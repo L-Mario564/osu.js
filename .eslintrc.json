@@ -11,7 +11,9 @@
   "plugins": ["@typescript-eslint"],
   "rules": {
     "indent": ["warn", 2],
-    "quotes": ["warn", "single"],
+    "quotes": ["warn", "single", {
+      "avoidEscape": true
+    }],
     "semi": ["warn", "always"],
     "no-var": "warn",
     "brace-style": ["warn", "1tbs"],
@@ -22,5 +24,5 @@
     "quote-props": ["warn", "consistent"],
     "jsx-quotes": ["warn", "prefer-single"]
   },
-  "ignorePatterns": ["node_modules", "lib", "temp", "dist"]
+  "ignorePatterns": ["node_modules", "lib", "temp", "dist", "src/docs"]
 }

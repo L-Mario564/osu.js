@@ -18,7 +18,7 @@ import {
   getUserScoresParamsSchema,
   GetUSerScoresValidParams,
   GetUserValidParams
-} from '../schemas/v1';
+} from '../schemas/legacy';
 import { Mod } from '../types';
 import {
   Beatmap,
@@ -34,9 +34,17 @@ import {
   User,
   UserBestScore,
   UserRecentScore
-} from '../types/v1';
+} from '../types/legacy';
 import { getEnumMods, getModsEnum, map } from '../utils';
-import { GenresEnum, LanguagesEnum, ModesEnum, ScoringTypeEnum, StatusEnum, TeamColorEnum, TeamTypeEnum } from '../utils/enums';
+import {
+  GenresEnum,
+  LanguagesEnum,
+  ModesEnum,
+  ScoringTypeEnum,
+  StatusEnum,
+  TeamColorEnum,
+  TeamTypeEnum
+} from '../utils/enums';
 
 /**
  * Initialize an instance of the legacy API (API v1) client
@@ -212,18 +220,19 @@ export default class Client {
    * @param params Object containing the parameters for the endpoint (excluding the API key)
    * @returns An array of scores on a beatmap
    */
-  public async getMultiplayerLobby(params: GetMultiplayerLobbyParams): Promise<MultiplayerLobby | null> {
+  public async getMultiplayerLobby(
+    params: GetMultiplayerLobbyParams
+  ): Promise<MultiplayerLobby | null> {
     let parsed = getMultiplayerLobbyParamsSchema.parse(params);
     let mpLobby: ResponseMultiplayerLobby = await this.fetch('get_match', parsed);
 
-    if (!mpLobby.match)
-      return null;
+    if (!mpLobby.match) return null;
 
     return map({
-      ... mpLobby,
+      ...mpLobby,
       games: mpLobby.games.map((game) => {
         return {
-          ... game,
+          ...game,
           play_mode: ModesEnum[Number(game.play_mode)],
           scoring_type: ScoringTypeEnum[Number(game.scoring_type)],
           team_type: TeamTypeEnum[Number(game.team_type)],
@@ -232,8 +241,8 @@ export default class Client {
             delete score.rank;
 
             return {
-              ... score,
-              team: (score.team === '0') ? null : TeamColorEnum[Number(score.team)],
+              ...score,
+              team: score.team === '0' ? null : TeamColorEnum[Number(score.team)],
               perfect: score.perfect === '1',
               pass: score.pass === '1',
               enabled_mods: getEnumMods(score.enabled_mods)
@@ -258,6 +267,6 @@ export default class Client {
     };
 
     let replay: Replay = await this.fetch('get_replay', validParams);
-    return (replay.error) ? null : replay.content;
+    return replay.error ? null : replay.content;
   }
 }

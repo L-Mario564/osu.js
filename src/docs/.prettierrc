@@ -1,9 +1,10 @@
 {
+  "printWidth": 100,
   "trailingComma": "none",
   "quoteProps": "consistent",
   "singleQuote": true,
-  "jsxSingleQuote": true,
   "semi": true,
+  "jsxSingleQuote": true,
   "pluginSearchDirs": ["."],
   "overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }]
 }

@@ -7,7 +7,7 @@ export default class Auth {
   private clientSecret: string;
   private redirectUri: string;
   private oauthUrl: string;
-  
+
   constructor(clientId: number, clientSecret: string, redirectUri: string) {
     this.clientId = clientId;
     this.clientSecret = clientSecret;
@@ -24,8 +24,7 @@ export default class Auth {
         url += '&response_type=code';
         url += `&scope=${scope}`;
 
-        if (state)
-          url += `&state=${state}`;
+        if (state) url += `&state=${state}`;
 
         open(url);
       },
@@ -47,7 +46,7 @@ export default class Auth {
           client_secret: this.clientSecret,
           access_token: accessToken,
           refresh_token: refreshToken,
-          grant_type: 'refresh_token',
+          grant_type: 'refresh_token'
         });
 
         let token: Token = resp.data;

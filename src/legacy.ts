@@ -1,4 +1,4 @@
 import Client from './classes/LegacyClient';
-import { Beatmap, User } from './types/v1';
+import { Beatmap, User } from './types/legacy';
 
 export { Client, Beatmap, User };

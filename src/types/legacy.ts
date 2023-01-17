@@ -99,8 +99,8 @@ export interface User {
 }
 
 export type ResponseUser = Omit<Record<keyof User, string>, 'events'> & {
-  events: ResponseEvent[]
-}
+  events: ResponseEvent[];
+};
 
 export interface Event {
   display_html: string;
@@ -110,7 +110,7 @@ export interface Event {
   epicfactor: number;
 }
 
-export type ResponseEvent = Record<keyof Event, string>
+export type ResponseEvent = Record<keyof Event, string>;
 
 interface BaseScore {
   score: number;
@@ -135,7 +135,7 @@ export interface BeatmapScore extends BaseScore {
   replay_available: boolean;
 }
 
-export type ResponseBeatmapScore = Record<keyof BeatmapScore, string>
+export type ResponseBeatmapScore = Record<keyof BeatmapScore, string>;
 
 export interface UserRecentScore extends BaseScore {
   beatmap_id: number;
@@ -144,7 +144,7 @@ export interface UserRecentScore extends BaseScore {
   rank: Rank;
 }
 
-export type ResponseUserRecentScore = Record<keyof UserRecentScore, string>
+export type ResponseUserRecentScore = Record<keyof UserRecentScore, string>;
 
 export interface UserBestScore extends UserRecentScore {
   score_id: number;
@@ -152,7 +152,7 @@ export interface UserBestScore extends UserRecentScore {
   replay_available: boolean;
 }
 
-export type ResponseUserBestScore = Record<keyof UserBestScore, string>
+export type ResponseUserBestScore = Record<keyof UserBestScore, string>;
 
 export interface MultiplayerLobby {
   match: Match;
@@ -173,7 +173,7 @@ export interface Match {
 
 export type ResponseMatch = Omit<Record<keyof Match, string>, 'end_time'> & {
   end_time: string | null;
-}
+};
 
 export interface Game {
   game_id: number;
@@ -189,7 +189,7 @@ export interface Game {
 
 export type ResponseGame = Omit<Record<keyof Game, string>, 'scores'> & {
   scores: ResponseMatchScore[];
-}
+};
 
 export interface MatchScore extends Omit<BaseScore, 'enabled_mods'> {
   slot: number;
@@ -202,7 +202,7 @@ export interface MatchScore extends Omit<BaseScore, 'enabled_mods'> {
 export type ResponseMatchScore = Omit<Record<keyof MatchScore, string>, 'enabled_mods'> & {
   enabled_mods: string | null;
   rank?: string;
-}
+};
 
 export interface Replay {
   content: string;

@@ -1,5 +1,3 @@
-
-
 export default class Client {
   private accessToken: string;
   public beatmaps: any;
@@ -73,8 +71,6 @@ export default class Client {
       // /comments/{comment}
       get: undefined
     };
-    this.forums = {
-      
-    };
+    this.forums = {};
   }
 }

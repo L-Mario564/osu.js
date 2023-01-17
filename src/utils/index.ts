@@ -134,8 +134,7 @@ export function getModsEnum(mods: Mod[]): number {
 export function getEnumMods(modEnum: string | null): Mod[] {
   let mods: Mod[] = [];
 
-  if (!modEnum || modEnum === '0')
-    return mods;
+  if (!modEnum || modEnum === '0') return mods;
 
   let parsedGlobalEnum: number = Number(modEnum);
   let modEnums: string[] = Object.keys(ModsEnum);

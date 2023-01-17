@@ -1,17 +1,10 @@
 import { z } from 'zod';
 
 const gameModeUnion = z
-  .union([
-    z.literal('STD'),
-    z.literal('Taiko'),
-    z.literal('CTB'),
-    z.literal('Mania')
-  ])
+  .union([z.literal('STD'), z.literal('Taiko'), z.literal('CTB'), z.literal('Mania')])
   .optional();
 
-const userTypeUnion = z
-  .union([z.literal('string'), z.literal('id')])
-  .optional();
+const userTypeUnion = z.union([z.literal('string'), z.literal('id')]).optional();
 
 const modsArray = z
   .array(
@@ -124,9 +117,7 @@ export const getBeatmapScoresParamsSchema = z.object({
 /**
  * Parameters for a GET request at the `get_scores` endpoint
  */
-export type GetBeatmapScoresParams = z.infer<
-  typeof getBeatmapScoresParamsSchema
->;
+export type GetBeatmapScoresParams = z.infer<typeof getBeatmapScoresParamsSchema>;
 export type GetBeatmapScoresValidParams = Omit<GetBeatmapScoresParams, 'm'> & {
   m?: number;
 };
@@ -177,4 +168,4 @@ export type GetReplayParams = z.infer<typeof getReplayParamsSchema>;
 export type GetReplayValidParams = Omit<GetReplayParams, 'm' | 'mods'> & {
   mods?: number;
   m?: number;
-}
+};
