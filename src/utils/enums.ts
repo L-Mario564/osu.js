@@ -1,53 +1,53 @@
 export enum ModesEnum {
-  std = 0,
-  taiko = 1,
-  ctb = 2,
-  mania = 3
+  STD = 0,
+  Taiko = 1,
+  CTB = 2,
+  Mania = 3
 }
 
 export enum StatusEnum {
-  graveyard = -2,
-  wip = -1,
-  pending = 0,
-  ranked = 1,
-  approved = 2,
-  qualified = 3,
-  loved = 4
+  Graveyard = -2,
+  WIP = -1,
+  Pending = 0,
+  Ranked = 1,
+  Approved = 2,
+  Qualified = 3,
+  Loved = 4
 }
 
 export enum GenresEnum {
-  any = 0,
-  unspecified = 1,
-  'video game' = 2,
-  anime = 3,
-  rock = 4,
-  pop = 5,
-  other = 6,
-  novelty = 7,
-  'hip hop' = 9,
-  electronic = 10,
-  metal = 11,
-  classical = 12,
-  folk = 13,
-  jazz = 14
+  Any = 0,
+  Unspecified = 1,
+  'Video Game' = 2,
+  Anime = 3,
+  Rock = 4,
+  Pop = 5,
+  Other = 6,
+  Novelty = 7,
+  'Hip Hop' = 9,
+  Electronic = 10,
+  Metal = 11,
+  Classical = 12,
+  Folk = 13,
+  Jazz = 14
 }
 
 export enum LanguagesEnum {
-  any = 0,
-  unspecified = 1,
-  english = 2,
-  japanese = 3,
-  chinese = 4,
-  instrumental = 5,
-  korean = 6,
-  french = 7,
-  german = 8,
-  swedish = 9,
-  spanish = 10,
-  italian = 11,
-  russian = 12,
-  polish = 13,
-  other = 14
+  Any = 0,
+  Unspecified = 1,
+  English = 2,
+  Japanese = 3,
+  Chinese = 4,
+  Instrumental = 5,
+  Korean = 6,
+  French = 7,
+  German = 8,
+  Wwedish = 9,
+  Spanish = 10,
+  Italian = 11,
+  Russian = 12,
+  Polish = 13,
+  Other = 14
 }
 
 export enum ModsEnum {
@@ -82,4 +82,23 @@ export enum ModsEnum {
   K2 = 268435456,
   SV2 = 536870912,
   MR = 1073741824
+}
+
+export enum ScoringTypeEnum {
+  Score = 0,
+  Accuracy = 1,
+  Combo = 2,
+  'Score V2' = 3
+}
+
+export enum TeamTypeEnum {
+  'Head To Head' = 0,
+  'Tag Co-Op' = 1,
+  'Team VS' = 2,
+  'Tag Team VS' = 3
+}
+
+export enum TeamColorEnum {
+  Blue = 1,
+  Red = 2
 }

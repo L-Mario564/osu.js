@@ -1,18 +1,22 @@
+import { Mod } from '.';
 import {
   ModesEnum,
   StatusEnum,
   GenresEnum,
-  LanguagesEnum
+  LanguagesEnum,
+  ScoringTypeEnum,
+  TeamTypeEnum,
+  TeamColorEnum
 } from '../utils/enums';
 
 export type Mode = keyof typeof ModesEnum;
 export type Status = keyof typeof StatusEnum;
 export type Genre = keyof typeof GenresEnum;
 export type Language = keyof typeof LanguagesEnum;
-export type Scoring = 'score' | 'accuracy' | 'combo' | 'score v2';
-export type Team = 'head to head' | 'tag co-op' | 'team' | 'tag team vs';
-export type TeamColor = 'red' | 'blue' | null;
-export type Rank = 'SS' | 'SSH' | 'S' | 'SH' | 'A';
+export type ScoringType = keyof typeof ScoringTypeEnum;
+export type TeamType = keyof typeof TeamTypeEnum;
+export type TeamColor = keyof typeof TeamColorEnum;
+export type Rank = 'SS' | 'SSH' | 'S' | 'SH' | 'A' | 'B' | 'C' | 'D' | 'F';
 
 export interface Beatmap {
   approved: Status;
@@ -34,13 +38,13 @@ export interface Beatmap {
   diff_drain: number;
   hit_length: number;
   source: string;
-  genre_id: number;
-  language_id: number;
+  genre: Genre;
+  language: Language;
   title: string;
   total_length: number;
   version: string;
   file_md5: string;
-  mode: number;
+  mode: Mode;
   tags: string[];
   favourite_count: number;
   rating: number;
@@ -61,8 +65,10 @@ export type ResponseBeatmap = Record<
     Beatmap & {
       download_unavailable: string;
       audio_unavailable: string;
+      genre_id: string;
+      language_id: string;
     },
-    'download_available' | 'audio_available'
+    'download_available' | 'audio_available' | 'genre' | 'language'
   >,
   string
 >;
@@ -116,7 +122,7 @@ interface BaseScore {
   countkatu: number;
   countgeki: number;
   perfect: boolean;
-  enabled_mods: number;
+  enabled_mods: Mod[];
 }
 
 export interface BeatmapScore extends BaseScore {
@@ -150,6 +156,12 @@ export type ResponseUserBestScore = Record<keyof UserBestScore, string>
 
 export interface MultiplayerLobby {
   match: Match;
+  games: Game[];
+}
+
+export interface ResponseMultiplayerLobby {
+  match: ResponseMatch;
+  games: ResponseGame[];
 }
 
 export interface Match {
@@ -159,26 +171,40 @@ export interface Match {
   end_time: Date | null;
 }
 
+export type ResponseMatch = Omit<Record<keyof Match, string>, 'end_time'> & {
+  end_time: string | null;
+}
+
 export interface Game {
   game_id: number;
   start_time: Date;
   end_time: Date;
   beatmap_id: number;
   play_mode: Mode;
-  scoring_type: Scoring;
-  team_type: Team;
-  mods: number;
-  scores: Score[];
+  scoring_type: ScoringType;
+  team_type: TeamType;
+  mods: Mod[];
+  scores: MatchScore[];
 }
 
-export interface Score extends Omit<BaseScore, 'enabled_mods'> {
+export type ResponseGame = Omit<Record<keyof Game, string>, 'scores'> & {
+  scores: ResponseMatchScore[];
+}
+
+export interface MatchScore extends Omit<BaseScore, 'enabled_mods'> {
   slot: number;
-  team: TeamColor;
+  team: TeamColor | null;
   user_id: number;
   pass: boolean;
-  enabled_mods: number | null;
+  enabled_mods: Mod[];
+}
+
+export type ResponseMatchScore = Omit<Record<keyof MatchScore, string>, 'enabled_mods'> & {
+  enabled_mods: string | null;
+  rank?: string;
 }
 
 export interface Replay {
   content: string;
+  error?: string;
 }

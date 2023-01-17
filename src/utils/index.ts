@@ -1,16 +1,11 @@
-import { AnyObject, Mod } from '../types';
+import { Mod } from '../types';
 import { ModsEnum } from './enums';
 
-export function sleep(ms: number): Promise<unknown> {  
-  return new Promise((resolve: (value: unknown) => any) => setTimeout(resolve, ms));  
+export function sleep(ms: number): Promise<unknown> {
+  return new Promise((resolve: (value: unknown) => unknown) => setTimeout(resolve, ms));
 }
 
-/**
- * Parse numbers and dates in the object, since everything is returned as a string in the legacy API
- * @param obj Any object, usually data from a response
- * @returns The same inputted object with numbers and dates parsed
- */
-export function map<T>(obj: Record<string, any>): T {
+export function map<T>(obj: Record<string, unknown>): T {
   let entries: [string, unknown][] = Object.entries(obj);
   entries = entries.map(mapCallback);
 
@@ -24,20 +19,19 @@ export function map<T>(obj: Record<string, any>): T {
 export function mapCallback([key, value]: [string, unknown]): [string, unknown] {
   let newValue: unknown = value;
 
-  if (Array.isArray(value) && typeof value[0] === 'object')
-    newValue = value.map((v: AnyObject): AnyObject => map<AnyObject>(v));
-  else if (!isNaN(Number(value)) && typeof value !== 'boolean')
-    newValue = Number(value);
+  if (Array.isArray(value) && typeof value[0] === 'object') newValue = value.map((v) => map(v));
+  else if (typeof value === 'object' && value) newValue = map(value as Record<string, unknown>);
+  else if (!isNaN(Number(value)) && typeof value !== 'boolean') newValue = Number(value);
   else if (typeof value === 'string' && !isNaN(new Date(value).getHours()))
     newValue = new Date(value);
-  
+
   return [key, newValue];
 }
 
 const baseUrl: string = 'https://osu.ppy.sh/';
 
 /**
- * @param beatmapSetId 
+ * @param beatmapSetId
  * @returns The URL for the beatmap set cover
  */
 export function beatmapCoverUrl(beatmapSetId: number): string {
@@ -65,31 +59,38 @@ export function userUrl(userId: number): string {
 }
 
 export function getStdAccuracy(c300: number, c100: number, c50: number, misses: number): number {
-  return (
-    ((6 * c300) + (2 * c100) + c50) /
-    (6 * (c300 + c100 + c50 + misses))
-  );
+  return (6 * c300 + 2 * c100 + c50) / (6 * (c300 + c100 + c50 + misses));
 }
 
 export function getTaikoAccuracy(geki: number, katu: number, misses: number): number {
-  return (
-    ((2 * geki) + katu) /
-    (2 * (geki + katu + misses))
-  );
+  return (2 * geki + katu) / (2 * (geki + katu + misses));
 }
 
-export function getCtbAccuracy(c300: number, c100: number, c50: number, katu: number, misses: number): number {
+export function getCtbAccuracy(
+  c300: number,
+  c100: number,
+  c50: number,
+  katu: number,
+  misses: number
+): number {
   let x: number = c300 + c100 + c50;
   return x / (x + katu + misses);
 }
 
-export function getManiaAccuracy(geki: number, c300: number, katu: number, c100: number, c50: number, misses: number, scoreV2?: boolean): number {
-  let x: number = (scoreV2) ? (305 * geki) + (300 * c300) : 300 * (geki + c300);
-  let y: number = (scoreV2) ? 305 : 300;
+export function getManiaAccuracy(
+  geki: number,
+  c300: number,
+  katu: number,
+  c100: number,
+  c50: number,
+  misses: number,
+  scoreV2?: boolean
+): number {
+  let x: number = scoreV2 ? 305 * geki + 300 * c300 : 300 * (geki + c300);
+  let y: number = scoreV2 ? 305 : 300;
 
   return (
-    (x + (200 * katu) + (100 * c100) + (50 * c50)) /
-    (y * (geki + c300 + katu + c100 + c50 + misses))    
+    (x + 200 * katu + 100 * c100 + 50 * c50) / (y * (geki + c300 + katu + c100 + c50 + misses))
   );
 }
 
@@ -101,12 +102,10 @@ export const calculate = {
     hp: hrStat
   },
   dt: {
-    od: (n: number): number => (53 + (8 * n)) / 12,
+    od: (n: number): number => (53 + 8 * n) / 12,
     bpm: (n: number): number => n * 1.5,
     ar: (n: number): number => {
-      let x: number = (n <= 5) ?
-        (75 + (8 * n)) / 15 :
-        (13 + (2 * n)) / 3;
+      let x: number = n <= 5 ? (75 + 8 * n) / 15 : (13 + 2 * n) / 3;
 
       return Math.min(x, 11);
     },
@@ -119,21 +118,39 @@ export const calculate = {
     hp: ezStat
   },
   ht: {
-    od: (n: number): number => (-53 + (16 * n)) / 12,
+    od: (n: number): number => (-53 + 16 * n) / 12,
     bpm: (n: number): number => n * 0.75,
     ar: (n: number): number => {
-      return (n <= 5) ?
-        (4 / 3) * n - 5 :
-        (n > 7) ?
-          (4 / 3) * n - (13 / 3) :
-          (4 / 3) * n - (19 / 3);
+      return n <= 5 ? (4 / 3) * n - 5 : n > 7 ? (4 / 3) * n - 13 / 3 : (4 / 3) * n - 19 / 3;
     },
     length: (n: number): number => n * 0.75
   }
 };
 
 export function getModsEnum(mods: Mod[]): number {
-	return mods.reduce((count: number, mod: Mod) => count + ModsEnum[mod], 0);
+  return mods.reduce((count: number, mod: Mod) => count + ModsEnum[mod], 0);
+}
+
+export function getEnumMods(modEnum: string | null): Mod[] {
+  let mods: Mod[] = [];
+
+  if (!modEnum || modEnum === '0')
+    return mods;
+
+  let parsedGlobalEnum: number = Number(modEnum);
+  let modEnums: string[] = Object.keys(ModsEnum);
+  modEnums = modEnums.splice(0, modEnums.length / 2);
+
+  for (let i = modEnums.length; parsedGlobalEnum !== 0; i--) {
+    let parsedEnum: number = Number(modEnums[i]);
+
+    if (parsedGlobalEnum - parsedEnum >= 0) {
+      mods.push(ModsEnum[parsedEnum] as Mod);
+      parsedGlobalEnum -= parsedEnum;
+    }
+  }
+
+  return mods.reverse();
 }
 
 // Helper functions
