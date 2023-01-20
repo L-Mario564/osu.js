@@ -1,25 +1,25 @@
 import Base from './Base';
 import GetReplayMethods from './GetReplayMethods';
 import {
-  GetBeatmapScoresParams,
   getBeatmapScoresParamsSchema,
-  GetBeatmapScoresValidParams,
-  GetBeatmapsParams,
   getBeatmapsParamsSchema,
-  GetBeatmapsValidParams,
-  GetMultiplayerLobbyParams,
   getMultiplayerLobbyParamsSchema,
-  GetUserParams,
   getUserParamsSchema,
-  GetUserScoresParams,
-  getUserScoresParamsSchema,
-  GetUSerScoresValidParams,
-  GetUserValidParams
+  getUserScoresParamsSchema
 } from '../../schemas/legacy';
 import { Mod } from '../../types';
 import {
   Beatmap,
   BeatmapScore,
+  GetBeatmapScoresParams,
+  GetBeatmapScoresValidParams,
+  GetBeatmapsParams,
+  GetBeatmapsValidParams,
+  GetMultiplayerLobbyParams,
+  GetUserParams,
+  GetUserScoresParams,
+  GetUSerScoresValidParams,
+  GetUserValidParams,
   MultiplayerLobby,
   ResponseBeatmap,
   ResponseBeatmapScore,

@@ -11,9 +11,13 @@
   "plugins": ["@typescript-eslint"],
   "rules": {
     "indent": ["warn", 2],
-    "quotes": ["warn", "single", {
-      "avoidEscape": true
-    }],
+    "quotes": [
+      "warn",
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ],
     "semi": ["warn", "always"],
     "no-var": "warn",
     "brace-style": ["warn", "1tbs"],

@@ -1,5 +1,15 @@
+import { z } from 'zod';
 import { Mod } from '.';
-import { GetReplayByBeatmapAndUserIdParams, GetReplayByScoreIdParams } from '../schemas/legacy';
+import {
+  getBeatmapsParamsSchema,
+  getUserParamsSchema,
+  getBeatmapScoresParamsSchema,
+  getUserScoresParamsSchema,
+  getMultiplayerLobbyParamsSchema,
+  getReplayByScoreIdParamsSchema,
+  getReplayByBeatmapAndUserIdParamsSchema,
+  getReplayParamsSchema
+} from '../schemas/legacy';
 import {
   ModesEnum,
   StatusEnum,
@@ -9,6 +19,65 @@ import {
   TeamTypeEnum,
   TeamColorEnum
 } from '../utils/enums';
+
+/**
+ * Parameters for a GET request at the `get_beatmaps` endpoint
+ */
+export type GetBeatmapsParams = z.infer<typeof getBeatmapsParamsSchema>;
+export type GetBeatmapsValidParams = Omit<GetUserParams, 'm'> & {
+  since?: string;
+  m?: number;
+  a?: number;
+  mods?: number;
+};
+
+/**
+ * Parameters for a GET request at the `get_user` endpoint
+ */
+export type GetUserParams = z.infer<typeof getUserParamsSchema>;
+export type GetUserValidParams = Omit<GetUserParams, 'm'> & {
+  m?: number;
+};
+
+/**
+ * Parameters for a GET request at the `get_scores` endpoint
+ */
+export type GetBeatmapScoresParams = z.infer<typeof getBeatmapScoresParamsSchema>;
+export type GetBeatmapScoresValidParams = Omit<GetBeatmapScoresParams, 'm'> & {
+  m?: number;
+};
+
+/**
+ * Parameters for a GET request at the `get_user_best` and `get_user_recent` endpoints
+ */
+export type GetUserScoresParams = z.infer<typeof getUserScoresParamsSchema>;
+export type GetUSerScoresValidParams = Omit<GetUserScoresParams, 'm'> & {
+  m?: number;
+};
+
+/**
+ * Parameters for a GET request at the `get_match` endpoint
+ */
+export type GetMultiplayerLobbyParams = z.infer<typeof getMultiplayerLobbyParamsSchema>;
+
+export type GetReplay = z.infer<typeof getReplayParamsSchema>;
+
+/**
+ * Parameters for a GET request at the `get_replay` endpoint (using a score ID)
+ */
+export type GetReplayByScoreIdParams = z.infer<typeof getReplayByScoreIdParamsSchema>;
+
+/**
+ * Parameters for a GET request at the `get_replay` endpoint (using a beatmap ID and a user ID or username)
+ */
+export type GetReplayByBeatmapAndUserIdParams = z.infer<
+  typeof getReplayByBeatmapAndUserIdParamsSchema
+>;
+
+export type GetReplayValidParams<T> = Omit<T, 'm' | 'mods'> & {
+  mods?: number;
+  m?: number;
+};
 
 export type Mode = keyof typeof ModesEnum;
 export type Status = keyof typeof StatusEnum;
@@ -208,9 +277,4 @@ export type ResponseMatchScore = Omit<Record<keyof MatchScore, string>, 'enabled
 export interface Replay {
   content: string;
   error?: string;
-}
-
-export interface GetReplayMethods {
-  byScoreId: (params: GetReplayByScoreIdParams) => Promise<string | null>;
-  byBeatmapAndUserId: (params: GetReplayByBeatmapAndUserIdParams) => Promise<string | null>;
 }

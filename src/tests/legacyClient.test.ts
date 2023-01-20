@@ -24,7 +24,7 @@ describe('Test legacy client', async () => {
   });
   await sleep(ms);
 
-  it('Gets a user that doesn\'t exist', async () => {
+  it("Gets a user that doesn't exist", async () => {
     let user = await client.getUser({ u: 0 });
     expect(user).toBeNull();
   });
@@ -66,22 +66,22 @@ describe('Test legacy client', async () => {
   });
   await sleep(ms);
 
-  // it('Gets a replay (by a beatmap ID and user ID)', async () => {
-  //   let replay = await client.getReplay.byBeatmapAndUserId({
-  //     b: 131891,
-  //     u: 5182050
-  //   });
-  //   expect(replay).toBeTypeOf('string');
-  // });
-  // await sleep(ms);
+  it('Gets a replay (by a beatmap ID and user ID)', async () => {
+    let replay = await client.getReplay.byBeatmapAndUserId({
+      b: 131891,
+      u: 5182050
+    });
+    expect(replay).toBeTypeOf('string');
+  });
+  await sleep(ms);
 
-  // it("Gets replays that don't exist", async () => {
-  //   let replay1 = await client.getReplay.byScoreId({ s: 0 });
-  //   let replay2 = await client.getReplay.byBeatmapAndUserId({
-  //     b: 0,
-  //     u: 0
-  //   });
+  it("Gets replays that don't exist", async () => {
+    let replay1 = await client.getReplay.byScoreId({ s: 0 });
+    let replay2 = await client.getReplay.byBeatmapAndUserId({
+      b: 0,
+      u: 0
+    });
 
-  //   expect(replay1 === null && replay2 === null).toBe(true);
-  // });
+    expect(replay1 === null && replay2 === null).toBe(true);
+  });
 });
