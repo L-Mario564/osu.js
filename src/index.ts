@@ -1,4 +1,4 @@
-import V1Client from './classes/LegacyClient';
+import V1Client from './classes/legacy/Client';
 import {
   beatmapCoverUrl,
   beatmapSetUrl,

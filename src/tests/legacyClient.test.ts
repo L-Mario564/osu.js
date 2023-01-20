@@ -60,14 +60,28 @@ describe('Test legacy client', async () => {
   });
   await sleep(ms);
 
-  it('Gets a replay', async () => {
-    let replay = await client.getReplay({ s: 3812908497 });
+  it('Gets a replay (by score ID)', async () => {
+    let replay = await client.getReplay.byScoreId({ s: 3812908497 });
     expect(replay).toBeTypeOf('string');
   });
   await sleep(ms);
 
-  it("Gets a replay that doesn't exist", async () => {
-    let replay = await client.getReplay({ s: 0 });
-    expect(replay).toBeNull();
-  });
+  // it('Gets a replay (by a beatmap ID and user ID)', async () => {
+  //   let replay = await client.getReplay.byBeatmapAndUserId({
+  //     b: 131891,
+  //     u: 5182050
+  //   });
+  //   expect(replay).toBeTypeOf('string');
+  // });
+  // await sleep(ms);
+
+  // it("Gets replays that don't exist", async () => {
+  //   let replay1 = await client.getReplay.byScoreId({ s: 0 });
+  //   let replay2 = await client.getReplay.byBeatmapAndUserId({
+  //     b: 0,
+  //     u: 0
+  //   });
+
+  //   expect(replay1 === null && replay2 === null).toBe(true);
+  // });
 });

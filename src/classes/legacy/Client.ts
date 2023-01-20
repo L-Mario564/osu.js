@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
-import { z } from 'zod';
+import Base from './Base';
+import GetReplayMethods from './GetReplayMethods';
 import {
   GetBeatmapScoresParams,
   getBeatmapScoresParamsSchema,
@@ -9,22 +9,18 @@ import {
   GetBeatmapsValidParams,
   GetMultiplayerLobbyParams,
   getMultiplayerLobbyParamsSchema,
-  GetReplayParams,
-  getReplayParamsSchema,
-  GetReplayValidParams,
   GetUserParams,
   getUserParamsSchema,
   GetUserScoresParams,
   getUserScoresParamsSchema,
   GetUSerScoresValidParams,
   GetUserValidParams
-} from '../schemas/legacy';
-import { Mod } from '../types';
+} from '../../schemas/legacy';
+import { Mod } from '../../types';
 import {
   Beatmap,
   BeatmapScore,
   MultiplayerLobby,
-  Replay,
   ResponseBeatmap,
   ResponseBeatmapScore,
   ResponseMultiplayerLobby,
@@ -34,8 +30,8 @@ import {
   User,
   UserBestScore,
   UserRecentScore
-} from '../types/legacy';
-import { getEnumMods, getModsEnum, map } from '../utils';
+} from '../../types/legacy';
+import { getEnumMods, getModsEnum, map } from '../../utils';
 import {
   GenresEnum,
   LanguagesEnum,
@@ -44,43 +40,19 @@ import {
   StatusEnum,
   TeamColorEnum,
   TeamTypeEnum
-} from '../utils/enums';
+} from '../../utils/enums';
 
 /**
  * Initialize an instance of the legacy API (API v1) client
  * @param apiKey Your osu! API key
  */
-export default class Client {
-  private apiKey: string;
+export default class Client extends Base {
+  public getReplay: GetReplayMethods;
 
   constructor(apiKey: string) {
-    this.apiKey = z.string().parse(apiKey);
-  }
+    super(apiKey);
 
-  /**
-   * Makes a fetch request to a specified endpoint
-   * @param endPoint API endpoint to fetch from
-   * @param urlParams Object containing parameters for the endpoint (excluding the API key)
-   * @returns Response data
-   */
-  private async fetch<T>(endPoint: string, urlParams: Record<string, unknown>): Promise<T> {
-    let params: string = Object.entries(urlParams).reduce(
-      (prev: string, [key, value]: [string, unknown]) => {
-        return !value ? prev : `${prev}&${key}=${value}`;
-      },
-      ''
-    );
-
-    let url: string = `https://osu.ppy.sh/api/${endPoint}?k=${this.apiKey}${params}`;
-
-    let resp: AxiosResponse = await axios.get(url, {
-      headers: {
-        'Accept-encoding': '*'
-      }
-    });
-    let data: T = resp.data;
-
-    return data;
+    this.getReplay = new GetReplayMethods(apiKey);
   }
 
   /**
@@ -245,21 +217,5 @@ export default class Client {
         };
       })
     });
-  }
-
-  /**
-   * Makes a GET request to the `get_replay` endpoint
-   * @returns A string containing the Base64 encoded replay
-   */
-  public async getReplay(params: GetReplayParams): Promise<string | null> {
-    let parsed = getReplayParamsSchema.parse(params);
-    let validParams: GetReplayValidParams = {
-      ...parsed,
-      m: parsed.m && ModesEnum[parsed.m],
-      mods: getModsEnum(parsed.mods ?? [])
-    };
-
-    let replay: Replay = await this.fetch('get_replay', validParams);
-    return replay.error ? null : replay.content;
   }
 }

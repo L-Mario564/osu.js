@@ -1,4 +1,5 @@
 import { Mod } from '.';
+import { GetReplayByBeatmapAndUserIdParams, GetReplayByScoreIdParams } from '../schemas/legacy';
 import {
   ModesEnum,
   StatusEnum,
@@ -207,4 +208,9 @@ export type ResponseMatchScore = Omit<Record<keyof MatchScore, string>, 'enabled
 export interface Replay {
   content: string;
   error?: string;
+}
+
+export interface GetReplayMethods {
+  byScoreId: (params: GetReplayByScoreIdParams) => Promise<string | null>;
+  byBeatmapAndUserId: (params: GetReplayByBeatmapAndUserIdParams) => Promise<string | null>;
 }

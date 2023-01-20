@@ -146,26 +146,44 @@ export const getMultiplayerLobbyParamsSchema = z.object({
  */
 export type GetMultiplayerLobbyParams = z.infer<typeof getMultiplayerLobbyParamsSchema>;
 
-export const getReplayParamsSchema = z.object({
-  /** Replay from a beatmap with a specific beatmap ID (required if `s` is undefined) */
-  b: z.number().optional(),
-  /** Replay from a user with a specific user ID or username (required if `s` is undefined) */
-  u: z.union([z.string(), z.number()]).optional(),
+const getReplayParams = {
   /** Replay gamemode */
   m: gameModeUnion,
-  /** Replay from a score with a specific score ID (required if `b` and `u` are undefined) */
-  s: z.number().optional(),
-  /** Specify if `u` is a user ID (`id`) or a username (`string`) */
-  type: userTypeUnion,
   /** Replay with a specific list of mods */
   mods: modsArray
+};
+
+const getReplayParamsSchema = z.object(getReplayParams);
+
+export const getReplayByScoreIdParamsSchema = z.object({
+  ... getReplayParams,
+  /** Replay from a score with a specific score ID */
+  s: z.number()
 });
 
+export const getReplayByBeatmapAndUserIdParamsSchema = z.object({
+  ... getReplayParams,
+  /** Replay from a beatmap with a specific beatmap ID */
+  b: z.number(),
+  /** Replay from a user with a specific user ID or username */
+  u: z.union([z.string(), z.number()]),
+  /** Specify if `u` is a user ID (`id`) or a username (`string`) */
+  type: userTypeUnion
+});
+
+export type GetReplay = z.infer<typeof getReplayParamsSchema>;
+
 /**
- * Parameters for a GET request at the `get_replay` endpoint
+ * Parameters for a GET request at the `get_replay` endpoint (using a score ID)
  */
-export type GetReplayParams = z.infer<typeof getReplayParamsSchema>;
-export type GetReplayValidParams = Omit<GetReplayParams, 'm' | 'mods'> & {
+export type GetReplayByScoreIdParams = z.infer<typeof getReplayByScoreIdParamsSchema>;
+
+/**
+ * Parameters for a GET request at the `get_replay` endpoint (using a beatmap ID and a user ID or username)
+ */
+export type GetReplayByBeatmapAndUserIdParams = z.infer<typeof getReplayByBeatmapAndUserIdParamsSchema>;
+
+export type GetReplayValidParams<T> = Omit<T, 'm' | 'mods'> & {
   mods?: number;
   m?: number;
 };
