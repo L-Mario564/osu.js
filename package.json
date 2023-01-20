@@ -10,12 +10,8 @@
   "typings": "lib/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "docs:build": "node check.js && npm --prefix src/docs run build",
-    "docs:dev": "node check.js && npm --prefix src/docs run dev",
     "fmt": "npx prettier --write .",
     "lint": "npx eslint .",
-    "docs:fmt": "npm --prefix src/docs run fmt",
-    "document": "tsc && npx api-extractor run --verbose && npx minify-json temp/osu.js.api.json",
     "test": "vitest run"
   },
   "keywords": [],

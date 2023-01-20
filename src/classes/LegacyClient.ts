@@ -48,7 +48,7 @@ import {
 
 /**
  * Initialize an instance of the legacy API (API v1) client
- * @param apiKey Your osu! api key
+ * @param apiKey Your osu! API key
  */
 export default class Client {
   private apiKey: string;
@@ -85,7 +85,6 @@ export default class Client {
 
   /**
    * Makes a GET request to the `get_beatmaps` endpoint
-   * @param params Object containing the parameters for the endpoint (excluding the API key)
    * @returns An array of beatmaps
    */
   public async getBeatmaps(params: GetBeatmapsParams): Promise<Beatmap[]> {
@@ -121,7 +120,6 @@ export default class Client {
 
   /**
    * Makes a GET request to the `get_user` endpoint
-   * @param params Object containing the parameters for the endpoint (excluding the API key)
    * @returns A user if it exists, otherwise null
    */
   public async getUser(params: GetUserParams): Promise<User | null> {
@@ -137,7 +135,6 @@ export default class Client {
 
   /**
    * Makes a GET request to the `get_scores` endpoint
-   * @param params Object containing the parameters for the endpoint (excluding the API key)
    * @returns An array of scores on a beatmap
    */
   public async getBeatmapScores(params: GetBeatmapScoresParams): Promise<BeatmapScore[]> {
@@ -199,7 +196,6 @@ export default class Client {
 
   /**
    * Makes a GET request to the `get_user_best` endpoint
-   * @param params Object containing the parameters for the endpoint (excluding the API key)
    * @returns An array of a user's top scores
    */
   public async getUserBestScores(params: GetUserScoresParams): Promise<UserBestScore[]> {
@@ -208,7 +204,6 @@ export default class Client {
 
   /**
    * Makes a GET request to the `get_user_recent` endpoint
-   * @param params Object containing the parameters for the endpoint (excluding the API key)
    * @returns An array of a user's most recent scores in 24 hours
    */
   public async getUserRecentScores(params: GetUserScoresParams): Promise<UserRecentScore[]> {
@@ -217,7 +212,6 @@ export default class Client {
 
   /**
    * Makes a GET request to the `get_match` endpoint
-   * @param params Object containing the parameters for the endpoint (excluding the API key)
    * @returns An array of scores on a beatmap
    */
   public async getMultiplayerLobby(
@@ -255,7 +249,6 @@ export default class Client {
 
   /**
    * Makes a GET request to the `get_replay` endpoint
-   * @param params Object containing the parameters for the endpoint (excluding the API key)
    * @returns A string containing the Base64 encoded replay
    */
   public async getReplay(params: GetReplayParams): Promise<string | null> {

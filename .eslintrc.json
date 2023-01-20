@@ -21,8 +21,7 @@
     "default-case": "error",
     "prefer-const": "off",
     "@typescript-eslint/no-inferrable-types": "off",
-    "quote-props": ["warn", "consistent"],
-    "jsx-quotes": ["warn", "prefer-single"]
+    "quote-props": ["warn", "consistent"]
   },
   "ignorePatterns": ["node_modules", "lib", "temp", "dist", "src/docs"]
 }
