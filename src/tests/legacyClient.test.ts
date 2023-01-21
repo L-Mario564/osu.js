@@ -10,7 +10,7 @@ describe('Test legacy client', async () => {
   if (!apiKey) throw new Error('"API_KEY" environment variable is undefined');
 
   let ms: number = 500;
-  let client: Client = new Client(apiKey);
+  let client = new Client(apiKey);
 
   it('Gets beatmaps', async () => {
     let beatmaps = await client.getBeatmaps({ b: 1816113 });

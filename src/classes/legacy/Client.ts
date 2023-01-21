@@ -1,5 +1,5 @@
 import Base from './Base';
-import GetReplayMethods from './GetReplayMethods';
+import GetReplay from './GetReplay';
 import {
   getBeatmapScoresParamsSchema,
   getBeatmapsParamsSchema,
@@ -47,12 +47,12 @@ import {
  * @param apiKey Your osu! API key
  */
 export default class Client extends Base {
-  public getReplay: GetReplayMethods;
+  public getReplay: GetReplay;
 
   constructor(apiKey: string) {
     super(apiKey);
 
-    this.getReplay = new GetReplayMethods(apiKey);
+    this.getReplay = new GetReplay(apiKey);
   }
 
   /**

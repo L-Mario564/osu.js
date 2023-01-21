@@ -6,19 +6,19 @@ import {
 import {
   Replay as ReplayT,
   GetReplayValidParams,
-  GetReplay,
+  GetReplay as GetReplayT,
   GetReplayByBeatmapAndUserIdParams,
   GetReplayByScoreIdParams
 } from '../../types/legacy';
 import { getModsEnum } from '../../utils';
 import { ModesEnum } from '../../utils/enums';
 
-export default class GetReplayMethods extends Base {
+export default class GetReplay extends Base {
   constructor(apiKey: string) {
     super(apiKey);
   }
 
-  private async fetchReplay<T extends GetReplay>(params: T): Promise<string | null> {
+  private async fetchReplay<T extends GetReplayT>(params: T): Promise<string | null> {
     let validParams: GetReplayValidParams<T> = {
       ...params,
       m: params.m && ModesEnum[params.m],

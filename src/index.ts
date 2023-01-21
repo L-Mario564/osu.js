@@ -1,33 +1,3 @@
-import V1Client from './classes/legacy/Client';
-import {
-  beatmapCoverUrl,
-  beatmapSetUrl,
-  beatmapThumbnailUrl,
-  beatmapUrl,
-  calculate,
-  getCtbAccuracy,
-  getManiaAccuracy,
-  getStdAccuracy,
-  getTaikoAccuracy,
-  userProfileImgUrl,
-  userUrl
-} from './utils';
-import { AnyObject } from './types';
-import { Beatmap } from './types/legacy';
+import Auth from './classes/auth/Auth';
 
-export {
-  V1Client,
-  beatmapCoverUrl,
-  beatmapSetUrl,
-  beatmapThumbnailUrl,
-  beatmapUrl,
-  calculate,
-  getCtbAccuracy,
-  getManiaAccuracy,
-  getStdAccuracy,
-  getTaikoAccuracy,
-  userProfileImgUrl,
-  userUrl,
-  AnyObject,
-  Beatmap
-};
+export { Auth };

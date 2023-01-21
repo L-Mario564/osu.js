@@ -10,12 +10,6 @@ export type Scope =
   | 'identify'
   | 'public';
 
-export interface AuthorizationCodeGrant {
-  requestAuthorization: (state?: string) => void;
-  requestToken: (code: string) => Promise<Token>;
-  refreshToken: (accessToken: string, refreshToken: string) => Promise<Token>;
-}
-
 export interface Token {
   token_type: string;
   expires_in: number;
