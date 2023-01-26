@@ -2,8 +2,28 @@ import Base from './Base';
 import UserScores from './UserScores';
 import UserBeatmaps from './UserBeatmaps';
 import { z } from 'zod';
-import { getSelfOptionsSchema, getUserKudosuOptionsSchema, getUserOptionsSchema, getUserRecentActivityOptionsSchema, getUsersOptionsSchema } from '../schemas';
-import { GetSelfOptions, GetUserKodosuOptions, GetUserOptions, UserExtended, UserKudosuHistory, GetUsersOptions, UserCompact, Country, Cover, UserGroup, StatisticsRulesets, GetUserRecentActivityOptions, UserEvent } from '../types';
+import {
+  getSelfOptionsSchema,
+  getUserKudosuOptionsSchema,
+  getUserOptionsSchema,
+  getUserRecentActivityOptionsSchema,
+  getUsersOptionsSchema
+} from '../schemas';
+import {
+  GetSelfOptions,
+  GetUserKodosuOptions,
+  GetUserOptions,
+  UserExtended,
+  UserKudosuHistory,
+  GetUsersOptions,
+  UserCompact,
+  Country,
+  Cover,
+  UserGroup,
+  StatisticsRulesets,
+  GetUserRecentActivityOptions,
+  UserEvent
+} from '../types';
 
 export default class UserEndpoints extends Base {
   public scores: UserScores;
@@ -20,10 +40,12 @@ export default class UserEndpoints extends Base {
    * Makes a GET request to the `me` endpoint (requires the `identify` scope)
    * @returns The user corresponding to the access token provided in the constructor of this class
    */
-  public async getSelf(options?: GetSelfOptions): Promise<UserExtended<{
-    is_restricted: boolean;
-    statistics_rulesets: StatisticsRulesets
-  }>> {
+  public async getSelf(options?: GetSelfOptions): Promise<
+    UserExtended<{
+      is_restricted: boolean;
+      statistics_rulesets: StatisticsRulesets;
+    }>
+  > {
     options = getSelfOptionsSchema.parse(options);
     let endPoint: string = 'me';
 
@@ -39,7 +61,10 @@ export default class UserEndpoints extends Base {
    * @param user ID of the user to get kudosu from
    * @returns An array containing the specified user's kudosu history
    */
-  public async getUserKudosu(user: number, options?: GetUserKodosuOptions): Promise<UserKudosuHistory[]> {
+  public async getUserKudosu(
+    user: number,
+    options?: GetUserKodosuOptions
+  ): Promise<UserKudosuHistory[]> {
     user = z.number().parse(user);
     options = getUserKudosuOptionsSchema.parse(options);
     return await this.fetch(`users/${user}/kudosu`, 'GET', options);
@@ -50,7 +75,10 @@ export default class UserEndpoints extends Base {
    * @param user ID of the user to get their recent activity from
    * @returns An array containing the specified user's recent activity (each event is a union, to discriminate, use the `type` key)
    */
-  public async getUserRecentActivity(user: number, options?: GetUserRecentActivityOptions): Promise<UserEvent[]> {
+  public async getUserRecentActivity(
+    user: number,
+    options?: GetUserRecentActivityOptions
+  ): Promise<UserEvent[]> {
     user = z.number().parse(user);
     options = getUserRecentActivityOptionsSchema.parse(options);
     return await this.fetch(`users/${user}/recent_activity`, 'GET', options);
@@ -61,7 +89,10 @@ export default class UserEndpoints extends Base {
    * @param user ID or username of the user to get
    * @returns A user
    */
-  public async getUser(user: number | string, options?: GetUserOptions): Promise<UserExtended<unknown>> {
+  public async getUser(
+    user: number | string,
+    options?: GetUserOptions
+  ): Promise<UserExtended<unknown>> {
     user = z.number().parse(user);
     options = getUserOptionsSchema.parse(options);
     let endPoint: string = `users/${user}`;
@@ -77,20 +108,22 @@ export default class UserEndpoints extends Base {
    * Makes a GET request to the `/users` endpoint
    * @returns An array of users
    */
-  public async getUsers(options?: GetUsersOptions): Promise<UserCompact<{
-    country: Country;
-    cover: Cover;
-    groups: UserGroup[];
-    statistics_rulesets: StatisticsRulesets
-  }>[]> {
+  public async getUsers(options?: GetUsersOptions): Promise<
+    UserCompact<{
+      country: Country;
+      cover: Cover;
+      groups: UserGroup[];
+      statistics_rulesets: StatisticsRulesets;
+    }>[]
+  > {
     options = getUsersOptionsSchema.parse(options);
     let obj: {
       users: UserCompact<{
         country: Country;
         cover: Cover;
         groups: UserGroup[];
-        statistics_rulesets: StatisticsRulesets
-      }>[]
+        statistics_rulesets: StatisticsRulesets;
+      }>[];
     } = await this.fetch('users', 'GET', options);
     return obj.users;
   }

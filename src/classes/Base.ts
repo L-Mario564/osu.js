@@ -15,9 +15,13 @@ export default class Base {
     });
   }
 
-  protected async fetch<T>(endPoint: string, method: 'POST' | 'GET', options?: Options): Promise<T> {
+  protected async fetch<T>(
+    endPoint: string,
+    method: 'POST' | 'GET',
+    options?: Options
+  ): Promise<T> {
     let resp: AxiosResponse;
-    
+
     if (options?.query) {
       let query: string = formatUrlParams(options.query);
       endPoint += query.replace('&', '?');

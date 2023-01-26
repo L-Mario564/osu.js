@@ -18,7 +18,7 @@ describe('Test user related endpoints', async () => {
   });
   await sleep(ms);
 
-  it('Gets a user\'s kudosu', async () => {
+  it("Gets a user's kudosu", async () => {
     let kudosu = await users.getUserKudosu(3171691, {
       query: {
         limit: 1
@@ -29,7 +29,7 @@ describe('Test user related endpoints', async () => {
   });
   await sleep(ms);
 
-  it('Gets a user\'s best scores', async () => {
+  it("Gets a user's best scores", async () => {
     let scores = await users.scores.getUserBestScores(14544646, {
       query: {
         mode: 'osu',
@@ -41,7 +41,7 @@ describe('Test user related endpoints', async () => {
   });
   await sleep(ms);
 
-  it('Gets a user\'s recent scores', async () => {
+  it("Gets a user's recent scores", async () => {
     let scores = await users.scores.getUserRecentScores(14544646, {
       query: {
         mode: 'osu'
@@ -52,7 +52,7 @@ describe('Test user related endpoints', async () => {
   });
   await sleep(ms);
 
-  it('Gets a user\'s first place scores', async () => {
+  it("Gets a user's first place scores", async () => {
     let scores = await users.scores.getUserFirstPlaceScores(14544646, {
       query: {
         mode: 'osu'
@@ -63,7 +63,7 @@ describe('Test user related endpoints', async () => {
   });
   await sleep(ms);
 
-  it('Gets a user\'s beatmaps', async () => {
+  it("Gets a user's beatmaps", async () => {
     let beatmapsets = await users.beatmaps.getUserBeatmaps(14544646, 'favourite', {
       query: {
         limit: 2
@@ -74,7 +74,7 @@ describe('Test user related endpoints', async () => {
   });
   await sleep(ms);
 
-  it('Gets a user\'s most played beatmaps', async () => {
+  it("Gets a user's most played beatmaps", async () => {
     let beatmapsets = await users.beatmaps.getUserMostPlayed(14544646, {
       query: {
         limit: 2
@@ -85,7 +85,7 @@ describe('Test user related endpoints', async () => {
   });
   await sleep(ms);
 
-  it('Gets a user\'s recent activity', async () => {
+  it("Gets a user's recent activity", async () => {
     let events = await users.getUserRecentActivity(14544646);
     expect(Array.isArray(events)).toBe(true);
   });
@@ -97,7 +97,7 @@ describe('Test user related endpoints', async () => {
         mode: 'osu'
       }
     });
-    
+
     expect(user).toBeDefined();
   });
   await sleep(ms);
@@ -108,7 +108,7 @@ describe('Test user related endpoints', async () => {
         ids: [14544646, 3171691]
       }
     });
-    
+
     expect(usersData.length).toBe(2);
   });
   await sleep(ms);

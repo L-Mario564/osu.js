@@ -1,14 +1,24 @@
 import Base from './Base';
 import { z } from 'zod';
 import { getUserBeatmapsOptionsSchema, userBeatmapsTypeSchema } from '../schemas';
-import { Beatmap, BeatmapPlaycount, Beatmapset, GetUserBeatmapsOptions, UserBeatmapsType } from '../types';
+import {
+  Beatmap,
+  BeatmapPlaycount,
+  Beatmapset,
+  GetUserBeatmapsOptions,
+  UserBeatmapsType
+} from '../types';
 
 export default class UserBeatmaps extends Base {
   constructor(accessToken: string) {
     super(accessToken);
   }
 
-  private async getAllUserBeatmaps<T>(user: number, type: UserBeatmapsType, options?: GetUserBeatmapsOptions): Promise<T> {
+  private async getAllUserBeatmaps<T>(
+    user: number,
+    type: UserBeatmapsType,
+    options?: GetUserBeatmapsOptions
+  ): Promise<T> {
     user = z.number().parse(user);
     type = userBeatmapsTypeSchema.parse(type);
     options = getUserBeatmapsOptionsSchema.parse(options);
@@ -26,11 +36,13 @@ export default class UserBeatmaps extends Base {
     user: number,
     type: Exclude<UserBeatmapsType, 'most_played'>,
     options?: GetUserBeatmapsOptions
-  ): Promise<(Beatmapset & {
-    beatmaps: Beatmap<{
-      checksum: string | null;
-    }>[];
-  })[]> {
+  ): Promise<
+    (Beatmapset & {
+      beatmaps: Beatmap<{
+        checksum: string | null;
+      }>[];
+    })[]
+  > {
     return await this.getAllUserBeatmaps(user, type, options);
   }
 
@@ -39,7 +51,10 @@ export default class UserBeatmaps extends Base {
    * @param user ID of the user to get their most played beatmapsets
    * @returns An array of a user's most played beatmapsets
    */
-  public async getUserMostPlayed(user: number, options?: GetUserBeatmapsOptions): Promise<BeatmapPlaycount[]> {
+  public async getUserMostPlayed(
+    user: number,
+    options?: GetUserBeatmapsOptions
+  ): Promise<BeatmapPlaycount[]> {
     return await this.getAllUserBeatmaps(user, 'most_played', options);
   }
 }
