@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { Options } from '../types';
+import { Options } from '../types/options';
 import { formatUrlParams } from '../utils';
 
 export default class Base {

@@ -1,13 +1,8 @@
 import Base from './Base';
 import { z } from 'zod';
 import { getUserBeatmapsOptionsSchema, userBeatmapsTypeSchema } from '../schemas';
-import {
-  Beatmap,
-  BeatmapPlaycount,
-  Beatmapset,
-  GetUserBeatmapsOptions,
-  UserBeatmapsType
-} from '../types';
+import { Beatmap, BeatmapPlaycount, Beatmapset, UserBeatmapsType } from '../types';
+import { GetUserBeatmapsOptions } from '../types/options';
 
 export default class UserBeatmaps extends Base {
   constructor(accessToken: string) {

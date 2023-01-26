@@ -1,33 +1,13 @@
-import { ModsEnum, StatusEnum } from '../utils/enums';
 import { z } from 'zod';
-import {
-  gameModeSchema,
-  getSelfOptionsSchema,
-  getUserBeatmapsOptionsSchema,
-  userBeatmapsTypeSchema,
-  getUserKudosuOptionsSchema,
-  getUserOptionsSchema,
-  getUserRecentScoresOptionsSchema,
-  getUserScoresOptionsSchema,
-  getUsersOptionsSchema,
-  getUserRecentActivityOptionsSchema
-} from '../schemas';
+import { ModsEnum, StatusEnum } from '../utils/enums';
+import { gameModeSchema, userBeatmapsTypeSchema } from '../schemas';
 
-export type GetSelfOptions = z.infer<typeof getSelfOptionsSchema>;
-export type GetUserKodosuOptions = z.infer<typeof getUserKudosuOptionsSchema>;
-export type GetUserScoresOptions = z.infer<typeof getUserScoresOptionsSchema>;
-export type GetUserRecentScoresOptions = z.infer<typeof getUserRecentScoresOptionsSchema>;
-export type GetUserBeatmapsOptions = z.infer<typeof getUserBeatmapsOptionsSchema>;
-export type GetUserRecentActivityOptions = z.infer<typeof getUserRecentActivityOptionsSchema>;
-export type GetUserOptions = z.infer<typeof getUserOptionsSchema>;
-export type GetUsersOptions = z.infer<typeof getUsersOptionsSchema>;
-
-export interface Options {
-  query?: Record<string, unknown>;
-  body?: Record<string, unknown>;
-}
-
+export type GuestToken = Omit<Token, 'refresh_token'>;
 export type Mod = keyof typeof ModsEnum;
+export type RankStatus = keyof typeof StatusEnum;
+export type GameMode = z.infer<typeof gameModeSchema>;
+export type UserBeatmapsType = z.infer<typeof userBeatmapsTypeSchema>;
+export type Playstyle = 'mouse' | 'keyboard' | 'tablet' | 'touch';
 export type Scope =
   | 'chat.write'
   | 'delegate'
@@ -35,20 +15,7 @@ export type Scope =
   | 'friends.read'
   | 'identify'
   | 'public';
-
-export interface Token {
-  token_type: string;
-  expires_in: number;
-  access_token: string;
-  refresh_token: string;
-}
-
-export type GuestToken = Omit<Token, 'refresh_token'>;
-export type GameMode = z.infer<typeof gameModeSchema>;
-export type UserBeatmapsType = z.infer<typeof userBeatmapsTypeSchema>;
-export type RankStatus = keyof typeof StatusEnum;
-export type Playstyle = 'mouse' | 'keyboard' | 'tablet' | 'touch';
-export type ProfilePage =
+export type ProfilePageSection =
   | 'me'
   | 'recent_activity'
   | 'beatmaps'
@@ -75,6 +42,13 @@ export type UserEventTypes =
   | 'usernameChange';
 export type AchievementGrouping = 'Skill' | 'Hush-Hush' | 'Dedication' | 'Mod Introduction';
 export type EventBeatmapsetApprovedType = 'ranked' | 'approved' | 'qualified' | 'loved';
+
+export interface Token {
+  token_type: string;
+  expires_in: number;
+  access_token: string;
+  refresh_token: string;
+}
 
 export type UserCompact<T> = T & {
   avatar_url: string;
@@ -103,7 +77,7 @@ export interface Cover {
   id: string | null;
 }
 
-interface UserKudosu {
+export interface UserKudosu {
   available: number;
   total: number;
 }
@@ -125,7 +99,7 @@ export type User<T> = T &
     playmode: GameMode;
     playstyle: Playstyle[];
     post_count: number;
-    profile_order: ProfilePage[];
+    profile_order: ProfilePageSection[];
     title: string | null;
     title_url: string | null;
     twitter: string | null;
@@ -154,12 +128,12 @@ export interface UserBadge {
   url: string;
 }
 
-interface Page {
+export interface Page {
   html: string;
   raw: string;
 }
 
-type Group<T> = T & {
+export type Group<T> = T & {
   colour: string | null;
   has_listing: boolean;
   has_playmodes: boolean;

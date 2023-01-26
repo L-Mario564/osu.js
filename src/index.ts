@@ -1,4 +1,3 @@
-import Auth from './classes/auth/Auth';
-import Client from './classes/Client';
-
-export { Auth, Client };
+export { default as Auth } from './classes/auth/Auth';
+export { default as Client } from './classes/Client';
+export { AchievementGrouping, Beatmap, BeatmapCompact, BeatmapPlaycount, Beatmapset, BeatmapsetAvailability, BeatmapsetCompact, BeatmapsetHype, Country, Cover, Covers, EventAchievement, EventBeatmap, EventBeatmapsetApprovedType, EventUser, GameMode, Giver, GradeCounts, Group, GuestToken, KudosuAction, Mod, MonthlyPlaycount, Page, Playstyle, Post, ProfilePageSection, Rank, RankHighest, RankHistory, RankStatus, Scope, Score, ScoreStatistics, StatisticsRulesets, Token, User, UserAccountHistory, UserAccountHistoryType, UserAchievement, UserActiveTournamentBanner, UserBadge, UserBeatmapsType, UserBestScore, UserCompact, UserEvent, UserEventAchievement, UserEventBeatmapPlaycount, UserEventBeatmapsetApprove, UserEventBeatmapsetDelete, UserEventBeatmapsetUpdate, UserEventRankAchieved, UserEventRankLost, UserEventTypes, UserEventUserUpdate, UserEventUsernameUpdate, UserExtended, UserGroup, UserKudosu, UserKudosuHistory, UserLevel, UserScore, UserStatistics, Weight } from './types';

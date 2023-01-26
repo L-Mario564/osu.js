@@ -10,20 +10,22 @@ import {
   getUsersOptionsSchema
 } from '../schemas';
 import {
-  GetSelfOptions,
-  GetUserKodosuOptions,
-  GetUserOptions,
   UserExtended,
   UserKudosuHistory,
-  GetUsersOptions,
   UserCompact,
   Country,
   Cover,
   UserGroup,
   StatisticsRulesets,
-  GetUserRecentActivityOptions,
   UserEvent
 } from '../types';
+import {
+  GetSelfOptions,
+  GetUserKodosuOptions,
+  GetUserOptions,
+  GetUsersOptions,
+  GetUserRecentActivityOptions
+} from '../types/options';
 
 export default class UserEndpoints extends Base {
   public scores: UserScores;
