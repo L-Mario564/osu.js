@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { ModsEnum, StatusEnum } from '../utils/enums';
-import { gameModeSchema, userBeatmapsTypeSchema } from '../schemas';
+import { gameModeSchema } from '../schemas';
+import { userBeatmapsTypeSchema } from '../schemas/users';
 
 export type GuestToken = Omit<Token, 'refresh_token'>;
 export type Mod = keyof typeof ModsEnum;

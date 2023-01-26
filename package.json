@@ -10,9 +10,9 @@
   "typings": "lib/index.d.ts",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "npx tsc",
     "fmt": "npx prettier --write .",
-    "lint": "npx eslint .",
+    "lint": "npx eslint . && npx tsc --noEmit",
     "test:auth": "node --experimental-specifier-resolution=node --loader ts-node/esm src/tests/authTestServer.ts",
     "test:legacy": "vitest run src/tests/legacyClient.test.ts",
     "test:users": "vitest run src/tests/client-tests/users.test.ts"

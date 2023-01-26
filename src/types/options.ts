@@ -8,7 +8,7 @@ import {
   getUserScoresOptionsSchema,
   getUsersOptionsSchema,
   getUserRecentActivityOptionsSchema
-} from '../schemas';
+} from '../schemas/users';
 
 export type GetSelfOptions = z.infer<typeof getSelfOptionsSchema>;
 export type GetUserKodosuOptions = z.infer<typeof getUserKudosuOptionsSchema>;

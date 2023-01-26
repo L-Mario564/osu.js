@@ -1,6 +1,6 @@
 import Base from './Base';
 import { z } from 'zod';
-import { getUserRecentScoresOptionsSchema, getUserScoresOptionsSchema } from '../schemas';
+import { getUserRecentScoresOptionsSchema, getUserScoresOptionsSchema } from '../schemas/users';
 import { UserBestScore, UserScore } from '../types';
 import { GetUserRecentScoresOptions, GetUserScoresOptions } from '../types/options';
 

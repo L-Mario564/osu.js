@@ -1,6 +1,6 @@
 import Base from './Base';
 import { z } from 'zod';
-import { getUserBeatmapsOptionsSchema, userBeatmapsTypeSchema } from '../schemas';
+import { getUserBeatmapsOptionsSchema, userBeatmapsTypeSchema } from '../schemas/users';
 import { Beatmap, BeatmapPlaycount, Beatmapset, UserBeatmapsType } from '../types';
 import { GetUserBeatmapsOptions } from '../types/options';
 

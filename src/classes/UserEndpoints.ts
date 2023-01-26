@@ -8,7 +8,7 @@ import {
   getUserOptionsSchema,
   getUserRecentActivityOptionsSchema,
   getUsersOptionsSchema
-} from '../schemas';
+} from '../schemas/users';
 import {
   UserExtended,
   UserKudosuHistory,
