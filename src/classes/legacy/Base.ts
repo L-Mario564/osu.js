@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { z } from 'zod';
+import { formatUrlParams } from '../../utils';
 
 export default class Base {
   protected apiKey: string;
@@ -9,13 +10,7 @@ export default class Base {
   }
 
   protected async fetch<T>(endPoint: string, urlParams: Record<string, unknown>): Promise<T> {
-    let params: string = Object.entries(urlParams).reduce(
-      (prev: string, [key, value]: [string, unknown]) => {
-        return !value ? prev : `${prev}&${key}=${value}`;
-      },
-      ''
-    );
-
+    let params: string = formatUrlParams(urlParams);
     let url: string = `https://osu.ppy.sh/api/${endPoint}?k=${this.apiKey}${params}`;
 
     let resp: AxiosResponse = await axios.get(url, {

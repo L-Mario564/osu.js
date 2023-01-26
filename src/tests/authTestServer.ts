@@ -1,23 +1,12 @@
 import e from 'express';
 import { Auth } from '../';
-import { config } from 'dotenv';
 import { readFileSync, writeFileSync } from 'fs';
 import { GuestToken, Token } from '../types';
+import { tokenFileLocation, getClientData } from './client-tests';
 
 let server = e();
-config();
+let { clientId, clientSecret, redirectUri } = getClientData();
 
-let clientId: string | undefined = process.env.CLIENT_ID;
-let clientSecret: string | undefined = process.env.CLIENT_SECRET;
-let redirectUri: string | undefined = process.env.REDIRECT_URI;
-
-if (!clientId || !clientSecret || !redirectUri) {
-  throw new Error(
-    '"CLIENT_ID", "CLIENT_SECRET" or "REDIRECT_URI" environment variables are undefined'
-  );
-}
-
-let tokenFileLocation: string = `${process.cwd()}/api-token.json`;
 let client = new Auth(Number(clientId), clientSecret, redirectUri);
 let authCodeGrant = client.authorizationCodeGrant([
   'identify',

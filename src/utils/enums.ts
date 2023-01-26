@@ -6,13 +6,13 @@ export enum ModesEnum {
 }
 
 export enum StatusEnum {
-  Graveyard = -2,
-  WIP = -1,
-  Pending = 0,
-  Ranked = 1,
-  Approved = 2,
-  Qualified = 3,
-  Loved = 4
+  graveyard = -2,
+  wip = -1,
+  pending = 0,
+  ranked = 1,
+  approved = 2,
+  qualified = 3,
+  loved = 4
 }
 
 export enum GenresEnum {

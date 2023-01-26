@@ -14,7 +14,8 @@
     "fmt": "npx prettier --write .",
     "lint": "npx eslint .",
     "test:auth": "node --experimental-specifier-resolution=node --loader ts-node/esm src/tests/authTestServer.ts",
-    "test:legacy": "vitest run src/tests/legacyClient.test.ts"
+    "test:legacy": "vitest run src/tests/legacyClient.test.ts",
+    "test:users": "vitest run src/tests/client-tests/users.test.ts"
   },
   "keywords": [],
   "author": "Mario564",

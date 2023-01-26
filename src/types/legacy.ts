@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Mod } from '.';
+import { Mod, RankStatus, Rank } from '.';
 import {
   getBeatmapsParamsSchema,
   getUserParamsSchema,
@@ -12,7 +12,6 @@ import {
 } from '../schemas/legacy';
 import {
   ModesEnum,
-  StatusEnum,
   GenresEnum,
   LanguagesEnum,
   ScoringTypeEnum,
@@ -80,16 +79,14 @@ export type GetReplayValidParams<T> = Omit<T, 'm' | 'mods'> & {
 };
 
 export type Mode = keyof typeof ModesEnum;
-export type Status = keyof typeof StatusEnum;
 export type Genre = keyof typeof GenresEnum;
 export type Language = keyof typeof LanguagesEnum;
 export type ScoringType = keyof typeof ScoringTypeEnum;
 export type TeamType = keyof typeof TeamTypeEnum;
 export type TeamColor = keyof typeof TeamColorEnum;
-export type Rank = 'SS' | 'SSH' | 'S' | 'SH' | 'A' | 'B' | 'C' | 'D' | 'F';
 
 export interface Beatmap {
-  approved: Status;
+  approved: RankStatus;
   submit_date: Date;
   approved_date: Date;
   last_update: Date;

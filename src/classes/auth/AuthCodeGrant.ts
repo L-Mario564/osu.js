@@ -22,11 +22,15 @@ export default class AuthCodeGrant extends Base {
     url += `&redirect_uri=${this.redirectUri}`;
     url += '&response_type=code';
 
-    if (this.scopes.length === 0) this.scopes = ['identify'];
+    if (this.scopes.length === 0) {
+      this.scopes = ['identify'];
+    }
 
     url += `&scope=${this.scopes.reduce((prev: string, scope) => `${prev}${scope} `, '')}`.trim();
 
-    if (state) url += `&state=${state}`;
+    if (state) {
+      url += `&state=${state}`;
+    }
 
     return url;
   }
