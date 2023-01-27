@@ -2,24 +2,24 @@ import { searchOptionsSchema } from '../schemas';
 import { SearchResults } from '../types';
 import { SearchOptions, UndocumentedEndpointOptions } from '../types/options';
 import Base from './Base';
-import UserEndpoints from './UserEndpoints';
-import WikiEndpoints from './WikiEndpoints';
-import CommentEndpoints from './CommentEndpoints';
+import Users from './Users';
+import Wiki from './Wiki';
+import Comments from './Comments';
 
 export default class Client extends Base {
   // public beatmaps: any;
   // public beatmapsets: any;
   // public changelog: any;
   // public chat: any;
-  public comments: CommentEndpoints;
+  public comments: Comments;
   // public forums: any;
   // public search: any;
   // public rooms: any;
   // public news: any;
   // public rankings: any;
   // public spotlights: any;
-  public users: UserEndpoints;
-  public wiki: WikiEndpoints;
+  public users: Users;
+  public wiki: Wiki;
   // public matches: any;
   // public seasonalBackground: any;
   // public scores: any;
@@ -29,9 +29,9 @@ export default class Client extends Base {
     let t = accessToken;
     super(t);
 
-    this.comments = new CommentEndpoints(t);
-    this.users = new UserEndpoints(t);
-    this.wiki = new WikiEndpoints(t);
+    this.comments = new Comments(t);
+    this.users = new Users(t);
+    this.wiki = new Wiki(t);
   }
 
   /**

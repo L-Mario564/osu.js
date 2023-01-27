@@ -27,7 +27,7 @@ import {
   GetUserRecentActivityOptions
 } from '../types/options';
 
-export default class UserEndpoints extends Base {
+export default class Users extends Base {
   public scores: UserScores;
   public beatmaps: UserBeatmaps;
 
@@ -49,13 +49,13 @@ export default class UserEndpoints extends Base {
     }>
   > {
     options = getSelfOptionsSchema.parse(options);
-    let endPoint: string = 'me';
+    let endpoint: string = 'me';
 
     if (options?.urlParams?.mode) {
-      endPoint += `/${options.urlParams.mode}`;
+      endpoint += `/${options.urlParams.mode}`;
     }
 
-    return await this.fetch(endPoint, 'GET');
+    return await this.fetch(endpoint, 'GET');
   }
 
   /**
@@ -97,13 +97,13 @@ export default class UserEndpoints extends Base {
   ): Promise<UserExtended<unknown>> {
     user = z.number().parse(user);
     options = getUserOptionsSchema.parse(options);
-    let endPoint: string = `users/${user}`;
+    let endpoint: string = `users/${user}`;
 
     if (options?.urlParams?.mode) {
-      endPoint += `/${options.urlParams.mode}`;
+      endpoint += `/${options.urlParams.mode}`;
     }
 
-    return await this.fetch(endPoint, 'GET', options);
+    return await this.fetch(endpoint, 'GET', options);
   }
 
   /**

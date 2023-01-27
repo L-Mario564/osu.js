@@ -2,7 +2,7 @@ import Base from './Base';
 import { z } from 'zod';
 import { WikiPage } from '../types';
 
-export default class WikiEndpoints extends Base {
+export default class Wiki extends Base {
   constructor(accessToken: string) {
     super(accessToken);
   }

@@ -9,9 +9,9 @@ export default class Base {
     this.apiKey = z.string().parse(apiKey);
   }
 
-  protected async fetch<T>(endPoint: string, urlParams: Record<string, unknown>): Promise<T> {
+  protected async fetch<T>(endpoint: string, urlParams: Record<string, unknown>): Promise<T> {
     let params: string = formatUrlParams(urlParams);
-    let url: string = `https://osu.ppy.sh/api/${endPoint}?k=${this.apiKey}${params}`;
+    let url: string = `https://osu.ppy.sh/api/${endpoint}?k=${this.apiKey}${params}`;
 
     let resp: AxiosResponse = await axios.get(url, {
       headers: {

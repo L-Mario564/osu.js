@@ -16,7 +16,7 @@ export default class Base {
   }
 
   protected async fetch<T>(
-    endPoint: string,
+    endpoint: string,
     method: 'POST' | 'GET',
     options?: Options
   ): Promise<T> {
@@ -24,13 +24,13 @@ export default class Base {
 
     if (options?.query) {
       let query: string = formatUrlParams(options.query);
-      endPoint += query.replace('&', '?');
+      endpoint += query.replace('&', '?');
     }
 
     if (method === 'GET') {
-      resp = await this.axios.get(endPoint);
+      resp = await this.axios.get(endpoint);
     } else {
-      resp = await this.axios.post(endPoint, options?.body);
+      resp = await this.axios.post(endpoint, options?.body);
     }
 
     let data: T = resp.data;

@@ -4,7 +4,7 @@ import { GetCommentsOptions } from '../types/options';
 import { getCommentsOptionsSchema } from '../schemas/comments';
 import { z } from 'zod';
 
-export default class CommentEndpoints extends Base {
+export default class Comments extends Base {
   constructor(accessToken: string) {
     super(accessToken);
   }
