@@ -2,12 +2,15 @@ import { z } from 'zod';
 import { ModsEnum, StatusEnum } from '../utils/enums';
 import { gameModeSchema } from '../schemas';
 import { userBeatmapsTypeSchema } from '../schemas/users';
+import { commentableTypeSchema, commentSortSchema } from '../schemas/comments';
 
 export type GuestToken = Omit<Token, 'refresh_token'>;
 export type Mod = keyof typeof ModsEnum;
 export type RankStatus = keyof typeof StatusEnum;
 export type GameMode = z.infer<typeof gameModeSchema>;
 export type UserBeatmapsType = z.infer<typeof userBeatmapsTypeSchema>;
+export type CommentableType = z.infer<typeof commentableTypeSchema>;
+export type CommentSort = z.infer<typeof commentSortSchema>;
 export type Playstyle = 'mouse' | 'keyboard' | 'tablet' | 'touch';
 export type Scope =
   | 'chat.write'
@@ -486,3 +489,65 @@ export type UserEvent =
   | UserEventRankLost
   | UserEventUserUpdate
   | UserEventUsernameUpdate;
+
+export interface WikiPage {
+  available_locales: string[];
+  layout: string;
+  locale: string;
+  markdown: string;
+  path: string;
+  subtitle: string | null;
+  tags: string[];
+  title: string;
+}
+
+export type SearchResult<T> = {
+  data: T[];
+  total: number;
+}
+
+export interface SearchResults {
+  user: SearchResult<UserCompact<unknown>> | null;
+  wiki_page: SearchResult<WikiPage> | null;
+}
+
+export interface CommentableMetadata {
+  id: number;
+  title: string;
+  type: string;
+  url: string;
+}
+
+export interface Comment {
+  commentable_id: number;
+  commentable_type: CommentableType;
+  created_at: string;
+  deleted_at: string | null;
+  edited_at: string | null;
+  edited_by_id: number | null;
+  id: number;
+  legacy_name: string | null;
+  message: string | null;
+  message_html: string | null;
+  parent_id: number | null;
+  pinned: boolean;
+  replies_count: number;
+  updated_at: string;
+  user_id: number;
+  votes_count: number;
+}
+
+export interface CommentBundle {
+  commentable_meta: CommentableMetadata[];
+  comments: Comment[];
+  has_more: boolean;
+  has_more_id: number | null;
+  included_comments: Comment[];
+  pinned_commnets: Comment[] | null;
+  sort: CommentSort;
+  top_level_count: number | null;
+  total: number | null;
+  user_follow: boolean;
+  user_votes: number[];
+  users: UserCompact<unknown>[];
+}

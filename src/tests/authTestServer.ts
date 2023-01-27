@@ -74,6 +74,20 @@ server.get('/refresh-token', async (_, res) => {
   res.status(500).send('An unknown error ocurred while refreshing the API token');
 });
 
+server.get('/revoke-token', async (_, res) => {
+  let file: string = readFileSync(tokenFileLocation, { encoding: 'utf-8' });
+  let token: Token = JSON.parse(file);
+
+  try {
+    await client.revokeToken(token.access_token);
+  } catch (err) {
+    res.status(500).send(err);
+    return;
+  }
+
+  res.status(200).json('The current API token has been revoked');
+});
+
 server.get('/auth/guest', async (_, res) => {
   let token: GuestToken | undefined;
 
@@ -99,5 +113,6 @@ server.listen(3000);
 console.log(
   '\nExpress server listening on port 3000. This server is used to test authentication with the API',
   '\n\nTo test the authorization code grant flow, head to http://localhost:3000/auth',
-  '\nTo test the client credentials grant flow, head to http://localhost:3000/auth/guest'
+  '\nTo test the client credentials grant flow, head to http://localhost:3000/auth/guest',
+  '\nTo revoke an existing token, head to http://localhost:3000/revoke-token'
 );

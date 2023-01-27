@@ -111,5 +111,4 @@ describe('Test user related endpoints', async () => {
 
     expect(usersData.length).toBe(2);
   });
-  await sleep(ms);
 });

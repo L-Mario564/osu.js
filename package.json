@@ -13,9 +13,12 @@
     "build": "npx tsc",
     "fmt": "npx prettier --write .",
     "lint": "npx eslint . && npx tsc --noEmit",
-    "test:auth": "node --experimental-specifier-resolution=node --loader ts-node/esm src/tests/authTestServer.ts",
     "test:legacy": "vitest run src/tests/legacyClient.test.ts",
-    "test:users": "vitest run src/tests/client-tests/users.test.ts"
+    "test:auth": "node --experimental-specifier-resolution=node --loader ts-node/esm src/tests/authTestServer.ts",
+    "test:client": "vitest run src/tests/client-tests/client.test.ts",
+    "test:users": "vitest run src/tests/client-tests/users.test.ts",
+    "test:wiki": "vitest run src/tests/client-tests/wiki.test.ts",
+    "test:comments": "vitest run src/tests/client-tests/comments.test.ts"
   },
   "keywords": [],
   "author": "Mario564",

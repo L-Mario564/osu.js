@@ -34,4 +34,13 @@ export default class Auth extends Base {
     let token: GuestToken = resp.data;
     return token;
   }
+
+  public async revokeToken(accessToken: string) {
+    await axios.delete('https://osu.ppy.sh/api/v2/oauth/tokens/current', {
+      headers: {
+        ... this.headers.headers,
+        'Authorization': `Bearer ${accessToken}`
+      }
+    });
+  }
 }

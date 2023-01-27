@@ -1,6 +1,6 @@
 import Base from './Base';
-import UserScores from './UserScores';
-import UserBeatmaps from './UserBeatmaps';
+import UserScores from './helpers/UserScores';
+import UserBeatmaps from './helpers/UserBeatmaps';
 import { z } from 'zod';
 import {
   getSelfOptionsSchema,

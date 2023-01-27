@@ -1,8 +1,6 @@
 import { z } from 'zod';
 import { baseQuery, gameModeSchema } from '.';
 
-const userKeySchema = z.union([z.literal('id'), z.literal('username')]);
-
 export const getSelfOptionsSchema = z
   .object({
     urlParams: z.object({
@@ -75,7 +73,7 @@ export const getUserOptionsSchema = z
     }),
     query: z.object({
       /** Specify if the `user` param is an `id` or a `username` */
-      key: userKeySchema
+      key: z.union([z.literal('id'), z.literal('username')])
     })
   })
   .deepPartial()

@@ -1,29 +1,53 @@
+import { searchOptionsSchema } from '../schemas';
+import { SearchResults } from '../types';
+import { SearchOptions, UndocumentedEndpointOptions } from '../types/options';
 import Base from './Base';
 import UserEndpoints from './UserEndpoints';
+import WikiEndpoints from './WikiEndpoints';
+import CommentEndpoints from './CommentEndpoints';
 
 export default class Client extends Base {
   // public beatmaps: any;
   // public beatmapsets: any;
   // public changelog: any;
   // public chat: any;
-  // public comments: any;
+  public comments: CommentEndpoints;
   // public forums: any;
   // public search: any;
   // public rooms: any;
   // public news: any;
-  // public oauth: any;
   // public rankings: any;
   // public spotlights: any;
   public users: UserEndpoints;
-  // public wiki: any;
+  public wiki: WikiEndpoints;
   // public matches: any;
   // public seasonalBackground: any;
   // public scores: any;
   // public friends: any;
 
   constructor(accessToken: string) {
-    super(accessToken);
+    let t = accessToken;
+    super(t);
 
-    this.users = new UserEndpoints(accessToken);
+    this.comments = new CommentEndpoints(t);
+    this.users = new UserEndpoints(t);
+    this.wiki = new WikiEndpoints(t);
+  }
+
+  /**
+   * Makes a GET request to the `/search` endpoint
+   * @returns Users and wiki pages as results
+   */
+  public async search(options?: SearchOptions): Promise<SearchResults> {
+    options = searchOptionsSchema.parse(options);
+    return await this.fetch('search', 'GET', options);
+  }
+
+  /**
+   * Make a GET request to an undocumented endpoint
+   * @param endpoint The endpoint to make a request to
+   */
+  public async getUndocumented<T>(endpoint: string, options?: UndocumentedEndpointOptions): Promise<T> {
+    return await this.fetch(endpoint, 'GET', options);
   }
 }

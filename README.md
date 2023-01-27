@@ -1,11 +1,11 @@
 ## Currently supported endpoints
 
-10 / 52
+15 / 39
 
 ### OAuth
 
 - [x] /oauth/authorize
-- [ ] /oauth/tokens/current
+- [x] /oauth/tokens/current
 - [x] /oauth/token
 
 ### Beatmaps
@@ -37,8 +37,8 @@
 
 ### Comments
 
-- [ ] /comments
-- [ ] /comments/{comment}
+- [x] /comments
+- [x] /comments/{comment}
 
 ### Forums
 
@@ -50,7 +50,7 @@
 
 ### Home
 
-- [ ] /search
+- [x] /search
 
 ### Muliplayer
 
@@ -78,20 +78,4 @@
 
 ### Wiki
 
-- [ ] /wiki/{locale}/{path}
-
-### Undocumented
-
-- [ ] /beatmapsets/events
-- [ ] /matches
-- [ ] /matches/{match}
-- [ ] /rooms/{mode?}
-- [ ] /rooms/{room}/leaderboard
-- [ ] /rooms/{room}
-- [ ] /seasonal-backgrounds
-- [ ] /scores/{mode}/{score}/download
-- [ ] /scores/{mode}/{score}
-- [ ] /beatmapsets/search/{filters?}
-- [ ] /beatmapsets/lookup
-- [ ] /beatmapsets/{beatmapset}
-- [ ] /friends
+- [x] /wiki/{locale}/{path}

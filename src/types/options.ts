@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import { searchOptionsSchema } from '../schemas';
+import { getCommentsOptionsSchema } from '../schemas/comments';
 import {
   getSelfOptionsSchema,
   getUserBeatmapsOptionsSchema,
@@ -10,6 +12,16 @@ import {
   getUserRecentActivityOptionsSchema
 } from '../schemas/users';
 
+export interface Options {
+  query?: Record<string, unknown>;
+  body?: Record<string, unknown>;
+}
+
+export interface UndocumentedEndpointOptions {
+  query: Record<string, unknown>;
+  body: Record<string, unknown>;
+}
+
 export type GetSelfOptions = z.infer<typeof getSelfOptionsSchema>;
 export type GetUserKodosuOptions = z.infer<typeof getUserKudosuOptionsSchema>;
 export type GetUserScoresOptions = z.infer<typeof getUserScoresOptionsSchema>;
@@ -19,7 +31,6 @@ export type GetUserRecentActivityOptions = z.infer<typeof getUserRecentActivityO
 export type GetUserOptions = z.infer<typeof getUserOptionsSchema>;
 export type GetUsersOptions = z.infer<typeof getUsersOptionsSchema>;
 
-export interface Options {
-  query?: Record<string, unknown>;
-  body?: Record<string, unknown>;
-}
+export type GetCommentsOptions = z.infer<typeof getCommentsOptionsSchema>;
+
+export type SearchOptions = z.infer<typeof searchOptionsSchema>;

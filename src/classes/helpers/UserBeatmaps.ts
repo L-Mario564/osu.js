@@ -1,8 +1,8 @@
-import Base from './Base';
+import Base from '../Base';
 import { z } from 'zod';
-import { getUserBeatmapsOptionsSchema, userBeatmapsTypeSchema } from '../schemas/users';
-import { Beatmap, BeatmapPlaycount, Beatmapset, UserBeatmapsType } from '../types';
-import { GetUserBeatmapsOptions } from '../types/options';
+import { getUserBeatmapsOptionsSchema, userBeatmapsTypeSchema } from '../../schemas/users';
+import { Beatmap, BeatmapPlaycount, Beatmapset, UserBeatmapsType } from '../../types';
+import { GetUserBeatmapsOptions } from '../../types/options';
 
 export default class UserBeatmaps extends Base {
   constructor(accessToken: string) {
