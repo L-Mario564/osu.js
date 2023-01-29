@@ -17,8 +17,6 @@ export const getCommentsOptionsSchema = z.object({
       /** ID of the resource */
       id: z.number()
     }),
-    /** Pagination (currently not included in the response) */
-    cursor: z.string(),
     /** Get replies of a specific comment ID */
     parent_id: z.number(),
     /** Sort option */

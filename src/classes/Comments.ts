@@ -10,7 +10,7 @@ export default class Comments extends Base {
   }
 
   /**
-   * Makes a GET request to the `comments` endpoint
+   * Makes a GET request to the `/comments` endpoint
    * @returns An object containing comments, users and other related data
    */
   public async getComments(options?: GetCommentsOptions): Promise<CommentBundle> {
@@ -36,7 +36,7 @@ export default class Comments extends Base {
   }
 
   /**
-   * Makes a GET request to the `comments/{comment}` endpoint
+   * Makes a GET request to the `/comments/{comment}` endpoint
    * @param comment ID of the comment to get related data from
    * @returns An object containing comments, users and other related data to the comment with the specified ID
    */

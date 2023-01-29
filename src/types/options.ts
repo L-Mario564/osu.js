@@ -1,6 +1,9 @@
 import { z } from 'zod';
 import { searchOptionsSchema } from '../schemas';
 import { getCommentsOptionsSchema } from '../schemas/comments';
+import { getPlaylistScoresOptionsSchema } from '../schemas/multiplayer';
+import { getNewsListingOptionsSchema, getNewsPostOptionsSchema } from '../schemas/news';
+import { getRankingOptionsSchema } from '../schemas/ranking';
 import {
   getSelfOptionsSchema,
   getUserBeatmapsOptionsSchema,
@@ -14,13 +17,25 @@ import {
 
 export interface Options {
   query?: Record<string, unknown>;
-  body?: Record<string, unknown>;
+  body?: Record<string, unknown> | string;
 }
 
 export interface UndocumentedEndpointOptions {
   query: Record<string, unknown>;
   body: Record<string, unknown>;
 }
+
+
+export type GetCommentsOptions = z.infer<typeof getCommentsOptionsSchema>;
+
+export type SearchOptions = z.infer<typeof searchOptionsSchema>;
+
+export type GetPlaylistScoresOptions = z.infer<typeof getPlaylistScoresOptionsSchema>;
+
+export type GetNewsListingOptions = z.infer<typeof getNewsListingOptionsSchema>;
+export type GetNewsPostOptions = z.infer<typeof getNewsPostOptionsSchema>;
+
+export type GetRankingOptions = z.infer<typeof getRankingOptionsSchema>;
 
 export type GetSelfOptions = z.infer<typeof getSelfOptionsSchema>;
 export type GetUserKodosuOptions = z.infer<typeof getUserKudosuOptionsSchema>;
@@ -30,7 +45,3 @@ export type GetUserBeatmapsOptions = z.infer<typeof getUserBeatmapsOptionsSchema
 export type GetUserRecentActivityOptions = z.infer<typeof getUserRecentActivityOptionsSchema>;
 export type GetUserOptions = z.infer<typeof getUserOptionsSchema>;
 export type GetUsersOptions = z.infer<typeof getUsersOptionsSchema>;
-
-export type GetCommentsOptions = z.infer<typeof getCommentsOptionsSchema>;
-
-export type SearchOptions = z.infer<typeof searchOptionsSchema>;

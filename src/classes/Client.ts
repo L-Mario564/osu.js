@@ -5,6 +5,9 @@ import Base from './Base';
 import Users from './Users';
 import Wiki from './Wiki';
 import Comments from './Comments';
+import Multiplayer from './Multiplayer';
+import Ranking from './Ranking';
+import News from './News';
 
 export default class Client extends Base {
   // public beatmaps: any;
@@ -14,10 +17,9 @@ export default class Client extends Base {
   public comments: Comments;
   // public forums: any;
   // public search: any;
-  // public rooms: any;
-  // public news: any;
-  // public rankings: any;
-  // public spotlights: any;
+  public multiplayer: Multiplayer;
+  public news: News;
+  public ranking: Ranking;
   public users: Users;
   public wiki: Wiki;
   // public matches: any;
@@ -30,6 +32,9 @@ export default class Client extends Base {
     super(t);
 
     this.comments = new Comments(t);
+    this.multiplayer = new Multiplayer(t);
+    this.news = new News(t);
+    this.ranking = new Ranking(t);
     this.users = new Users(t);
     this.wiki = new Wiki(t);
   }

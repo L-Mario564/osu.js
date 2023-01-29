@@ -1,6 +1,6 @@
 ## Currently supported endpoints
 
-15 / 39
+20 / 39
 
 ### OAuth
 
@@ -54,17 +54,17 @@
 
 ### Muliplayer
 
-- [ ] /rooms/{room}/playlist/{playlist}/scores
+- [x] /rooms/{room}/playlist/{playlist}/scores
 
 ### News
 
-- [ ] /news
-- [ ] /news/{news}
+- [x] /news
+- [x] /news/{news}
 
 ### Ranking
 
-- [ ] /rankings/{mode}/{type}
-- [ ] /spotlights
+- [x] /rankings/{mode}/{type}
+- [x] /spotlights
 
 ### Users
 

@@ -3,14 +3,19 @@ import { ModsEnum, StatusEnum } from '../utils/enums';
 import { gameModeSchema } from '../schemas';
 import { userBeatmapsTypeSchema } from '../schemas/users';
 import { commentableTypeSchema, commentSortSchema } from '../schemas/comments';
+import { multiplayerScoresSortSchema } from '../schemas/multiplayer';
+import { rankingTypeSchema } from '../schemas/ranking';
 
-export type GuestToken = Omit<Token, 'refresh_token'>;
 export type Mod = keyof typeof ModsEnum;
 export type RankStatus = keyof typeof StatusEnum;
+
 export type GameMode = z.infer<typeof gameModeSchema>;
 export type UserBeatmapsType = z.infer<typeof userBeatmapsTypeSchema>;
 export type CommentableType = z.infer<typeof commentableTypeSchema>;
 export type CommentSort = z.infer<typeof commentSortSchema>;
+export type MultiplayerScoresSort = z.infer<typeof multiplayerScoresSortSchema>;
+export type RankingType = z.infer<typeof rankingTypeSchema>;
+
 export type Playstyle = 'mouse' | 'keyboard' | 'tablet' | 'touch';
 export type Scope =
   | 'chat.write'
@@ -46,6 +51,7 @@ export type UserEventTypes =
   | 'usernameChange';
 export type AchievementGrouping = 'Skill' | 'Hush-Hush' | 'Dedication' | 'Mod Introduction';
 export type EventBeatmapsetApprovedType = 'ranked' | 'approved' | 'qualified' | 'loved';
+export type SpotlightType = 'monthly' | 'spotlight' | 'theme' | 'special' | 'bestof';
 
 export interface Token {
   token_type: string;
@@ -53,6 +59,8 @@ export interface Token {
   access_token: string;
   refresh_token: string;
 }
+
+export type GuestToken = Omit<Token, 'refresh_token'>;
 
 export type UserCompact<T> = T & {
   avatar_url: string;
@@ -504,7 +512,7 @@ export interface WikiPage {
 export type SearchResult<T> = {
   data: T[];
   total: number;
-}
+};
 
 export interface SearchResults {
   user: SearchResult<UserCompact<unknown>> | null;
@@ -550,4 +558,117 @@ export interface CommentBundle {
   user_follow: boolean;
   user_votes: number[];
   users: UserCompact<unknown>[];
+}
+
+export interface MultiplayerScoresParams {
+  limit: number;
+  sort: MultiplayerScoresSort;
+}
+
+export interface MultiplayerScoreMod {
+  acronym: Mod;
+}
+
+export interface MultiplayerScoreStatistics {
+  Ok: number;
+  Meh: number;
+  Good: number;
+  Miss: number;
+  None: number;
+  Great: number;
+  Perfect: number;
+  IgnoreHit: number;
+  IgnoreMiss: number;
+  LargeBonus: number;
+  SmallBonus: number;
+  LargeTickHit: number;
+  SmallTickHit: number;
+  LargeTickMiss: number;
+  SmallTickMiss: number;
+}
+
+export interface MultiplayerScore {
+  id: number;
+  user_id: number;
+  room_id: number;
+  playlist_item_id: number;
+  beatmap_id: number;
+  rank: Rank;
+  total_score: number;
+  accuracy: number;
+  max_combo: number;
+  mods: MultiplayerScoreMod[];
+  statistics: MultiplayerScoreStatistics;
+  passed: boolean;
+  position: number | null;
+  user: UserCompact<{
+    country: Country;
+    cover: Cover;
+  }>;
+}
+
+export interface MultiplayerScores {
+  cursor_string: string;
+  params: MultiplayerScoresParams;
+  scores: MultiplayerScore[];
+  total: number | null;
+  user_score: MultiplayerScore | null;
+}
+
+export interface Spotlight {
+  end_date: string;
+  id: number;
+  mode_specific: boolean;
+  participant_count: number | null;
+  name: string;
+  start_date: string;
+  type: SpotlightType;
+}
+
+export interface Rankings {
+  beatmapsets: Beatmapset[] | null;
+  ranking: UserStatistics<{
+    user: UserCompact<{
+      country: Country;
+      cover: Cover;
+    }>
+  }>[];
+  spotlight: Spotlight | null;
+  total: number;
+}
+
+export type NewsPost<T> = T & {
+  author: string;
+  edit_url: string;
+  first_image: string | null;
+  id: number;
+  published_at: string;
+  slug: string;
+  title: string;
+  updated_at: string;
+}
+
+export interface NewsSidebar {
+  current_year: number;
+  news_posts: NewsPost<unknown>;
+  years: number[];
+}
+
+export interface NewsSearch {
+  limit: number;
+  sort: 'published_desc';
+}
+
+export interface NewsListing {
+  cursor_string: string;
+  news_posts: NewsPost<{
+    preview: string;
+  }>;
+  news_sidebar: NewsSidebar;
+  search: NewsSearch;
+}
+
+export interface NewsNavigation {
+  newer: NewsPost<unknown> | null;
+  older: NewsPost<unknown> | null;
 }

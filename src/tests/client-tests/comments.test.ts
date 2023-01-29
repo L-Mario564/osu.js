@@ -1,6 +1,7 @@
 import { Client } from '../../index';
 import { describe, expect, it } from 'vitest';
-import { getExistingAccessToken } from '.';
+import { getExistingAccessToken, ms } from '.';
+import { sleep } from '../../utils';
 
 describe('Test comment related endpoints', async () => {
   let accessToken: string = await getExistingAccessToken();
@@ -18,6 +19,7 @@ describe('Test comment related endpoints', async () => {
 
     expect(commentBundle).toBeDefined();
   });
+  await sleep(ms);
 
   it('Gets a comment', async () => {
     let commentBundle = await comments.getComment(832359);
