@@ -32,7 +32,7 @@ export default class UserBeatmaps extends Base {
     type: Exclude<UserBeatmapsType, 'most_played'>,
     options?: GetUserBeatmapsOptions
   ): Promise<
-    (Beatmapset & {
+    (Beatmapset<unknown> & {
       beatmaps: Beatmap<{
         checksum: string | null;
       }>[];

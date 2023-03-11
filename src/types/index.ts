@@ -288,6 +288,7 @@ export type Score<T> = T & {
   score: number;
   max_combo: number;
   perfect: boolean;
+  statistics: ScoreStatistics;
   passed: boolean;
   pp: number;
   rank: Rank;
@@ -354,24 +355,25 @@ export interface BeatmapsetHype {
   required: number;
 }
 
-export interface Beatmapset extends BeatmapsetCompact<unknown> {
-  availability: BeatmapsetAvailability;
-  bpm: number;
-  can_be_hyped: boolean;
-  creator: string;
-  discussion_locked: boolean;
-  hype: BeatmapsetHype | null;
-  is_scoreable: boolean;
-  last_updated: string;
-  legacy_thread_url: string | null;
-  nominations_summary: BeatmapsetHype;
-  ranked: number;
-  ranked_date: string | null;
-  source: string;
-  storyboard: boolean;
-  submitted_date: string | null;
-  tags: string;
-}
+export type Beatmapset<T> = T &
+  BeatmapsetCompact<{
+    availability: BeatmapsetAvailability;
+    bpm: number;
+    can_be_hyped: boolean;
+    creator: string;
+    discussion_locked: boolean;
+    hype: BeatmapsetHype | null;
+    is_scoreable: boolean;
+    last_updated: string;
+    legacy_thread_url: string | null;
+    nominations_summary: BeatmapsetHype;
+    ranked: number;
+    ranked_date: string | null;
+    source: string;
+    storyboard: boolean;
+    submitted_date: string | null;
+    tags: string;
+  }>;
 
 export type Beatmap<T> = T &
   BeatmapCompact<{
@@ -626,12 +628,12 @@ export interface Spotlight {
 }
 
 export interface Rankings {
-  beatmapsets: Beatmapset[] | null;
+  beatmapsets: Beatmapset<unknown>[] | null;
   ranking: UserStatistics<{
     user: UserCompact<{
       country: Country;
       cover: Cover;
-    }>
+    }>;
   }>[];
   spotlight: Spotlight | null;
   total: number;
@@ -646,7 +648,7 @@ export type NewsPost<T> = T & {
   slug: string;
   title: string;
   updated_at: string;
-}
+};
 
 export interface NewsSidebar {
   current_year: number;
@@ -671,4 +673,58 @@ export interface NewsListing {
 export interface NewsNavigation {
   newer: NewsPost<unknown> | null;
   older: NewsPost<unknown> | null;
+}
+
+export interface Fails {
+  exit: number[] | null;
+  fail: number[] | null;
+}
+
+export interface BeatmapUserScore {
+  position: number;
+  score: Score<{
+    beatmap: Beatmap<{
+      checksum: string | null;
+    }>;
+    user: UserCompact<{
+      country: Country;
+      cover: Cover;
+    }>;
+  }>;
+}
+
+interface BeatmapDifficultyAttributes {
+  max_combo: number;
+  star_rating: number;
+  gamemode: GameMode;
+}
+
+export interface OsuBeatmapDifficultyAttributes extends BeatmapDifficultyAttributes {
+  gamemode: 'osu';
+  aim_difficulty: number;
+  approach_rate: number;
+  flashlight_difficulty: number;
+  overall_difficulty: number;
+  slider_factor: number;
+  speed_difficulty: number;
+}
+
+export interface TaikoBeatmapDifficultyAttributes extends BeatmapDifficultyAttributes {
+  gamemode: 'taiko';
+  stamina_difficulty: number;
+  rhythm_difficulty: number;
+  colour_difficulty: number;
+  approach_rate: number;
+  great_hit_window: number;
+}
+
+export interface FruitsBeatmapDifficultyAttributes extends BeatmapDifficultyAttributes {
+  gamemode: 'fruits';
+  approach_rate: number;
+}
+
+export interface ManiaBeatmapDifficultyAttributes extends BeatmapDifficultyAttributes {
+  gamemode: 'mania';
+  great_hit_window: number;
+  score_multiplier: number;
 }

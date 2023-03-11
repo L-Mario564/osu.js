@@ -1,6 +1,6 @@
 ## Currently supported endpoints
 
-20 / 39
+27 / 39
 
 ### OAuth
 
@@ -10,13 +10,13 @@
 
 ### Beatmaps
 
-- [ ] /beatmaps/lookup
-- [ ] /beatmaps/{beatmap}/scores/users/{user}
-- [ ] /beatmaps/{beatmap}/scores/users/{user}/all
-- [ ] /beatmaps/{beatmap}/scores
-- [ ] /beatmaps
-- [ ] /beatmaps/{beatmap}
-- [ ] /beatmaps/{beatmap}/attributes
+- [x] /beatmaps/lookup
+- [x] /beatmaps/{beatmap}/scores/users/{user}
+- [x] /beatmaps/{beatmap}/scores/users/{user}/all
+- [x] /beatmaps/{beatmap}/scores
+- [x] /beatmaps
+- [x] /beatmaps/{beatmap}
+- [x] /beatmaps/{beatmap}/attributes
 
 ### Beatmapset Discussions
 

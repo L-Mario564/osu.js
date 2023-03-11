@@ -21,7 +21,8 @@
     "test:comments": "vitest run src/tests/client-tests/comments.test.ts",
     "test:ranking": "vitest run src/tests/client-tests/ranking.test.ts",
     "test:multiplayer": "vitest run src/tests/client-tests/multiplayer.test.ts",
-    "test:news": "vitest run src/tests/client-tests/news.test.ts"
+    "test:news": "vitest run src/tests/client-tests/news.test.ts",
+    "test:beatmaps": "vitest run src/tests/client-tests/beatmaps.test.ts"
   },
   "keywords": [],
   "author": "Mario564",

@@ -83,7 +83,7 @@ export const getUsersOptionsSchema = z
   .object({
     query: z.object({
       /** An array of user IDs (can only take up to 50 IDs) */
-      ids: z.number().array()
+      ids: z.number().array().max(50)
     })
   })
   .deepPartial()

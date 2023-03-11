@@ -8,35 +8,32 @@ import Comments from './Comments';
 import Multiplayer from './Multiplayer';
 import Ranking from './Ranking';
 import News from './News';
+import Beatmaps from './Beatmaps';
 
 export default class Client extends Base {
-  // public beatmaps: any;
+  public beatmaps: Beatmaps;
   // public beatmapsets: any;
   // public changelog: any;
   // public chat: any;
   public comments: Comments;
   // public forums: any;
-  // public search: any;
   public multiplayer: Multiplayer;
   public news: News;
   public ranking: Ranking;
   public users: Users;
   public wiki: Wiki;
-  // public matches: any;
-  // public seasonalBackground: any;
-  // public scores: any;
-  // public friends: any;
 
   constructor(accessToken: string) {
-    let t = accessToken;
-    super(t);
+    let token = accessToken;
+    super(token);
 
-    this.comments = new Comments(t);
-    this.multiplayer = new Multiplayer(t);
-    this.news = new News(t);
-    this.ranking = new Ranking(t);
-    this.users = new Users(t);
-    this.wiki = new Wiki(t);
+    this.beatmaps = new Beatmaps(token);
+    this.comments = new Comments(token);
+    this.multiplayer = new Multiplayer(token);
+    this.news = new News(token);
+    this.ranking = new Ranking(token);
+    this.users = new Users(token);
+    this.wiki = new Wiki(token);
   }
 
   /**

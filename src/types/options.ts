@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { searchOptionsSchema } from '../schemas';
+import { getBeatmapAttributesOptionsSchema, getBeatmapOptionsSchema, getBeatmapsOptionsSchema, getBeatmapScoresOptionSchema, lookupBeatmapOptionsSchema } from '../schemas/beatmaps';
 import { getCommentsOptionsSchema } from '../schemas/comments';
 import { getPlaylistScoresOptionsSchema } from '../schemas/multiplayer';
 import { getNewsListingOptionsSchema, getNewsPostOptionsSchema } from '../schemas/news';
@@ -25,6 +26,11 @@ export interface UndocumentedEndpointOptions {
   body: Record<string, unknown>;
 }
 
+export type LookupBeatmapOptions = z.infer<typeof lookupBeatmapOptionsSchema>;
+export type GetBeatmapScoresOptions = z.infer<typeof getBeatmapScoresOptionSchema>;
+export type GetBeatmapsOptions = z.infer<typeof getBeatmapsOptionsSchema>;
+export type GetBeatmapOptions = z.infer<typeof getBeatmapOptionsSchema>;
+export type GetBeatmapAttributesOptions = z.infer<typeof getBeatmapAttributesOptionsSchema>;
 
 export type GetCommentsOptions = z.infer<typeof getCommentsOptionsSchema>;
 
