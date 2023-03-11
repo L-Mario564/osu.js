@@ -38,8 +38,8 @@ export default class Auth extends Base {
   public async revokeToken(accessToken: string) {
     await axios.delete('https://osu.ppy.sh/api/v2/oauth/tokens/current', {
       headers: {
-        ... this.headers.headers,
-        'Authorization': `Bearer ${accessToken}`
+        ...this.headers.headers,
+        Authorization: `Bearer ${accessToken}`
       }
     });
   }

@@ -1,13 +1,16 @@
 import Base from './Base';
-import UserScores from './helpers/UserScores';
-import UserBeatmaps from './helpers/UserBeatmaps';
 import { z } from 'zod';
 import {
   getSelfOptionsSchema,
+  getUserBeatmapsOptionsSchema,
   getUserKudosuOptionsSchema,
   getUserOptionsSchema,
   getUserRecentActivityOptionsSchema,
-  getUsersOptionsSchema
+  getUserRecentScoresOptionsSchema,
+  getUserScoresOptionsSchema,
+  getUsersOptionsSchema,
+  userBeatmapsTypeSchema,
+  userScoreTypeSchema
 } from '../schemas/users';
 import {
   UserExtended,
@@ -17,25 +20,29 @@ import {
   Cover,
   UserGroup,
   StatisticsRulesets,
-  UserEvent
+  UserEvent,
+  Beatmap,
+  Beatmapset,
+  UserBeatmapsType,
+  BeatmapPlaycount,
+  UserScoreType,
+  UserBestScore,
+  UserScore
 } from '../types';
 import {
   GetSelfOptions,
   GetUserKodosuOptions,
   GetUserOptions,
   GetUsersOptions,
-  GetUserRecentActivityOptions
+  GetUserRecentActivityOptions,
+  GetUserBeatmapsOptions,
+  GetUserRecentScoresOptions,
+  GetUserScoresOptions
 } from '../types/options';
 
 export default class Users extends Base {
-  public scores: UserScores;
-  public beatmaps: UserBeatmaps;
-
   constructor(accessToken: string) {
     super(accessToken);
-
-    this.scores = new UserScores(accessToken);
-    this.beatmaps = new UserBeatmaps(accessToken);
   }
 
   /**
@@ -43,10 +50,10 @@ export default class Users extends Base {
    * @returns The user corresponding to the access token provided in the constructor of this class
    */
   public async getSelf(options?: GetSelfOptions): Promise<
-    UserExtended<{
+    UserExtended & {
       is_restricted: boolean;
       statistics_rulesets: StatisticsRulesets;
-    }>
+    }
   > {
     options = getSelfOptionsSchema.parse(options);
     let endpoint: string = 'me';
@@ -87,14 +94,57 @@ export default class Users extends Base {
   }
 
   /**
+   * Makes a GET request to the `/users/{user}/scores/{type}` endpoint
+   * @param user ID of the user to get their scores
+   * @returns An array of the specified user's scores
+   */
+  public async getUserScores<T extends UserScoreType>(
+    user: number,
+    type: T,
+    options?: T extends 'recent' ? GetUserRecentScoresOptions : GetUserScoresOptions
+  ): Promise<T extends 'best' ? UserBestScore[] : UserScore[]> {
+    user = z.number().parse(user);
+    type = userScoreTypeSchema.parse(type) as T;
+    options =
+      type === 'recent'
+        ? getUserRecentScoresOptionsSchema.parse(options)
+        : getUserScoresOptionsSchema.parse(options);
+
+    return await this.fetch(`users/${user}/scores/${type}`, 'GET', options);
+  }
+
+  /**
+   * Makes a GET request to the `/users/{user}/beatmapsets/{type}` endpoint
+   * @param user ID of the user to get their beatmapsets
+   * @param type Type of beatmapsets to return
+   * @returns An array of a user's beatmapsets
+   */
+  public async getUserBeatmaps<T extends UserBeatmapsType>(
+    user: number,
+    type: T,
+    options?: GetUserBeatmapsOptions
+  ): Promise<
+    T extends 'most_played'
+      ? BeatmapPlaycount[]
+      : (Beatmapset & {
+          beatmaps: (Beatmap & {
+            checksum: string | null;
+          })[];
+        })[]
+  > {
+    user = z.number().parse(user);
+    type = userBeatmapsTypeSchema.parse(type) as T;
+    options = getUserBeatmapsOptionsSchema.parse(options);
+
+    return await this.fetch(`users/${user}/beatmapsets/${type}`, 'GET', options);
+  }
+
+  /**
    * Makes a GET request to the `/users/{user}/` endpoint
    * @param user ID or username of the user to get
    * @returns A user
    */
-  public async getUser(
-    user: number | string,
-    options?: GetUserOptions
-  ): Promise<UserExtended<unknown>> {
+  public async getUser(user: number | string, options?: GetUserOptions): Promise<UserExtended> {
     user = z.number().parse(user);
     options = getUserOptionsSchema.parse(options);
     let endpoint: string = `users/${user}`;
@@ -111,22 +161,24 @@ export default class Users extends Base {
    * @returns An array of users
    */
   public async getUsers(options?: GetUsersOptions): Promise<
-    UserCompact<{
+    (UserCompact & {
       country: Country;
       cover: Cover;
       groups: UserGroup[];
       statistics_rulesets: StatisticsRulesets;
-    }>[]
+    })[]
   > {
     options = getUsersOptionsSchema.parse(options);
+
     let obj: {
-      users: UserCompact<{
+      users: (UserCompact & {
         country: Country;
         cover: Cover;
         groups: UserGroup[];
         statistics_rulesets: StatisticsRulesets;
-      }>[];
+      })[];
     } = await this.fetch('users', 'GET', options);
+
     return obj.users;
   }
 }

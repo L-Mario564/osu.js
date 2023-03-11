@@ -15,7 +15,11 @@ export default class Ranking extends Base {
    * @param type Ranking type
    * @returns An object containing ranking data
    */
-  public async getRanking(mode: GameMode, type: RankingType, options?: GetRankingOptions): Promise<Rankings> {
+  public async getRanking(
+    mode: GameMode,
+    type: RankingType,
+    options?: GetRankingOptions
+  ): Promise<Rankings> {
     mode = gameModeSchema.parse(mode);
     type = rankingTypeSchema.parse(type);
     options = getRankingOptionsSchema.parse(options);

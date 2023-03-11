@@ -39,14 +39,14 @@ export default class Beatmaps extends Base {
    * @returns A beatmap
    */
   public async lookupBeatmap(options?: LookupBeatmapOptions): Promise<
-    Beatmap<{
-      beatmapset: Beatmapset<{
+    Beatmap & {
+      beatmapset: Beatmapset & {
         ratings: number[];
-      }>;
+      };
       checksum: string | null;
       failtimes: Fails;
       max_combo: number;
-    }>
+    }
   > {
     options = lookupBeatmapOptionsSchema.parse(options);
     return await this.fetch('beatmaps/lookup', 'GET', options);
@@ -80,13 +80,13 @@ export default class Beatmaps extends Base {
     beatmap: number,
     user: number,
     options?: GetBeatmapScoresOptions
-  ): Promise<Score<unknown>[]> {
+  ): Promise<Score[]> {
     beatmap = z.number().parse(beatmap);
     user = z.number().parse(user);
     options = getBeatmapScoresOptionSchema.parse(options);
 
     let scores: {
-      scores: Score<unknown>[];
+      scores: Score[];
     } = await this.fetch(`beatmaps/${beatmap}/scores/users/${user}/all`, 'GET', options);
 
     return scores.scores;
@@ -101,23 +101,23 @@ export default class Beatmaps extends Base {
     beatmap: number,
     options?: GetBeatmapScoresOptions
   ): Promise<
-    Score<{
-      user: UserCompact<{
+    (Score & {
+      user: UserCompact & {
         country: Country;
         cover: Cover;
-      }>;
-    }>[]
+      };
+    })[]
   > {
     beatmap = z.number().parse(beatmap);
     options = getBeatmapScoresOptionSchema.parse(options);
 
     let scores: {
-      scores: Score<{
-        user: UserCompact<{
+      scores: (Score & {
+        user: UserCompact & {
           country: Country;
           cover: Cover;
-        }>;
-      }>[];
+        };
+      })[];
     } = await this.fetch(`beatmaps/${beatmap}/scores`, 'GET', options);
 
     return scores.scores;
@@ -128,26 +128,26 @@ export default class Beatmaps extends Base {
    * @returns An array of beatmaps
    */
   public async getBeatmaps(options?: GetBeatmapsOptions): Promise<
-    Beatmap<{
+    (Beatmap & {
       failtimes: Fails;
       max_combo: number;
       checksum: string | null;
-      beatmapset: Beatmapset<{
+      beatmapset: Beatmapset & {
         ratings: number[];
-      }>;
-    }>[]
+      };
+    })[]
   > {
     options = getBeatmapsOptionsSchema.parse(options);
 
     let beatmaps: {
-      beatmaps: Beatmap<{
+      beatmaps: (Beatmap & {
         failtimes: Fails;
         max_combo: number;
         checksum: string | null;
-        beatmapset: Beatmapset<{
+        beatmapset: Beatmapset & {
           ratings: number[];
-        }>;
-      }>[];
+        };
+      })[];
     } = await this.fetch('/beatmaps', 'GET', options);
 
     return beatmaps.beatmaps;
@@ -159,14 +159,14 @@ export default class Beatmaps extends Base {
    * @returns A beatmap
    */
   public async getBeatmap(beatmap: number): Promise<
-    Beatmap<{
-      beatmapset: Beatmapset<{
+    Beatmap & {
+      beatmapset: Beatmapset & {
         ratings: number[];
-      }>;
+      };
       checksum: string | null;
       failtimes: Fails;
       max_combo: number;
-    }>
+    }
   > {
     beatmap = z.number().parse(beatmap);
     return await this.fetch(`beatmaps/${beatmap}`, 'GET');

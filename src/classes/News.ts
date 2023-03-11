@@ -23,10 +23,15 @@ export default class News extends Base {
    * @param news ID or slug of the news post to get
    * @returns A news post
    */
-  public async getNewsPost(news: string | number, options?: GetNewsPostOptions): Promise<NewsPost<{
-    content: string;
-    navigation: NewsNavigation;
-  }>> {
+  public async getNewsPost(
+    news: string | number,
+    options?: GetNewsPostOptions
+  ): Promise<
+    NewsPost & {
+      content: string;
+      navigation: NewsNavigation;
+    }
+  > {
     news = z.union([z.string(), z.number()]).parse(news);
     options = getNewsPostOptionsSchema.parse(options);
 

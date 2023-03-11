@@ -1,6 +1,12 @@
 import { z } from 'zod';
 import { searchOptionsSchema } from '../schemas';
-import { getBeatmapAttributesOptionsSchema, getBeatmapOptionsSchema, getBeatmapsOptionsSchema, getBeatmapScoresOptionSchema, lookupBeatmapOptionsSchema } from '../schemas/beatmaps';
+import {
+  getBeatmapAttributesOptionsSchema,
+  getBeatmapOptionsSchema,
+  getBeatmapsOptionsSchema,
+  getBeatmapScoresOptionSchema,
+  lookupBeatmapOptionsSchema
+} from '../schemas/beatmaps';
 import { getCommentsOptionsSchema } from '../schemas/comments';
 import { getPlaylistScoresOptionsSchema } from '../schemas/multiplayer';
 import { getNewsListingOptionsSchema, getNewsPostOptionsSchema } from '../schemas/news';

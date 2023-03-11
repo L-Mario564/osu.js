@@ -18,6 +18,12 @@ export const getUserKudosuOptionsSchema = z
   .deepPartial()
   .optional();
 
+export const userScoreTypeSchema = z.union([
+  z.literal('best'),
+  z.literal('firsts'),
+  z.literal('recent')
+]);
+
 const getUserScoresOptions = {
   ...baseQuery,
   /** Gamemode of the scores to return */

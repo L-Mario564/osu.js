@@ -15,7 +15,11 @@ export default class Multiplayer extends Base {
    * @param playlist ID of the playlist to get scores from
    * @returns An object containing playlist scores and metadata
    */
-  public async getPlaylistScores(room: number, playlist: number, options?: GetPlaylistScoresOptions): Promise<MultiplayerScores> {
+  public async getPlaylistScores(
+    room: number,
+    playlist: number,
+    options?: GetPlaylistScoresOptions
+  ): Promise<MultiplayerScores> {
     room = z.number().parse(room);
     playlist = z.number().parse(playlist);
     options = getPlaylistScoresOptionsSchema.parse(options);

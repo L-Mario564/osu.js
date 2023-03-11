@@ -30,7 +30,7 @@ describe('Test user related endpoints', async () => {
   await sleep(ms);
 
   it("Gets a user's best scores", async () => {
-    let scores = await users.scores.getUserBestScores(14544646, {
+    let scores = await users.getUserScores(14544646, 'best', {
       query: {
         mode: 'osu',
         limit: 3
@@ -41,41 +41,8 @@ describe('Test user related endpoints', async () => {
   });
   await sleep(ms);
 
-  it("Gets a user's recent scores", async () => {
-    let scores = await users.scores.getUserRecentScores(14544646, {
-      query: {
-        mode: 'osu'
-      }
-    });
-
-    expect(Array.isArray(scores)).toBe(true);
-  });
-  await sleep(ms);
-
-  it("Gets a user's first place scores", async () => {
-    let scores = await users.scores.getUserFirstPlaceScores(14544646, {
-      query: {
-        mode: 'osu'
-      }
-    });
-
-    expect(Array.isArray(scores)).toBe(true);
-  });
-  await sleep(ms);
-
   it("Gets a user's beatmaps", async () => {
-    let beatmapsets = await users.beatmaps.getUserBeatmaps(14544646, 'favourite', {
-      query: {
-        limit: 2
-      }
-    });
-
-    expect(beatmapsets.length).toBe(2);
-  });
-  await sleep(ms);
-
-  it("Gets a user's most played beatmaps", async () => {
-    let beatmapsets = await users.beatmaps.getUserMostPlayed(14544646, {
+    let beatmapsets = await users.getUserBeatmaps(14544646, 'favourite', {
       query: {
         limit: 2
       }

@@ -49,7 +49,10 @@ export default class Client extends Base {
    * Make a GET request to an undocumented endpoint
    * @param endpoint The endpoint to make a request to
    */
-  public async getUndocumented<T>(endpoint: string, options?: UndocumentedEndpointOptions): Promise<T> {
+  public async getUndocumented<T>(
+    endpoint: string,
+    options?: UndocumentedEndpointOptions
+  ): Promise<T> {
     return await this.fetch(endpoint, 'GET', options);
   }
 }

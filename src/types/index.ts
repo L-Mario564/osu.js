@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { ModsEnum, StatusEnum } from '../utils/enums';
 import { gameModeSchema } from '../schemas';
-import { userBeatmapsTypeSchema } from '../schemas/users';
+import { userBeatmapsTypeSchema, userScoreTypeSchema } from '../schemas/users';
 import { commentableTypeSchema, commentSortSchema } from '../schemas/comments';
 import { multiplayerScoresSortSchema } from '../schemas/multiplayer';
 import { rankingTypeSchema } from '../schemas/ranking';
@@ -15,6 +15,7 @@ export type CommentableType = z.infer<typeof commentableTypeSchema>;
 export type CommentSort = z.infer<typeof commentSortSchema>;
 export type MultiplayerScoresSort = z.infer<typeof multiplayerScoresSortSchema>;
 export type RankingType = z.infer<typeof rankingTypeSchema>;
+export type UserScoreType = z.infer<typeof userScoreTypeSchema>;
 
 export type Playstyle = 'mouse' | 'keyboard' | 'tablet' | 'touch';
 export type Scope =
@@ -62,7 +63,7 @@ export interface Token {
 
 export type GuestToken = Omit<Token, 'refresh_token'>;
 
-export type UserCompact<T> = T & {
+export interface UserCompact {
   avatar_url: string;
   country_code: string;
   default_group: string;
@@ -76,7 +77,7 @@ export type UserCompact<T> = T & {
   pm_friends_only: boolean;
   profile_colour: string | null;
   username: string;
-};
+}
 
 export interface Country {
   code: string;
@@ -94,29 +95,27 @@ export interface UserKudosu {
   total: number;
 }
 
-export type User<T> = T &
-  UserCompact<{
-    country: Country;
-    cover: Cover;
-  }> & {
-    discord: string | null;
-    has_supported: boolean;
-    interests: string | null;
-    join_date: string;
-    kudosu: UserKudosu;
-    location: string | null;
-    max_blocks: number;
-    max_friends: number;
-    occupation: string | null;
-    playmode: GameMode;
-    playstyle: Playstyle[];
-    post_count: number;
-    profile_order: ProfilePageSection[];
-    title: string | null;
-    title_url: string | null;
-    twitter: string | null;
-    website: string | null;
-  };
+export interface User extends UserCompact {
+  country: Country;
+  cover: Cover;
+  discord: string | null;
+  has_supported: boolean;
+  interests: string | null;
+  join_date: string;
+  kudosu: UserKudosu;
+  location: string | null;
+  max_blocks: number;
+  max_friends: number;
+  occupation: string | null;
+  playmode: GameMode;
+  playstyle: Playstyle[];
+  post_count: number;
+  profile_order: ProfilePageSection[];
+  title: string | null;
+  title_url: string | null;
+  twitter: string | null;
+  website: string | null;
+}
 
 export interface UserAccountHistory {
   description: string | null;
@@ -145,7 +144,7 @@ export interface Page {
   raw: string;
 }
 
-export type Group<T> = T & {
+export interface Group {
   colour: string | null;
   has_listing: boolean;
   has_playmodes: boolean;
@@ -154,11 +153,11 @@ export type Group<T> = T & {
   is_probationary: boolean;
   name: string;
   short_name: string;
-};
+}
 
-export type UserGroup = Group<{
+export interface UserGroup extends Group {
   playmodes: GameMode[] | null;
-}>;
+}
 
 export interface MonthlyPlaycount {
   start_date: string;
@@ -188,7 +187,7 @@ export interface UserLevel {
   progress: number;
 }
 
-export type UserStatistics<T> = T & {
+export interface UserStatistics {
   grade_counts: GradeCounts;
   hit_accuracy: number;
   is_ranked: boolean;
@@ -203,40 +202,39 @@ export type UserStatistics<T> = T & {
   total_hits: number;
   total_score: number;
   country_rank: number;
-};
+}
 
 export interface UserAchievement {
   achieved_at: string;
   achievement_id: number;
 }
 
-export type UserExtended<T> = T &
-  User<{
-    account_history: UserAccountHistory[];
-    active_tournament_banner: UserActiveTournamentBanner | null;
-    badges: UserBadge[];
-    beatmap_playcounts_count: number;
-    favourite_beatmapset_count: number;
-    follower_count: number;
-    graveyard_beatmapset_count: number;
-    groups: UserGroup[];
-    loved_beatmapset_count: number;
-    mapping_follower_count: number;
-    monthly_playcounts: MonthlyPlaycount[];
-    page: Page;
-    pending_beatmapset_count: number;
-    previous_usernames: string[];
-    rank_highest: RankHighest | null;
-    rank_history: RankHistory;
-    ranked_beatmapset_count: number;
-    replays_watched_counts: MonthlyPlaycount[];
-    scores_best_count: number;
-    scores_first_count: number;
-    scores_recent_count: number;
-    statistics: UserStatistics<unknown>;
-    support_level: number;
-    user_achievements: UserAchievement[];
-  }>;
+export interface UserExtended extends User {
+  account_history: UserAccountHistory[];
+  active_tournament_banner: UserActiveTournamentBanner | null;
+  badges: UserBadge[];
+  beatmap_playcounts_count: number;
+  favourite_beatmapset_count: number;
+  follower_count: number;
+  graveyard_beatmapset_count: number;
+  groups: UserGroup[];
+  loved_beatmapset_count: number;
+  mapping_follower_count: number;
+  monthly_playcounts: MonthlyPlaycount[];
+  page: Page;
+  pending_beatmapset_count: number;
+  previous_usernames: string[];
+  rank_highest: RankHighest | null;
+  rank_history: RankHistory;
+  ranked_beatmapset_count: number;
+  replays_watched_counts: MonthlyPlaycount[];
+  scores_best_count: number;
+  scores_first_count: number;
+  scores_recent_count: number;
+  statistics: UserStatistics;
+  support_level: number;
+  user_achievements: UserAchievement[];
+}
 
 export interface Giver {
   url: string;
@@ -258,9 +256,9 @@ export interface UserKudosuHistory {
   post: Post;
 }
 
-export type StatisticsRulesets = Record<GameMode, UserStatistics<unknown> | undefined>;
+export type StatisticsRulesets = Record<GameMode, UserStatistics | undefined>;
 
-export type BeatmapCompact<T> = T & {
+export interface BeatmapCompact {
   beatmapset_id: number;
   difficulty_rating: number;
   id: number;
@@ -269,7 +267,7 @@ export type BeatmapCompact<T> = T & {
   total_length: number;
   user_id: number;
   version: string;
-};
+}
 
 export interface ScoreStatistics {
   count_50: number;
@@ -280,7 +278,7 @@ export interface ScoreStatistics {
   count_miss: number;
 }
 
-export type Score<T> = T & {
+export interface Score {
   id: number;
   user_id: number;
   accuracy: number;
@@ -296,7 +294,7 @@ export type Score<T> = T & {
   mode: GameMode;
   mode_int: number;
   replay: boolean;
-};
+}
 
 export interface Covers {
   'cover': string;
@@ -309,7 +307,7 @@ export interface Covers {
   'slimcover@2x': string;
 }
 
-export type BeatmapsetCompact<T> = T & {
+export interface BeatmapsetCompact {
   artist: string;
   artist_unicode: string;
   covers: Covers;
@@ -325,25 +323,24 @@ export type BeatmapsetCompact<T> = T & {
   title_unicode: string;
   user_id: string;
   video: boolean;
-};
+}
 
-export type UserScore = Score<{
-  beatmap: BeatmapCompact<{
+export interface UserScore extends Score {
+  beatmap: BeatmapCompact & {
     checksum: string | null;
-  }>;
-  beatmapset: BeatmapsetCompact<unknown>;
-  user: UserCompact<unknown>;
-}>;
+  };
+  beatmapset: BeatmapsetCompact;
+  user: UserCompact;
+}
 
 export interface Weight {
   percentage: number;
   pp: number;
 }
 
-export type UserBestScore = UserScore &
-  Score<{
-    weight: Weight;
-  }>;
+export interface UserBestScore extends UserScore, Score {
+  weight: Weight;
+}
 
 export interface BeatmapsetAvailability {
   download_disabled: boolean;
@@ -355,53 +352,51 @@ export interface BeatmapsetHype {
   required: number;
 }
 
-export type Beatmapset<T> = T &
-  BeatmapsetCompact<{
-    availability: BeatmapsetAvailability;
-    bpm: number;
-    can_be_hyped: boolean;
-    creator: string;
-    discussion_locked: boolean;
-    hype: BeatmapsetHype | null;
-    is_scoreable: boolean;
-    last_updated: string;
-    legacy_thread_url: string | null;
-    nominations_summary: BeatmapsetHype;
-    ranked: number;
-    ranked_date: string | null;
-    source: string;
-    storyboard: boolean;
-    submitted_date: string | null;
-    tags: string;
-  }>;
+export interface Beatmapset extends BeatmapsetCompact {
+  availability: BeatmapsetAvailability;
+  bpm: number;
+  can_be_hyped: boolean;
+  creator: string;
+  discussion_locked: boolean;
+  hype: BeatmapsetHype | null;
+  is_scoreable: boolean;
+  last_updated: string;
+  legacy_thread_url: string | null;
+  nominations_summary: BeatmapsetHype;
+  ranked: number;
+  ranked_date: string | null;
+  source: string;
+  storyboard: boolean;
+  submitted_date: string | null;
+  tags: string;
+}
 
-export type Beatmap<T> = T &
-  BeatmapCompact<{
-    accuracy: number;
-    ar: number;
-    beatmapset_id: number;
-    bpm: number | null;
-    convert: boolean;
-    count_circles: number;
-    count_sliders: number;
-    count_spinners: number;
-    cs: number;
-    deleted_at: string | null;
-    drain: number;
-    hit_length: number;
-    is_scoreable: boolean;
-    last_updated: string;
-    mode_int: number;
-    passcount: number;
-    playcount: number;
-    ranked: number;
-    url: string;
-  }>;
+export interface Beatmap extends BeatmapCompact {
+  accuracy: number;
+  ar: number;
+  beatmapset_id: number;
+  bpm: number | null;
+  convert: boolean;
+  count_circles: number;
+  count_sliders: number;
+  count_spinners: number;
+  cs: number;
+  deleted_at: string | null;
+  drain: number;
+  hit_length: number;
+  is_scoreable: boolean;
+  last_updated: string;
+  mode_int: number;
+  passcount: number;
+  playcount: number;
+  ranked: number;
+  url: string;
+}
 
 export interface BeatmapPlaycount {
   beatmap_id: number;
-  beatmap: BeatmapCompact<unknown> | null;
-  beatmapset: BeatmapsetCompact<unknown> | null;
+  beatmap: BeatmapCompact | null;
+  beatmapset: BeatmapsetCompact | null;
   count: number;
 }
 
@@ -517,7 +512,7 @@ export type SearchResult<T> = {
 };
 
 export interface SearchResults {
-  user: SearchResult<UserCompact<unknown>> | null;
+  user: SearchResult<UserCompact> | null;
   wiki_page: SearchResult<WikiPage> | null;
 }
 
@@ -559,7 +554,7 @@ export interface CommentBundle {
   total: number | null;
   user_follow: boolean;
   user_votes: number[];
-  users: UserCompact<unknown>[];
+  users: UserCompact[];
 }
 
 export interface MultiplayerScoresParams {
@@ -603,10 +598,10 @@ export interface MultiplayerScore {
   statistics: MultiplayerScoreStatistics;
   passed: boolean;
   position: number | null;
-  user: UserCompact<{
+  user: UserCompact & {
     country: Country;
     cover: Cover;
-  }>;
+  };
 }
 
 export interface MultiplayerScores {
@@ -628,18 +623,18 @@ export interface Spotlight {
 }
 
 export interface Rankings {
-  beatmapsets: Beatmapset<unknown>[] | null;
-  ranking: UserStatistics<{
-    user: UserCompact<{
+  beatmapsets: Beatmapset[] | null;
+  ranking: (UserStatistics & {
+    user: UserCompact & {
       country: Country;
       cover: Cover;
-    }>;
-  }>[];
+    };
+  })[];
   spotlight: Spotlight | null;
   total: number;
 }
 
-export type NewsPost<T> = T & {
+export interface NewsPost {
   author: string;
   edit_url: string;
   first_image: string | null;
@@ -648,11 +643,11 @@ export type NewsPost<T> = T & {
   slug: string;
   title: string;
   updated_at: string;
-};
+}
 
 export interface NewsSidebar {
   current_year: number;
-  news_posts: NewsPost<unknown>;
+  news_posts: NewsPost;
   years: number[];
 }
 
@@ -663,16 +658,16 @@ export interface NewsSearch {
 
 export interface NewsListing {
   cursor_string: string;
-  news_posts: NewsPost<{
+  news_posts: NewsPost & {
     preview: string;
-  }>;
+  };
   news_sidebar: NewsSidebar;
   search: NewsSearch;
 }
 
 export interface NewsNavigation {
-  newer: NewsPost<unknown> | null;
-  older: NewsPost<unknown> | null;
+  newer: NewsPost | null;
+  older: NewsPost | null;
 }
 
 export interface Fails {
@@ -682,15 +677,15 @@ export interface Fails {
 
 export interface BeatmapUserScore {
   position: number;
-  score: Score<{
-    beatmap: Beatmap<{
+  score: Score & {
+    beatmap: Beatmap & {
       checksum: string | null;
-    }>;
-    user: UserCompact<{
+    };
+    user: UserCompact & {
       country: Country;
       cover: Cover;
-    }>;
-  }>;
+    };
+  };
 }
 
 interface BeatmapDifficultyAttributes {

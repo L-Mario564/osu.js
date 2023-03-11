@@ -68,7 +68,7 @@ describe('Test beatmap related endpoints', async () => {
   });
   await sleep(ms);
 
-  it('Gets a beatmap\'s attributes', async () => {
+  it("Gets a beatmap's attributes", async () => {
     let attributes = await beatmaps.getBeatmapAttributes(1816113, 'fruits');
     expect(attributes).toBeDefined();
   });
