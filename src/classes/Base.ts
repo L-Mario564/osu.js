@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import { z } from 'zod';
 import { Options } from '../types/options';
 import { formatUrlParams } from '../utils';
 
@@ -9,7 +10,7 @@ export default class Base {
     this.axios = axios.create({
       baseURL: 'https://osu.ppy.sh/api/v2/',
       headers: {
-        'Authorization': `Bearer ${accessToken}`,
+        'Authorization': `Bearer ${z.string().parse(accessToken)}`,
         'Accept-encoding': '*'
       }
     });

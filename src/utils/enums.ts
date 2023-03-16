@@ -1,8 +1,8 @@
 export enum ModesEnum {
-  STD = 0,
-  Taiko = 1,
-  CTB = 2,
-  Mania = 3
+  osu = 0,
+  taiko = 1,
+  fruits = 2,
+  mania = 3
 }
 
 export enum StatusEnum {
@@ -42,7 +42,7 @@ export enum LanguagesEnum {
   Korean = 6,
   French = 7,
   German = 8,
-  Wwedish = 9,
+  Swedish = 9,
   Spanish = 10,
   Italian = 11,
   Russian = 12,

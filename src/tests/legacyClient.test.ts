@@ -1,4 +1,4 @@
-import { Client } from '../legacy';
+import { LegacyClient } from '../';
 import { describe, expect, it } from 'vitest';
 import { config } from 'dotenv';
 import { sleep } from '../utils';
@@ -10,7 +10,7 @@ describe('Test legacy client', async () => {
   if (!apiKey) throw new Error('"API_KEY" environment variable is undefined');
 
   let ms: number = 500;
-  let client = new Client(apiKey);
+  let client = new LegacyClient(apiKey);
 
   it('Gets beatmaps', async () => {
     let beatmaps = await client.getBeatmaps({ b: 1816113 });
@@ -61,13 +61,13 @@ describe('Test legacy client', async () => {
   await sleep(ms);
 
   it('Gets a replay (by score ID)', async () => {
-    let replay = await client.getReplay.byScoreId({ s: 3812908497 });
+    let replay = await client.getReplay('score id', { s: 3812908497 });
     expect(replay).toBeTypeOf('string');
   });
   await sleep(ms);
 
   it('Gets a replay (by a beatmap ID and user ID)', async () => {
-    let replay = await client.getReplay.byBeatmapAndUserId({
+    let replay = await client.getReplay('user & beatmap id', {
       b: 131891,
       u: 5182050
     });
@@ -76,12 +76,7 @@ describe('Test legacy client', async () => {
   await sleep(ms);
 
   it("Gets replays that don't exist", async () => {
-    let replay1 = await client.getReplay.byScoreId({ s: 0 });
-    let replay2 = await client.getReplay.byBeatmapAndUserId({
-      b: 0,
-      u: 0
-    });
-
-    expect(replay1 === null && replay2 === null).toBe(true);
+    let replay = await client.getReplay('score id', { s: 0 });
+    expect(replay).toBeNull();
   });
 });

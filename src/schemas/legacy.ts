@@ -1,9 +1,5 @@
 import { z } from 'zod';
-import { modsSchema } from '.';
-
-const gameModeUnion = z
-  .union([z.literal('STD'), z.literal('Taiko'), z.literal('CTB'), z.literal('Mania')])
-  .optional();
+import { gameModeSchema, modsSchema } from '.';
 
 const userTypeSchema = z.union([z.literal('string'), z.literal('id')]).optional();
 
@@ -19,7 +15,7 @@ export const getBeatmapsParamsSchema = z.object({
   /** Specify if `u` is a user ID (`id`) or a username (`string`) */
   type: userTypeSchema,
   /** Beatmaps from a specific gamemode */
-  m: gameModeUnion,
+  m: gameModeSchema.optional(),
   /** Include converted beatmaps? */
   a: z.boolean().optional(),
   /** Beatmap with a specific hash */
@@ -34,7 +30,7 @@ export const getUserParamsSchema = z.object({
   /** User with a specific user ID or username */
   u: z.union([z.string(), z.number()]).optional(),
   /** User gamemode profile  */
-  m: gameModeUnion,
+  m: gameModeSchema.optional(),
   /** Specify if `u` is a user ID (`id`) or a username (`string`) */
   type: userTypeSchema,
   /** Max. number of days between now and the last event's date (range: 1-31) */
@@ -43,7 +39,7 @@ export const getUserParamsSchema = z.object({
 
 let getUserScores = {
   /** Scores from a specific gamemode  */
-  m: gameModeUnion,
+  m: gameModeSchema.optional(),
   /** Limit amount of scores to return (100 max.) */
   limit: z.number().gte(1).lte(100).optional(),
   /** Specify if `u` is a user ID (`id`) or a username (`string`) */
@@ -69,9 +65,9 @@ export const getMultiplayerLobbyParamsSchema = z.object({
   mp: z.number()
 });
 
-let getReplayParams = {
+const getReplayParams = {
   /** Replay gamemode */
-  m: gameModeUnion,
+  m: gameModeSchema.optional(),
   /** Replay with a specific list of mods */
   mods: modsSchema.optional()
 };

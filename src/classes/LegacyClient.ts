@@ -1,37 +1,43 @@
-import Base from './Base';
-import GetReplay from './GetReplay';
 import {
   getBeatmapScoresParamsSchema,
   getBeatmapsParamsSchema,
   getMultiplayerLobbyParamsSchema,
+  getReplayByBeatmapAndUserIdParamsSchema,
+  getReplayByScoreIdParamsSchema,
   getUserParamsSchema,
   getUserScoresParamsSchema
-} from '../../schemas/legacy';
-import { Mod } from '../../types';
+} from '../schemas/legacy';
+import { Mod } from '../types';
 import {
-  Beatmap,
-  BeatmapScore,
+  LegacyBeatmap,
+  LegacyBeatmapScore,
   GetBeatmapScoresParams,
-  GetBeatmapScoresValidParams,
   GetBeatmapsParams,
-  GetBeatmapsValidParams,
   GetMultiplayerLobbyParams,
+  GetReplayByBeatmapAndUserIdParams,
+  GetReplayByScoreIdParams,
+  GetReplayValidParams,
   GetUserParams,
   GetUserScoresParams,
-  GetUSerScoresValidParams,
+  LegacyMultiplayerLobby,
+  LegacyUser,
+  LegacyUserBestScore,
+  LegacyUserRecentScore
+} from '../types/legacy';
+import {
+  GetBeatmapScoresValidParams,
+  GetBeatmapsValidParams,
+  GetUserScoresValidParams,
   GetUserValidParams,
-  MultiplayerLobby,
+  Replay,
   ResponseBeatmap,
   ResponseBeatmapScore,
   ResponseMultiplayerLobby,
   ResponseUser,
   ResponseUserBestScore,
-  ResponseUserRecentScore,
-  User,
-  UserBestScore,
-  UserRecentScore
-} from '../../types/legacy';
-import { getEnumMods, getModsEnum, map } from '../../utils';
+  ResponseUserRecentScore
+} from '../types/legacy/not-exported';
+import { formatUrlParams, getEnumMods, getModsEnum, map } from '../utils';
 import {
   GenresEnum,
   LanguagesEnum,
@@ -40,26 +46,36 @@ import {
   StatusEnum,
   TeamColorEnum,
   TeamTypeEnum
-} from '../../utils/enums';
+} from '../utils/enums';
+import { z } from 'zod';
+import axios, { AxiosResponse } from 'axios';
 
-/**
- * Initialize an instance of the legacy API (API v1) client
- * @param apiKey Your osu! API key
- */
-export default class Client extends Base {
-  public getReplay: GetReplay;
+export default class LegacyClient {
+  private apiKey: string;
 
   constructor(apiKey: string) {
-    super(apiKey);
+    this.apiKey = z.string().parse(apiKey);
+  }
 
-    this.getReplay = new GetReplay(apiKey);
+  private async fetch<T>(endpoint: string, urlParams: Record<string, unknown>): Promise<T> {
+    let params: string = formatUrlParams(urlParams);
+    let url: string = `https://osu.ppy.sh/api/${endpoint}?k=${this.apiKey}${params}`;
+
+    let resp: AxiosResponse = await axios.get(url, {
+      headers: {
+        'Accept-encoding': '*'
+      }
+    });
+    let data: T = resp.data;
+
+    return data;
   }
 
   /**
    * Makes a GET request to the `get_beatmaps` endpoint
    * @returns An array of beatmaps
    */
-  public async getBeatmaps(params: GetBeatmapsParams): Promise<Beatmap[]> {
+  public async getBeatmaps(params: GetBeatmapsParams): Promise<LegacyBeatmap[]> {
     let parsed = getBeatmapsParamsSchema.parse(params);
     let mods: Mod[] = parsed.mods ? parsed.mods : [];
     let diffIncreaseMods: Mod[] = mods.filter((mod: Mod): boolean => {
@@ -94,7 +110,7 @@ export default class Client extends Base {
    * Makes a GET request to the `get_user` endpoint
    * @returns A user if it exists, otherwise null
    */
-  public async getUser(params: GetUserParams): Promise<User | null> {
+  public async getUser(params: GetUserParams): Promise<LegacyUser | null> {
     let parsed = getUserParamsSchema.parse(params);
     let validParams: GetUserValidParams = {
       ...parsed,
@@ -109,7 +125,7 @@ export default class Client extends Base {
    * Makes a GET request to the `get_scores` endpoint
    * @returns An array of scores on a beatmap
    */
-  public async getBeatmapScores(params: GetBeatmapScoresParams): Promise<BeatmapScore[]> {
+  public async getBeatmapScores(params: GetBeatmapScoresParams): Promise<LegacyBeatmapScore[]> {
     let parsed = getBeatmapScoresParamsSchema.parse(params);
     let validParams: GetBeatmapScoresValidParams = {
       ...parsed,
@@ -130,9 +146,9 @@ export default class Client extends Base {
   private async getUserScores(
     type: 'best' | 'recent',
     params: GetUserScoresParams
-  ): Promise<(UserBestScore | UserRecentScore)[]> {
+  ): Promise<(LegacyUserBestScore | LegacyUserRecentScore)[]> {
     let parsed = getUserScoresParamsSchema.parse(params);
-    let validParams: GetUSerScoresValidParams = {
+    let validParams: GetUserScoresValidParams = {
       ...parsed,
       m: parsed.m && ModesEnum[parsed.m]
     };
@@ -170,16 +186,16 @@ export default class Client extends Base {
    * Makes a GET request to the `get_user_best` endpoint
    * @returns An array of a user's top scores
    */
-  public async getUserBestScores(params: GetUserScoresParams): Promise<UserBestScore[]> {
-    return (await this.getUserScores('best', params)) as UserBestScore[];
+  public async getUserBestScores(params: GetUserScoresParams): Promise<LegacyUserBestScore[]> {
+    return (await this.getUserScores('best', params)) as LegacyUserBestScore[];
   }
 
   /**
    * Makes a GET request to the `get_user_recent` endpoint
    * @returns An array of a user's most recent scores in 24 hours
    */
-  public async getUserRecentScores(params: GetUserScoresParams): Promise<UserRecentScore[]> {
-    return (await this.getUserScores('recent', params)) as UserRecentScore[];
+  public async getUserRecentScores(params: GetUserScoresParams): Promise<LegacyUserRecentScore[]> {
+    return (await this.getUserScores('recent', params)) as LegacyUserRecentScore[];
   }
 
   /**
@@ -188,7 +204,7 @@ export default class Client extends Base {
    */
   public async getMultiplayerLobby(
     params: GetMultiplayerLobbyParams
-  ): Promise<MultiplayerLobby | null> {
+  ): Promise<LegacyMultiplayerLobby | null> {
     let parsed = getMultiplayerLobbyParamsSchema.parse(params);
     let mpLobby: ResponseMultiplayerLobby = await this.fetch('get_match', parsed);
 
@@ -217,5 +233,31 @@ export default class Client extends Base {
         };
       })
     });
+  }
+
+  /**
+   * Makes a GET request to the `get_replay`
+   * @param by Get replay by `score id` or `user & beatmap id`
+   * @returns A string containing the Base64 encoded replay
+   */
+  public async getReplay<T extends 'score id' | 'user & beatmap id'>(
+    by: T,
+    params: T extends 'score id' ? GetReplayByScoreIdParams : GetReplayByBeatmapAndUserIdParams
+  ) {
+    let parsed =
+      by === 'score id'
+        ? getReplayByScoreIdParamsSchema.parse(params)
+        : getReplayByBeatmapAndUserIdParamsSchema.parse(params);
+    
+    let validParams: GetReplayValidParams<
+      GetReplayByScoreIdParams | GetReplayByBeatmapAndUserIdParams
+    > = {
+      ...parsed,
+      m: parsed.m && ModesEnum[parsed.m],
+      mods: getModsEnum(parsed.mods ?? [])
+    };
+
+    let replay: Replay = await this.fetch('get_replay', validParams);
+    return replay.error ? null : replay.content;
   }
 }

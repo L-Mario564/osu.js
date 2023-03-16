@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Mod, RankStatus, Rank } from '.';
+import { Mod, RankStatus, Rank, GameMode } from '../';
 import {
   getBeatmapsParamsSchema,
   getUserParamsSchema,
@@ -9,15 +9,14 @@ import {
   getReplayByScoreIdParamsSchema,
   getReplayByBeatmapAndUserIdParamsSchema,
   getReplayParamsSchema
-} from '../schemas/legacy';
+} from '../../schemas/legacy';
 import {
-  ModesEnum,
   GenresEnum,
   LanguagesEnum,
   ScoringTypeEnum,
   TeamTypeEnum,
   TeamColorEnum
-} from '../utils/enums';
+} from '../../utils/enums';
 
 /**
  * Timestamp string in ODBC canonical format
@@ -25,30 +24,10 @@ import {
 export type ODBCTimestamp = string;
 
 export type GetBeatmapsParams = z.infer<typeof getBeatmapsParamsSchema>;
-export type GetBeatmapsValidParams = Omit<GetUserParams, 'm'> & {
-  since?: string;
-  m?: number;
-  a?: number;
-  mods?: number;
-};
-
 export type GetUserParams = z.infer<typeof getUserParamsSchema>;
-export type GetUserValidParams = Omit<GetUserParams, 'm'> & {
-  m?: number;
-};
-
 export type GetBeatmapScoresParams = z.infer<typeof getBeatmapScoresParamsSchema>;
-export type GetBeatmapScoresValidParams = Omit<GetBeatmapScoresParams, 'm'> & {
-  m?: number;
-};
-
 export type GetUserScoresParams = z.infer<typeof getUserScoresParamsSchema>;
-export type GetUSerScoresValidParams = Omit<GetUserScoresParams, 'm'> & {
-  m?: number;
-};
-
 export type GetMultiplayerLobbyParams = z.infer<typeof getMultiplayerLobbyParamsSchema>;
-
 export type GetReplay = z.infer<typeof getReplayParamsSchema>;
 
 export type GetReplayByScoreIdParams = z.infer<typeof getReplayByScoreIdParamsSchema>;
@@ -62,14 +41,13 @@ export type GetReplayValidParams<T> = Omit<T, 'm' | 'mods'> & {
   m?: number;
 };
 
-export type Mode = keyof typeof ModesEnum;
 export type Genre = keyof typeof GenresEnum;
 export type Language = keyof typeof LanguagesEnum;
 export type ScoringType = keyof typeof ScoringTypeEnum;
 export type TeamType = keyof typeof TeamTypeEnum;
 export type TeamColor = keyof typeof TeamColorEnum;
 
-export interface Beatmap {
+export interface LegacyBeatmap {
   approved: RankStatus;
   submit_date: ODBCTimestamp;
   approved_date: ODBCTimestamp;
@@ -95,7 +73,7 @@ export interface Beatmap {
   total_length: number;
   version: string;
   file_md5: string;
-  mode: Mode;
+  mode: GameMode;
   tags: string[];
   favourite_count: number;
   rating: number;
@@ -111,20 +89,7 @@ export interface Beatmap {
   audio_available: boolean;
 }
 
-export type ResponseBeatmap = Record<
-  keyof Omit<
-    Beatmap & {
-      download_unavailable: string;
-      audio_unavailable: string;
-      genre_id: string;
-      language_id: string;
-    },
-    'download_available' | 'audio_available' | 'genre' | 'language'
-  >,
-  string
->;
-
-export interface User {
+export interface LegacyUser {
   user_id: number;
   username: string;
   join_date: ODBCTimestamp;
@@ -146,22 +111,16 @@ export interface User {
   country: string;
   total_seconds_played: number;
   pp_country_rank: number;
-  events: Event[];
+  events: LegacyEvent[];
 }
 
-export type ResponseUser = Omit<Record<keyof User, string>, 'events'> & {
-  events: ResponseEvent[];
-};
-
-export interface Event {
+export interface LegacyEvent {
   display_html: string;
   beatmap_id: number;
   beatmapset_id: number;
   date: ODBCTimestamp;
   epicfactor: number;
 }
-
-export type ResponseEvent = Record<keyof Event, string>;
 
 interface BaseScore {
   score: number;
@@ -176,7 +135,7 @@ interface BaseScore {
   enabled_mods: Mod[];
 }
 
-export interface BeatmapScore extends BaseScore {
+export interface LegacyBeatmapScore extends BaseScore {
   score_id: number;
   username: string;
   user_id: number;
@@ -186,76 +145,47 @@ export interface BeatmapScore extends BaseScore {
   replay_available: boolean;
 }
 
-export type ResponseBeatmapScore = Record<keyof BeatmapScore, string>;
-
-export interface UserRecentScore extends BaseScore {
+export interface LegacyUserRecentScore extends BaseScore {
   beatmap_id: number;
   user_id: number;
   date: ODBCTimestamp;
   rank: Rank;
 }
 
-export type ResponseUserRecentScore = Record<keyof UserRecentScore, string>;
-
-export interface UserBestScore extends UserRecentScore {
+export interface LegacyUserBestScore extends LegacyUserRecentScore {
   score_id: number;
   pp: number;
   replay_available: boolean;
 }
 
-export type ResponseUserBestScore = Record<keyof UserBestScore, string>;
-
-export interface MultiplayerLobby {
-  match: Match;
-  games: Game[];
+export interface LegacyMultiplayerLobby {
+  match: LegacyMatch;
+  games: LegacyGame[];
 }
 
-export interface ResponseMultiplayerLobby {
-  match: ResponseMatch;
-  games: ResponseGame[];
-}
-
-export interface Match {
+export interface LegacyMatch {
   match_id: number;
   name: string;
   start_time: ODBCTimestamp;
   end_time: ODBCTimestamp | null;
 }
 
-export type ResponseMatch = Omit<Record<keyof Match, string>, 'end_time'> & {
-  end_time: string | null;
-};
-
-export interface Game {
+export interface LegacyGame {
   game_id: number;
   start_time: ODBCTimestamp;
-  end_time: ODBCTimestamp;
+  end_time: ODBCTimestamp | null;
   beatmap_id: number;
-  play_mode: Mode;
+  play_mode: GameMode;
   scoring_type: ScoringType;
   team_type: TeamType;
   mods: Mod[];
-  scores: MatchScore[];
+  scores: LegacyMatchScore[];
 }
 
-export type ResponseGame = Omit<Record<keyof Game, string>, 'scores'> & {
-  scores: ResponseMatchScore[];
-};
-
-export interface MatchScore extends Omit<BaseScore, 'enabled_mods'> {
+export interface LegacyMatchScore extends Omit<BaseScore, 'enabled_mods'> {
   slot: number;
   team: TeamColor | null;
   user_id: number;
   pass: boolean;
   enabled_mods: Mod[];
-}
-
-export type ResponseMatchScore = Omit<Record<keyof MatchScore, string>, 'enabled_mods'> & {
-  enabled_mods: string | null;
-  rank?: string;
-};
-
-export interface Replay {
-  content: string;
-  error?: string;
 }
