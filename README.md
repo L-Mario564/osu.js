@@ -1,6 +1,6 @@
 ## Currently supported endpoints
 
-27 / 39
+30 / 39
 
 ### OAuth
 
@@ -26,9 +26,9 @@
 
 ### Changelog
 
-- [ ] /changelog/{stream}/{build}
-- [ ] /changelog
-- [ ] /changelog/{changelog}
+- [x] /changelog/{stream}/{build}
+- [x] /changelog
+- [x] /changelog/{changelog}
 
 ### Chat
 

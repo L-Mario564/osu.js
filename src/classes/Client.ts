@@ -9,11 +9,12 @@ import Multiplayer from './Multiplayer';
 import Ranking from './Ranking';
 import News from './News';
 import Beatmaps from './Beatmaps';
+import Changelog from './Changelog';
 
 export default class Client extends Base {
   public beatmaps: Beatmaps;
   // public beatmapsets: any;
-  // public changelog: any;
+  public changelog: Changelog;
   // public chat: any;
   public comments: Comments;
   // public forums: any;
@@ -28,6 +29,7 @@ export default class Client extends Base {
     super(token);
 
     this.beatmaps = new Beatmaps(token);
+    this.changelog = new Changelog(token);
     this.comments = new Comments(token);
     this.multiplayer = new Multiplayer(token);
     this.news = new News(token);

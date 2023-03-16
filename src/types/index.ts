@@ -5,6 +5,7 @@ import { userBeatmapsTypeSchema, userScoreTypeSchema } from '../schemas/users';
 import { commentableTypeSchema, commentSortSchema } from '../schemas/comments';
 import { multiplayerScoresSortSchema } from '../schemas/multiplayer';
 import { rankingTypeSchema } from '../schemas/ranking';
+import { changelogStreamSchema } from '../schemas/changelog';
 
 /**
  * Timestamp string in ISO 8601 format
@@ -21,6 +22,7 @@ export type CommentSort = z.infer<typeof commentSortSchema>;
 export type MultiplayerScoresSort = z.infer<typeof multiplayerScoresSortSchema>;
 export type RankingType = z.infer<typeof rankingTypeSchema>;
 export type UserScoreType = z.infer<typeof userScoreTypeSchema>;
+export type ChangelogStream = z.infer<typeof changelogStreamSchema>;
 
 export type Playstyle = 'mouse' | 'keyboard' | 'tablet' | 'touch';
 export type Scope =
@@ -727,4 +729,47 @@ export interface ManiaBeatmapDifficultyAttributes extends BeatmapDifficultyAttri
   gamemode: 'mania';
   great_hit_window: number;
   score_multiplier: number;
+}
+
+export interface UpdateStream {
+  display_name: string | null;
+  id: number;
+  is_featured: boolean;
+  name: string;
+}
+
+export interface Build {
+  created_at: ISOTimestamp;
+  display_version: string;
+  id: number;
+  update_stream: UpdateStream | null;
+  users: number;
+  version: string | null;
+}
+
+export interface BuildVersions {
+  next: Build | null;
+  previous: Build | null;
+}
+
+export interface ChangelogEntry {
+  category: string;
+  created_at: ISOTimestamp | null;
+  github_pull_request_id: number | null;
+  github_url: string | null;
+  id: number | null;
+  major: boolean;
+  repository: string | null;
+  title: string | null;
+  type: string;
+  url: string | null;
+}
+
+export interface GithubUser {
+  display_name: string;
+  github_url: string | null;
+  id: number | null;
+  osu_username: string | null;
+  user_id: number | null;
+  user_url: string | null;
 }

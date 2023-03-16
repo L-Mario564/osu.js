@@ -28,6 +28,7 @@ import {
   getBeatmapAttributesOptionsSchema
 } from '../schemas/beatmaps';
 import { gameModeSchema } from '../schemas';
+import { isAxiosError } from 'axios';
 
 export default class Beatmaps extends Base {
   constructor(accessToken: string) {
@@ -46,10 +47,28 @@ export default class Beatmaps extends Base {
       checksum: string | null;
       failtimes: Fails;
       max_combo: number;
-    }
+    } | undefined
   > {
     options = lookupBeatmapOptionsSchema.parse(options);
-    return await this.fetch('beatmaps/lookup', 'GET', options);
+
+    let beatmap: Beatmap & {
+      beatmapset: Beatmapset & {
+        ratings: number[];
+      };
+      checksum: string | null;
+      failtimes: Fails;
+      max_combo: number;
+    } | undefined;
+
+    try {
+      beatmap = await this.fetch('beatmaps/lookup', 'GET', options);
+    } catch (err) {
+      if (!isAxiosError(err) || err.response?.status !== 404) {
+        throw err;
+      }
+    }
+
+    return beatmap;
   }
 
   /**

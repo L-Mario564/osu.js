@@ -18,6 +18,17 @@ describe('Test beatmap related endpoints', async () => {
   });
   await sleep(ms);
 
+  it('Looks up a non-existant beatmap', async () => {
+    let beatmap = await beatmaps.lookupBeatmap({
+      query: {
+        id: 0
+      }
+    });
+
+    expect(beatmap).toBeUndefined();
+  });
+  await sleep(ms);
+
   it('Gets a beatmap user score', async () => {
     let score = await beatmaps.getBeatmapUserScore(1816113, 12408961, {
       query: {

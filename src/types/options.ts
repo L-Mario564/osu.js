@@ -7,6 +7,7 @@ import {
   getBeatmapScoresOptionSchema,
   lookupBeatmapOptionsSchema
 } from '../schemas/beatmaps';
+import { getChangelogListingOptionsSchema, lookupChangelogBuildOptionsSchema } from '../schemas/changelog';
 import { getCommentsOptionsSchema } from '../schemas/comments';
 import { getPlaylistScoresOptionsSchema } from '../schemas/multiplayer';
 import { getNewsListingOptionsSchema, getNewsPostOptionsSchema } from '../schemas/news';
@@ -37,6 +38,9 @@ export type GetBeatmapScoresOptions = z.infer<typeof getBeatmapScoresOptionSchem
 export type GetBeatmapsOptions = z.infer<typeof getBeatmapsOptionsSchema>;
 export type GetBeatmapOptions = z.infer<typeof getBeatmapOptionsSchema>;
 export type GetBeatmapAttributesOptions = z.infer<typeof getBeatmapAttributesOptionsSchema>;
+
+export type GetChangelogListingOptions = z.infer<typeof getChangelogListingOptionsSchema>;
+export type LookupChangelogBuildOptionsSchema = z.infer<typeof lookupChangelogBuildOptionsSchema>;
 
 export type GetCommentsOptions = z.infer<typeof getCommentsOptionsSchema>;
 
