@@ -1,6 +1,6 @@
 ## Currently supported endpoints
 
-30 / 39
+31 / 39
 
 ### OAuth
 
@@ -32,8 +32,8 @@
 
 ### Chat
 
-- [ ] /chat/new
-- [ ] /chat/channels
+- [x] /chat/new
+- [x] /chat/channels
 
 ### Comments
 

@@ -60,6 +60,8 @@ export type UserEventTypes =
 export type AchievementGrouping = 'Skill' | 'Hush-Hush' | 'Dedication' | 'Mod Introduction';
 export type EventBeatmapsetApprovedType = 'ranked' | 'approved' | 'qualified' | 'loved';
 export type SpotlightType = 'monthly' | 'spotlight' | 'theme' | 'special' | 'bestof';
+export type ChannelType = 'PUBLIC' | 'PRIVATE' | 'MULTIPLAYER' | 'SPECTATOR' | 'TEMPORARY' | 'PM' | 'GROUP' | 'ANNOUNCE';
+export type ChatMessageType = 'action' | 'markdown' | 'plain';
 
 export interface Token {
   token_type: string;
@@ -772,4 +774,25 @@ export interface GithubUser {
   osu_username: string | null;
   user_id: number | null;
   user_url: string | null;
+}
+
+export interface Channel {
+  channel_id: number;
+  name: string;
+  description: string | null;
+  icon: string | null;
+  type: ChannelType;
+  moderated: boolean;
+  uuid: string | null;
+}
+
+export interface ChatMessage {
+  channel_id: number;
+  content: string;
+  is_action: boolean;
+  message_id: number;
+  sender_id: number;
+  timestamp: ISOTimestamp;
+  type: ChatMessageType;
+  uuid: string | null;
 }

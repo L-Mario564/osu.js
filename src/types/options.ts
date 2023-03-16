@@ -8,6 +8,7 @@ import {
   lookupBeatmapOptionsSchema
 } from '../schemas/beatmaps';
 import { getChangelogListingOptionsSchema, lookupChangelogBuildOptionsSchema } from '../schemas/changelog';
+import { createAnnounceChannelOptionsSchema, createPMChannelOptionsSchema, createPMOptionsSchema } from '../schemas/chat';
 import { getCommentsOptionsSchema } from '../schemas/comments';
 import { getPlaylistScoresOptionsSchema } from '../schemas/multiplayer';
 import { getNewsListingOptionsSchema, getNewsPostOptionsSchema } from '../schemas/news';
@@ -28,11 +29,6 @@ export interface Options {
   body?: Record<string, unknown> | string;
 }
 
-export interface UndocumentedEndpointOptions {
-  query: Record<string, unknown>;
-  body: Record<string, unknown>;
-}
-
 export type LookupBeatmapOptions = z.infer<typeof lookupBeatmapOptionsSchema>;
 export type GetBeatmapScoresOptions = z.infer<typeof getBeatmapScoresOptionSchema>;
 export type GetBeatmapsOptions = z.infer<typeof getBeatmapsOptionsSchema>;
@@ -41,6 +37,10 @@ export type GetBeatmapAttributesOptions = z.infer<typeof getBeatmapAttributesOpt
 
 export type GetChangelogListingOptions = z.infer<typeof getChangelogListingOptionsSchema>;
 export type LookupChangelogBuildOptionsSchema = z.infer<typeof lookupChangelogBuildOptionsSchema>;
+
+export type CreatePMOptions = z.infer<typeof createPMOptionsSchema>;
+export type CreatePMChannelOptions = z.infer<typeof createPMChannelOptionsSchema>;
+export type CreateAnnounceChannelOptions = z.infer<typeof createAnnounceChannelOptionsSchema>;
 
 export type GetCommentsOptions = z.infer<typeof getCommentsOptionsSchema>;
 

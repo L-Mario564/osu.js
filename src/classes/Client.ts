@@ -1,6 +1,6 @@
 import { searchOptionsSchema } from '../schemas';
 import { SearchResults } from '../types';
-import { SearchOptions, UndocumentedEndpointOptions } from '../types/options';
+import { SearchOptions, Options } from '../types/options';
 import Base from './Base';
 import Users from './Users';
 import Wiki from './Wiki';
@@ -10,12 +10,13 @@ import Ranking from './Ranking';
 import News from './News';
 import Beatmaps from './Beatmaps';
 import Changelog from './Changelog';
+import Chat from './Chat';
 
 export default class Client extends Base {
   public beatmaps: Beatmaps;
   // public beatmapsets: any;
   public changelog: Changelog;
-  // public chat: any;
+  public chat: Chat;
   public comments: Comments;
   // public forums: any;
   public multiplayer: Multiplayer;
@@ -30,6 +31,7 @@ export default class Client extends Base {
 
     this.beatmaps = new Beatmaps(token);
     this.changelog = new Changelog(token);
+    this.chat = new Chat(token);
     this.comments = new Comments(token);
     this.multiplayer = new Multiplayer(token);
     this.news = new News(token);
@@ -51,10 +53,7 @@ export default class Client extends Base {
    * Make a GET request to an undocumented endpoint
    * @param endpoint The endpoint to make a request to
    */
-  public async getUndocumented<T>(
-    endpoint: string,
-    options?: UndocumentedEndpointOptions
-  ): Promise<T> {
+  public async getUndocumented<T>(endpoint: string, options?: Options): Promise<T> {
     return await this.fetch(endpoint, 'GET', options);
   }
 }

@@ -213,13 +213,13 @@ export default class Beatmaps extends Base {
     gamemode = gameModeSchema.parse(gamemode) as T;
     options = getBeatmapAttributesOptionsSchema.parse(options);
 
-    let remappedOptions = {
+    let remapped = {
       body: {
         mods: options?.body?.mods,
         ruleset: gamemode
       }
     };
 
-    return await this.fetch(`beatmaps/${beatmap}/attributes`, 'POST', remappedOptions);
+    return await this.fetch(`beatmaps/${beatmap}/attributes`, 'POST', remapped);
   }
 }
