@@ -1,4 +1,4 @@
-import { getStdAccuracy, getTaikoAccuracy, getCtbAccuracy, getManiaAccuracy } from '../utils';
+import { calcAccuracy } from '../utils/constants';
 import { describe, expect, it } from 'vitest';
 
 function fixDecimals(accuracy: number): number {
@@ -7,27 +7,27 @@ function fixDecimals(accuracy: number): number {
 
 describe('Test accuracy calculating functions', () => {
   it('Calculates for STD', () => {
-    let accuracy: number = fixDecimals(getStdAccuracy(1756, 26, 0, 0));
+    let accuracy: number = fixDecimals(calcAccuracy.osu(1756, 26, 0, 0));
     expect(accuracy).toBe(0.9903);
   });
 
   it('Calculates for Taiko', () => {
-    let accuracy: number = fixDecimals(getTaikoAccuracy(2896, 55, 0));
+    let accuracy: number = fixDecimals(calcAccuracy.taiko(2896, 55, 0));
     expect(accuracy).toBe(0.9907);
   });
 
   it('Calculates for CTB', () => {
-    let accuracy: number = fixDecimals(getCtbAccuracy(3277, 75, 557, 5, 0));
+    let accuracy: number = fixDecimals(calcAccuracy.fruits(3277, 75, 557, 5, 0));
     expect(accuracy).toBe(0.9987);
   });
 
   it('Calculates for Mania (score v1)', () => {
-    let accuracy: number = fixDecimals(getManiaAccuracy(6349, 1940, 126, 15, 5, 24));
+    let accuracy: number = fixDecimals(calcAccuracy.mania(6349, 1940, 126, 15, 5, 24));
     expect(accuracy).toBe(0.9905);
   });
 
   it('Calculates for Mania (score v2)', () => {
-    let accuracy: number = fixDecimals(getManiaAccuracy(6349, 1940, 126, 15, 5, 24, true));
+    let accuracy: number = fixDecimals(calcAccuracy.mania(6349, 1940, 126, 15, 5, 24, true));
     expect(accuracy).toBe(0.9866);
   });
 });
