@@ -16,7 +16,6 @@ import {
   GetMultiplayerLobbyParams,
   GetReplayByBeatmapAndUserIdParams,
   GetReplayByScoreIdParams,
-  GetReplayValidParams,
   GetUserParams,
   GetUserScoresParams,
   LegacyMultiplayerLobby,
@@ -35,7 +34,8 @@ import {
   ResponseMultiplayerLobby,
   ResponseUser,
   ResponseUserBestScore,
-  ResponseUserRecentScore
+  ResponseUserRecentScore,
+  GetReplayValidParams
 } from '../types/legacy/not-exported';
 import { formatUrlParams, getEnumMods, getModsEnum, map } from '../utils';
 import {

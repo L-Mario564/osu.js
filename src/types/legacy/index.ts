@@ -36,11 +36,6 @@ export type GetReplayByBeatmapAndUserIdParams = z.infer<
   typeof getReplayByBeatmapAndUserIdParamsSchema
 >;
 
-export type GetReplayValidParams<T> = Omit<T, 'm' | 'mods'> & {
-  mods?: number;
-  m?: number;
-};
-
 export type Genre = keyof typeof GenresEnum;
 export type Language = keyof typeof LanguagesEnum;
 export type ScoringType = keyof typeof ScoringTypeEnum;

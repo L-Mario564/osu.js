@@ -63,3 +63,8 @@ export interface Replay {
   content: string;
   error?: string;
 }
+
+export type GetReplayValidParams<T> = Omit<T, 'm' | 'mods'> & {
+  mods?: number;
+  m?: number;
+};
