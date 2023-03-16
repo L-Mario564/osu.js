@@ -20,8 +20,10 @@ import {
 } from '../utils/enums';
 
 /**
- * Parameters for a GET request at the `get_beatmaps` endpoint
- */
+ * Timestamp string in ODBC canonical format
+*/
+export type ODBCTimestamp = string;
+
 export type GetBeatmapsParams = z.infer<typeof getBeatmapsParamsSchema>;
 export type GetBeatmapsValidParams = Omit<GetUserParams, 'm'> & {
   since?: string;
@@ -30,45 +32,27 @@ export type GetBeatmapsValidParams = Omit<GetUserParams, 'm'> & {
   mods?: number;
 };
 
-/**
- * Parameters for a GET request at the `get_user` endpoint
- */
 export type GetUserParams = z.infer<typeof getUserParamsSchema>;
 export type GetUserValidParams = Omit<GetUserParams, 'm'> & {
   m?: number;
 };
 
-/**
- * Parameters for a GET request at the `get_scores` endpoint
- */
 export type GetBeatmapScoresParams = z.infer<typeof getBeatmapScoresParamsSchema>;
 export type GetBeatmapScoresValidParams = Omit<GetBeatmapScoresParams, 'm'> & {
   m?: number;
 };
 
-/**
- * Parameters for a GET request at the `get_user_best` and `get_user_recent` endpoints
- */
 export type GetUserScoresParams = z.infer<typeof getUserScoresParamsSchema>;
 export type GetUSerScoresValidParams = Omit<GetUserScoresParams, 'm'> & {
   m?: number;
 };
 
-/**
- * Parameters for a GET request at the `get_match` endpoint
- */
 export type GetMultiplayerLobbyParams = z.infer<typeof getMultiplayerLobbyParamsSchema>;
 
 export type GetReplay = z.infer<typeof getReplayParamsSchema>;
 
-/**
- * Parameters for a GET request at the `get_replay` endpoint (using a score ID)
- */
 export type GetReplayByScoreIdParams = z.infer<typeof getReplayByScoreIdParamsSchema>;
 
-/**
- * Parameters for a GET request at the `get_replay` endpoint (using a beatmap ID and a user ID or username)
- */
 export type GetReplayByBeatmapAndUserIdParams = z.infer<
   typeof getReplayByBeatmapAndUserIdParamsSchema
 >;
@@ -87,9 +71,9 @@ export type TeamColor = keyof typeof TeamColorEnum;
 
 export interface Beatmap {
   approved: RankStatus;
-  submit_date: Date;
-  approved_date: Date;
-  last_update: Date;
+  submit_date: ODBCTimestamp;
+  approved_date: ODBCTimestamp;
+  last_update: ODBCTimestamp;
   artist: string;
   beatmap_id: number;
   beatmapset_id: number;
@@ -143,7 +127,7 @@ export type ResponseBeatmap = Record<
 export interface User {
   user_id: number;
   username: string;
-  join_date: Date;
+  join_date: ODBCTimestamp;
   count300: number;
   count100: number;
   count50: number;
@@ -173,7 +157,7 @@ export interface Event {
   display_html: string;
   beatmap_id: number;
   beatmapset_id: number;
-  date: Date;
+  date: ODBCTimestamp;
   epicfactor: number;
 }
 
@@ -196,7 +180,7 @@ export interface BeatmapScore extends BaseScore {
   score_id: number;
   username: string;
   user_id: number;
-  date: Date;
+  date: ODBCTimestamp;
   rank: Rank;
   pp: number;
   replay_available: boolean;
@@ -207,7 +191,7 @@ export type ResponseBeatmapScore = Record<keyof BeatmapScore, string>;
 export interface UserRecentScore extends BaseScore {
   beatmap_id: number;
   user_id: number;
-  date: Date;
+  date: ODBCTimestamp;
   rank: Rank;
 }
 
@@ -234,8 +218,8 @@ export interface ResponseMultiplayerLobby {
 export interface Match {
   match_id: number;
   name: string;
-  start_time: Date;
-  end_time: Date | null;
+  start_time: ODBCTimestamp;
+  end_time: ODBCTimestamp | null;
 }
 
 export type ResponseMatch = Omit<Record<keyof Match, string>, 'end_time'> & {
@@ -244,8 +228,8 @@ export type ResponseMatch = Omit<Record<keyof Match, string>, 'end_time'> & {
 
 export interface Game {
   game_id: number;
-  start_time: Date;
-  end_time: Date;
+  start_time: ODBCTimestamp;
+  end_time: ODBCTimestamp;
   beatmap_id: number;
   play_mode: Mode;
   scoring_type: ScoringType;

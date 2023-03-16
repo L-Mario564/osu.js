@@ -6,6 +6,11 @@ import { commentableTypeSchema, commentSortSchema } from '../schemas/comments';
 import { multiplayerScoresSortSchema } from '../schemas/multiplayer';
 import { rankingTypeSchema } from '../schemas/ranking';
 
+/**
+ * Timestamp string in ISO 8601 format
+*/
+export type ISOTimestamp = string;
+
 export type Mod = keyof typeof ModsEnum;
 export type RankStatus = keyof typeof StatusEnum;
 
@@ -101,7 +106,7 @@ export interface User extends UserCompact {
   discord: string | null;
   has_supported: boolean;
   interests: string | null;
-  join_date: string;
+  join_date: ISOTimestamp;
   kudosu: UserKudosu;
   location: string | null;
   max_blocks: number;
@@ -133,7 +138,7 @@ export interface UserActiveTournamentBanner {
 }
 
 export interface UserBadge {
-  awarded_at: string;
+  awarded_at: ISOTimestamp;
   description: string;
   image_url: string;
   url: string;
@@ -160,13 +165,13 @@ export interface UserGroup extends Group {
 }
 
 export interface MonthlyPlaycount {
-  start_date: string;
+  start_date: ISOTimestamp;
   count: number;
 }
 
 export interface RankHighest {
   rank: number;
-  updated_at: string;
+  updated_at: ISOTimestamp;
 }
 
 export interface RankHistory {
@@ -205,7 +210,7 @@ export interface UserStatistics {
 }
 
 export interface UserAchievement {
-  achieved_at: string;
+  achieved_at: ISOTimestamp;
   achievement_id: number;
 }
 
@@ -251,7 +256,7 @@ export interface UserKudosuHistory {
   action: KudosuAction;
   amount: number;
   model: string;
-  created_at: string;
+  created_at: ISOTimestamp;
   giver: Giver | null;
   post: Post;
 }
@@ -290,7 +295,7 @@ export interface Score {
   passed: boolean;
   pp: number;
   rank: Rank;
-  created_at: string;
+  created_at: ISOTimestamp;
   mode: GameMode;
   mode_int: number;
   replay: boolean;
@@ -360,14 +365,14 @@ export interface Beatmapset extends BeatmapsetCompact {
   discussion_locked: boolean;
   hype: BeatmapsetHype | null;
   is_scoreable: boolean;
-  last_updated: string;
+  last_updated: ISOTimestamp;
   legacy_thread_url: string | null;
   nominations_summary: BeatmapsetHype;
   ranked: number;
-  ranked_date: string | null;
+  ranked_date: ISOTimestamp | null;
   source: string;
   storyboard: boolean;
-  submitted_date: string | null;
+  submitted_date: ISOTimestamp | null;
   tags: string;
 }
 
@@ -381,11 +386,11 @@ export interface Beatmap extends BeatmapCompact {
   count_sliders: number;
   count_spinners: number;
   cs: number;
-  deleted_at: string | null;
+  deleted_at: ISOTimestamp | null;
   drain: number;
   hit_length: number;
   is_scoreable: boolean;
-  last_updated: string;
+  last_updated: ISOTimestamp;
   mode_int: number;
   passcount: number;
   playcount: number;
@@ -423,7 +428,7 @@ export interface EventBeatmap {
 }
 
 interface BaseUserEvent {
-  created_at: string;
+  created_at: ISOTimestamp;
   id: number;
   type: UserEventTypes;
 }
@@ -526,9 +531,9 @@ export interface CommentableMetadata {
 export interface Comment {
   commentable_id: number;
   commentable_type: CommentableType;
-  created_at: string;
-  deleted_at: string | null;
-  edited_at: string | null;
+  created_at: ISOTimestamp;
+  deleted_at: ISOTimestamp | null;
+  edited_at: ISOTimestamp | null;
   edited_by_id: number | null;
   id: number;
   legacy_name: string | null;
@@ -537,7 +542,7 @@ export interface Comment {
   parent_id: number | null;
   pinned: boolean;
   replies_count: number;
-  updated_at: string;
+  updated_at: ISOTimestamp;
   user_id: number;
   votes_count: number;
 }
@@ -613,12 +618,12 @@ export interface MultiplayerScores {
 }
 
 export interface Spotlight {
-  end_date: string;
+  end_date: ISOTimestamp;
   id: number;
   mode_specific: boolean;
   participant_count: number | null;
   name: string;
-  start_date: string;
+  start_date: ISOTimestamp;
   type: SpotlightType;
 }
 
@@ -639,10 +644,10 @@ export interface NewsPost {
   edit_url: string;
   first_image: string | null;
   id: number;
-  published_at: string;
+  published_at: ISOTimestamp;
   slug: string;
   title: string;
-  updated_at: string;
+  updated_at: ISOTimestamp;
 }
 
 export interface NewsSidebar {

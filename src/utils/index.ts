@@ -35,8 +35,6 @@ export function mapCallback([key, value]: [string, unknown]): [string, unknown] 
     newValue = map(value as Record<string, unknown>);
   } else if (!isNaN(Number(value)) && typeof value !== 'boolean') {
     newValue = Number(value);
-  } else if (typeof value === 'string' && !isNaN(new Date(value).getHours())) {
-    newValue = new Date(value);
   }
 
   return [key, newValue];
