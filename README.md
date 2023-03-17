@@ -1,6 +1,6 @@
 ## Currently supported endpoints
 
-34 / 39
+36 / 39
 
 ### OAuth
 
@@ -45,8 +45,8 @@
 - [x] /forums/topics/{topic}/reply
 - [x] /forums/topics
 - [x] /forums/topics/{topic}
-- [ ] /forums/topics/{topic}
-- [ ] /forums/posts/{post}
+- [x] /forums/topics/{topic}
+- [x] /forums/posts/{post}
 
 ### Home
 

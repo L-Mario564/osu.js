@@ -11,6 +11,7 @@ import News from './News';
 import Beatmaps from './Beatmaps';
 import Changelog from './Changelog';
 import Chat from './Chat';
+import Forum from './Forum';
 
 export default class Client extends Base {
   public beatmaps: Beatmaps;
@@ -18,7 +19,7 @@ export default class Client extends Base {
   public changelog: Changelog;
   public chat: Chat;
   public comments: Comments;
-  // public forums: any;
+  public forum: Forum;
   public multiplayer: Multiplayer;
   public news: News;
   public ranking: Ranking;
@@ -33,6 +34,7 @@ export default class Client extends Base {
     this.changelog = new Changelog(token);
     this.chat = new Chat(token);
     this.comments = new Comments(token);
+    this.forum = new Forum(token);
     this.multiplayer = new Multiplayer(token);
     this.news = new News(token);
     this.ranking = new Ranking(token);

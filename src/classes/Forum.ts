@@ -1,8 +1,8 @@
 import Base from './Base';
 import { Cursor, ForumPost, ForumPostBody, ForumTopic } from '../types';
 import { z } from 'zod';
-import { CreateTopicOptions, GetTopicOptions, ReplyToTopicOptions } from '../types/options';
-import { createTopicOptionsSchema, getTopicOptionsSchema, replyToTopicOptionsSchema } from '../schemas/forum';
+import { CreateTopicOptions, GetTopicOptions, ReplyToTopicOptions, UpdatePostOptions, UpdateTopicOptions } from '../types/options';
+import { createTopicOptionsSchema, getTopicOptionsSchema, replyToTopicOptionsSchema, updatePostOptionsSchema, updateTopicOptionsSchema } from '../schemas/forum';
 
 export default class Forum extends Base {
   constructor(accessToken: string) {
@@ -68,7 +68,50 @@ export default class Forum extends Base {
     topic: ForumTopic;
   }> {
     topic = z.number().parse(topic);
-    options = getTopicOptionsSchema.parse(options);
-    return await this.fetch(`forums/topics/${topic}/reply`, 'GET', options);
+    options = getTopicOptionsSchema.optional().parse(options);
+    return await this.fetch(`forums/topics/${topic}`, 'GET', options);
+  }
+
+  /**
+   * Makes a PATCH request to the `/forums/topics/{topic}` endpoint
+   * @param topic ID of the topic to update
+   * @returns A forum topic
+   */
+  public async updateTopic(topic: number, options?: UpdateTopicOptions): Promise<ForumTopic> {
+    topic = z.number().parse(topic);
+    options = updateTopicOptionsSchema.optional().parse(options);
+    let forumTopic = options?.body?.forum_topic as Record<string, unknown> | undefined;
+    let parsedForumTopic: Record<string, unknown> | undefined;
+
+    if (forumTopic) {
+      parsedForumTopic = {};
+
+      for (let key in forumTopic) {
+        parsedForumTopic[`forum_topic[${key}]`] = forumTopic[key];
+      }
+    }
+
+    let parsed = {
+      body: (options?.body) ? {
+        ... options.body,
+        ... parsedForumTopic
+      } : undefined
+    };
+
+    delete parsed.body?.forum_topic;
+    return await this.fetch(`forums/topics/${topic}`, 'PATCH', parsed);
+  }
+
+  /**
+   * Makes a PATCH request to the `/forums/posts/{post}` endpoint
+   * @param post ID of the post to update
+   * @returns A forum post
+   */
+  public async updatePost(post: number, options: UpdatePostOptions): Promise<ForumPost & {
+    body: ForumPostBody;
+  }> {
+    post = z.number().parse(post);
+    options = updatePostOptionsSchema.parse(options);
+    return await this.fetch(`forums/posts/${post}`, 'PATCH', options);
   }
 }

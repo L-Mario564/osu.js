@@ -48,4 +48,21 @@ export const getTopicOptionsSchema = z.object({
     /** First post ID to be returned with `sort` set to `id_desc`. This parameter is ignored if `cursor_string` is specified */
     end: z.number()
   })
-}).deepPartial().optional();
+}).deepPartial();
+
+export const updateTopicOptionsSchema = z.object({
+  body: z.object({
+    /** Forum topic details */
+    forum_topic: z.object({
+      /** Title of the topic */
+      topic_title: z.string()
+    })
+  })
+}).deepPartial();
+
+export const updatePostOptionsSchema = z.object({
+  body: z.object({
+    /** Content of the post in BBCode format */
+    body: z.string()
+  })
+});
