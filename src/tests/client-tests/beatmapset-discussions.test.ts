@@ -7,7 +7,7 @@ describe('Test beatmapset discussion related endpoints', async () => {
   let accessToken: string = await getExistingAccessToken();
   let discussions = new Client(accessToken).beatmapsetDiscussions;
 
-  it('Gets a discussion\'s posts', async () => {
+  it("Gets a discussion's posts", async () => {
     let discussion = await discussions.getDiscussionPosts({
       query: {
         beatmapset_discussion_id: 1816113
@@ -18,7 +18,7 @@ describe('Test beatmapset discussion related endpoints', async () => {
   });
   await sleep(ms);
 
-  it('Gets a discussion\'s votes', async () => {
+  it("Gets a discussion's votes", async () => {
     let discussion = await discussions.getDiscussionVotes({
       query: {
         beatmapset_discussion_id: 1816113

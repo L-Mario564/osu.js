@@ -33,7 +33,7 @@ export default class Base {
     } else if (method === 'POST') {
       resp = await this.axios.post(endpoint, options?.body);
     } else {
-      resp =  await this.axios.patch(endpoint, options?.body);
+      resp = await this.axios.patch(endpoint, options?.body);
     }
 
     let data: T = resp.data;

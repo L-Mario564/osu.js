@@ -1,4 +1,17 @@
-import { GetUserParams, GetBeatmapScoresParams, GetUserScoresParams, LegacyBeatmap, LegacyBeatmapScore, LegacyGame, LegacyMatch, LegacyMatchScore, LegacyUser, LegacyUserBestScore, LegacyUserRecentScore, LegacyEvent } from '.';
+import {
+  GetUserParams,
+  GetBeatmapScoresParams,
+  GetUserScoresParams,
+  LegacyBeatmap,
+  LegacyBeatmapScore,
+  LegacyGame,
+  LegacyMatch,
+  LegacyMatchScore,
+  LegacyUser,
+  LegacyUserBestScore,
+  LegacyUserRecentScore,
+  LegacyEvent
+} from '.';
 
 export type GetBeatmapsValidParams = Omit<GetUserParams, 'm'> & {
   since?: string;

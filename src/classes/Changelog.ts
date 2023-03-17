@@ -1,7 +1,18 @@
 import Base from './Base';
-import { Build, BuildVersions, ChangelogEntry, ChangelogStream, GithubUser, UpdateStream } from '../types';
+import {
+  Build,
+  BuildVersions,
+  ChangelogEntry,
+  ChangelogStream,
+  GithubUser,
+  UpdateStream
+} from '../types';
 import { z } from 'zod';
-import { changelogStreamSchema, getChangelogListingOptionsSchema, lookupChangelogBuildOptionsSchema } from '../schemas/changelog';
+import {
+  changelogStreamSchema,
+  getChangelogListingOptionsSchema,
+  lookupChangelogBuildOptionsSchema
+} from '../schemas/changelog';
 import { GetChangelogListingOptions, LookupChangelogBuildOptions } from '../types/options';
 import { isAxiosError } from 'axios';
 
@@ -16,14 +27,19 @@ export default class Changelog extends Base {
    * @param build Build version
    * @returns A changelog build
    */
-  public async getChangelogBuild(stream: ChangelogStream, build: string): Promise<Build & {
-    changelog_entries: (ChangelogEntry & {
-      github_user: GithubUser;
-      message: string | null;
-      message_html: string | null;
-    })[];
-    versions: BuildVersions;
-  }> {
+  public async getChangelogBuild(
+    stream: ChangelogStream,
+    build: string
+  ): Promise<
+    Build & {
+      changelog_entries: (ChangelogEntry & {
+        github_user: GithubUser;
+        message: string | null;
+        message_html: string | null;
+      })[];
+      versions: BuildVersions;
+    }
+  > {
     stream = changelogStreamSchema.parse(stream);
     build = z.string().parse(build);
     return await this.fetch(`changelog/${stream}/${build}`, 'GET');
@@ -62,25 +78,33 @@ export default class Changelog extends Base {
    * @param changelog Build version, update stream name, or build ID
    * @returns A changelog build
    */
-  public async lookupChangelogBuild(changelog: string | number, options?: LookupChangelogBuildOptions): Promise<Build & {
-    changelog_entries: (ChangelogEntry & {
-      github_user: GithubUser;
-      message: string | null;
-      message_html: string | null;
-    })[];
-    versions: BuildVersions;
-  } | undefined> {
+  public async lookupChangelogBuild(
+    changelog: string | number,
+    options?: LookupChangelogBuildOptions
+  ): Promise<
+    | (Build & {
+        changelog_entries: (ChangelogEntry & {
+          github_user: GithubUser;
+          message: string | null;
+          message_html: string | null;
+        })[];
+        versions: BuildVersions;
+      })
+    | undefined
+  > {
     changelog = z.union([z.string(), z.number()]).parse(changelog);
     options = lookupChangelogBuildOptionsSchema.optional().parse(options);
 
-    let build: Build & {
-      changelog_entries: (ChangelogEntry & {
-        github_user: GithubUser;
-        message: string | null;
-        message_html: string | null;
-      })[];
-      versions: BuildVersions;
-    } | undefined;
+    let build:
+      | (Build & {
+          changelog_entries: (ChangelogEntry & {
+            github_user: GithubUser;
+            message: string | null;
+            message_html: string | null;
+          })[];
+          versions: BuildVersions;
+        })
+      | undefined;
 
     try {
       build = await this.fetch(`changelog/${changelog}`, 'GET', options);

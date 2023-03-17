@@ -1,7 +1,23 @@
 import Base from './Base';
-import { Beatmap, BeatmapsetCompact, BeatmapsetDiscussion, Cursor, DiscussionPost, DiscussionVote, UserCompact } from '../types';
-import { GetDiscussionPostsOptions, GetDiscussionsOptions, GetDiscussionVotesOptions } from '../types/options';
-import { getDiscussionPostsOptionsSchema, getDiscussionsOptionsSchema, getDiscussionVotesOptionsSchema } from '../schemas/beatmapset-discussions';
+import {
+  Beatmap,
+  BeatmapsetCompact,
+  BeatmapsetDiscussion,
+  Cursor,
+  DiscussionPost,
+  DiscussionVote,
+  UserCompact
+} from '../types';
+import {
+  GetDiscussionPostsOptions,
+  GetDiscussionsOptions,
+  GetDiscussionVotesOptions
+} from '../types/options';
+import {
+  getDiscussionPostsOptionsSchema,
+  getDiscussionsOptionsSchema,
+  getDiscussionVotesOptionsSchema
+} from '../schemas/beatmapset-discussions';
 
 export default class BeatmapsetDiscussions extends Base {
   constructor(accessToken: string) {

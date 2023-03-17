@@ -248,7 +248,7 @@ export default class LegacyClient {
       by === 'score id'
         ? getReplayByScoreIdParamsSchema.parse(params)
         : getReplayByBeatmapAndUserIdParamsSchema.parse(params);
-    
+
     let validParams: GetReplayValidParams<
       GetReplayByScoreIdParams | GetReplayByBeatmapAndUserIdParams
     > = {

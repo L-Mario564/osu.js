@@ -1,8 +1,16 @@
 import Base from './Base';
 import { Channel, ChatMessage } from '../types';
 import { z } from 'zod';
-import { CreateAnnounceChannelOptions, CreatePMChannelOptions, CreatePMOptions } from '../types/options';
-import { createAnnounceChannelOptionsSchema, createPMChannelOptionsSchema, createPMOptionsSchema } from '../schemas/chat';
+import {
+  CreateAnnounceChannelOptions,
+  CreatePMChannelOptions,
+  CreatePMOptions
+} from '../types/options';
+import {
+  createAnnounceChannelOptionsSchema,
+  createPMChannelOptionsSchema,
+  createPMOptionsSchema
+} from '../schemas/chat';
 
 export default class Chat extends Base {
   constructor(accessToken: string) {
@@ -30,14 +38,17 @@ export default class Chat extends Base {
     options: T extends 'PM' ? CreatePMChannelOptions : CreateAnnounceChannelOptions
   ): Promise<Channel> {
     type = z.union([z.literal('PM'), z.literal('ANNOUNCE')]).parse(type) as T;
-    let parsed = (type === 'PM') ? createPMChannelOptionsSchema.parse(options) : createAnnounceChannelOptionsSchema.parse(options);
+    let parsed =
+      type === 'PM'
+        ? createPMChannelOptionsSchema.parse(options)
+        : createAnnounceChannelOptionsSchema.parse(options);
     let remapped = {
       body: {
-        ... parsed.body,
+        ...parsed.body,
         type
       }
     };
-    
+
     return await this.fetch('chat/channels', 'POST', remapped);
   }
 }

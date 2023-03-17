@@ -40,25 +40,28 @@ export default class Beatmaps extends Base {
    * @returns A beatmap
    */
   public async lookupBeatmap(options?: LookupBeatmapOptions): Promise<
-    Beatmap & {
-      beatmapset: Beatmapset & {
-        ratings: number[];
-      };
-      checksum: string | null;
-      failtimes: Fails;
-      max_combo: number;
-    } | undefined
+    | (Beatmap & {
+        beatmapset: Beatmapset & {
+          ratings: number[];
+        };
+        checksum: string | null;
+        failtimes: Fails;
+        max_combo: number;
+      })
+    | undefined
   > {
     options = lookupBeatmapOptionsSchema.optional().parse(options);
 
-    let beatmap: Beatmap & {
-      beatmapset: Beatmapset & {
-        ratings: number[];
-      };
-      checksum: string | null;
-      failtimes: Fails;
-      max_combo: number;
-    } | undefined;
+    let beatmap:
+      | (Beatmap & {
+          beatmapset: Beatmapset & {
+            ratings: number[];
+          };
+          checksum: string | null;
+          failtimes: Fails;
+          max_combo: number;
+        })
+      | undefined;
 
     try {
       beatmap = await this.fetch('beatmaps/lookup', 'GET', options);

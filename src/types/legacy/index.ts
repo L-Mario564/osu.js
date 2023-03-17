@@ -20,7 +20,7 @@ import {
 
 /**
  * Timestamp string in ODBC canonical format
-*/
+ */
 export type ODBCTimestamp = string;
 
 export type GetBeatmapsParams = z.infer<typeof getBeatmapsParamsSchema>;

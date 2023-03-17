@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
-  "exports": {
-    ".": "./lib/index.js",
-    "./legacy": "./lib/legacy.js"
-  },
   "typings": "lib/index.d.ts",
   "type": "module",
   "scripts": {
@@ -29,7 +25,7 @@
   },
   "keywords": [],
   "author": "Mario564",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/express": "^4.17.15",
     "@typescript-eslint/eslint-plugin": "^5.47.1",

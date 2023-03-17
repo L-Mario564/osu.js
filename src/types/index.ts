@@ -10,7 +10,7 @@ import { discussionMessageTypeSchema } from '../schemas/beatmapset-discussions';
 
 /**
  * Timestamp string in ISO 8601 format
-*/
+ */
 export type ISOTimestamp = string;
 export type Cursor = string | null;
 
@@ -63,7 +63,15 @@ export type UserEventTypes =
 export type AchievementGrouping = 'Skill' | 'Hush-Hush' | 'Dedication' | 'Mod Introduction';
 export type EventBeatmapsetApprovedType = 'ranked' | 'approved' | 'qualified' | 'loved';
 export type SpotlightType = 'monthly' | 'spotlight' | 'theme' | 'special' | 'bestof';
-export type ChannelType = 'PUBLIC' | 'PRIVATE' | 'MULTIPLAYER' | 'SPECTATOR' | 'TEMPORARY' | 'PM' | 'GROUP' | 'ANNOUNCE';
+export type ChannelType =
+  | 'PUBLIC'
+  | 'PRIVATE'
+  | 'MULTIPLAYER'
+  | 'SPECTATOR'
+  | 'TEMPORARY'
+  | 'PM'
+  | 'GROUP'
+  | 'ANNOUNCE';
 export type ChatMessageType = 'action' | 'markdown' | 'plain';
 export type ForumTopicType = 'normal' | 'sticky' | 'announcement';
 

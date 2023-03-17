@@ -10,26 +10,30 @@ export const changelogStreamSchema = z.union([
 
 const messageFormatsSchema = z.union([z.literal('html'), z.literal('markdown')]).array();
 
-export const getChangelogListingOptionsSchema = z.object({
-  query: z.object({
-    /** Minimum build version */
-    from: z.string(),
-    /** Maximum build ID */
-    max_id: z.number(),
-    /** Stream name to return builds from */
-    stream: changelogStreamSchema,
-    /** Maximum build version */
-    to: z.string(),
-    /** Changelog entry format (returns both by default) */
-    message_formats: messageFormatsSchema
+export const getChangelogListingOptionsSchema = z
+  .object({
+    query: z.object({
+      /** Minimum build version */
+      from: z.string(),
+      /** Maximum build ID */
+      max_id: z.number(),
+      /** Stream name to return builds from */
+      stream: changelogStreamSchema,
+      /** Maximum build version */
+      to: z.string(),
+      /** Changelog entry format (returns both by default) */
+      message_formats: messageFormatsSchema
+    })
   })
-}).deepPartial();
+  .deepPartial();
 
-export const lookupChangelogBuildOptionsSchema = z.object({
-  query: z.object({
-    /** Unset to query by build version or stream name, or id to query by build ID */
-    key: z.literal('id'),
-    /** Changelog entry format (returns both by default) */
-    message_formats: messageFormatsSchema
+export const lookupChangelogBuildOptionsSchema = z
+  .object({
+    query: z.object({
+      /** Unset to query by build version or stream name, or id to query by build ID */
+      key: z.literal('id'),
+      /** Changelog entry format (returns both by default) */
+      message_formats: messageFormatsSchema
+    })
   })
-}).deepPartial();
+  .deepPartial();

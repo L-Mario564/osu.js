@@ -7,11 +7,28 @@ import {
   getBeatmapScoresOptionSchema,
   lookupBeatmapOptionsSchema
 } from '../schemas/beatmaps';
-import { getDiscussionPostsOptionsSchema, getDiscussionsOptionsSchema, getDiscussionVotesOptionsSchema } from '../schemas/beatmapset-discussions';
-import { getChangelogListingOptionsSchema, lookupChangelogBuildOptionsSchema } from '../schemas/changelog';
-import { createAnnounceChannelOptionsSchema, createPMChannelOptionsSchema, createPMOptionsSchema } from '../schemas/chat';
+import {
+  getDiscussionPostsOptionsSchema,
+  getDiscussionsOptionsSchema,
+  getDiscussionVotesOptionsSchema
+} from '../schemas/beatmapset-discussions';
+import {
+  getChangelogListingOptionsSchema,
+  lookupChangelogBuildOptionsSchema
+} from '../schemas/changelog';
+import {
+  createAnnounceChannelOptionsSchema,
+  createPMChannelOptionsSchema,
+  createPMOptionsSchema
+} from '../schemas/chat';
 import { getCommentsOptionsSchema } from '../schemas/comments';
-import { createTopicOptionsSchema, getTopicOptionsSchema, replyToTopicOptionsSchema, updatePostOptionsSchema, updateTopicOptionsSchema } from '../schemas/forum';
+import {
+  createTopicOptionsSchema,
+  getTopicOptionsSchema,
+  replyToTopicOptionsSchema,
+  updatePostOptionsSchema,
+  updateTopicOptionsSchema
+} from '../schemas/forum';
 import { getPlaylistScoresOptionsSchema } from '../schemas/multiplayer';
 import { getNewsListingOptionsSchema, getNewsPostOptionsSchema } from '../schemas/news';
 import { getRankingOptionsSchema } from '../schemas/ranking';
@@ -54,7 +71,7 @@ export type ReplyToTopicOptions = z.infer<typeof replyToTopicOptionsSchema>;
 export type CreateTopicOptions = z.infer<typeof createTopicOptionsSchema>;
 export type GetTopicOptions = z.infer<typeof getTopicOptionsSchema>;
 export type UpdateTopicOptions = z.infer<typeof updateTopicOptionsSchema>;
-export type UpdatePostOptions  =z.infer<typeof updatePostOptionsSchema>;
+export type UpdatePostOptions = z.infer<typeof updatePostOptionsSchema>;
 
 export type SearchOptions = z.infer<typeof searchOptionsSchema>;
 
