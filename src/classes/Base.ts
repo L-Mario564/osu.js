@@ -18,7 +18,7 @@ export default class Base {
 
   protected async fetch<T>(
     endpoint: string,
-    method: 'POST' | 'GET',
+    method: 'POST' | 'GET' | 'PATCH',
     options?: Options
   ): Promise<T> {
     let resp: AxiosResponse;
@@ -30,8 +30,10 @@ export default class Base {
 
     if (method === 'GET') {
       resp = await this.axios.get(endpoint);
-    } else {
+    } else if (method === 'POST') {
       resp = await this.axios.post(endpoint, options?.body);
+    } else {
+      resp =  await this.axios.patch(endpoint, options?.body);
     }
 
     let data: T = resp.data;

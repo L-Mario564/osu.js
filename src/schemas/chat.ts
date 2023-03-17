@@ -7,9 +7,9 @@ export const createPMOptionsSchema = z.object({
     /** Message to send */
     message: z.string(),
     /** Is the message an action? */
-    is_action: z.boolean().default(false),
+    is_action: z.boolean().default(false).optional(),
     /** Client side message identifier which will be sent back in response and websocket JSON */
-    uuid: z.string().uuid()
+    uuid: z.string().uuid().optional()
   })
 });
 

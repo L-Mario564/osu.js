@@ -10,6 +10,7 @@ import {
 import { getChangelogListingOptionsSchema, lookupChangelogBuildOptionsSchema } from '../schemas/changelog';
 import { createAnnounceChannelOptionsSchema, createPMChannelOptionsSchema, createPMOptionsSchema } from '../schemas/chat';
 import { getCommentsOptionsSchema } from '../schemas/comments';
+import { createTopicOptionsSchema, getTopicOptionsSchema, replyToTopicOptionsSchema } from '../schemas/forum';
 import { getPlaylistScoresOptionsSchema } from '../schemas/multiplayer';
 import { getNewsListingOptionsSchema, getNewsPostOptionsSchema } from '../schemas/news';
 import { getRankingOptionsSchema } from '../schemas/ranking';
@@ -43,6 +44,10 @@ export type CreatePMChannelOptions = z.infer<typeof createPMChannelOptionsSchema
 export type CreateAnnounceChannelOptions = z.infer<typeof createAnnounceChannelOptionsSchema>;
 
 export type GetCommentsOptions = z.infer<typeof getCommentsOptionsSchema>;
+
+export type ReplyToTopicOptions = z.infer<typeof replyToTopicOptionsSchema>;
+export type CreateTopicOptions = z.infer<typeof createTopicOptionsSchema>;
+export type GetTopicOptions = z.infer<typeof getTopicOptionsSchema>;
 
 export type SearchOptions = z.infer<typeof searchOptionsSchema>;
 

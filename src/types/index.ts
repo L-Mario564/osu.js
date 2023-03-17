@@ -11,6 +11,7 @@ import { changelogStreamSchema } from '../schemas/changelog';
  * Timestamp string in ISO 8601 format
 */
 export type ISOTimestamp = string;
+export type Cursor = string | null;
 
 export type Mod = keyof typeof ModsEnum;
 export type RankStatus = keyof typeof StatusEnum;
@@ -62,6 +63,7 @@ export type EventBeatmapsetApprovedType = 'ranked' | 'approved' | 'qualified' | 
 export type SpotlightType = 'monthly' | 'spotlight' | 'theme' | 'special' | 'bestof';
 export type ChannelType = 'PUBLIC' | 'PRIVATE' | 'MULTIPLAYER' | 'SPECTATOR' | 'TEMPORARY' | 'PM' | 'GROUP' | 'ANNOUNCE';
 export type ChatMessageType = 'action' | 'markdown' | 'plain';
+export type ForumTopicType = 'normal' | 'sticky' | 'announcement';
 
 export interface Token {
   token_type: string;
@@ -614,7 +616,7 @@ export interface MultiplayerScore {
 }
 
 export interface MultiplayerScores {
-  cursor_string: string;
+  cursor_string: Cursor;
   params: MultiplayerScoresParams;
   scores: MultiplayerScore[];
   total: number | null;
@@ -666,7 +668,7 @@ export interface NewsSearch {
 }
 
 export interface NewsListing {
-  cursor_string: string;
+  cursor_string: Cursor;
   news_posts: NewsPost & {
     preview: string;
   };
@@ -795,4 +797,60 @@ export interface ChatMessage {
   timestamp: ISOTimestamp;
   type: ChatMessageType;
   uuid: string | null;
+}
+
+export interface ForumPost {
+  create_at: ISOTimestamp;
+  deleted_at: ISOTimestamp | null;
+  edited_at: ISOTimestamp | null;
+  edited_by_id: number | null;
+  forum_id: number;
+  id: number;
+  topic_id: number;
+  user_id: number;
+}
+
+export interface ForumPostBody {
+  html: string;
+  raw: string;
+}
+
+export interface ForumTopic {
+  create_at: ISOTimestamp;
+  deleted_at: ISOTimestamp | null;
+  first_post_id: number;
+  forum_id: number;
+  id: number;
+  is_locked: boolean;
+  last_post_id: number;
+  poll: ForumPoll | null;
+  post_count: number;
+  title: string;
+  type: ForumTopicType;
+  updated_at: ISOTimestamp;
+  user_id: number;
+}
+
+export interface ForumPoll {
+  allow_vote_change: boolean;
+  ended_at: ISOTimestamp | null;
+  hide_incomplete_results: boolean;
+  last_vote_at: ISOTimestamp | null;
+  max_votes: number;
+  options: ForumPollOptions[];
+  started_at: ISOTimestamp;
+  title: {
+    bbcode: string;
+    html: string;
+  };
+  total_vote_count: number;
+}
+
+export interface ForumPollOptions {
+  id: number;
+  text: {
+    bbcode: string;
+    html: string;
+  };
+  vote_count: number | null;
 }
