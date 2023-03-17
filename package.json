@@ -24,7 +24,8 @@
     "test:news": "vitest run src/tests/client-tests/news.test.ts",
     "test:beatmaps": "vitest run src/tests/client-tests/beatmaps.test.ts",
     "test:changelog": "vitest run src/tests/client-tests/changelog.test.ts",
-    "test:forum": "vitest run src/tests/client-tests/forum.test.ts"
+    "test:forum": "vitest run src/tests/client-tests/forum.test.ts",
+    "test:discussions": "vitest run src/tests/client-tests/beatmapset-discussions.test.ts"
   },
   "keywords": [],
   "author": "Mario564",

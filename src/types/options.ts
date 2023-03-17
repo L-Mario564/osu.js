@@ -7,6 +7,7 @@ import {
   getBeatmapScoresOptionSchema,
   lookupBeatmapOptionsSchema
 } from '../schemas/beatmaps';
+import { getDiscussionPostsOptionsSchema, getDiscussionsOptionsSchema, getDiscussionVotesOptionsSchema } from '../schemas/beatmapset-discussions';
 import { getChangelogListingOptionsSchema, lookupChangelogBuildOptionsSchema } from '../schemas/changelog';
 import { createAnnounceChannelOptionsSchema, createPMChannelOptionsSchema, createPMOptionsSchema } from '../schemas/chat';
 import { getCommentsOptionsSchema } from '../schemas/comments';
@@ -36,8 +37,12 @@ export type GetBeatmapsOptions = z.infer<typeof getBeatmapsOptionsSchema>;
 export type GetBeatmapOptions = z.infer<typeof getBeatmapOptionsSchema>;
 export type GetBeatmapAttributesOptions = z.infer<typeof getBeatmapAttributesOptionsSchema>;
 
+export type GetDiscussionPostsOptions = z.infer<typeof getDiscussionPostsOptionsSchema>;
+export type GetDiscussionVotesOptions = z.infer<typeof getDiscussionVotesOptionsSchema>;
+export type GetDiscussionsOptions = z.infer<typeof getDiscussionsOptionsSchema>;
+
 export type GetChangelogListingOptions = z.infer<typeof getChangelogListingOptionsSchema>;
-export type LookupChangelogBuildOptionsSchema = z.infer<typeof lookupChangelogBuildOptionsSchema>;
+export type LookupChangelogBuildOptions = z.infer<typeof lookupChangelogBuildOptionsSchema>;
 
 export type CreatePMOptions = z.infer<typeof createPMOptionsSchema>;
 export type CreatePMChannelOptions = z.infer<typeof createPMChannelOptionsSchema>;

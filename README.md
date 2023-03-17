@@ -1,5 +1,5 @@
-<div style="display: flex; justify-content: center;">
-  <img src="https://i.imgur.com/bjozQJd.png" style="width: 350px;"></img>
+<div align="center">
+  <img src="https://i.imgur.com/eFERZWb.png" width="350" alt="osu.js" />
 </div>
 
 ## About

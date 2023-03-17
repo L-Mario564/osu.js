@@ -2,7 +2,7 @@ import Base from './Base';
 import { Build, BuildVersions, ChangelogEntry, ChangelogStream, GithubUser, UpdateStream } from '../types';
 import { z } from 'zod';
 import { changelogStreamSchema, getChangelogListingOptionsSchema, lookupChangelogBuildOptionsSchema } from '../schemas/changelog';
-import { GetChangelogListingOptions, LookupChangelogBuildOptionsSchema } from '../types/options';
+import { GetChangelogListingOptions, LookupChangelogBuildOptions } from '../types/options';
 import { isAxiosError } from 'axios';
 
 export default class Changelog extends Base {
@@ -62,7 +62,7 @@ export default class Changelog extends Base {
    * @param changelog Build version, update stream name, or build ID
    * @returns A changelog build
    */
-  public async lookupChangelogBuild(changelog: string | number, options?: LookupChangelogBuildOptionsSchema): Promise<Build & {
+  public async lookupChangelogBuild(changelog: string | number, options?: LookupChangelogBuildOptions): Promise<Build & {
     changelog_entries: (ChangelogEntry & {
       github_user: GithubUser;
       message: string | null;

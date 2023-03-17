@@ -8,7 +8,7 @@ export const changelogStreamSchema = z.union([
   z.literal('web')
 ]);
 
-const messageFormatsSchema = z.array(z.union([z.literal('html'), z.literal('markdown')]));
+const messageFormatsSchema = z.union([z.literal('html'), z.literal('markdown')]).array();
 
 export const getChangelogListingOptionsSchema = z.object({
   query: z.object({

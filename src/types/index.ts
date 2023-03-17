@@ -6,6 +6,7 @@ import { commentableTypeSchema, commentSortSchema } from '../schemas/comments';
 import { multiplayerScoresSortSchema } from '../schemas/multiplayer';
 import { rankingTypeSchema } from '../schemas/ranking';
 import { changelogStreamSchema } from '../schemas/changelog';
+import { discussionMessageTypeSchema } from '../schemas/beatmapset-discussions';
 
 /**
  * Timestamp string in ISO 8601 format
@@ -24,6 +25,7 @@ export type MultiplayerScoresSort = z.infer<typeof multiplayerScoresSortSchema>;
 export type RankingType = z.infer<typeof rankingTypeSchema>;
 export type UserScoreType = z.infer<typeof userScoreTypeSchema>;
 export type ChangelogStream = z.infer<typeof changelogStreamSchema>;
+export type DiscussionMessageType = z.infer<typeof discussionMessageTypeSchema>;
 
 export type Playstyle = 'mouse' | 'keyboard' | 'tablet' | 'touch';
 export type Scope =
@@ -853,4 +855,45 @@ export interface ForumPollOptions {
     html: string;
   };
   vote_count: number | null;
+}
+
+export interface BeatmapsetDiscussion {
+  beatmap_id: number | null;
+  beatmapset_id: number | null;
+  can_be_resolved: boolean;
+  can_grant_kudosu: boolean;
+  created_at: ISOTimestamp;
+  deleted_at: ISOTimestamp | null;
+  deleted_by_id: number | null;
+  id: number;
+  kudosu_denied: boolean;
+  last_post_at: ISOTimestamp;
+  message_type: DiscussionMessageType;
+  parent_id: number | null;
+  resolved: boolean;
+  timestamp: number | null;
+  updated_at: ISOTimestamp;
+  user_id: number;
+}
+
+export interface DiscussionPost {
+  beatmapset_discussion_id: number;
+  created_at: ISOTimestamp;
+  deleted_at: ISOTimestamp | null;
+  deleted_by_id: number | null;
+  id: number;
+  last_editor_id: number | null;
+  message: string;
+  system: boolean;
+  updated_at: ISOTimestamp;
+  user_id: number;
+}
+
+export interface DiscussionVote {
+  beatmapset_discussion_id: number;
+  created_at: ISOTimestamp;
+  id: number;
+  score: number;
+  updated_at: ISOTimestamp;
+  user_id: number;
 }

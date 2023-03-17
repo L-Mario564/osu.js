@@ -12,10 +12,11 @@ import Beatmaps from './Beatmaps';
 import Changelog from './Changelog';
 import Chat from './Chat';
 import Forum from './Forum';
+import BeatmapsetDiscussions from './BeatmapsetDiscussions';
 
 export default class Client extends Base {
   public beatmaps: Beatmaps;
-  // public beatmapsets: any;
+  public beatmapsetDiscussions: BeatmapsetDiscussions;
   public changelog: Changelog;
   public chat: Chat;
   public comments: Comments;
@@ -31,6 +32,7 @@ export default class Client extends Base {
     super(token);
 
     this.beatmaps = new Beatmaps(token);
+    this.beatmapsetDiscussions = new BeatmapsetDiscussions(token);
     this.changelog = new Changelog(token);
     this.chat = new Chat(token);
     this.comments = new Comments(token);
