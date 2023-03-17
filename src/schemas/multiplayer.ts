@@ -16,5 +16,4 @@ export const getPlaylistScoresOptionsSchema = z
       cursor_string: z.string()
     })
   })
-  .deepPartial()
-  .optional();
+  .deepPartial();

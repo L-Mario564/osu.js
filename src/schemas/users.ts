@@ -8,15 +8,13 @@ export const getSelfOptionsSchema = z
       mode: gameModeSchema
     })
   })
-  .deepPartial()
-  .optional();
+  .deepPartial();
 
 export const getUserKudosuOptionsSchema = z
   .object({
     query: z.object(baseQuery)
   })
-  .deepPartial()
-  .optional();
+  .deepPartial();
 
 export const userScoreTypeSchema = z.union([
   z.literal('best'),
@@ -34,8 +32,7 @@ export const getUserScoresOptionsSchema = z
   .object({
     query: z.object(getUserScoresOptions)
   })
-  .deepPartial()
-  .optional();
+  .deepPartial();
 
 export const getUserRecentScoresOptionsSchema = z
   .object({
@@ -45,15 +42,13 @@ export const getUserRecentScoresOptionsSchema = z
       include_fails: z.union([z.boolean(), z.number()])
     })
   })
-  .deepPartial()
-  .optional();
+  .deepPartial();
 
 export const getUserBeatmapsOptionsSchema = z
   .object({
     query: z.object(baseQuery)
   })
-  .deepPartial()
-  .optional();
+  .deepPartial();
 
 export const userBeatmapsTypeSchema = z.union([
   z.literal('favourite'),
@@ -68,8 +63,7 @@ export const getUserRecentActivityOptionsSchema = z
   .object({
     query: z.object(baseQuery)
   })
-  .deepPartial()
-  .optional();
+  .deepPartial();
 
 export const getUserOptionsSchema = z
   .object({
@@ -82,8 +76,7 @@ export const getUserOptionsSchema = z
       key: z.union([z.literal('id'), z.literal('username')])
     })
   })
-  .deepPartial()
-  .optional();
+  .deepPartial();
 
 export const getUsersOptionsSchema = z
   .object({
@@ -92,5 +85,4 @@ export const getUsersOptionsSchema = z
       ids: z.number().array().max(50)
     })
   })
-  .deepPartial()
-  .optional();
+  .deepPartial();

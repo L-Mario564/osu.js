@@ -14,7 +14,6 @@ export default class Wiki extends Base {
   public async getWikiPage(locale: string, path: string): Promise<WikiPage> {
     locale = z.string().length(2).parse(locale);
     path = z.string().parse(path);
-
     return await this.fetch(`wiki/${locale}/${path}`, 'GET');
   }
 }

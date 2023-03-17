@@ -22,7 +22,7 @@ export default class Multiplayer extends Base {
   ): Promise<MultiplayerScores> {
     room = z.number().parse(room);
     playlist = z.number().parse(playlist);
-    options = getPlaylistScoresOptionsSchema.parse(options);
+    options = getPlaylistScoresOptionsSchema.optional().parse(options);
 
     return await this.fetch(`rooms/${room}/playlist/${playlist}/scores`, 'GET', options);
   }

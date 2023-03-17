@@ -11,8 +11,7 @@ export const getNewsListingOptionsSchema = z
       cursor_string: z.string()
     })
   })
-  .deepPartial()
-  .optional();
+  .deepPartial();
 
 export const getNewsPostOptionsSchema = z
   .object({
@@ -21,5 +20,4 @@ export const getNewsPostOptionsSchema = z
       key: z.literal('id')
     })
   })
-  .deepPartial()
-  .optional();
+  .deepPartial();

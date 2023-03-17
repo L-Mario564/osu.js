@@ -23,5 +23,4 @@ export const getRankingOptionsSchema = z
       variant: z.string()
     })
   })
-  .deepPartial()
-  .optional();
+  .deepPartial();

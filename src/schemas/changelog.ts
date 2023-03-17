@@ -23,7 +23,7 @@ export const getChangelogListingOptionsSchema = z.object({
     /** Changelog entry format (returns both by default) */
     message_formats: messageFormatsSchema
   })
-}).deepPartial().optional();
+}).deepPartial();
 
 export const lookupChangelogBuildOptionsSchema = z.object({
   query: z.object({
@@ -32,4 +32,4 @@ export const lookupChangelogBuildOptionsSchema = z.object({
     /** Changelog entry format (returns both by default) */
     message_formats: messageFormatsSchema
   })
-}).deepPartial().optional();
+}).deepPartial();

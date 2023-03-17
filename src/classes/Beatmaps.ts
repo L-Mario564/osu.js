@@ -49,7 +49,7 @@ export default class Beatmaps extends Base {
       max_combo: number;
     } | undefined
   > {
-    options = lookupBeatmapOptionsSchema.parse(options);
+    options = lookupBeatmapOptionsSchema.optional().parse(options);
 
     let beatmap: Beatmap & {
       beatmapset: Beatmapset & {
@@ -84,7 +84,7 @@ export default class Beatmaps extends Base {
   ): Promise<BeatmapUserScore> {
     beatmap = z.number().parse(beatmap);
     user = z.number().parse(user);
-    options = getBeatmapScoresOptionSchema.parse(options);
+    options = getBeatmapScoresOptionSchema.optional().parse(options);
 
     return await this.fetch(`beatmaps/${beatmap}/scores/users/${user}`, 'GET', options);
   }
@@ -102,7 +102,7 @@ export default class Beatmaps extends Base {
   ): Promise<Score[]> {
     beatmap = z.number().parse(beatmap);
     user = z.number().parse(user);
-    options = getBeatmapScoresOptionSchema.parse(options);
+    options = getBeatmapScoresOptionSchema.optional().parse(options);
 
     let scores: {
       scores: Score[];
@@ -128,7 +128,7 @@ export default class Beatmaps extends Base {
     })[]
   > {
     beatmap = z.number().parse(beatmap);
-    options = getBeatmapScoresOptionSchema.parse(options);
+    options = getBeatmapScoresOptionSchema.optional().parse(options);
 
     let scores: {
       scores: (Score & {
@@ -156,7 +156,7 @@ export default class Beatmaps extends Base {
       };
     })[]
   > {
-    options = getBeatmapsOptionsSchema.parse(options);
+    options = getBeatmapsOptionsSchema.optional().parse(options);
 
     let beatmaps: {
       beatmaps: (Beatmap & {
@@ -211,7 +211,7 @@ export default class Beatmaps extends Base {
   > {
     beatmap = z.number().parse(beatmap);
     gamemode = gameModeSchema.parse(gamemode) as T;
-    options = getBeatmapAttributesOptionsSchema.parse(options);
+    options = getBeatmapAttributesOptionsSchema.optional().parse(options);
 
     let remapped = {
       body: {

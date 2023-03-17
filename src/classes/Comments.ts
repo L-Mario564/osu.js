@@ -15,6 +15,7 @@ export default class Comments extends Base {
    */
   public async getComments(options?: GetCommentsOptions): Promise<CommentBundle> {
     options = getCommentsOptionsSchema
+      .optional()
       .transform((options) => {
         let query: Record<string, unknown> | undefined = options?.query;
 

@@ -55,7 +55,7 @@ export default class Users extends Base {
       statistics_rulesets: StatisticsRulesets;
     }
   > {
-    options = getSelfOptionsSchema.parse(options);
+    options = getSelfOptionsSchema.optional().parse(options);
     let endpoint: string = 'me';
 
     if (options?.urlParams?.mode) {
@@ -75,7 +75,7 @@ export default class Users extends Base {
     options?: GetUserKodosuOptions
   ): Promise<UserKudosuHistory[]> {
     user = z.number().parse(user);
-    options = getUserKudosuOptionsSchema.parse(options);
+    options = getUserKudosuOptionsSchema.optional().parse(options);
     return await this.fetch(`users/${user}/kudosu`, 'GET', options);
   }
 
@@ -89,7 +89,7 @@ export default class Users extends Base {
     options?: GetUserRecentActivityOptions
   ): Promise<UserEvent[]> {
     user = z.number().parse(user);
-    options = getUserRecentActivityOptionsSchema.parse(options);
+    options = getUserRecentActivityOptionsSchema.optional().parse(options);
     return await this.fetch(`users/${user}/recent_activity`, 'GET', options);
   }
 
@@ -107,8 +107,8 @@ export default class Users extends Base {
     type = userScoreTypeSchema.parse(type) as T;
     options =
       type === 'recent'
-        ? getUserRecentScoresOptionsSchema.parse(options)
-        : getUserScoresOptionsSchema.parse(options);
+        ? getUserRecentScoresOptionsSchema.optional().parse(options)
+        : getUserScoresOptionsSchema.optional().parse(options);
 
     return await this.fetch(`users/${user}/scores/${type}`, 'GET', options);
   }
@@ -134,7 +134,7 @@ export default class Users extends Base {
   > {
     user = z.number().parse(user);
     type = userBeatmapsTypeSchema.parse(type) as T;
-    options = getUserBeatmapsOptionsSchema.parse(options);
+    options = getUserBeatmapsOptionsSchema.optional().parse(options);
 
     return await this.fetch(`users/${user}/beatmapsets/${type}`, 'GET', options);
   }
@@ -146,7 +146,7 @@ export default class Users extends Base {
    */
   public async getUser(user: number | string, options?: GetUserOptions): Promise<UserExtended> {
     user = z.number().parse(user);
-    options = getUserOptionsSchema.parse(options);
+    options = getUserOptionsSchema.optional().parse(options);
     let endpoint: string = `users/${user}`;
 
     if (options?.urlParams?.mode) {
@@ -168,7 +168,7 @@ export default class Users extends Base {
       statistics_rulesets: StatisticsRulesets;
     })[]
   > {
-    options = getUsersOptionsSchema.parse(options);
+    options = getUsersOptionsSchema.optional().parse(options);
 
     let obj: {
       users: (UserCompact & {

@@ -14,7 +14,7 @@ export default class News extends Base {
    * @returns An object containing news posts and other additional data
    */
   public async getNewsListing(options?: GetNewsListingOptions): Promise<NewsListing> {
-    options = getNewsListingOptionsSchema.parse(options);
+    options = getNewsListingOptionsSchema.optional().parse(options);
     return await this.fetch('news', 'GET', options);
   }
 
@@ -33,7 +33,7 @@ export default class News extends Base {
     }
   > {
     news = z.union([z.string(), z.number()]).parse(news);
-    options = getNewsPostOptionsSchema.parse(options);
+    options = getNewsPostOptionsSchema.optional().parse(options);
 
     return await this.fetch(`news/${news}`, 'GET', options);
   }

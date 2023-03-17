@@ -12,8 +12,7 @@ export const lookupBeatmapOptionsSchema = z
       id: z.number()
     })
   })
-  .deepPartial()
-  .optional();
+  .deepPartial();
 
 export const getBeatmapScoresOptionSchema = z
   .object({
@@ -22,8 +21,7 @@ export const getBeatmapScoresOptionSchema = z
       mode: gameModeSchema
     })
   })
-  .deepPartial()
-  .optional();
+  .deepPartial();
 
 export const getBeatmapsOptionsSchema = z
   .object({
@@ -32,8 +30,7 @@ export const getBeatmapsOptionsSchema = z
       ids: z.number().array().max(50)
     })
   })
-  .deepPartial()
-  .optional();
+  .deepPartial();
 
 export const getBeatmapOptionsSchema = z
   .object({
@@ -42,8 +39,7 @@ export const getBeatmapOptionsSchema = z
       id: z.number()
     })
   })
-  .deepPartial()
-  .optional();
+  .deepPartial();
 
 export const getBeatmapAttributesOptionsSchema = z
   .object({
@@ -52,5 +48,4 @@ export const getBeatmapAttributesOptionsSchema = z
       mods: z.union([z.number(), modsSchema])
     })
   })
-  .deepPartial()
-  .optional();
+  .deepPartial();

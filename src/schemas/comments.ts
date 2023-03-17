@@ -24,7 +24,4 @@ export const getCommentsOptionsSchema = z
         /** Sort option */
         sort: commentSortSchema
       })
-      .partial()
-  })
-  .partial()
-  .optional();
+  }).deepPartial();

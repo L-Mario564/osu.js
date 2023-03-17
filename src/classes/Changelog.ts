@@ -53,7 +53,7 @@ export default class Changelog extends Base {
       user_count: number;
     })[];
   }> {
-    options = getChangelogListingOptionsSchema.parse(options);
+    options = getChangelogListingOptionsSchema.optional().parse(options);
     return await this.fetch('changelog', 'GET', options);
   }
 
@@ -71,7 +71,7 @@ export default class Changelog extends Base {
     versions: BuildVersions;
   } | undefined> {
     changelog = z.union([z.string(), z.number()]).parse(changelog);
-    options = lookupChangelogBuildOptionsSchema.parse(options);
+    options = lookupChangelogBuildOptionsSchema.optional().parse(options);
 
     let build: Build & {
       changelog_entries: (ChangelogEntry & {

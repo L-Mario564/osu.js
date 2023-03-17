@@ -22,7 +22,7 @@ export default class Ranking extends Base {
   ): Promise<Rankings> {
     mode = gameModeSchema.parse(mode);
     type = rankingTypeSchema.parse(type);
-    options = getRankingOptionsSchema.parse(options);
+    options = getRankingOptionsSchema.optional().parse(options);
 
     return await this.fetch(`rankings/${mode}/${type}`, 'GET', options);
   }
