@@ -12,7 +12,13 @@ import {
   createPMOptionsSchema
 } from '../schemas/chat';
 
+/**
+ * Class that wraps all chat related endpoints
+ */
 export default class Chat extends Base {
+  /**
+   * @param accessToken OAuth access token
+   */
   constructor(accessToken: string) {
     super(accessToken);
   }

@@ -40,7 +40,13 @@ import {
   GetUserScoresOptions
 } from '../types/options';
 
+/**
+ * Class that wraps all user related endpoints
+ */
 export default class Users extends Base {
+  /**
+   * @param accessToken OAuth access token
+   */
   constructor(accessToken: string) {
     super(accessToken);
   }

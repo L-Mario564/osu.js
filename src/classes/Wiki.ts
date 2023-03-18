@@ -2,7 +2,13 @@ import Base from './Base';
 import { z } from 'zod';
 import { WikiPage } from '../types';
 
+/**
+ * Class that wraps all wiki related endpoints
+ */
 export default class Wiki extends Base {
+  /**
+   * @param accessToken OAuth access token
+   */
   constructor(accessToken: string) {
     super(accessToken);
   }

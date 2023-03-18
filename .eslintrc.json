@@ -27,5 +27,5 @@
     "@typescript-eslint/no-inferrable-types": "off",
     "quote-props": ["warn", "consistent"]
   },
-  "ignorePatterns": ["node_modules", "lib"]
+  "ignorePatterns": ["node_modules", "lib", "docs"]
 }

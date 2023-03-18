@@ -1,0 +1,13 @@
+src
+node_modules
+docs
+.github
+.env
+.env.example
+.eslintrc.json
+.gitignore
+.prettierignore
+.prettierrc.json
+api-token.json
+tsconfig.json
+typedoc.json

@@ -16,7 +16,13 @@ import {
 import { GetChangelogListingOptions, LookupChangelogBuildOptions } from '../types/options';
 import { isAxiosError } from 'axios';
 
+/**
+ * Class that wraps all changelog related endpoints
+ */
 export default class Changelog extends Base {
+  /**
+   * @param accessToken OAuth access token
+   */
   constructor(accessToken: string) {
     super(accessToken);
   }

@@ -19,7 +19,13 @@ import {
   getDiscussionVotesOptionsSchema
 } from '../schemas/beatmapset-discussions';
 
+/**
+ * Class that wraps all beatmapset discussion related endpoints
+ */
 export default class BeatmapsetDiscussions extends Base {
+  /**
+   * @param accessToken OAuth access token
+   */
   constructor(accessToken: string) {
     super(accessToken);
   }

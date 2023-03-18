@@ -30,7 +30,13 @@ import {
 import { gameModeSchema } from '../schemas';
 import { isAxiosError } from 'axios';
 
+/**
+ * Class that wraps all beatmap related endpoints
+ */
 export default class Beatmaps extends Base {
+  /**
+   * @param accessToken OAuth access token
+   */
   constructor(accessToken: string) {
     super(accessToken);
   }

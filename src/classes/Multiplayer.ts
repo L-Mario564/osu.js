@@ -4,7 +4,13 @@ import { GetPlaylistScoresOptions } from '../types/options';
 import { getPlaylistScoresOptionsSchema } from '../schemas/multiplayer';
 import { z } from 'zod';
 
+/**
+ * Class that wraps all multiplayer related endpoints
+ */
 export default class Multiplayer extends Base {
+  /**
+   * @param accessToken OAuth access token
+   */
   constructor(accessToken: string) {
     super(accessToken);
   }

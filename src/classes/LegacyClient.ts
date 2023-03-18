@@ -50,9 +50,15 @@ import {
 import { z } from 'zod';
 import axios, { AxiosResponse } from 'axios';
 
+/**
+ * Class that wraps all endpoints of the legacy API (API v1)
+ */
 export default class LegacyClient {
   private apiKey: string;
 
+  /**
+   * @param apiKey API key
+   */
   constructor(apiKey: string) {
     this.apiKey = z.string().parse(apiKey);
   }

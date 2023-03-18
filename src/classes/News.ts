@@ -4,7 +4,13 @@ import { GetNewsListingOptions, GetNewsPostOptions } from '../types/options';
 import { z } from 'zod';
 import { getNewsListingOptionsSchema, getNewsPostOptionsSchema } from '../schemas/news';
 
+/**
+ * Class that wraps all news related endpoints
+ */
 export default class News extends Base {
+  /**
+   * @param accessToken OAuth access token
+   */
   constructor(accessToken: string) {
     super(accessToken);
   }

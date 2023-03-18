@@ -4,7 +4,13 @@ import { GetRankingOptions } from '../types/options';
 import { gameModeSchema } from '../schemas';
 import { getRankingOptionsSchema, rankingTypeSchema } from '../schemas/ranking';
 
+/**
+ * Class that wraps all ranking related endpoints
+ */
 export default class Ranking extends Base {
+  /**
+   * @param accessToken OAuth access token
+   */
   constructor(accessToken: string) {
     super(accessToken);
   }

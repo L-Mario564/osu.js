@@ -2,9 +2,18 @@ import axios, { AxiosResponse } from 'axios';
 import { Scope, Token } from '../../types';
 import Base from './Base';
 
+/**
+ * Class that handles auth code grant flow related actions
+ */
 export default class AuthCodeGrant extends Base {
   private scopes: Scope[];
 
+  /**
+   * @param clientId OAuth client ID
+   * @param clientSecret OAuth client secret
+   * @param redirectUri OAuth redirect URI
+   * @param scopes An array of OAuth scopes
+   */
   constructor(clientId: number, clientSecret: string, redirectUri: string, scopes: Scope[]) {
     super(clientId, clientSecret, redirectUri);
 

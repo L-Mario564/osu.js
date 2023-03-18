@@ -16,7 +16,13 @@ import {
   updateTopicOptionsSchema
 } from '../schemas/forum';
 
+/**
+ * Class that wraps all forum related endpoints
+ */
 export default class Forum extends Base {
+  /**
+   * @param accessToken OAuth access token
+   */
   constructor(accessToken: string) {
     super(accessToken);
   }
@@ -112,11 +118,13 @@ export default class Forum extends Base {
     }
 
     let parsed = {
+      // prettier-ignore
       body: options?.body
-        ? {
-            ...options.body,
-            ...parsedForumTopic
-          }
+        ?
+        {
+          ...options.body,
+          ...parsedForumTopic
+        }
         : undefined
     };
 

@@ -4,7 +4,13 @@ import { GetCommentsOptions } from '../types/options';
 import { getCommentsOptionsSchema } from '../schemas/comments';
 import { z } from 'zod';
 
+/**
+ * Class that wraps all comment related endpoints
+ */
 export default class Comments extends Base {
+  /**
+   * @param accessToken OAuth access token
+   */
   constructor(accessToken: string) {
     super(accessToken);
   }

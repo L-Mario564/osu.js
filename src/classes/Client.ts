@@ -14,6 +14,9 @@ import Chat from './Chat';
 import Forum from './Forum';
 import BeatmapsetDiscussions from './BeatmapsetDiscussions';
 
+/**
+ * Class that wraps all endpoints of the current API (API v2)
+ */
 export default class Client extends Base {
   public beatmaps: Beatmaps;
   public beatmapsetDiscussions: BeatmapsetDiscussions;
@@ -27,6 +30,9 @@ export default class Client extends Base {
   public users: Users;
   public wiki: Wiki;
 
+  /**
+   * @param accessToken OAuth access token
+   */
   constructor(accessToken: string) {
     let token = accessToken;
     super(token);
