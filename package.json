@@ -1,12 +1,13 @@
 {
   "name": "osu.js",
   "version": "1.0.0",
-  "description": "",
+  "description": "osu.js is an unofficial Javascript and Typescript SDK for the browser-facing portion of osu! with type safety in mind",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "type": "module",
   "scripts": {
     "build": "npx tsc",
+    "build:docs": "npx typedoc",
     "fmt": "npx prettier --write .",
     "lint": "npx eslint . && npx tsc --noEmit",
     "test:legacy": "vitest run src/tests/legacyClient.test.ts",
@@ -23,10 +24,14 @@
     "test:forum": "vitest run src/tests/client-tests/forum.test.ts",
     "test:discussions": "vitest run src/tests/client-tests/beatmapset-discussions.test.ts"
   },
-  "keywords": [],
+  "keywords": [
+    "osu",
+    "api-wrapper"
+  ],
   "author": "Mario564",
   "license": "MIT",
   "devDependencies": {
+    "@mxssfd/typedoc-theme": "^1.0.3",
     "@types/express": "^4.17.15",
     "@typescript-eslint/eslint-plugin": "^5.47.1",
     "@typescript-eslint/parser": "^5.47.1",
@@ -36,6 +41,8 @@
     "open": "^8.4.0",
     "prettier": "^2.8.1",
     "ts-node": "^10.9.1",
+    "typedoc": "^0.23.27",
+    "typedoc-plugin-zod": "^1.0.1",
     "vitest": "^0.26.2"
   },
   "dependencies": {

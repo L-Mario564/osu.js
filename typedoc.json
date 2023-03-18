@@ -1,0 +1,6 @@
+{
+  "plugin": ["typedoc-plugin-zod", "@mxssfd/typedoc-theme"],
+  "entryPoints": ["./src/index.ts"],
+  "out": "docs",
+  "theme": "my-theme"
+}
