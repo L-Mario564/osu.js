@@ -810,7 +810,7 @@ export interface ChatMessage {
 }
 
 export interface ForumPost {
-  create_at: ISOTimestamp;
+  created_at: ISOTimestamp;
   deleted_at: ISOTimestamp | null;
   edited_at: ISOTimestamp | null;
   edited_by_id: number | null;
@@ -826,7 +826,7 @@ export interface ForumPostBody {
 }
 
 export interface ForumTopic {
-  create_at: ISOTimestamp;
+  created_at: ISOTimestamp;
   deleted_at: ISOTimestamp | null;
   first_post_id: number;
   forum_id: number;
