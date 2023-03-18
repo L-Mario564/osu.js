@@ -3,5 +3,6 @@
   "entryPoints": ["./src/index.ts"],
   "out": "docs",
   "theme": "my-theme",
-  "name": "osu.js"
+  "name": "osu.js",
+  "gitRemote": "https://github.com/L-Mario564/osu.js.git"
 }
