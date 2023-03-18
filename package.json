@@ -1,5 +1,5 @@
 {
-  "name": "osu.js",
+  "name": "osu-web.js",
   "version": "1.0.0",
   "description": "osu.js is an unofficial Javascript and Typescript SDK for the browser-facing portion of osu! with type safety in mind",
   "main": "lib/index.js",
