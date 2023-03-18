@@ -1,8 +1,9 @@
 {
   "name": "osu-web.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "osu.js is an unofficial Javascript and Typescript SDK for the browser-facing portion of osu! with type safety in mind",
   "main": "lib/index.js",
+  "module": "lib/index.mjs",
   "typings": "lib/index.d.ts",
   "type": "module",
   "repository": {
@@ -10,7 +11,7 @@
     "url": "https://github.com/L-Mario564/osu.js.git"
   },
   "scripts": {
-    "build": "npx tsc",
+    "build": "npx tsup src/index.ts --format cjs,esm --dts && node scripts/rename.js",
     "build:docs": "npx typedoc",
     "fmt": "npx prettier --write .",
     "lint": "npx eslint . && npx tsc --noEmit",
@@ -45,6 +46,7 @@
     "open": "^8.4.0",
     "prettier": "^2.8.1",
     "ts-node": "^10.9.1",
+    "tsup": "^6.6.3",
     "typedoc": "^0.23.27",
     "typedoc-plugin-zod": "^1.0.1",
     "typescript": "^4.9.4",

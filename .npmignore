@@ -1,6 +1,7 @@
 src
 node_modules
 docs
+scripts
 .github
 .env
 .env.example
