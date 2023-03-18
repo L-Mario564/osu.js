@@ -10,17 +10,17 @@ osu.js is an unofficial Javascript and Typescript SDK for the browser-facing por
 
 ```bash
 # npm
-npm i osu.js
+npm i osu-web.js
 # yarn
-yarn add osu.js
+yarn add osu-web.js
 # pnpm
-pnpm add osu.js
+pnpm add osu-web.js
 ```
 
 ## Quickstart
 
 ```js
-import { Client, LegacyClient } from 'osu.js';
+import { Client, LegacyClient } from 'osu-web.js';
 
 // Client for the current API (API v2)
 const client = new Client('OAUTH ACCESS TOKEN');
@@ -55,9 +55,9 @@ The current API is up to date with February 17th, 2023's (2023-02-17) [breaking 
 
 ### Project
 
-- [Documentation]()
+- [Documentation](https://osu-js.onrender.com)
 - [Github](https://github.com/L-Mario564/osu.js)
-- [npm]()
+- [npm](https://www.npmjs.com/package/osu-web.js)
 
 ### Other
 
