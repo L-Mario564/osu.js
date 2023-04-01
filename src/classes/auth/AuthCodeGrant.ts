@@ -68,19 +68,18 @@ export default class AuthCodeGrant extends Base {
 
   /**
    * Refreshes a token
-   * @param accessToken The access token to refresh
-   * @param refreshToken The refresh token used to refresh
+   * @param refreshToken The token used to refresh
    * @returns An API token
    */
-  public async refreshToken(accessToken: string, refreshToken: string): Promise<Token> {
+  public async refreshToken(refreshToken: string): Promise<Token> {
     let resp: AxiosResponse = await axios.post(
       `${this.oauthUrl}token`,
       {
         client_id: this.clientId,
         client_secret: this.clientSecret,
-        access_token: accessToken,
         refresh_token: refreshToken,
-        grant_type: 'refresh_token'
+        grant_type: 'refresh_token',
+        scope: this.scopes
       },
       this.headers
     );

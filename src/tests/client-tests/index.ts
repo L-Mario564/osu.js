@@ -37,7 +37,7 @@ export async function getExistingAccessToken() {
     let { clientId, clientSecret, redirectUri } = getClientData();
     token = await new Auth(Number(clientId), clientSecret, redirectUri)
       .authorizationCodeGrant()
-      .refreshToken(token.access_token, token.refresh_token);
+      .refreshToken(token.refresh_token);
 
     tokenRefreshed = true;
   }

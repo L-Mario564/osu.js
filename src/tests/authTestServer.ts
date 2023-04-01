@@ -55,7 +55,7 @@ server.get('/refresh-token', async (_, res) => {
   let newToken: Token | undefined;
 
   try {
-    newToken = await authCodeGrant.refreshToken(token.access_token, token.refresh_token);
+    newToken = await authCodeGrant.refreshToken(token.refresh_token);
   } catch (err) {
     res.status(500).send(err);
     return;
