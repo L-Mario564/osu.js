@@ -1,23 +1,19 @@
 import e from 'express';
-import { Auth } from '../';
+import { Auth, buildUrl } from '../';
 import { readFileSync, writeFileSync } from 'fs';
-import { GuestToken, Token } from '../types';
+import { GuestToken, Scope, Token } from '../types';
 import { tokenFileLocation, getClientData } from './client-tests';
 
 let server = e();
 let { clientId, clientSecret, redirectUri } = getClientData();
 
 let client = new Auth(Number(clientId), clientSecret, redirectUri);
-let authCodeGrant = client.authorizationCodeGrant([
-  'identify',
-  'public',
-  'friends.read',
-  'forum.write',
-  'chat.write'
-]);
+let scopes: Scope[] = ['identify', 'public', 'friends.read', 'forum.write', 'chat.write'];
+
+let authCodeGrant = client.authorizationCodeGrant(scopes);
 
 server.get('/auth', (_, res) => {
-  res.redirect(authCodeGrant.requestAuthorizationUrl());
+  res.redirect(buildUrl.authRequest(Number(clientId), redirectUri, scopes));
 });
 
 server.get('/auth-callback', async (req, res) => {

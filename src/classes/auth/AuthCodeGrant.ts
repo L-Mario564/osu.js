@@ -21,30 +21,6 @@ export default class AuthCodeGrant extends Base {
   }
 
   /**
-   * Builds the authorization request URL
-   * @param state Data that will be returned when a temporary code is issued. It can be used to provide a token for protecting against cross-site request forgery attacks.
-   * @returns A URL which the user can be redirected to request authorization
-   */
-  public requestAuthorizationUrl(state?: string): string {
-    let url: string = `${this.oauthUrl}authorize`;
-    url += `?client_id=${this.clientId}`;
-    url += `&redirect_uri=${this.redirectUri}`;
-    url += '&response_type=code';
-
-    if (this.scopes.length === 0) {
-      this.scopes = ['identify'];
-    }
-
-    url += `&scope=${this.scopes.reduce((prev: string, scope) => `${prev}${scope} `, '')}`.trim();
-
-    if (state) {
-      url += `&state=${state}`;
-    }
-
-    return url;
-  }
-
-  /**
    * Gets a token
    * @param code The string received after a user authorizes the app
    * @returns An API token

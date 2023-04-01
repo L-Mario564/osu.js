@@ -1,4 +1,4 @@
-import { GameMode } from '../types';
+import { GameMode, Scope } from '../types';
 
 /**
  * URL builder
@@ -21,7 +21,32 @@ export const buildUrl = {
   forum: (forumId: number) => createUrl(`community/forums/${forumId}`),
   forumTopic: (topicId: number) => createUrl(`community/forums/${topicId}`),
   room: (roomId: number) => createUrl(`multiplayer/rooms/${roomId}`),
-  match: (matchId: number) => createUrl(`mp/${matchId}`)
+  match: (matchId: number) => createUrl(`mp/${matchId}`),
+  /**
+   * @param clientId OAuth client ID
+   * @param redirectUri OAuth redirect URI
+   * @param scopes An array of OAuth scopes
+   * @param state Data that will be returned when a temporary code is issued. It can be used to provide a token for protecting against cross-site request forgery attacks
+   */
+  authRequest: (
+    clientId: number,
+    redirectUri: string,
+    scopes: Scope[] = ['identify'],
+    state?: string
+  ) => {
+    let url = createUrl('oauth');
+    url += '/authorize';
+    url += `?client_id=${clientId}`;
+    url += `&redirect_uri=${redirectUri}`;
+    url += '&response_type=code';
+    url += `&scope=${scopes.reduce((prev: string, scope) => `${prev}${scope} `, '')}`.trim();
+
+    if (state) {
+      url += `&state=${state}`;
+    }
+
+    return url;
+  }
 };
 
 function createUrl(path: string, subdomain?: string) {
