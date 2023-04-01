@@ -1,9 +1,9 @@
 {
   "name": "osu-web.js",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "osu.js is an unofficial Javascript and Typescript SDK for the browser-facing portion of osu! with type safety in mind",
-  "main": "lib/index.js",
-  "module": "lib/index.mjs",
+  "main": "lib/index.cjs",
+  "module": "lib/index.js",
   "typings": "lib/index.d.ts",
   "type": "module",
   "repository": {
