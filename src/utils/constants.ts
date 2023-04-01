@@ -56,7 +56,7 @@ function createUrl(path: string, subdomain?: string) {
     baseUrl = baseUrl.replace('osu', subdomain);
   }
 
-  return `${baseUrl}/${path}`;
+  return `${baseUrl}${path}`;
 }
 
 /**
