@@ -12,7 +12,6 @@
   },
   "scripts": {
     "build": "npx tsup src/index.ts --format cjs,esm --dts && node scripts/rename.js",
-    "build:docs": "npx typedoc",
     "fmt": "npx prettier --write .",
     "lint": "npx eslint . && npx tsc --noEmit",
     "test:legacy": "vitest run src/tests/legacyClient.test.ts",
