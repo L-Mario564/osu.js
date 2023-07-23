@@ -7,8 +7,7 @@ import {
   getUserScoresParamsSchema,
   getMultiplayerLobbyParamsSchema,
   getReplayByScoreIdParamsSchema,
-  getReplayByBeatmapAndUserIdParamsSchema,
-  getReplayParamsSchema
+  getReplayByBeatmapAndUserIdParamsSchema
 } from '../../schemas/legacy';
 import {
   GenresEnum,
@@ -28,7 +27,6 @@ export type GetUserParams = z.infer<typeof getUserParamsSchema>;
 export type GetBeatmapScoresParams = z.infer<typeof getBeatmapScoresParamsSchema>;
 export type GetUserScoresParams = z.infer<typeof getUserScoresParamsSchema>;
 export type GetMultiplayerLobbyParams = z.infer<typeof getMultiplayerLobbyParamsSchema>;
-export type GetReplay = z.infer<typeof getReplayParamsSchema>;
 
 export type GetReplayByScoreIdParams = z.infer<typeof getReplayByScoreIdParamsSchema>;
 
