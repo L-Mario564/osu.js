@@ -1,0 +1,24 @@
+---
+title: LegacyBeatmapScore
+ref: interface
+---
+
+# LegacyBeatmapScore
+
+```ts
+interface LegacyBeatmapScore extends LegacyBaseScore {
+  score_id: number;
+  username: string;
+  user_id: number;
+  date: ODBCTimestamp;
+  rank: Rank;
+  pp: number;
+  replay_available: boolean;
+}
+```
+
+## Types
+
+- [LegacyBaseScore](/references/legacy-base-score)
+- [ODBCTimestamp](/references/odbc-timestamp)
+- [Rank](/references/rank)

@@ -1,0 +1,20 @@
+---
+title: GetBeatmapScoresParams
+ref: type
+---
+
+# GetBeatmapScoresParams
+
+```ts
+type GetBeatmapScoresParams = GetUserScores & Partial<{
+  /** Scores from a beatmap with a specific beatmap ID */
+  b: number;
+  /** Scores from a user with a specific user ID or username */
+  u: string | number;
+}>;
+```
+
+## Types
+
+- [GetUserScores](/references/get-user-scores)
+- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)

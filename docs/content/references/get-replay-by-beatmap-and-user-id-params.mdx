@@ -1,0 +1,22 @@
+---
+title: GetReplayByBeatmapAndUserIdParams
+ref: type
+---
+
+# GetReplayByBeatmapAndUserIdParams
+
+```ts
+type GetReplayByBeatmapAndUserIdParams = GetReplay & {
+  /** Replay from a beatmap with a specific beatmap ID */
+  b: number;
+  /** Replay from a user with a specific user ID or username */
+  u: string | number;
+  /** Specify if `u` is a user ID (`id`) or a username (`string`) */
+  type?: UserType;
+};
+```
+
+## Types
+
+- [GetReplay](/references/get-replay)
+- [UserType](//references/user-type)

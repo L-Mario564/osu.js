@@ -1,0 +1,29 @@
+---
+title: LegacyGame
+ref: interface
+---
+
+# LegacyGame
+
+```ts
+export interface LegacyGame {
+  game_id: number;
+  start_time: ODBCTimestamp;
+  end_time: ODBCTimestamp | null;
+  beatmap_id: number;
+  play_mode: GameMode;
+  scoring_type: ScoringType;
+  team_type: TeamType;
+  mods: Mod[];
+  scores: LegacyMatchScore[];
+}
+```
+
+## Types
+
+- [ODBCTimestamp](/references/odbc-timestamp)
+- [GameMode](/references/game-mode)
+- [ScoringType](/references/scoring-type)
+- [TeamType](/references/team-type)
+- [Mod](/references/mod)
+- [LegacyMatchScore](/references/legacy-match-score)

@@ -1,0 +1,25 @@
+---
+title: GetUserScores
+ref: type
+---
+
+# GetUserScores
+
+**Note:** This type can't be imported, it's only here for reference.
+
+```ts
+type GetUserScores = Partial<{
+  /** Scores from a specific gamemode  */
+  m: GameMode;
+  /** Limit amount of scores to return (100 max.) */
+  limit: number;
+  /** Specify if `u` is a user ID (`id`) or a username (`string`) */
+  type: UserType;
+}>;
+```
+
+## Types
+
+- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
+- [GameMode](/references/game-mode)
+- [UserType](/references/user-type)
