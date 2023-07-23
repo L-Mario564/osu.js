@@ -27,6 +27,10 @@ const navLinks = [
   {
     label: 'Extras',
     href: '/extras'
+  },
+  {
+    label: 'References',
+    href: '/references'
   }
 ];
 ---
@@ -56,7 +60,7 @@ const navLinks = [
   </head>
   <body>
     <nav
-      class="fixed top-0 left-0 border-b border-stone-700 w-screen h-16 bg-base-100 bg-opacity-90 backdrop-blur text-zinc-100 flex items-center place-content-between"
+      class="fixed top-0 left-0 border-b border-stone-600 w-screen h-16 bg-base-100 bg-opacity-90 backdrop-blur text-zinc-100 flex items-center place-content-between"
     >
       <div class="flex items-center gap-1 ml-8">
         <a href="/" class="block h-min mr-3">
@@ -83,7 +87,16 @@ const navLinks = [
       <slot name="sidebar" />
       <div class="flex justify-center w-full">
         <div
-          class="prose prose-h1:text-zinc-50 prose-h2:text-zinc-50 prose-h3:text-zinc-50 prose-p:text-zinc-100 prose-a:text-primary prose-a:font-normal prose-code:bg-base-200 prose-code:text-secondary prose-code:rounded-md mb-10"
+          class="
+            px-8 mb-10 prose !max-w-[none] w-[96ch] overflow-hidden break-words
+            prose-h1:text-zinc-50
+            prose-h2:text-zinc-50
+            prose-h3:text-zinc-50
+            prose-p:text-zinc-100
+            prose-strong:text-primary
+            prose-a:text-primary prose-a:font-normal
+            prose-code:bg-[#191724] prose-code:text-secondary prose-code:rounded-md
+          "
         >
           <slot />
         </div>

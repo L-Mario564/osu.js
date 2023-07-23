@@ -1,0 +1,39 @@
+---
+import type { Sections } from '@lib/types';
+
+interface Props {
+  slot: string;
+  sections: Sections<string>;
+}
+
+const { slot, sections } = Astro.props;
+---
+
+<div class="w-64" />
+<nav class="scroll fixed top-16 w-64 h-[calc(100vh-4rem)] bg-base-100 flex flex-col gap-4 border-r border-stone-600 py-4 overflow-y-auto" slot={slot}>
+  {Object.entries(sections).map(([label, links]) => (
+    <div>
+      <span class="font-bold text-primary px-4 scrollbar">{label.toUpperCase()}</span>
+      <div class="flex flex-col gap-1 mt-4 px-4">
+        {links.map(({ label, href }) => (
+          <a href={`/references/${href}`} class="btn btn-ghost normal-case btn-sm text-left justify-start text-zinc-100">{label}</a>
+        ))}
+      </div>
+    </div>
+  ))}
+</nav>
+
+<style>
+  .scroll::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  .scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scroll::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.35);
+    border-radius: 0.25rem;
+  }
+</style>

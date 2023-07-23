@@ -6,7 +6,8 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   markdown: {
     shikiConfig: {
-      theme: 'rose-pine'
+      theme: 'rose-pine',
+      wrap: true
     }
   },
   integrations: [tailwind(), mdx()]
