@@ -1,0 +1,32 @@
+---
+title: Get multiplayer lobby
+---
+
+# Get multiplayer lobby
+
+The `getMultiplayerLobby` method on a `LegacyClient` instance makes a `GET` request to the `get_match` endpoint and returns an object containing the match's information, games and each games' scores if the multiplayer lobby exists, otherwise null.
+
+### Example
+
+```ts
+let multiLobby = await legacyApi.getMultiplayerLobby({
+  u: 14544646
+});
+```
+
+### Parameters
+
+| Parameter | Type                                                                  | Optional | Description                    |
+| --------- | --------------------------------------------------------------------- | -------- | ------------------------------ |
+| params    | [GetMultiplayerLobbyParams](/references/get-multiplayer-lobby-params) |          | The request's URL parameters   |
+| params.mp | number                                                                |          | Match with a specific match ID |
+
+### Returns
+
+```ts
+Promise<LegacyMultiplayerLobby | null>;
+```
+
+#### Types
+
+- [LegacyMultiplayerLobby](/references/legacy-multiplayer-lobby)

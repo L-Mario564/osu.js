@@ -8,13 +8,11 @@ ref: type
 **Note:** This type can't be imported, it's only here for reference.
 
 ```ts
-type GetUserScoresParams = GetUserScores & Partial<{
-  /** Scores from a user with a specific user ID or username */
+type GetUserScoresParams = GetUserScores & {
   u: string | number;
-}>;
+};
 ```
 
 ## Types
 
 - [GetUserScores](/references/get-user-scores)
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)

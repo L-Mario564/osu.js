@@ -1,0 +1,36 @@
+---
+title: Get beatmap scores
+---
+
+# Get beatmap scores
+
+The `getBeatmapScores` method on a `LegacyClient` instance makes a `GET` request to the `get_scores` endpoint and returns an array of scores on a beatmap.
+
+### Example
+
+```ts
+let user = await legacyApi.getBeatmapScores({
+  b: 131891
+});
+```
+
+### Parameters
+
+| Parameter    | Type                                                            | Optional | Description                                                 |
+| ------------ | --------------------------------------------------------------- | -------- | ----------------------------------------------------------- |
+| params       | [GetBeatmapScoresParams](/references/get-beatmap-scores-params) |          | The request's URL parameters                                |
+| params.b     | number                                                          |          | Scores from a beatmap with a specific beatmap ID            |
+| params.u     | string \| number                                                | ✓        | Scores from a user with a specific user ID or username      |
+| params.m     | [GameMode](/references/game-mode)                               | ✓        | Scores from a specific gamemode                             |
+| params.limit | number                                                          | ✓        | Limit amount of scores to return (100 max.)                 |
+| params.type  | [UserType](/references/user-type)                               | ✓        | Specify if `u` is a user ID (`id`) or a username (`string`) |
+
+### Returns
+
+```ts
+Promise<LegacyBeatmapScore[]>;
+```
+
+#### Types
+
+- [LegacyBeatmapScore](/references/legacy-beatmap-score)

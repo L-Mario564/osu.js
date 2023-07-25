@@ -1,0 +1,18 @@
+---
+interface Props {
+  label: string;
+  href: string;
+  parentHref: string;
+}
+
+const { label, href, parentHref } = Astro.props;
+---
+
+<a
+  href={`/${parentHref}/${href}`}
+  class="btn btn-ghost normal-case btn-sm text-left justify-start text-zinc-100 w-56"
+>
+  <span class="overflow-x-hidden overflow-y-clip leading-5 whitespace-nowrap text-ellipsis"
+    >{label}</span
+  >
+</a>

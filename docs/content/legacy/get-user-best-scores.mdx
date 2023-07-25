@@ -1,0 +1,35 @@
+---
+title: Get user best scores
+---
+
+# Get user best scores
+
+The `getUserBestScores` method on a `LegacyClient` instance makes a `GET` request to the `get_user_best` endpoint and returns an array of a user's top scores.
+
+### Example
+
+```ts
+let scores = await legacyApi.getUserBestScores({
+  u: 14544646
+});
+```
+
+### Parameters
+
+| Parameter    | Type                                                      | Optional | Description                                                 |
+| ------------ | --------------------------------------------------------- | -------- | ----------------------------------------------------------- |
+| params       | [GetUserScoresParams](/references/get-user-scores-params) |          | The request's URL parameters                                |
+| params.u     | string \| number                                          |          | Scores from a user with a specific user ID or username      |
+| params.m     | [GameMode](/references/game-mode)                         | ✓        | Scores from a specific gamemode                             |
+| params.limit | number                                                    | ✓        | Limit amount of scores to return (100 max.)                 |
+| params.type  | [UserType](/references/user-type)                         | ✓        | Specify if `u` is a user ID (`id`) or a username (`string`) |
+
+### Returns
+
+```ts
+Promise<LegacyUserBestScore[]>;
+```
+
+#### Types
+
+- [LegacyUserBestScore](/references/legacy-user-best-score)

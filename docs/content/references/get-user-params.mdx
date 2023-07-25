@@ -7,13 +7,9 @@ ref: type
 
 ```ts
 type GetUserParams = Partial<{
-  /** User with a specific user ID or username */
   u: string | number;
-  /** User gamemode profile  */
   m: GameMode;
-  /** Specify if `u` is a user ID (`id`) or a username (`string`) */
   type: UserType;
-  /** Max. number of days between now and the last event's date (range: 1-31) */
   event_days: number;
 }>;
 ```

@@ -1,0 +1,38 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Sidebar from '@components/Sidebar.astro';
+import { z } from 'astro:content';
+import { validateFrontmatters, fileToSlug } from '@lib/utils';
+import type { SectionLink } from '@lib/types';
+
+export async function getStaticPaths() {
+  const files = validateFrontmatters(
+    await Astro.glob('../../../../content/legacy/*.mdx'),
+    z.object({
+      title: z.string()
+    })
+  );
+  const links: SectionLink[] = files.map(({ file, frontmatter }) => ({
+    href: fileToSlug(file),
+    label: frontmatter.title
+  }));
+
+  return files.map(({ Content, file, frontmatter }) => ({
+    params: {
+      slug: fileToSlug(file)
+    },
+    props: {
+      Content,
+      links,
+      title: z.string().parse(frontmatter.title)
+    }
+  }));
+}
+
+const { Content, links, title } = Astro.props;
+---
+
+<BaseLayout title={`${title} - osu.js`}>
+  <Sidebar slot="sidebar" parentHref="legacy" sections={links} />
+  <Content />
+</BaseLayout>

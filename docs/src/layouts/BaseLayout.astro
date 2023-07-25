@@ -56,11 +56,12 @@ const navLinks = [
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={`${Astro.url.href}og.png`} />
     <meta name="twitter:image:alt" content="osu.js banner" />
+    <script src="../scripts/wrap-tables.ts" />
     <title>{title}</title>
   </head>
   <body>
     <nav
-      class="fixed top-0 left-0 border-b border-stone-600 w-screen h-16 bg-base-100 bg-opacity-90 backdrop-blur text-zinc-100 flex items-center place-content-between"
+      class="fixed top-0 left-0 border-b border-stone-600 w-screen h-16 bg-base-100 bg-opacity-90 backdrop-blur text-zinc-100 flex items-center place-content-between z-10"
     >
       <div class="flex items-center gap-1 ml-8">
         <a href="/" class="block h-min mr-3">
@@ -87,14 +88,19 @@ const navLinks = [
       <slot name="sidebar" />
       <div class="flex justify-center w-full">
         <div
+          id="content"
           class="
-            px-8 mb-10 prose !max-w-[none] w-[96ch] overflow-hidden break-words
+            px-16 mb-10 prose !max-w-[none] w-full overflow-hidden break-words
             prose-h1:text-zinc-50
             prose-h2:text-zinc-50
             prose-h3:text-zinc-50
+            prose-h4:text-zinc-50
             prose-p:text-zinc-100
             prose-strong:text-primary
             prose-a:text-primary prose-a:font-normal
+            prose-table:text-zinc-100 prose-table:w-max md:prose-table:w-full
+            prose-td:min-w-max
+            prose-th:text-zinc-50
             prose-code:bg-[#191724] prose-code:text-secondary prose-code:rounded-md
           "
         >

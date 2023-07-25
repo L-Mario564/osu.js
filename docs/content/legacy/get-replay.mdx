@@ -1,0 +1,50 @@
+---
+title: Get replay
+---
+
+# Get replay
+
+The `getReplay` method on a `LegacyClient` instance makes a `GET` request to the `get_replay` endpoint and returns a string containing the Base64 encoded replay if the replay exists, otherwise null.
+
+### Example
+
+```ts
+let replay = await legacyApi.getReplay('user & beatmap id', {
+  u: 14544646,
+  b: 2176783
+});
+```
+
+### Parameters
+
+| Parameter | Type                              | Optional | Description                                                           |
+| --------- | --------------------------------- | -------- | --------------------------------------------------------------------- |
+| by        | 'score id' \| 'user & beatmap id' |          | Get the replay by specifying a score ID or a user ID and a beatmap ID |
+
+if `score id` is passed as the value for the parameter `by` then the parameters change as follows:
+
+| Parameter   | Type                                                                  | Optional | Description                                  |
+| ----------- | --------------------------------------------------------------------- | -------- | -------------------------------------------- |
+| by          | 'score id'                                                            |          | Get the replay by specifying a score ID      |
+| params      | [GetReplayByScoreIdParams](/references/get-replay-by-score-id-params) |          | The request's URL parameters                 |
+| params.s    | number                                                                |          | Replay from a score with a specific score ID |
+| params.m    | [GameMode](/references/game-mode)                                     | ✓        | Replay gamemode                              |
+| params.mods | [Mod](/references/mod)[]                                              | ✓        | Replay with a specific list of mods          |
+
+if `user & beatmap id` is passed as the value for the parameter `by` then the parameters change as follows:
+
+| Parameter   | Type                                                                  | Optional | Description                                                 |
+| ----------- | --------------------------------------------------------------------- | -------- | ----------------------------------------------------------- |
+| by          | 'score id'                                                            |          | Get the replay by specifying a score ID                     |
+| params      | [GetReplayByScoreIdParams](/references/get-replay-by-score-id-params) |          | The request's URL parameters                                |
+| params.b    | number                                                                |          | Replay from a beatmap with a specific beatmap ID            |
+| params.u    | string \| number                                                      |          | Replay from a user with a specific user ID or username      |
+| params.type | [UserType](/references/user-type)                                     | ✓        | Specify if `u` is a user ID (`id`) or a username (`string`) |
+| params.m    | [GameMode](/references/game-mode)                                     | ✓        | Replay gamemode                                             |
+| params.mods | [Mod](/references/mod)[]                                              | ✓        | Replay with a specific list of mods                         |
+
+### Returns
+
+```ts
+Promise<string | null>;
+```

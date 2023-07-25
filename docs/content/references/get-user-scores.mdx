@@ -9,11 +9,8 @@ ref: type
 
 ```ts
 type GetUserScores = Partial<{
-  /** Scores from a specific gamemode  */
   m: GameMode;
-  /** Limit amount of scores to return (100 max.) */
   limit: number;
-  /** Specify if `u` is a user ID (`id`) or a username (`string`) */
   type: UserType;
 }>;
 ```
