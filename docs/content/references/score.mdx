@@ -1,0 +1,34 @@
+---
+title: Score
+ref: interface
+---
+
+# Score
+
+```ts
+interface Score {
+  id: number;
+  user_id: number;
+  accuracy: number;
+  mods: Mod[];
+  score: number;
+  max_combo: number;
+  perfect: boolean;
+  statistics: ScoreStatistics;
+  passed: boolean;
+  pp: number;
+  rank: Rank;
+  created_at: ISOTimestamp;
+  mode: GameMode;
+  mode_int: number;
+  replay: boolean;
+}
+```
+
+## Types
+
+- [Mod](/references/mod)
+- [ScoreStatistics](/references/score-statistics)
+- [Rank](/references/rank)
+- [ISOTimestamp](/references/iso-timestamp)
+- [GameMode](/references/game-mode)

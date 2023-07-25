@@ -1,0 +1,33 @@
+---
+title: UserEvent
+ref: type
+---
+
+# UserEvent
+
+A union that can be discriminated with the `type` property.
+
+```ts
+type UserEvent =
+  | UserEventAchievement
+  | UserEventBeatmapPlaycount
+  | UserEventBeatmapsetApprove
+  | UserEventBeatmapsetDelete
+  | UserEventBeatmapsetUpdate
+  | UserEventRankAchieved
+  | UserEventRankLost
+  | UserEventUserUpdate
+  | UserEventUsernameUpdate;
+```
+
+## Types
+
+- [UserEventAchievement](/references/user-event-achievement)
+- [UserEventBeatmapPlaycount](/references/user-event-beatmap-playcount)
+- [UserEventBeatmapsetApprove](/references/user-event-beatmapset-approve)
+- [UserEventBeatmapsetDelete](/references/user-event-beatmapset-delete)
+- [UserEventBeatmapsetUpdate](/references/user-event-beatmapset-update)
+- [UserEventRankAchieved](/references/user-event-rank-achieved)
+- [UserEventRankLost](/references/user-event-rank-lost)
+- [UserEventUserUpdate](/references/user-event-user-update)
+- [UserEventUsernameUpdate](/references/user-event-username-update)

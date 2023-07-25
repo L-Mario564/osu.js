@@ -1,0 +1,19 @@
+---
+title: UserEventBeatmapPlaycount
+ref: interface
+---
+
+# UserEventBeatmapPlaycount
+
+```ts
+interface UserEventBeatmapPlaycount extends BaseUserEvent {
+  type: 'beatmapPlaycount';
+  beatmap: EventBeatmap;
+  count: number;
+}
+```
+
+## Types
+
+- [BaseUserEvent](/references/base-user-event)
+- [EventBeatmap](/references/event-beatmap)

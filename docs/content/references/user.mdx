@@ -1,0 +1,41 @@
+---
+title: User
+ref: interface
+---
+
+# User
+
+```ts
+interface User extends UserCompact {
+  country: Country;
+  cover: Cover;
+  discord: string | null;
+  has_supported: boolean;
+  interests: string | null;
+  join_date: ISOTimestamp;
+  kudosu: UserKudosu;
+  location: string | null;
+  max_blocks: number;
+  max_friends: number;
+  occupation: string | null;
+  playmode: GameMode;
+  playstyle: Playstyle[];
+  post_count: number;
+  profile_order: ProfilePageSection[];
+  title: string | null;
+  title_url: string | null;
+  twitter: string | null;
+  website: string | null;
+}
+```
+
+## Types
+
+- [UserCompact](/references/user-compact)
+- [Country](/references/country)
+- [Cover](/references/cover)
+- [ISOTimestamp](/references/iso-timestamp)
+- [UserKudosu](/references/user-kudosu)
+- [GameMode](/references/game-mode)
+- [Playstyle](/references/playstyle)
+- [ProfilePageSection](/references/profile-page-section)

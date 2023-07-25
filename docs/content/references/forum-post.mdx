@@ -1,0 +1,23 @@
+---
+title: ForumPost
+ref: interface
+---
+
+# ForumPost
+
+```ts
+interface ForumPost {
+  created_at: ISOTimestamp;
+  deleted_at: ISOTimestamp | null;
+  edited_at: ISOTimestamp | null;
+  edited_by_id: number | null;
+  forum_id: number;
+  id: number;
+  topic_id: number;
+  user_id: number;
+}
+```
+
+## Types
+
+- [ISOTimestamp](/references/iso-timestamp)

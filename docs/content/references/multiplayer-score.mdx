@@ -1,0 +1,37 @@
+---
+title: MultiplayerScore
+ref: interface
+---
+
+# MultiplayerScore
+
+```ts
+interface MultiplayerScore {
+  id: number;
+  user_id: number;
+  room_id: number;
+  playlist_item_id: number;
+  beatmap_id: number;
+  rank: Rank;
+  total_score: number;
+  accuracy: number;
+  max_combo: number;
+  mods: MultiplayerScoreMod[];
+  statistics: MultiplayerScoreStatistics;
+  passed: boolean;
+  position: number | null;
+  user: UserCompact & {
+    country: Country;
+    cover: Cover;
+  };
+}
+```
+
+## Types
+
+- [Rank](/references/rank)
+- [MultiplayerScoreMod](/references/multiplayer-score-mod)
+- [MultiplayerScoreStatistics](/references/multiplayer-score-statistics)
+- [UserCompact](/references/user-compact)
+- [Country](/references/country)
+- [Cover](/references/cover)

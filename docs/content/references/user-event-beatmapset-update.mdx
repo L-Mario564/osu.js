@@ -1,0 +1,20 @@
+---
+title: UserEventBeatmapsetUpdate
+ref: interface
+---
+
+# UserEventBeatmapsetUpdate
+
+```ts
+interface UserEventBeatmapsetUpdate extends BaseUserEvent {
+  type: 'beatmapsetRevive' | 'beatmapsetUpdate' | 'beatmapsetUpload';
+  beatmapset: EventBeatmap;
+  user: EventUser;
+}
+```
+
+## Types
+
+- [BaseUserEvent](/references/base-user-event)
+- [EventBeatmap](/references/event-beatmap)
+- [EventUser](/references/event-user)

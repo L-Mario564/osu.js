@@ -1,0 +1,28 @@
+---
+title: ForumPoll
+ref: interface
+---
+
+# ForumPoll
+
+```ts
+interface ForumPoll {
+  allow_vote_change: boolean;
+  ended_at: ISOTimestamp | null;
+  hide_incomplete_results: boolean;
+  last_vote_at: ISOTimestamp | null;
+  max_votes: number;
+  options: ForumPollOptions[];
+  started_at: ISOTimestamp;
+  title: {
+    bbcode: string;
+    html: string;
+  };
+  total_vote_count: number;
+}
+```
+
+## Types
+
+- [ISOTimestamp](/references/iso-timestamp)
+- [ForumPollOptions](/references/forum-poll-options)

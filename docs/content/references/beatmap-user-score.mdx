@@ -1,0 +1,29 @@
+---
+title: BeatmapUserScore
+ref: interface
+---
+
+# BeatmapUserScore
+
+```ts
+interface BeatmapUserScore {
+  position: number;
+  score: Score & {
+    beatmap: Beatmap & {
+      checksum: string | null;
+    };
+    user: UserCompact & {
+      country: Country;
+      cover: Cover;
+    };
+  };
+}
+```
+
+## Types
+
+- [Score](/references/score)
+- [Beatmap](/references/beatmap)
+- [UserCompact](/references/user-compact)
+- [Country](/references/country)
+- [Cover](/references/cover)

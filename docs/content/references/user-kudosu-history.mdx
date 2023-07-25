@@ -1,0 +1,25 @@
+---
+title: UserKudosuHistory
+ref: interface
+---
+
+# UserKudosuHistory
+
+```ts
+interface UserKudosuHistory {
+  id: number;
+  action: KudosuAction;
+  amount: number;
+  model: string;
+  created_at: ISOTimestamp;
+  giver: Giver | null;
+  post: Post;
+}
+```
+
+## Types
+
+- [KudosuAction](/references/kudosu-action)
+- [ISOTimestamp](/references/iso-timestamp)
+- [Giver](/references/giver)
+- [Post](/references/post)

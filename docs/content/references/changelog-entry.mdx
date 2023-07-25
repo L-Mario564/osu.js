@@ -1,0 +1,25 @@
+---
+title: ChangelogEntry
+ref: interface
+---
+
+# ChangelogEntry
+
+```ts
+interface ChangelogEntry {
+  category: string;
+  created_at: ISOTimestamp | null;
+  github_pull_request_id: number | null;
+  github_url: string | null;
+  id: number | null;
+  major: boolean;
+  repository: string | null;
+  title: string | null;
+  type: string;
+  url: string | null;
+}
+```
+
+## Types
+
+- [ISOTimestamp](/references/iso-timestamp)

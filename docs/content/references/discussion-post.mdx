@@ -1,0 +1,25 @@
+---
+title: DiscussionPost
+ref: interface
+---
+
+# DiscussionPost
+
+```ts
+interface DiscussionPost {
+  beatmapset_discussion_id: number;
+  created_at: ISOTimestamp;
+  deleted_at: ISOTimestamp | null;
+  deleted_by_id: number | null;
+  id: number;
+  last_editor_id: number | null;
+  message: string;
+  system: boolean;
+  updated_at: ISOTimestamp;
+  user_id: number;
+}
+```
+
+## Types
+
+- [ISOTimestamp](/references/iso-timestamp)

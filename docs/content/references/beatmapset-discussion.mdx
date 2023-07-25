@@ -1,0 +1,32 @@
+---
+title: BeatmapsetDiscussion
+ref: interface
+---
+
+# BeatmapsetDiscussion
+
+```ts
+interface BeatmapsetDiscussion {
+  beatmap_id: number | null;
+  beatmapset_id: number | null;
+  can_be_resolved: boolean;
+  can_grant_kudosu: boolean;
+  created_at: ISOTimestamp;
+  deleted_at: ISOTimestamp | null;
+  deleted_by_id: number | null;
+  id: number;
+  kudosu_denied: boolean;
+  last_post_at: ISOTimestamp;
+  message_type: DiscussionMessageType;
+  parent_id: number | null;
+  resolved: boolean;
+  timestamp: number | null;
+  updated_at: ISOTimestamp;
+  user_id: number;
+}
+```
+
+## Types
+
+- [ISOTimestamp](/references/iso-timestamp)
+- [DiscussionMessageType](/references/discussion-message-type)
