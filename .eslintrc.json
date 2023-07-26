@@ -7,7 +7,6 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:svelte/recommended",
     "plugin:astro/recommended",
     "prettier"
   ],
@@ -16,27 +15,21 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "overrides": [{
-    "files": ["*.svelte"],
-    "parser": "svelte-eslint-parser",
-    "plugins": ["astro"],
-    "parserOptions": {
-      "parser": "@typescript-eslint/parser",
-      "extraFileExtensions": [".svelte"]
+  "overrides": [
+    {
+      "files": ["*.astro"],
+      "parser": "astro-eslint-parser",
+      "extends": ["prettier"],
+      "parserOptions": {
+        "parser": "@typescript-eslint/parser",
+        "extraFileExtensions": [".astro"]
+      },
+      "rules": {
+        "semi": "off",
+        "astro/semi": ["warn", "always"]
+      }
     }
-  }, {
-    "files": ["*.astro"],
-    "parser": "astro-eslint-parser",
-    "extends": ["prettier"],
-    "parserOptions": {
-      "parser": "@typescript-eslint/parser",
-      "extraFileExtensions": [".astro"]
-    },
-    "rules": {
-      "semi": "off",
-      "astro/semi": ["warn", "always"]
-    }
-  }],
+  ],
   "plugins": ["@typescript-eslint"],
   "rules": {
     "indent": ["warn", 2],

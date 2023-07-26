@@ -2,7 +2,7 @@ const content = document.querySelector('#content');
 
 if (content) {
   const tables = document.querySelectorAll('table');
-  
+
   tables.forEach((el) => {
     const div = document.createElement('div');
     div.style.overflowX = 'auto';

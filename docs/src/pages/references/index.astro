@@ -10,11 +10,7 @@ const files = validateFrontmatters(
   await Astro.glob('../../../content/references/*.mdx'),
   z.object({
     title: z.string(),
-    ref: z.union([
-      z.literal('type'),
-      z.literal('interface'),
-      z.literal('enum')
-    ])
+    ref: z.union([z.literal('type'), z.literal('interface'), z.literal('enum')])
   })
 );
 const sections: Sections<'interfaces' | 'types' | 'enums'> = {
@@ -34,7 +30,7 @@ files.forEach(({ file, frontmatter }) => {
   } else if (frontmatter.ref === 'type') {
     sections.types.push(link);
   } else {
-    sections.enums.push(link)
+    sections.enums.push(link);
   }
 });
 ---
