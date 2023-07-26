@@ -3,5 +3,20 @@
   "trailingComma": "none",
   "quoteProps": "consistent",
   "singleQuote": true,
-  "semi": true
+  "semi": true,
+  "plugins": ["prettier-plugin-svelte", "prettier-plugin-astro"],
+  "overrides": [
+    {
+      "files": "*.svelte",
+      "options": {
+        "parser": "svelte"
+      }
+    },
+    {
+      "files": "*.astro",
+      "options": {
+        "parser": "astro"
+      }
+    }
+  ]
 }
