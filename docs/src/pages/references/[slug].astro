@@ -7,7 +7,7 @@ import type { Sections } from '@lib/types';
 
 export async function getStaticPaths() {
   const files = validateFrontmatters(
-    await Astro.glob('../../../../content/references/*.mdx'),
+    await Astro.glob('../../../content/references/*.mdx'),
     z.object({
       title: z.string(),
       ref: z.union([z.literal('type'), z.literal('interface'), z.literal('enum')])

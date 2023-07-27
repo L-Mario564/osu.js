@@ -7,7 +7,7 @@ import type { SectionLink } from '@lib/types';
 
 export async function getStaticPaths() {
   const files = validateFrontmatters(
-    await Astro.glob('../../../../content/extras/*.mdx'),
+    await Astro.glob('../../../content/legacy/*.mdx'),
     z.object({
       title: z.string()
     })
@@ -33,6 +33,6 @@ const { Content, links, title } = Astro.props;
 ---
 
 <BaseLayout title={`${title} - osu.js`}>
-  <Sidebar slot="sidebar" parentHref="extras" sections={links} />
+  <Sidebar slot="sidebar" parentHref="legacy" sections={links} />
   <Content />
 </BaseLayout>
