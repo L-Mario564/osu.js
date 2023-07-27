@@ -49,7 +49,7 @@ export async function getStaticPaths() {
 const { Content, sections, title } = Astro.props;
 ---
 
-<BaseLayout title={`${title} - osu.js`}>
+<BaseLayout title={`${title} - osu.js`} noIndex>
   <Sidebar slot="sidebar" parentHref="references" sections={sections} />
   <Content />
 </BaseLayout>

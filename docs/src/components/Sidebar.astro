@@ -11,27 +11,30 @@ interface Props {
 const { slot, sections, parentHref } = Astro.props;
 ---
 
-<div class="w-[19.5rem] hidden lg:block" />
-<nav class="scroll fixed top-16 w-64 h-[calc(100vh-4rem)] bg-base-100 hidden lg:flex flex-col gap-8 border-r border-stone-600 py-4 overflow-y-auto overflow-x-hidden" slot={slot}>
+<div class="w-[19.5rem] hidden lg:block"></div>
+<nav
+  class="scroll fixed top-16 w-64 h-[calc(100vh-4rem)] bg-base-100 hidden lg:flex flex-col gap-8 border-r border-stone-600 py-4 overflow-y-auto overflow-x-hidden"
+  slot={slot}
+>
   {
-    Array.isArray(sections)
-    ? (
+    Array.isArray(sections) ? (
       <div class="flex flex-col gap-1 px-4">
         {sections.map(({ label, href }) => (
           <SectionLink label={label} href={href} parentHref={parentHref} />
         ))}
       </div>
-    )
-    : Object.entries(sections).map(([label, links]) => (
-      <div>
-        <span class="font-bold text-primary px-4 scrollbar">{label.toUpperCase()}</span>
-        <div class="flex flex-col gap-1 mt-4 px-4">
-          {links.map(({ label, href }) => (
-            <SectionLink label={label} href={href} parentHref={parentHref} />
-          ))}
+    ) : (
+      Object.entries(sections).map(([label, links]) => (
+        <div>
+          <span class="font-bold text-primary px-4 scrollbar">{label.toUpperCase()}</span>
+          <div class="flex flex-col gap-1 mt-4 px-4">
+            {links.map(({ label, href }) => (
+              <SectionLink label={label} href={href} parentHref={parentHref} />
+            ))}
+          </div>
         </div>
-      </div>
-    ))
+      ))
+    )
   }
 </nav>
 
