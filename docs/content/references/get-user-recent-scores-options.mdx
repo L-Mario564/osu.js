@@ -1,0 +1,20 @@
+---
+title: GetUserRecentScoresOptions
+ref: type
+---
+
+# GetUserRecentScoresOptions
+
+```ts
+type GetUserRecentScoresOptions = Partial<{
+  query: Partial<{
+    limit: number;
+    offset: string;
+    mode: GameMode;
+    include_fails: boolean | number;
+  }>;
+}>;
+```
+
+- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
+- [GameMode](/references/game-mode)

@@ -1,0 +1,23 @@
+---
+title: GetCommentsOptions
+ref: type
+---
+
+# GetCommentsOptions
+
+```ts
+type GetCommentsOptions = Partial<{
+  query: Partial<{
+    commentable: Partial<{
+      type: CommentableType;
+      id: number;
+    }>,
+    parent_id: number;
+    sort: CommentSort;
+  }>;
+}>;
+```
+
+- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
+- [CommentableType](/references/commentable-type)
+- [CommentSort](/references/comment-sort)

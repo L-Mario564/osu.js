@@ -1,0 +1,19 @@
+---
+title: GetPlaylistScoresOptions
+ref: type
+---
+
+# GetPlaylistScoresOptions
+
+```ts
+type GetPlaylistScoresOptions = Partial<{
+  query: Partial<{
+    limit: number;
+    sort: MultiplayerScoresSort;
+    cursor_string: string;
+  }>;
+}>;
+```
+
+- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
+- [MultiplayerScoresSort](/references/multiplayer-scores-sort)

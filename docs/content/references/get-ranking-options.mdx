@@ -1,0 +1,19 @@
+---
+title: GetRankingOptions
+ref: type
+---
+
+# GetRankingOptions
+
+```ts
+type GetRankingOptions = Partial<{
+  query: Partial<{
+    country: string;
+    filter: 'all' | 'friends';
+    spotlight: number;
+    variant: string;
+  }>;
+}>;
+```
+
+- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)

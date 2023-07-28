@@ -1,0 +1,25 @@
+---
+title: CreateTopicOptions
+ref: type
+---
+
+# CreateTopicOptions
+
+```ts
+type CreateTopicOptions = {
+  body: {
+    body: string;
+    forum_id: number;
+    title: string;
+    with_poll?: boolean;
+    forum_topic_poll?: {
+      hide_results?: boolean;
+      length_days?: number;
+      max_options?: number;
+      options: string;
+      title: string;
+      vote_change?: boolean;
+    };
+  };
+};
+```
