@@ -7,11 +7,12 @@ ref: type
 
 ```ts
 type GetDiscussionPostsOptions = Partial<{
-  query: GetDiscussionsBaseOptions & Partial<{
-    beatmapset_discussion_id: number;
-    types: ('first' | 'reply' | 'system')[];
-    user: number
-  }>;
+  query: GetDiscussionsBaseOptions &
+    Partial<{
+      beatmapset_discussion_id: number;
+      types: ('first' | 'reply' | 'system')[];
+      user: number;
+    }>;
 }>;
 ```
 

@@ -20,7 +20,7 @@ export async function getStaticPaths() {
     z.literal('users'),
     z.literal('wiki')
   ]);
-  
+
   const files = validateFrontmatters(
     await Astro.glob('../../../content/current/*.mdx'),
     z.object({
@@ -42,13 +42,13 @@ export async function getStaticPaths() {
     'users': [],
     'wiki': []
   };
-  
+
   files.forEach(({ file, frontmatter }) => {
     const link = {
       href: fileToSlug(file),
       label: frontmatter.title
     };
-  
+
     sections[frontmatter.ref].push(link);
   });
 

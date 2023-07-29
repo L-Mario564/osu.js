@@ -7,14 +7,15 @@ ref: type
 
 ```ts
 type GetDiscussionsOptions = Partial<{
-  query: GetDiscussionsBaseOptions & Partial<{
-    beatmap_id: number;
-    beatmapset_id: number;
-    beatmapset_status: 'all' | 'ranked' | 'qualified' | 'disqualified' | 'never_qualified';
-    message_types: DiscussionMessageType[];
-    only_unresolved: number;
-    user: number;
-  }>;
+  query: GetDiscussionsBaseOptions &
+    Partial<{
+      beatmap_id: number;
+      beatmapset_id: number;
+      beatmapset_status: 'all' | 'ranked' | 'qualified' | 'disqualified' | 'never_qualified';
+      message_types: DiscussionMessageType[];
+      only_unresolved: number;
+      user: number;
+    }>;
 }>;
 ```
 

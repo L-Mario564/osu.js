@@ -55,7 +55,7 @@ The current API is up to date with February 17th, 2023's (2023-02-17) [breaking 
 
 ### Project
 
-- [Documentation](https://osu-js.onrender.com)
+- [Documentation](https://osujs.mario564.com)
 - [Github](https://github.com/L-Mario564/osu.js)
 - [npm](https://www.npmjs.com/package/osu-web.js)
 
