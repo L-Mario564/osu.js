@@ -72,8 +72,6 @@ const getReplayParams = {
   mods: modsSchema.optional()
 };
 
-export const getReplayParamsSchema = z.object(getReplayParams);
-
 export const getReplayByScoreIdParamsSchema = z.object({
   ...getReplayParams,
   /** Replay from a score with a specific score ID */
