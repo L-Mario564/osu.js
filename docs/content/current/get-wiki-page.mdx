@@ -1,0 +1,31 @@
+---
+title: Get wiki page
+ref: wiki
+---
+
+# Get wiki page
+
+The `wiki.getWikiPage` method on a `Client` instance makes a `GET` request to the `wiki/{locale}/{path}` endpoint and returns a wiki page.
+
+### Example
+
+```ts
+const wikiPage = await api.wiki.getWikiPage('en', 'Tournaments/OWC/2022');
+```
+
+### Parameters
+
+| Parameter | Type   | Optional | Description                               |
+| --------- | ------ | -------- | ----------------------------------------- |
+| locale    | string |          | Two-letter language code of the wiki page |
+| path      | string |          | Path to the wiki page                     |
+
+### Returns
+
+```ts
+Promise<WikiPage>;
+```
+
+#### Types
+
+- [WikiPage](/references/wiki-page)

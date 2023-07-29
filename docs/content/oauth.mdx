@@ -1,0 +1,21 @@
+# OAuth
+
+You can authenticate users to your osu! OAuth application using osu.js. The library doesn't provide a plug-and-play solution for authentication, it just provides utilities specific to osu! in case you want to implement your authentication from scratch.
+
+To do anything OAuth related, import and instantiate the `Auth` class.
+
+```ts
+import { Auth } from 'osu-web.js';
+
+const auth = new Auth(clientId, clientSecret, redirectUri);
+```
+
+## Parameters
+
+| Parameter    | Type   | Optional | Description                            |
+| ------------ | ------ | -------- | -------------------------------------- |
+| clientId     | number |          | Your application's OAuth client ID     |
+| clientSecret | string |          | Your application's OAuth client secret |
+| redirectUri  | string |          | Your application's OAuth redirect URI  |
+
+You should avoid exposing the client secret in your source code and frontend apps. Set it as an environment variable alongside the client ID and redirect URI.

@@ -1,0 +1,21 @@
+---
+title: LegacyUserRecentScore
+ref: interface
+---
+
+# LegacyUserRecentScore
+
+```ts
+export interface LegacyUserRecentScore extends LegacyBaseScore {
+  beatmap_id: number;
+  user_id: number;
+  date: ODBCTimestamp;
+  rank: Rank;
+}
+```
+
+## Types
+
+- [LegacyBaseScore](/references/legacy-base-score)
+- [ODBCTimestamp](/references/odbc-timestamp)
+- [Rank](/references/rank)

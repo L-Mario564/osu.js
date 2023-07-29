@@ -1,0 +1,34 @@
+---
+title: Update topic
+ref: forum
+---
+
+# Update topic
+
+The `forum.updateTopic` method on a `Client` instance makes a `PATCH` request to the `forums/topics/{topic}` endpoint and returns a forum topic.
+
+**Warning:** This endpoint is not tested, you may or may not run into unexpected behavior.
+
+### Parameters
+
+| Parameter | Type                                                   | Optional | Description               |
+| --------- | ------------------------------------------------------ | -------- | ------------------------- |
+| topic     | number                                                 |          | ID of the topic to update |
+| options   | [UpdateTopicOptions](/references/update-topic-options) | ✓        |                           |
+
+#### options.body
+
+| Parameter               | Type   | Optional | Description         |
+| ----------------------- | ------ | -------- | ------------------- |
+| forum_topic             |        | ✓        | Forum topic details |
+| forum_topic.topic_title | string | ✓        | Title of the topic  |
+
+### Returns
+
+```ts
+Promise<ForumTopic>;
+```
+
+#### Types
+
+- [ForumTopic](/references/forum-topic)

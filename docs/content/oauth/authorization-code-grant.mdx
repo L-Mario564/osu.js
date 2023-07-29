@@ -1,0 +1,83 @@
+---
+title: Authorization code grant
+---
+
+# Authorization code grant
+
+Provides an OAuth token with its associated user permissions.
+
+## Authorizing
+
+Before obtaining an OAuth token, the user must authorize your application. To request authorization, redirect the user to `https://osu.ppy.sh/oauth/authorize`. osu.js provides a [utility to build this URL](/extras/create-urls).
+
+### Example
+
+```ts
+import { buildUrl } from 'osu-web.js';
+
+const url = buildUrl.authRequest(clientId, redirectUri, scopes);
+redirect(url); // Redirect the user to the URL. Different libraries and frameworks will have different ways to do this
+```
+
+After the user grants permission to your application, they'll be redirected to the URL passed as the value for `redirectUri`.
+
+## Obtain a token
+
+To get the OAuth token, make a `POST` request to `https://osu.ppy.sh/oauth/token`. You can do so with the `authorizationCodeGrant.requestToken` method.
+
+### Example
+
+```ts
+const authCodeGrant = auth.authorizationCodeGrant(scopes);
+const token = await authCodeGrant.requestToken(code);
+```
+
+### authorizationCodeGrant
+
+#### Parameters
+
+| Parameter | Type                         | Optional | Description                                                                                        |
+| --------- | ---------------------------- | -------- | -------------------------------------------------------------------------------------------------- |
+| scopes    | [Scope](/references/scope)[] | ✓        | Your application's [scopes](https://osu.ppy.sh/docs/index.html#scopes). Defaults to `['identify']` |
+
+The array of scopes must have the same scopes passed in the authorization request URL.
+
+### requestToken
+
+#### Parameters
+
+| Parameter | Type   | Optional | Description                                                   |
+| --------- | ------ | -------- | ------------------------------------------------------------- |
+| code      | string |          | The code retreived after the user authorizes your application |
+
+The code is a URL query parameter passed in the redirect URI after the user authorizes your application. Obtaining this value varies depending on the library or framework being used.
+
+## Refresh a token
+
+OAuth tokens expire within 24 hours but it's possible to refresh a token.
+
+### Example
+
+```ts
+const token = await authCodeGrant.refreshToken(refreshToken);
+```
+
+#### Parameters
+
+| Parameter    | Type   | Optional | Description                                   |
+| ------------ | ------ | -------- | --------------------------------------------- |
+| refreshToken | string |          | The refresh token of the previous OAuth token |
+
+## Return Types
+
+Both `requestToken` and `refreshToken` return the same type.
+
+```ts
+Promise<Token>;
+```
+
+### Types
+
+- [Token](/references/token)
+
+For more information regarding the authorization code flow, refer to the [official documentation](https://osu.ppy.sh/docs/index.html#authorization-code-grant) about the topic.

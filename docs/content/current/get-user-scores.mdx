@@ -1,0 +1,81 @@
+---
+title: Get user scores
+ref: users
+---
+
+# Get user scores
+
+The `users.getUserScores` method on a `Client` instance makes a `GET` request to the `users/{user}/scores/{type}` endpoint and returns an array of the specified user's scores.
+
+### Example
+
+```ts
+const scores = await api.users.getUserScores(14544646, 'best', {
+  query: {
+    mode: 'osu',
+    limit: 3
+  }
+});
+```
+
+### Parameters
+
+| Parameter | Type                                         | Optional | Description                        |
+| --------- | -------------------------------------------- | -------- | ---------------------------------- |
+| user      | number                                       |          | ID of the user to get their scores |
+| type      | [UserScoreType](/references/user-score-type) |          | Score type                         |
+
+If `type` is set to `recent` then the parameters are as follows:
+
+| Parameter | Type                                                                     | Optional | Description                        |
+| --------- | ------------------------------------------------------------------------ | -------- | ---------------------------------- |
+| user      | number                                                                   |          | ID of the user to get their scores |
+| type      | 'recent'                                                                 |          | Score type                         |
+| options   | [GetUserRecentScoresOptions](/references/get-user-recent-scores-options) | ✓        |                                    |
+
+#### options.query
+
+| Parameter     | Type                              | Optional | Description                      |
+| ------------- | --------------------------------- | -------- | -------------------------------- |
+| limit         | number                            | ✓        | Limit number of results          |
+| offset        | number                            | ✓        | Pagination offset                |
+| mode          | [GameMode](/references/game-mode) | ✓        | Gamemode of the scores to return |
+| include_fails | boolean \| number                 | ✓        | Include failed scores?           |
+
+If `type` is set to `best` or `firsts` then the parameters are as follows:
+
+| Parameter | Type                                                        | Optional | Description                        |
+| --------- | ----------------------------------------------------------- | -------- | ---------------------------------- |
+| user      | number                                                      |          | ID of the user to get their scores |
+| type      | 'best' \| 'firsts'                                          |          | Score type                         |
+| options   | [GetUserScoresOptions](/references/get-user-scores-options) | ✓        |                                    |
+
+#### options.query
+
+| Parameter | Type                              | Optional | Description                      |
+| --------- | --------------------------------- | -------- | -------------------------------- |
+| limit     | number                            | ✓        | Limit number of results          |
+| offset    | number                            | ✓        | Pagination offset                |
+| mode      | [GameMode](/references/game-mode) | ✓        | Gamemode of the scores to return |
+
+### Returns
+
+If `type` is set to `recent`:
+
+```ts
+Promise<UserBestScore[]>;
+```
+
+#### Types
+
+- [UserBestScore](/references/user-best-score)
+
+If `type` is set to `best` or `firsts`:
+
+```ts
+Promise<UserScore[]>;
+```
+
+#### Types
+
+- [UserScore](/references/user-score)

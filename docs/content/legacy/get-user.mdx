@@ -1,0 +1,35 @@
+---
+title: Get user
+---
+
+# Get user
+
+The `getUser` method on a `LegacyClient` instance makes a `GET` request to the `get_user` endpoint and returns a user if it exists, otherwise null.
+
+### Example
+
+```ts
+const user = await legacyApi.getUser({
+  u: 14544646
+});
+```
+
+### Parameters
+
+| Parameter         | Type                                         | Optional | Description                                                             |
+| ----------------- | -------------------------------------------- | -------- | ----------------------------------------------------------------------- |
+| params            | [GetUserParams](/references/get-user-params) |          | The request's URL parameters                                            |
+| params.u          | string \| number                             | ✓        | User with a specific user ID or username                                |
+| params.m          | [GameMode](/references/game-mode)            | ✓        | Beatmaps from a specific gamemode                                       |
+| params.type       | [UserType](/references/user-type)            | ✓        | Specify if `u` is a user ID (`id`) or a username (`string`)             |
+| params.event_days | number                                       | ✓        | Max. number of days between now and the last event's date (range: 1-31) |
+
+### Returns
+
+```ts
+Promise<LegacyUser | null>;
+```
+
+#### Types
+
+- [LegacyUser](/references/legacy-user)

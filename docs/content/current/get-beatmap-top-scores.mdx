@@ -1,0 +1,51 @@
+---
+title: Get beatmap top scores
+ref: beatmaps
+---
+
+# Get beatmap top scores
+
+The `beatmaps.getBeatmapTopScores` method on a `Client` instance makes a `GET` request to the `beatmaps/{beatmap}/scores` endpoint and returns an array of user scores on a beatmap.
+
+### Example
+
+```ts
+const scores = await api.beatmaps.getBeatmapTopScores(1816113, {
+  query: {
+    mode: 'osu'
+  }
+});
+```
+
+### Parameters
+
+| Parameter | Type                                                              | Optional | Description                              |
+| --------- | ----------------------------------------------------------------- | -------- | ---------------------------------------- |
+| beatmap   | number                                                            |          | ID of the beatmap to get top scores from |
+| options   | [GetBeatmapScoresOptions](/references/get-beatmap-scores-options) | ✓        |                                          |
+
+#### options.query
+
+| Parameter | Type                              | Optional | Description                      |
+| --------- | --------------------------------- | -------- | -------------------------------- |
+| mode      | [GameMode](/references/game-mode) | ✓        | Gamemode of the scores to return |
+
+### Returns
+
+```ts
+Promise<
+  (Score & {
+    user: UserCompact & {
+      country: Country;
+      cover: Cover;
+    };
+  })[]
+>;
+```
+
+#### Types
+
+- [Score](/references/score)
+- [UserCompact](/references/user-compact)
+- [Country](/references/country)
+- [Cover](/references/cover)

@@ -1,0 +1,23 @@
+---
+title: LegacyMatchScore
+ref: interface
+---
+
+# LegacyMatchScore
+
+```ts
+export interface LegacyMatchScore extends Omit<LegacyBaseScore, 'enabled_mods'> {
+  slot: number;
+  team: TeamColor | null;
+  user_id: number;
+  pass: boolean;
+  enabled_mods: Mod[];
+}
+```
+
+## Types
+
+- [Omit](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys)
+- [LegacyBaseScore](/references/legacy-base-score)
+- [TeamColor](/references/team-color)
+- [Mod](/references/mod)

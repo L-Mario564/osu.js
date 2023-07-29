@@ -1,0 +1,24 @@
+---
+title: NewsListing
+ref: interface
+---
+
+# NewsListing
+
+```ts
+interface NewsListing {
+  cursor_string: Cursor;
+  news_posts: NewsPost & {
+    preview: string;
+  };
+  news_sidebar: NewsSidebar;
+  search: NewsSearch;
+}
+```
+
+## Types
+
+- [Cursor](/references/cursor)
+- [NewsPost](/references/news-post)
+- [NewsSidebar](/references/news-sidebar)
+- [NewsSearch](/references/news-search)

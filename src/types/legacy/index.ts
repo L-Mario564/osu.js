@@ -115,6 +115,7 @@ export interface LegacyEvent {
   epicfactor: number;
 }
 
+// LegacyBaseScore in docs
 interface BaseScore {
   score: number;
   count300: number;

@@ -1,0 +1,24 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Sidebar from '@components/Sidebar.astro';
+import { Content } from '@content/oauth.mdx';
+import { z } from 'astro:content';
+import { validateFrontmatters, fileToSlug } from '@lib/utils';
+import type { SectionLink } from '@lib/types';
+
+const files = validateFrontmatters(
+  await Astro.glob('../../../content/oauth/*.mdx'),
+  z.object({
+    title: z.string()
+  })
+);
+const links: SectionLink[] = files.map(({ file, frontmatter }) => ({
+  href: fileToSlug(file),
+  label: frontmatter.title
+}));
+---
+
+<BaseLayout title="OAuth - osu.js">
+  <Sidebar slot="sidebar" parentHref="oauth" sections={links} />
+  <Content />
+</BaseLayout>

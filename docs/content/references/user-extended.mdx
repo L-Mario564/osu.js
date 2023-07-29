@@ -1,0 +1,49 @@
+---
+title: UserExtended
+ref: interface
+---
+
+# UserExtended
+
+```ts
+interface UserExtended extends User {
+  account_history: UserAccountHistory[];
+  active_tournament_banner: UserActiveTournamentBanner | null;
+  badges: UserBadge[];
+  beatmap_playcounts_count: number;
+  favourite_beatmapset_count: number;
+  follower_count: number;
+  graveyard_beatmapset_count: number;
+  groups: UserGroup[];
+  loved_beatmapset_count: number;
+  mapping_follower_count: number;
+  monthly_playcounts: MonthlyPlaycount[];
+  page: Page;
+  pending_beatmapset_count: number;
+  previous_usernames: string[];
+  rank_highest: RankHighest | null;
+  rank_history: RankHistory;
+  ranked_beatmapset_count: number;
+  replays_watched_counts: MonthlyPlaycount[];
+  scores_best_count: number;
+  scores_first_count: number;
+  scores_recent_count: number;
+  statistics: UserStatistics;
+  support_level: number;
+  user_achievements: UserAchievement[];
+}
+```
+
+## Types
+
+- [User](/references/user)
+- [UserAccountHistory](/references/user-account-history)
+- [UserActiveTournamentBanner](/references/user-active-tournament-banner)
+- [UserBadge](/references/user-badge)
+- [UserGroup](/references/user-group)
+- [MonthlyPlaycount](/references/monthly-playcount)
+- [Page](/references/page)
+- [RankHighest](/references/rank-highest)
+- [RankHistory](/references/rank-history)
+- [UserStatistics](/references/user-statistics)
+- [UserAchievement](/references/user-achievement)

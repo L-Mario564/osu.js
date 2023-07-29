@@ -1,0 +1,54 @@
+---
+title: Create topic
+ref: forum
+---
+
+# Create topic
+
+The `forum.createTopic` method on a `Client` instance makes a `POST` request to the `forums/topics` endpoint and returns a forum topic and the post attached to it.
+
+**Warning:** This endpoint is not tested, you may or may not run into unexpected behavior.
+
+### Parameters
+
+| Parameter | Type                                                   | Optional | Description |
+| --------- | ------------------------------------------------------ | -------- | ----------- |
+| options   | [CreateTopicOptions](/references/create-topic-options) |          |             |
+
+#### options.body
+
+| Parameter        | Type    | Optional | Description                            |
+| ---------------- | ------- | -------- | -------------------------------------- |
+| body             | string  |          | Content of the topic                   |
+| forum_id         | number  |          | ID of the forum to create the topic in |
+| title            | string  |          | Title of the topic                     |
+| with_poll        | boolean | ✓        | Create a poll with the topic?          |
+| forum_topic_poll |         | ✓        | Poll details                           |
+
+#### options.body.forum_topic_poll
+
+| Parameter    | Type    | Optional | Description                                                                                                                                   |
+| ------------ | ------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| options      | string  |          | Newline-separated list of voting options. BBCode is supported                                                                                 |
+| title        | string  |          | Title of the poll                                                                                                                             |
+| hide_results | boolean | ✓        | Hide results (until voting period ends)? Defaults to `false`                                                                                  |
+| length_days  | number  | ✓        | Length of the voting period in days. `0` means that the voting will never end. This parameter is required if `hide_results` option is enabled |
+| max_options  | number  | ✓        | Max. number of votes each user can cast                                                                                                       |
+| vote_change  | boolean | ✓        | Can a user change their votes? Defaults to `false`                                                                                            |
+
+### Returns
+
+```ts
+Promise<{
+  topic: ForumTopic;
+  post: ForumPost & {
+    body: ForumPostBody;
+  };
+}>;
+```
+
+#### Types
+
+- [ForumTopic](/references/forum-topic)
+- [ForumPost](/references/forum-post)
+- [ForumPostBody](/references/forum-post-body)

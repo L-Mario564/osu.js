@@ -1,0 +1,17 @@
+# Legacy API
+
+To use the legacy API (also known as API v1), import the `LegacyClient` class and instantiate it.
+
+```ts
+import { LegacyClient } from 'osu-web.js';
+
+const legacyApi = new LegacyClient(apiKey);
+```
+
+## Parameters
+
+| Parameter | Type   | Optional | Description       |
+| --------- | ------ | -------- | ----------------- |
+| apiKey    | string |          | Your osu! API Key |
+
+You should avoid exposing the API key in your source code and frontend apps. Set it as an environment variable.

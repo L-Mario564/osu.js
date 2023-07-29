@@ -1,0 +1,121 @@
+---
+import Logo from '@icons/Logo.astro';
+import Github from '@icons/Github.astro';
+import Npm from '@icons/Npm.astro';
+
+interface Props {
+  title: string;
+  noIndex?: boolean;
+  setMaxWidth?: boolean;
+  hideFooter?: boolean;
+}
+
+const { title, noIndex = false, setMaxWidth = false, hideFooter = false } = Astro.props;
+const maxW = setMaxWidth ? '!max-w-[120ch]' : '!max-w-[none]';
+const description =
+  'A Javascript and Typescript SDK for the browser-facing portion of osu! with type safety in mind.';
+
+const navLinks = [
+  {
+    label: 'Current API',
+    href: '/current'
+  },
+  {
+    label: 'Legacy API',
+    href: '/legacy'
+  },
+  {
+    label: 'OAuth',
+    href: '/oauth'
+  },
+  {
+    label: 'Extras',
+    href: '/extras'
+  },
+  {
+    label: 'References',
+    href: '/references'
+  },
+  {
+    label: 'Changelog',
+    href: '/changelog'
+  }
+];
+---
+
+<html lang="en" data-theme="custom">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+    <link rel="canonical" href={Astro.url.href} />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${Astro.url.href}og.png`} />
+    <meta property="og:image:alt" content="osu.js banner" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="osu.js" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${Astro.url.href}og.png`} />
+    <meta name="twitter:image:alt" content="osu.js banner" />
+    <script src="../scripts/wrap-tables.ts"></script>
+    {noIndex && <meta name="robots" content="noindex" />}
+    <title>{title}</title>
+  </head>
+  <body>
+    <nav
+      class="fixed top-0 left-0 border-b border-stone-600 w-screen h-16 bg-base-100 bg-opacity-90 backdrop-blur text-zinc-100 flex items-center place-content-between z-10"
+    >
+      <div class="flex items-center gap-1 ml-8">
+        <a href="/" class="block h-min mr-3">
+          <Logo styles="h-7 fill-white" />
+        </a>
+        {
+          navLinks.map(({ label, href }) => (
+            <a href={href} class="btn normal-case btn-ghost">
+              {label}
+            </a>
+          ))
+        }
+      </div>
+      <div class="flex items-center gap-3 mr-8">
+        <a href="https://github.com/L-Mario564/osu.js">
+          <Github styles="fill-white h-8" />
+        </a>
+        <a href="https://www.npmjs.com/package/osu-web.js">
+          <Npm styles="fill-white h-8" />
+        </a>
+      </div>
+    </nav>
+    <div class="flex mt-24">
+      <slot name="sidebar" />
+      <div class="flex justify-center w-full">
+        <div
+          id="content"
+          class={`px-16 mb-10 prose ${maxW} w-full overflow-hidden break-words prose-h1:text-zinc-50 prose-h2:text-zinc-50 prose-h3:text-zinc-50 prose-h4:text-zinc-50 prose-p:text-zinc-100 prose-strong:text-primary prose-a:text-primary prose-a:font-normal prose-table:text-zinc-100 prose-table:w-max md:prose-table:w-full prose-td:min-w-max prose-th:text-zinc-50 prose-code:bg-[#191724] prose-code:text-secondary prose-code:rounded-md`}
+        >
+          <slot />
+          {
+            !hideFooter && (
+              <p class="mt-12 !text-zinc-300">
+                Notice that something is missing? Found a typo? Think something's incomplete? Or
+                think that something can be explained better? Feel free to open a pull request or
+                submit an issue on the library's{' '}
+                <a href="https://github.com/L-Mario564/osu.js" class="!text-zinc-100">
+                  Github repository
+                </a>
+                .
+              </p>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

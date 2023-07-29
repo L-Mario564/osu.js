@@ -1,0 +1,66 @@
+---
+title: Calculate mod stats
+---
+
+# Calculate mod stats
+
+Most endpoints in the API return a beatmap's difficulty properties with no mod's applied to them. You can use the `calcModStat` constant and its methods to convert values such as circle size and approach rate from NoMod to a specified mod.
+
+Every method has a single value as an input of type number and the output will have the same type.
+
+## Example
+
+```ts
+import { calcModStat } from 'osu-web.js';
+
+let dtAR = calcModStat.dt.ar(9); // Output: 10.3
+let ezCS = calcModStat.ez.cs(4); // Output: 2
+```
+
+## Methods
+
+```ts
+import { calcModStat } from 'osu-web.js';
+
+const { hr, dt, ez, ht } = calcModStat;
+const input: number;
+
+// Convert NM values to HR
+hr.cs(input);
+hr.od(input);
+hr.ar(input);
+hr.hp(input);
+
+// Convert NM values to DT
+dt.od(input);
+dt.bpm(input);
+dt.ar(input);
+dt.length(input);
+
+// Convert NM values to EZ
+ez.cs(input);
+ez.od(input);
+ez.ar(input);
+ez.hp(input);
+
+// Convert NM values to HT
+ht.od(input);
+ht.bpm(input);
+ht.ar(input);
+ht.length(input);
+```
+
+## Reference
+
+In case you're unfamiliar with some of these acronyms, here's what they mean:
+
+| Acronym | For                |
+| ------- | ------------------ |
+| HR      | Hard Rock          |
+| DT      | Double Time        |
+| EZ      | Easy               |
+| HT      | Half Time          |
+| CS      | Circle size        |
+| OD      | Overall difficulty |
+| AR      | Approach rate      |
+| HP      | Health points      |

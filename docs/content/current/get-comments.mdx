@@ -1,0 +1,47 @@
+---
+title: Get comments
+ref: comments
+---
+
+# Get comments
+
+The `comments.getComments` method on a `Client` instance makes a `GET` request to the `comments` endpoint and returns an object containing comments, users and other related data.
+
+### Example
+
+```ts
+const commentBundle = await api.comments.getComments({
+  query: {
+    commentable: {
+      id: 742961,
+      type: 'beatmapset'
+    }
+  }
+});
+```
+
+### Parameters
+
+| Parameter | Type                                                   | Optional | Description |
+| --------- | ------------------------------------------------------ | -------- | ----------- |
+| options   | [GetCommentsOptions](/references/get-comments-options) | ✓        |             |
+
+#### options.query
+
+| Parameter        | Type                                            | Optional | Description                          |
+| ---------------- | ----------------------------------------------- | -------- | ------------------------------------ |
+| parent_id        | number                                          | ✓        | Get replies of a specific comment ID |
+| sort             | [CommentSort](/references/comment-sort)         | ✓        | Sort by                              |
+| commentable      |                                                 | ✓        | Resource to get comments for         |
+| commentable.type | [CommentableType](/references/commentable-type) | ✓        | Type of the resource                 |
+| commentable.id   | number                                          | ✓        | ID of the resource                   |
+
+### Returns
+
+```ts
+Promise<CommentBundle>;
+```
+
+#### Types
+
+- [CommentBundle](/references/comment-bundle)

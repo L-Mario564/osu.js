@@ -1,0 +1,34 @@
+---
+title: Beatmapset
+ref: interface
+---
+
+# Beatmapset
+
+```ts
+interface Beatmapset extends BeatmapsetCompact {
+  availability: BeatmapsetAvailability;
+  bpm: number;
+  can_be_hyped: boolean;
+  creator: string;
+  discussion_locked: boolean;
+  hype: BeatmapsetHype | null;
+  is_scoreable: boolean;
+  last_updated: ISOTimestamp;
+  legacy_thread_url: string | null;
+  nominations_summary: BeatmapsetHype;
+  ranked: number;
+  ranked_date: ISOTimestamp | null;
+  source: string;
+  storyboard: boolean;
+  submitted_date: ISOTimestamp | null;
+  tags: string;
+}
+```
+
+## Types
+
+- [BeatmapsetCompact](/references/beatmapset-compact)
+- [BeatmapsetAvailability](/references/beatmapset-availability)
+- [BeatmapsetHype](/references/beatmapset-hype)
+- [ISOTimestamp](/references/iso-timestamp)

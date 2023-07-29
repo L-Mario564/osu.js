@@ -1,0 +1,55 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Sidebar from '@components/Sidebar.astro';
+import { z } from 'astro:content';
+import { validateFrontmatters, fileToSlug } from '@lib/utils';
+import type { Sections } from '@lib/types';
+
+export async function getStaticPaths() {
+  const files = validateFrontmatters(
+    await Astro.glob('../../../content/references/*.mdx'),
+    z.object({
+      title: z.string(),
+      ref: z.union([z.literal('type'), z.literal('interface'), z.literal('enum')])
+    })
+  );
+  const sections: Sections<'interfaces' | 'types' | 'enums'> = {
+    interfaces: [],
+    types: [],
+    enums: []
+  };
+
+  files.forEach(({ file, frontmatter }) => {
+    const link = {
+      href: fileToSlug(file),
+      label: frontmatter.title
+    };
+
+    if (frontmatter.ref === 'interface') {
+      sections.interfaces.push(link);
+    } else if (frontmatter.ref === 'type') {
+      sections.types.push(link);
+    } else {
+      sections.enums.push(link);
+    }
+  });
+
+  return files.map(({ Content, file, frontmatter }) => ({
+    params: {
+      slug: fileToSlug(file)
+    },
+    props: {
+      Content,
+      sections,
+      title: z.string().parse(frontmatter.title)
+    }
+  }));
+}
+
+const { Content, sections, title } = Astro.props;
+---
+
+<BaseLayout title={`${title} - osu.js`} noIndex>
+  <Sidebar slot="sidebar" parentHref="references" sections={sections} />
+  <Content />
+</BaseLayout>

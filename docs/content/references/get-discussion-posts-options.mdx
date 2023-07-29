@@ -1,0 +1,20 @@
+---
+title: GetDiscussionPostsOptions
+ref: type
+---
+
+# GetDiscussionPostsOptions
+
+```ts
+type GetDiscussionPostsOptions = Partial<{
+  query: GetDiscussionsBaseOptions &
+    Partial<{
+      beatmapset_discussion_id: number;
+      types: ('first' | 'reply' | 'system')[];
+      user: number;
+    }>;
+}>;
+```
+
+- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
+- [GetDiscussionsBaseOptions](/references/get-dicussions-base-options)

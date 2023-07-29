@@ -1,0 +1,29 @@
+---
+title: Rankings
+ref: interface
+---
+
+# Rankings
+
+```ts
+interface Rankings {
+  beatmapsets: Beatmapset[] | null;
+  ranking: (UserStatistics & {
+    user: UserCompact & {
+      country: Country;
+      cover: Cover;
+    };
+  })[];
+  spotlight: Spotlight | null;
+  total: number;
+}
+```
+
+## Types
+
+- [Beatmapset](/references/beatmapset)
+- [UserStatistics](/references/user-statistics)
+- [UserCompact](/references/user-compact)
+- [Country](/references/country)
+- [Cover](/references/cover)
+- [Spotlight](/references/spotlight)

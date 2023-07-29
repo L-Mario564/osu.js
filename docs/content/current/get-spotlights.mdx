@@ -1,0 +1,24 @@
+---
+title: Get spotlights
+ref: ranking
+---
+
+# Get spotlights
+
+The `ranking.getSpotlights` method on a `Client` instance makes a `GET` request to the `spotights` endpoint and returns an array of spotlights.
+
+### Example
+
+```ts
+const spotlights = await api.ranking.getSpotlights();
+```
+
+### Returns
+
+```ts
+Promise<Spotlight[]>;
+```
+
+#### Types
+
+- [Spotlight](/references/spotlight)

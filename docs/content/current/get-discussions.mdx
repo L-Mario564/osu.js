@@ -1,0 +1,64 @@
+---
+title: Get discussions
+ref: beatmapset discussions
+---
+
+# Get discussions
+
+The `beatmapsetDiscussions.getDiscussions` method on a `Client` instance makes a `GET` request to the `beatmapsets/discussions` endpoint and returns an object containing a cursor and arrays of beatmaps, discussions and users.
+
+### Example
+
+```ts
+const votes = await api.beatmapsetDiscussions.getDiscussions({
+  query: {
+    beatmapset_id: 742961
+  }
+});
+```
+
+### Parameters
+
+| Parameter | Type                                                        | Optional | Description |
+| --------- | ----------------------------------------------------------- | -------- | ----------- |
+| options   | [GetDiscussionsOptions](/references/get-dicussions-options) | ✓        |             |
+
+#### options.query
+
+| Parameter         | Type                                                                    | Optional | Description                                                        |
+| ----------------- | ----------------------------------------------------------------------- | -------- | ------------------------------------------------------------------ |
+| limit             | number                                                                  | ✓        | Max. number of results                                             |
+| page              | number                                                                  | ✓        | Search result page number                                          |
+| sort              | 'id_desc' \| 'id_asc'                                                   | ✓        | Sort posts by newest (`id_desc`) or oldest (`id_desc`)             |
+| beatmap_id        | number                                                                  | ✓        | ID of the beatmap to get discussions from                          |
+| beatmapset_id     | number                                                                  | ✓        | ID of the beatmapset to get discussions from                       |
+| beatmapset_status | 'all' \| 'ranked' \| 'qualified' \| 'disqualified' \| 'never_qualified' | ✓        | Specify beatmapset status                                          |
+| message_types     | [DiscussionMessageType](/references/discussion-message-type)[]          | ✓        | Specify message types, (unset for all)                             |
+| only_unresolved   | boolean                                                                 | ✓        | Show only resolved issues?                                         |
+| user              | number                                                                  | ✓        | ID of the user (official documentation doesn't specify about what) |
+
+### Returns
+
+```ts
+Promise<{
+  cursor_string: Cursor;
+  users: UserCompact[];
+  discussions: BeatmapsetDiscussion[];
+  included_discussions: BeatmapsetDiscussion[];
+  beatmapsets: BeatmapsetCompact[];
+  beatmaps: (Beatmap & {
+    checksum: string | null;
+  })[];
+  reviews_config: {
+    max_blocks: number;
+  };
+}>;
+```
+
+#### Types
+
+- [Cursor](/references/cursor)
+- [UserCompact](/references/user-compact)
+- [BeatmapsetDiscussion](/references/beatmapset-discussion)
+- [BeatmapsetCompact](/references/beatmapset-compact)
+- [Beatmap](/references/beatmap)

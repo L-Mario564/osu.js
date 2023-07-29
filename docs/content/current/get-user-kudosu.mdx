@@ -1,0 +1,42 @@
+---
+title: Get user kudosu
+ref: users
+---
+
+# Get user kudosu
+
+The `users.getUserKudosu` method on a `Client` instance makes a `GET` request to the `users/{user}/kudosu` endpoint and returns an array containing the specified user's kudosu history.
+
+### Example
+
+```ts
+const kudosu = await api.users.getUserKudosu(3171691, {
+  query: {
+    limit: 1
+  }
+});
+```
+
+### Parameters
+
+| Parameter | Type                                                        | Optional | Description                       |
+| --------- | ----------------------------------------------------------- | -------- | --------------------------------- |
+| user      | number                                                      |          | ID of the user to get kudosu from |
+| options   | [GetUserKodosuOptions](/references/get-user-kudosu-options) | ✓        |                                   |
+
+#### options.query
+
+| Parameter | Type   | Optional | Description             |
+| --------- | ------ | -------- | ----------------------- |
+| limit     | number | ✓        | Limit number of results |
+| offset    | number | ✓        | Pagination offset       |
+
+### Returns
+
+```ts
+Promise<UserKudosuHistory[]>;
+```
+
+#### Types
+
+- [UserKudosuHistory](/references/user-kudosu-history)

@@ -1,0 +1,62 @@
+---
+title: Get changelog listing
+ref: changelog
+---
+
+# Get changelog listing
+
+The `changelog.getChangelogListing` method on a `Client` instance makes a `GET` request to the `changelog` endpoint and returns an object containing a array of builds, update stream and search parameters used.
+
+### Example
+
+```ts
+const listing = await api.changelog.getChangelogListing();
+```
+
+### Parameters
+
+| Parameter | Type                                                                    | Optional | Description |
+| --------- | ----------------------------------------------------------------------- | -------- | ----------- |
+| options   | [GetChangelogListingOptions](/references/get-changelog-listing-options) | ✓        |             |
+
+#### options.query
+
+| Parameter       | Type                                            | Optional | Description                                      |
+| --------------- | ----------------------------------------------- | -------- | ------------------------------------------------ |
+| from            | string                                          | ✓        | Minimum build version                            |
+| max_id          | number                                          | ✓        | Maximum build ID                                 |
+| stream          | [ChangelogStream](/references/changelog-stream) | ✓        | Stream name to return builds from                |
+| to              | string                                          | ✓        | Maximum build version                            |
+| message_formats | ('html' \| 'markdown')[]                        | ✓        | Changelog entry format (returns both by default) |
+
+### Returns
+
+```ts
+Promise<{
+  builds: (Build & {
+    changelog_entries: (ChangelogEntry & {
+      github_user: GithubUser;
+      message: string | null;
+      message_html: string | null;
+    })[];
+  })[];
+  search: {
+    from: string | null;
+    limit: 21;
+    max_id: number | null;
+    stream: string | null;
+    to: string | null;
+  };
+  streams: (UpdateStream & {
+    latest_build: Build;
+    user_count: number;
+  })[];
+}>;
+```
+
+#### Types
+
+- [Build](/references/build)
+- [ChangelogEntry](/references/changelog-entry)
+- [GithubUser](/references/github-user)
+- [UpdateStream](/references/update-stream)

@@ -1,0 +1,207 @@
+---
+title: Create URLs
+---
+
+# Create URLs
+
+The `buildUrl` constant has multiple methods that allow you to create different URLs in the `ppy.sh` domain. Each method returns a URL string as an output.
+
+## Example
+
+```ts
+import { buildUrl } from 'osu-web.js';
+
+const userProfileUrl = buildUrl.user(14544646); // Output: https://osu.ppy.sh/u/14544646
+const forumPostUrl = buildUrl.forumTopic(1789556); // Output: https://osu.ppy.sh/community/forums/topics/1789556
+```
+
+## Methods
+
+### beatmapsetCover
+
+#### Parameters
+
+| Parameter    | Type   | Optional | Description       |
+| ------------ | ------ | -------- | ----------------- |
+| beatmapsetId | number |          | A beatmapset's ID |
+
+#### Returns
+
+```ts
+`https://assets.ppy.sh/beatmaps/${beatmapsetId}/covers/cover.jpg`;
+```
+
+### beatmapsetThumbnail
+
+#### Parameters
+
+| Parameter    | Type   | Optional | Description       |
+| ------------ | ------ | -------- | ----------------- |
+| beatmapsetId | number |          | A beatmapset's ID |
+
+#### Returns
+
+```ts
+`https://b.ppy.sh/thumb/${beatmapsetId}.jpg`;
+```
+
+### beatmap
+
+#### Parameters
+
+| Parameter | Type   | Optional | Description    |
+| --------- | ------ | -------- | -------------- |
+| beatmapId | number |          | A beatmap's ID |
+
+#### Returns
+
+```ts
+`https://osu.ppy.sh/b/${beatmapId}`;
+```
+
+### beatmapset
+
+#### Parameters
+
+| Parameter    | Type   | Optional | Description       |
+| ------------ | ------ | -------- | ----------------- |
+| beatmapsetId | number |          | A beatmapset's ID |
+
+#### Returns
+
+```ts
+`https://osu.ppy.sh/s/${beatmapsetId}`;
+```
+
+### userAvatar
+
+#### Parameters
+
+| Parameter | Type   | Optional | Description |
+| --------- | ------ | -------- | ----------- |
+| userId    | number |          | A user's ID |
+
+#### Returns
+
+```ts
+`https://s.ppy.sh/a/${beatmapsetId}`;
+```
+
+### user
+
+#### Parameters
+
+| Parameter | Type   | Optional | Description |
+| --------- | ------ | -------- | ----------- |
+| userId    | number |          | A user's ID |
+
+#### Returns
+
+```ts
+`https://osu.ppy.sh/u/${userId}`;
+```
+
+### score
+
+#### Parameters
+
+| Parameter | Type                              | Optional | Description           |
+| --------- | --------------------------------- | -------- | --------------------- |
+| gamemode  | [GameMode](/references/game-mode) |          | The score's game mode |
+| scoreId   | number                            |          | A score's ID          |
+
+#### Returns
+
+```ts
+`https://osu.ppy.sh/scores/${gamemode}/${scoreId}`;
+```
+
+### forum
+
+#### Parameters
+
+| Parameter | Type   | Optional | Description  |
+| --------- | ------ | -------- | ------------ |
+| forumId   | number |          | A forum's ID |
+
+#### Returns
+
+```ts
+`https://osu.ppy.sh/community/forums/${forumId}`;
+```
+
+### forumTopic
+
+#### Parameters
+
+| Parameter | Type   | Optional | Description                     |
+| --------- | ------ | -------- | ------------------------------- |
+| topicId   | number |          | A forum topic's (forum post) ID |
+
+#### Returns
+
+```ts
+`https://osu.ppy.sh/community/forums/topics/${forumId}`;
+```
+
+### room
+
+#### Parameters
+
+| Parameter | Type   | Optional | Description            |
+| --------- | ------ | -------- | ---------------------- |
+| roomId    | number |          | A multplayer room's ID |
+
+#### Returns
+
+```ts
+`https://osu.ppy.sh/multiplayer/rooms/${roomId}`;
+```
+
+### match
+
+#### Parameters
+
+| Parameter | Type   | Optional | Description  |
+| --------- | ------ | -------- | ------------ |
+| matchId   | number |          | A match's ID |
+
+#### Returns
+
+```ts
+`https://osu.ppy.sh/mp/${matchId}`;
+```
+
+### authRequest
+
+#### Parameters
+
+| Parameter   | Type                         | Optional | Description                                                |
+| ----------- | ---------------------------- | -------- | ---------------------------------------------------------- |
+| clientId    | number                       |          | OAuth client ID                                            |
+| redirectUri | string                       |          | OAuth redirect URI                                         |
+| scopes      | [Scope](/references/scope)[] | ✓        | An array of OAuth scopes. Defaults to `['identify']`       |
+| state       | string                       | ✓        | Data that will be returned when a temporary code is issued |
+
+#### Returns
+
+```ts
+`https://osu.ppy.sh/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scopes}&state=${state}`;
+```
+
+## Create custom URL
+
+Don't see a method that creates a URL you're looking for? Use the `custom` method to create a URL using the ppy.sh domain as a base.
+
+#### Parameters
+
+| Parameter | Type   | Optional | Description                                        |
+| --------- | ------ | -------- | -------------------------------------------------- |
+| path      | number |          | Path to set after `https://{subdomain}.ppy.sh/`    |
+| subdomain | string | ✓        | Specify a subdomain to point to. Defaults to `osu` |
+
+#### Returns
+
+```ts
+`https://${subdomain}.ppy.sh/${path}`;
+```

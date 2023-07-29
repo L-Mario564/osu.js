@@ -1,0 +1,30 @@
+---
+title: Get comment
+ref: comments
+---
+
+# Get comment
+
+The `comments.getComment` method on a `Client` instance makes a `GET` request to the `comments/{comment}` endpoint and returns an object containing comments, users and other related data to the comment with the specified ID.
+
+### Example
+
+```ts
+const commentBundle = await api.comments.getComment(832359);
+```
+
+### Parameters
+
+| Parameter | Type   | Optional | Description                                |
+| --------- | ------ | -------- | ------------------------------------------ |
+| comment   | number |          | ID of the comment to get related data from |
+
+### Returns
+
+```ts
+Promise<CommentBundle>;
+```
+
+#### Types
+
+- [CommentBundle](/references/comment-bundle)

@@ -1,0 +1,24 @@
+---
+title: ChatMessage
+ref: interface
+---
+
+# ChatMessage
+
+```ts
+interface ChatMessage {
+  channel_id: number;
+  content: string;
+  is_action: boolean;
+  message_id: number;
+  sender_id: number;
+  timestamp: ISOTimestamp;
+  type: ChatMessageType;
+  uuid: string | null;
+}
+```
+
+## Types
+
+- [ISOTimestamp](/references/iso-timestamp)
+- [ChatMessageType](/references/chat-message-type)

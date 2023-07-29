@@ -1,0 +1,41 @@
+---
+title: Get beatmaps
+---
+
+# Get beatmaps
+
+The `getBeatmaps` method on a `LegacyClient` instance makes a `GET` request to the `get_beatmaps` endpoint and returns an array of beatmaps.
+
+### Example
+
+```ts
+const beatmaps = await legacyApi.getBeatmaps({
+  b: 1031991
+});
+```
+
+### Parameters
+
+| Parameter    | Type                                                 | Optional | Description                                                  |
+| ------------ | ---------------------------------------------------- | -------- | ------------------------------------------------------------ |
+| params       | [GetBeatmapsParams](/references/get-beatmaps-params) |          | The request's URL parameters                                 |
+| params.since | Date                                                 | ✓        | Beatmaps ranked or loved since this date (in UTC)            |
+| params.s     | number                                               | ✓        | Beatmaps with a specific beatmapset ID                       |
+| params.b     | number                                               | ✓        | Beatmap with a specific beatmap ID                           |
+| params.u     | string \| number                                     | ✓        | Beatmaps created by user with a specific user ID or username |
+| params.type  | [UserType](/references/user-type)                    | ✓        | Specify if `u` is a user ID (`id`) or a username (`string`)  |
+| params.m     | [GameMode](/references/game-mode)                    | ✓        | Beatmaps from a specific gamemode                            |
+| params.a     | boolean                                              | ✓        | Include converted beatmaps?                                  |
+| params.h     | string                                               | ✓        | Beatmap with a specific hash                                 |
+| params.limit | number                                               | ✓        | Limit amount of beatmaps to return (500 max.)                |
+| params.mods  | [Mod](/references/mod)[]                             | ✓        | Mods to apply                                                |
+
+### Returns
+
+```ts
+Promise<LegacyBeatmap[]>;
+```
+
+#### Types
+
+- [LegacyBeatmap](/references/legacy-beatmap)

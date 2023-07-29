@@ -1,0 +1,41 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Sidebar from '@components/Sidebar.astro';
+import { Content } from '@content/references.mdx';
+import { z } from 'astro:content';
+import { validateFrontmatters, fileToSlug } from '@lib/utils';
+import type { Sections } from '@lib/types';
+
+const files = validateFrontmatters(
+  await Astro.glob('../../../content/references/*.mdx'),
+  z.object({
+    title: z.string(),
+    ref: z.union([z.literal('type'), z.literal('interface'), z.literal('enum')])
+  })
+);
+const sections: Sections<'interfaces' | 'types' | 'enums'> = {
+  interfaces: [],
+  types: [],
+  enums: []
+};
+
+files.forEach(({ file, frontmatter }) => {
+  const link = {
+    href: fileToSlug(file),
+    label: frontmatter.title
+  };
+
+  if (frontmatter.ref === 'interface') {
+    sections.interfaces.push(link);
+  } else if (frontmatter.ref === 'type') {
+    sections.types.push(link);
+  } else {
+    sections.enums.push(link);
+  }
+});
+---
+
+<BaseLayout title="References - osu.js">
+  <Sidebar slot="sidebar" parentHref="references" sections={sections} />
+  <Content />
+</BaseLayout>

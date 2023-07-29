@@ -1,0 +1,20 @@
+---
+title: UserEventBeatmapsetApprove
+ref: interface
+---
+
+# UserEventBeatmapsetApprove
+
+```ts
+interface UserEventBeatmapsetApprove extends BaseUserEvent {
+  type: 'beatmapsetApprove';
+  approval: EventBeatmapsetApprovedType;
+  beatmapset: EventBeatmap;
+}
+```
+
+## Types
+
+- [BaseUserEvent](/references/base-user-event)
+- [EventBeatmapsetApprovedType](/references/event-beatmapset-approved-type)
+- [EventBeatmap](/references/event-beatmap)

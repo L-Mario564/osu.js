@@ -1,0 +1,54 @@
+---
+title: Get discussion votes
+ref: beatmapset discussions
+---
+
+# Get discussion votes
+
+The `beatmapsetDiscussions.getDiscussionVotes` method on a `Client` instance makes a `GET` request to the `beatmapsets/discussions/votes` endpoint and returns an object containing a cursor and arrays of discussions, users and votes.
+
+### Example
+
+```ts
+const votes = await api.beatmapsetDiscussions.getDiscussionVotes({
+  query: {
+    beatmapset_discussion_id: 1816113
+  }
+});
+```
+
+### Parameters
+
+| Parameter | Type                                                                 | Optional | Description |
+| --------- | -------------------------------------------------------------------- | -------- | ----------- |
+| options   | [GetDiscussionVotesOptions](/references/get-dicussion-votes-options) | ✓        |             |
+
+#### options.query
+
+| Parameter                | Type                  | Optional | Description                                            |
+| ------------------------ | --------------------- | -------- | ------------------------------------------------------ |
+| limit                    | number                | ✓        | Max. number of results                                 |
+| page                     | number                | ✓        | Search result page number                              |
+| sort                     | 'id_desc' \| 'id_asc' | ✓        | Sort posts by newest (`id_desc`) or oldest (`id_desc`) |
+| beatmapset_discussion_id | number                | ✓        | ID of the beatmapset discussion                        |
+| receiver                 | number                | ✓        | ID of the user receiving the votes                     |
+| score                    | 1 \| -1               | ✓        | `1` for up vote, `-1` for down vote                    |
+| user                     | number                | ✓        | ID of the user giving votes                            |
+
+### Returns
+
+```ts
+Promise<{
+  cursor_string: Cursor;
+  discussions: BeatmapsetDiscussion[];
+  users: UserCompact[];
+  votes: DiscussionVote[];
+}>;
+```
+
+#### Types
+
+- [Cursor](/references/cursor)
+- [BeatmapsetDiscussion](/references/beatmapset-discussion)
+- [UserCompact](/references/user-compact)
+- [DiscussionVote](/references/discussion-vote)

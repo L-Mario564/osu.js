@@ -1,0 +1,20 @@
+---
+title: CreatePMOptions
+ref: type
+---
+
+# CreatePMOptions
+
+```ts
+type CreatePMOptions = {
+  body: {
+    target_id: number;
+    /** Message to send */
+    message: string;
+    /** Is the message an action? */
+    is_action?: boolean;
+    /** Client side message identifier which will be sent back in response and websocket JSON */
+    uuid: string;
+  };
+};
+```

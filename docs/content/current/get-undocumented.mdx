@@ -1,0 +1,37 @@
+---
+title: Get undocumented endpoint
+ref: miscellaneous
+---
+
+# Get undocumented endpoint
+
+The `getUndocumented` method on a `Client` instance makes a `GET` request to an inputted endpoint. This is mainly used to get data from undocumented or unstable endpoints.
+
+### Example
+
+```ts
+interface Backgrounds {
+  ends_at: string;
+  backgrounds: {
+    url: string;
+  }[];
+}
+
+const backgrounds = await api.getUndocumented<Backgrounds>('seasonal-backgrounds');
+```
+
+### Parameters
+
+| Parameter     | Type                                                                                                         | Optional | Description                         |
+| ------------- | ------------------------------------------------------------------------------------------------------------ | -------- | ----------------------------------- |
+| endpoint      | string                                                                                                       |          | Endpoint to make a `GET` request to |
+| options       | Omit\<[Options](/references/options), 'body'\>                                                               | ✓        |                                     |
+| options.query | [Record](https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type)\<string, unknown\> | ✓        | URL Query parameters                |
+
+### Returns
+
+```ts
+Promise<T>;
+```
+
+`T` is a [Typescript generic](https://www.typescriptlang.org/docs/handbook/2/generics.html).

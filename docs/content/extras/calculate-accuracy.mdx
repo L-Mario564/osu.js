@@ -1,0 +1,95 @@
+---
+title: Calculate accuracy
+---
+
+# Calculate accuracy
+
+Calculate the accuracy of any game mode based off of a score's properties with the `calcAccuracy` constant and its methods. Every method returns a number between 0 and 1 (or at least it should as long as the values are from a real score).
+
+## Standard
+
+Calculate accuracy for osu! standard.
+
+### Example
+
+```ts
+import { calcAccuracy } from 'osu-web.js';
+
+const accuracy = calcAccuracy.osu(1756, 26, 0, 0); // Output: 0.9903 (Fixed to 4 decimals)
+```
+
+### Parameters
+
+| Parameter | Type   | Optional | Description      |
+| --------- | ------ | -------- | ---------------- |
+| c300      | number |          | Number of 300s   |
+| c100      | number |          | Number of 100s   |
+| c50       | number |          | Number of 50s    |
+| misses    | number |          | Number of misses |
+
+## Taiko
+
+Calculate accuracy for osu! taiko.
+
+### Example
+
+```ts
+import { calcAccuracy } from 'osu-web.js';
+
+const accuracy = calcAccuracy.taiko(2896, 55, 0); // Output: 0.9907 (Fixed to 4 decimals)
+```
+
+### Parameters
+
+| Parameter | Type   | Optional | Description      |
+| --------- | ------ | -------- | ---------------- |
+| geki      | number |          | Number of greats |
+| katu      | number |          | Number of goods  |
+| misses    | number |          | Number of misses |
+
+## Catch
+
+Calculate accuracy for osu! catch.
+
+### Example
+
+```ts
+import { calcAccuracy } from 'osu-web.js';
+
+const accuracy = calcAccuracy.fruits(3277, 75, 557, 5, 0); // Output: 0.9987 (Fixed to 4 decimals)
+```
+
+### Parameters
+
+| Parameter | Type   | Optional | Description               |
+| --------- | ------ | -------- | ------------------------- |
+| c300      | number |          | Number of caught fruits   |
+| c100      | number |          | Number of caught drops    |
+| c50       | number |          | Number of caught droplets |
+| katu      | number |          | Number of drops           |
+| misses    | number |          | Number of droplets        |
+
+## Mania
+
+Calculate accuracy for osu! mania (score v1 and v2).
+
+### Example
+
+```ts
+import { calcAccuracy } from 'osu-web.js';
+
+const sv1Accuracy = calcAccuracy.mania(6349, 1940, 126, 15, 5, 24); // Output: 0.9905 (Fixed to 4 decimals)
+const sv2Accuracy = calcAccuracy.mania(6349, 1940, 126, 15, 5, 24, true); // Output: 0.9866 (Fixed to 4 decimals)
+```
+
+### Parameters
+
+| Parameter | Type    | Optional | Description                                          |
+| --------- | ------- | -------- | ---------------------------------------------------- |
+| geki      | number  |          | Number of maxes                                      |
+| c300      | number  |          | Number of 300s                                       |
+| katu      | number  |          | Number of 200s                                       |
+| c100      | number  |          | Number of 100s                                       |
+| c50       | number  |          | Number of 50s                                        |
+| misses    | number  |          | Number of misses                                     |
+| scoreV2   | boolean | ✓        | Calculate with score v2 formula? Defaults to `false` |

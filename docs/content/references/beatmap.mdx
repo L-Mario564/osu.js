@@ -1,0 +1,35 @@
+---
+title: Beatmap
+ref: interface
+---
+
+# Beatmap
+
+```ts
+interface Beatmap extends BeatmapCompact {
+  accuracy: number;
+  ar: number;
+  beatmapset_id: number;
+  bpm: number | null;
+  convert: boolean;
+  count_circles: number;
+  count_sliders: number;
+  count_spinners: number;
+  cs: number;
+  deleted_at: ISOTimestamp | null;
+  drain: number;
+  hit_length: number;
+  is_scoreable: boolean;
+  last_updated: ISOTimestamp;
+  mode_int: number;
+  passcount: number;
+  playcount: number;
+  ranked: number;
+  url: string;
+}
+```
+
+## Types
+
+- [BeatmapCompact](/references/beatmap-compact)
+- [ISOTimestamp](/references/iso-timestamp)

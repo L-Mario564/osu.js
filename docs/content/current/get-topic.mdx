@@ -1,0 +1,50 @@
+---
+title: Get topic
+ref: forum
+---
+
+# Get topic
+
+The `forum.getTopic` method on a `Client` instance makes a `GET` request to the `forums/topics/{topic}` endpoint and returns an object containing the cursor string, posts and the topic itself.
+
+### Example
+
+```ts
+const topic = await api.forum.getTopic(1715676);
+```
+
+### Parameters
+
+| Parameter | Type                                             | Optional | Description                                    |
+| --------- | ------------------------------------------------ | -------- | ---------------------------------------------- |
+| topic     | number                                           |          | ID of the topic to get its data and posts from |
+| options   | [GetTopicOptions](/references/get-topic-options) | ✓        |                                                |
+
+#### options.query
+
+| Parameter     | Type                  | Optional | Description                                                                                                          |
+| ------------- | --------------------- | -------- | -------------------------------------------------------------------------------------------------------------------- |
+| cursor_string | string                | ✓        | Pagination cursor                                                                                                    |
+| sort          | 'id_asc' \| 'id_desc' | ✓        | Posts sorting                                                                                                        |
+| limit         | number                | ✓        | Max. number of posts to be returned (caps at 50)                                                                     |
+| start         | number                | ✓        | First post ID to be returned with `sort` set to `id_asc`. This parameter is ignored if `cursor_string` is specified  |
+| end           | number                | ✓        | First post ID to be returned with `sort` set to `id_desc`. This parameter is ignored if `cursor_string` is specified |
+
+### Returns
+
+```ts
+Promise<{
+  cursor_string: Cursor;
+  posts: (ForumPost & {
+    body: ForumPostBody;
+  })[];
+  topic: ForumTopic;
+}>;
+```
+
+#### Types
+
+- [Cursor](/references/cursor)
+- [ForumPost](/references/forum-post)
+- [ForumPostBody](/references/forum-post-body)
+- [ForumTopic](/references/forum-topic)

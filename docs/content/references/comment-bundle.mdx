@@ -1,0 +1,30 @@
+---
+title: CommentBundle
+ref: interface
+---
+
+# CommentBundle
+
+```ts
+interface CommentBundle {
+  commentable_meta: CommentableMetadata[];
+  comments: Comment[];
+  has_more: boolean;
+  has_more_id: number | null;
+  included_comments: Comment[];
+  pinned_commnets: Comment[] | null;
+  sort: CommentSort;
+  top_level_count: number | null;
+  total: number | null;
+  user_follow: boolean;
+  user_votes: number[];
+  users: UserCompact[];
+}
+```
+
+## Types
+
+- [CommentableMetadata](/references/commetable-metadata)
+- [Comment](/references/comment)
+- [CommentSort](/references/comment-sort)
+- [UserCompact](/references/user-compact)

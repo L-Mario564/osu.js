@@ -1,0 +1,20 @@
+---
+title: UserEventUsernameUpdate
+ref: interface
+---
+
+# UserEventUsernameUpdate
+
+```ts
+interface UserEventUsernameUpdate extends BaseUserEvent {
+  type: 'usernameChange';
+  user: EventUser & {
+    previousUsername: string | null;
+  };
+}
+```
+
+## Types
+
+- [BaseUserEvent](/references/base-user-event)
+- [EventUser](/references/event-user)

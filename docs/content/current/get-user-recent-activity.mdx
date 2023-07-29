@@ -1,0 +1,38 @@
+---
+title: Get user recent activity
+ref: users
+---
+
+# Get user recent activity
+
+The `users.getUserRecentActivity` method on a `Client` instance makes a `GET` request to the `users/{user}/recent_activity` endpoint and returns an array containing the specified user's recent activity.
+
+### Example
+
+```ts
+const events = await api.users.getUserRecentActivity(14544646);
+```
+
+### Parameters
+
+| Parameter | Type                                                                         | Optional | Description                                      |
+| --------- | ---------------------------------------------------------------------------- | -------- | ------------------------------------------------ |
+| user      | number                                                                       |          | ID of the user to get their recent activity from |
+| options   | [GetUserRecentActivityOptions](/references/get-user-recent-activity-options) | ✓        |                                                  |
+
+#### options.query
+
+| Parameter | Type   | Optional | Description             |
+| --------- | ------ | -------- | ----------------------- |
+| limit     | number | ✓        | Limit number of results |
+| offset    | number | ✓        | Pagination offset       |
+
+### Returns
+
+```ts
+Promise<UserEvent[]>;
+```
+
+#### Types
+
+- [UserEvent](/references/user-event)

@@ -1,0 +1,30 @@
+---
+title: ForumTopic
+ref: interface
+---
+
+# ForumTopic
+
+```ts
+interface ForumTopic {
+  created_at: ISOTimestamp;
+  deleted_at: ISOTimestamp | null;
+  first_post_id: number;
+  forum_id: number;
+  id: number;
+  is_locked: boolean;
+  last_post_id: number;
+  poll: ForumPoll | null;
+  post_count: number;
+  title: string;
+  type: ForumTopicType;
+  updated_at: ISOTimestamp;
+  user_id: number;
+}
+```
+
+## Types
+
+- [ISOTimestamp](/references/iso-timestamp)
+- [ForumPoll](/references/forum-poll)
+- [ForumTopicType](/references/forum-topic-type)
