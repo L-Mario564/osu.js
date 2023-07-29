@@ -1,0 +1,51 @@
+---
+title: Get users
+ref: users
+---
+
+# Get users
+
+The `users.getUsers` method on a `Client` instance makes a `GET` request to the `users` endpoint and returns an array of users.
+
+### Example
+
+```ts
+const users = await api.users.getUsers({
+  query: {
+    ids: [14544646, 3171691]
+  }
+});
+```
+
+### Parameters
+
+| Parameter | Type                                             | Optional | Description |
+| --------- | ------------------------------------------------ | -------- | ----------- |
+| options   | [GetUsersOptions](/references/get-users-options) | ✓        |             |
+
+#### options.query
+
+| Parameter | Type     | Optional | Description                                       |
+| --------- | -------- | -------- | ------------------------------------------------- |
+| ids       | number[] | ✓        | An array of user IDs (can only take up to 50 IDs) |
+
+### Returns
+
+```ts
+Promise<
+  (UserCompact & {
+    country: Country;
+    cover: Cover;
+    groups: UserGroup[];
+    statistics_rulesets: StatisticsRulesets;
+  })[]
+>;
+```
+
+#### Types
+
+- [UserCompact](/references/user-compact)
+- [Country](/references/country)
+- [Cover](/references/cover)
+- [UserGroup](/references/user-group)
+- [StatisticsRulesets](/references/statistics-rulesets)

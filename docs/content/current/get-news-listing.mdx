@@ -1,0 +1,38 @@
+---
+title: Get news listing
+ref: news
+---
+
+# Get news listing
+
+The `news.getNewsListing` method on a `Client` instance makes a `GET` request to the `news` endpoint and returns an object containing news posts and other additional data.
+
+### Example
+
+```ts
+const newsListing = await api.news.getNewsListing();
+```
+
+### Parameters
+
+| Parameter | Type                                                          | Optional | Description |
+| --------- | ------------------------------------------------------------- | -------- | ----------- |
+| options   | [GetNewsListingOptions](/references/get-news-listing-options) | ✓        |             |
+
+#### options.query
+
+| Parameter     | Type   | Optional | Description                          |
+| ------------- | ------ | -------- | ------------------------------------ |
+| limit         | number | ✓        | Limit number of results              |
+| year          | number | ✓        | Filter news posts by a specific year |
+| cursor_string | string | ✓        | Pagination cursor                    |
+
+### Returns
+
+```ts
+Promise<NewsListing>;
+```
+
+#### Types
+
+- [NewsListing](/references/news-listing)

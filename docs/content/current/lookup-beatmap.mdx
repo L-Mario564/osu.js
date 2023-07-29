@@ -1,0 +1,54 @@
+---
+title: Lookup beatmap
+ref: beatmaps
+---
+
+# Lookup beatmap
+
+The `beatmaps.lookupBeatmap` method on a `Client` instance makes a `GET` request to the `beatmaps/lookup` endpoint and returns a beatmap if it exists, otherwise undefined.
+
+### Example
+
+```ts
+const beatmap = await api.lookupBeatmap({
+  query: {
+    id: 1031991
+  }
+});
+```
+
+### Parameters
+
+| Parameter | Type                                                       | Optional | Description |
+| --------- | ---------------------------------------------------------- | -------- | ----------- |
+| options   | [LookupBeatmapOptions](/references/lookup-beatmap-options) | ✓        |             |
+
+#### options.query
+
+| Parameter | Type   | Optional | Description         |
+| --------- | ------ | -------- | ------------------- |
+| checksum  | string | ✓        | A beatmap checksum  |
+| filename  | string | ✓        | A beatmap file name |
+| id        | number | ✓        | ID of a beatmap     |
+
+### Returns
+
+```ts
+Promise<
+  | (Beatmap & {
+      beatmapset: Beatmapset & {
+        ratings: number[];
+      };
+      checksum: string | null;
+      failtimes: Fails;
+      max_combo: number;
+    })
+  | undefined
+>;
+```
+
+#### Types
+
+- [Beatmap](/references/beatmap)
+- [Beatmapset](/references/beatmapset)
+- [Fails](/references/fails)

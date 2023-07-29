@@ -1,0 +1,39 @@
+---
+title: Create PM
+ref: chat
+---
+
+# Create PM
+
+The `chat.createPM` method on a `Client` instance makes a `POST` request to the `chat/new` endpoint and returns an object containing the message sent and the channel it was sent to.
+
+**Warning:** This endpoint is not tested, you may or may not run into unexpected behavior.
+
+### Parameters
+
+| Parameter | Type                                             | Optional | Description |
+| --------- | ------------------------------------------------ | -------- | ----------- |
+| options   | [CreatePMOptions](/references/create-pm-options) |          |             |
+
+#### options.body
+
+| Parameter | Type    | Optional | Description                                                                           |
+| --------- | ------- | -------- | ------------------------------------------------------------------------------------- |
+| target_id | number  |          | ID of the user to send a PM                                                           |
+| message   | string  |          | Message to send                                                                       |
+| is_action | boolean | ✓        | Is the message an action? Defaults to `false`                                         |
+| uuid      | string  | ✓        | Client side message identifier which will be sent back in response and websocket JSON |
+
+### Returns
+
+```ts
+Promise<{
+  channel: Channel;
+  message: ChatMessage;
+}>;
+```
+
+#### Types
+
+- [Channel](/references/channel)
+- [ChatMessage](/references/chat-message)

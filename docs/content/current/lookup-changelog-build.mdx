@@ -1,0 +1,51 @@
+---
+title: Lookup changelog build
+ref: changelog
+---
+
+# Lookup changelog build
+
+The `changelog.lookupChangelogBuild` method on a `Client` instance makes a `GET` request to the `changelog/{changelog}` endpoint and returns a changelog build if it exists, otherwise undefined.
+
+### Example
+
+```ts
+const build = await api.changelog.lookupChangelogBuild('2023.305.0');
+```
+
+### Parameters
+
+| Parameter | Type                                                                      | Optional | Description                                    |
+| --------- | ------------------------------------------------------------------------- | -------- | ---------------------------------------------- |
+| changelog | string \| number                                                          |          | Build version, update stream name, or build ID |
+| options   | [LookupChangelogBuildOptions](/references/lookup-changelog-build-options) | ✓        |                                                |
+
+#### options.query
+
+| Parameter       | Type                     | Optional | Description                                                                |
+| --------------- | ------------------------ | -------- | -------------------------------------------------------------------------- |
+| key             | 'id'                     | ✓        | Unset to query by build version or stream name, or id to query by build ID |
+| message_formats | ('html' \| 'markdown')[] | ✓        | Changelog entry format (returns both by default)                           |
+
+### Returns
+
+```ts
+Promise<
+  | (Build & {
+      changelog_entries: (ChangelogEntry & {
+        github_user: GithubUser;
+        message: string | null;
+        message_html: string | null;
+      })[];
+      versions: BuildVersions;
+    })
+  | undefined
+>;
+```
+
+#### Types
+
+- [Build](/references/build)
+- [ChangelogEntry](/references/changelog-entry)
+- [GithubUser](/references/github-user)
+- [BuildVersions](/references/build-versions)

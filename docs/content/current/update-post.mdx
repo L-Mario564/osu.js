@@ -1,0 +1,38 @@
+---
+title: Update post
+ref: forum
+---
+
+# Update post
+
+The `forum.updatePost` method on a `Client` instance makes a `PATCH` request to the `forums/posts/{post}` endpoint and returns a forum post.
+
+**Warning:** This endpoint is not tested, you may or may not run into unexpected behavior.
+
+### Parameters
+
+| Parameter | Type                                                 | Optional | Description              |
+| --------- | ---------------------------------------------------- | -------- | ------------------------ |
+| post      | number                                               |          | ID of the post to update |
+| options   | [UpdatePostOptions](/references/update-post-options) |          |                          |
+
+#### options.body
+
+| Parameter | Type   | Optional | Description                          |
+| --------- | ------ | -------- | ------------------------------------ |
+| body      | string |          | Content of the post in BBCode format |
+
+### Returns
+
+```ts
+Promise<
+  ForumPost & {
+    body: ForumPostBody;
+  }
+>;
+```
+
+#### Types
+
+- [ForumPost](/references/forum-post)
+- [ForumPostBody](/references/forum-post-body)

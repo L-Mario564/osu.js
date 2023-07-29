@@ -1,0 +1,44 @@
+---
+title: Get playlist scores
+ref: multiplayer
+---
+
+# Get playlist scores
+
+The `multiplayer.getPlaylistScores` method on a `Client` instance makes a `GET` request to the `rooms/{room}/playlist/{playlist}/scores` endpoint and returns an object containing playlist scores and metadata.
+
+### Example
+
+```ts
+const scores = await api.multiplayer.getPlaylistScores(274844, 1852978, {
+  query: {
+    limit: 5
+  }
+});
+```
+
+### Parameters
+
+| Parameter | Type                                                                | Optional | Description                                  |
+| --------- | ------------------------------------------------------------------- | -------- | -------------------------------------------- |
+| room      | number                                                              |          | ID of the room corresponding to the playlist |
+| playlist  | number                                                              |          | ID of the playlist to get scores from        |
+| options   | [GetPlaylistScoresOptions](/references/get-playlist-scores-options) | ✓        |                                              |
+
+#### options.query
+
+| Parameter     | Type                                                         | Optional | Description             |
+| ------------- | ------------------------------------------------------------ | -------- | ----------------------- |
+| limit         | number                                                       | ✓        | Limit number of results |
+| sort          | [MultiplayerScoresSort](/references/multiplayer-scores-sort) | ✓        | Scores sorting          |
+| cursor_string | string                                                       | ✓        | Pagination cursor       |
+
+### Returns
+
+```ts
+Promise<MultiplayerScores>;
+```
+
+#### Types
+
+- [MultiplayerScores](/references/multiplayer-scores)

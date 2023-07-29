@@ -1,0 +1,47 @@
+---
+title: Get user
+ref: users
+---
+
+# Get user
+
+The `users.getUser` method on a `Client` instance makes a `GET` request to the `users/{user}/{mode?}` endpoint and returns a user.
+
+### Example
+
+```ts
+const user = await api.users.getUser(14544646, {
+  urlParams: {
+    mode: 'osu'
+  }
+});
+```
+
+### Parameters
+
+| Parameter | Type                                           | Optional | Description                             |
+| --------- | ---------------------------------------------- | -------- | --------------------------------------- |
+| user      | string \| number                               |          | ID of the user to get their beatmapsets |
+| options   | [GetUserOptions](/references/get-user-options) | ✓        |                                         |
+
+#### options.urlParams
+
+| Parameter | Type                              | Optional | Description                      |
+| --------- | --------------------------------- | -------- | -------------------------------- |
+| mode      | [GameMode](/references/game-mode) | ✓        | Gamemode of the proile to return |
+
+#### options.query
+
+| Parameter | Type | Optional | Description                                            |
+| --------- | ---- | -------- | ------------------------------------------------------ |
+| key       | 'id' | ✓        | Specify if the `user` param is an `id` or a `username` |
+
+### Returns
+
+```ts
+Promise<UserExtended[]>;
+```
+
+#### Types
+
+- [UserExtended](/references/user-extended)

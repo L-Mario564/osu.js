@@ -1,0 +1,73 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Sidebar from '@components/Sidebar.astro';
+import { z } from 'astro:content';
+import { validateFrontmatters, fileToSlug } from '@lib/utils';
+import type { Sections } from '@lib/types';
+
+export async function getStaticPaths() {
+  const refSchema = z.union([
+    z.literal('miscellaneous'),
+    z.literal('beatmaps'),
+    z.literal('beatmapset discussions'),
+    z.literal('changelog'),
+    z.literal('chat'),
+    z.literal('comments'),
+    z.literal('forum'),
+    z.literal('multiplayer'),
+    z.literal('news'),
+    z.literal('ranking'),
+    z.literal('users'),
+    z.literal('wiki')
+  ]);
+  
+  const files = validateFrontmatters(
+    await Astro.glob('../../../content/current/*.mdx'),
+    z.object({
+      title: z.string(),
+      ref: refSchema
+    })
+  );
+  const sections: Sections<z.infer<typeof refSchema>> = {
+    'beatmaps': [],
+    'beatmapset discussions': [],
+    'changelog': [],
+    'chat': [],
+    'comments': [],
+    'forum': [],
+    'miscellaneous': [],
+    'multiplayer': [],
+    'news': [],
+    'ranking': [],
+    'users': [],
+    'wiki': []
+  };
+  
+  files.forEach(({ file, frontmatter }) => {
+    const link = {
+      href: fileToSlug(file),
+      label: frontmatter.title
+    };
+  
+    sections[frontmatter.ref].push(link);
+  });
+
+  return files.map(({ Content, file, frontmatter }) => ({
+    params: {
+      slug: fileToSlug(file)
+    },
+    props: {
+      Content,
+      sections,
+      title: z.string().parse(frontmatter.title)
+    }
+  }));
+}
+
+const { Content, sections, title } = Astro.props;
+---
+
+<BaseLayout title={`${title} - osu.js`}>
+  <Sidebar slot="sidebar" parentHref="current" sections={sections} />
+  <Content />
+</BaseLayout>

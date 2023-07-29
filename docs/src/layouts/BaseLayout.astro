@@ -7,9 +7,10 @@ interface Props {
   title: string;
   noIndex?: boolean;
   setMaxWidth?: boolean;
+  hideFooter?: boolean;
 }
 
-const { title, noIndex = false, setMaxWidth = false } = Astro.props;
+const { title, noIndex = false, setMaxWidth = false, hideFooter = false } = Astro.props;
 const maxW = setMaxWidth ? '!max-w-[120ch]' : '!max-w-[none]';
 const description =
   'A Javascript and Typescript SDK for the browser-facing portion of osu! with type safety in mind.';
@@ -96,6 +97,7 @@ const navLinks = [
           class={`px-16 mb-10 prose ${maxW} w-full overflow-hidden break-words prose-h1:text-zinc-50 prose-h2:text-zinc-50 prose-h3:text-zinc-50 prose-h4:text-zinc-50 prose-p:text-zinc-100 prose-strong:text-primary prose-a:text-primary prose-a:font-normal prose-table:text-zinc-100 prose-table:w-max md:prose-table:w-full prose-td:min-w-max prose-th:text-zinc-50 prose-code:bg-[#191724] prose-code:text-secondary prose-code:rounded-md`}
         >
           <slot />
+          {!hideFooter && <p class="mt-12 !text-zinc-300">Notice that something is missing? Found a typo? Think something's incomplete? Or think that something can be explained better? Feel free to open a pull request or submit an issue on the library's <a href="https://github.com/L-Mario564/osu.js" class="!text-zinc-100">Github repository</a>.</p>}
         </div>
       </div>
     </div>

@@ -1,0 +1,45 @@
+---
+title: Get ranking
+ref: ranking
+---
+
+# Get ranking
+
+The `ranking.getRanking` method on a `Client` instance makes a `GET` request to the `rankings/{mode}/{type}` endpoint and returns an object containing ranking data.
+
+### Example
+
+```ts
+const rankings = await api.ranking.getRanking('osu', 'performance', {
+  query: {
+    country: 'US'
+  }
+});
+```
+
+### Parameters
+
+| Parameter | Type                                                 | Optional | Description      |
+| --------- | ---------------------------------------------------- | -------- | ---------------- |
+| mode      | [GameMode](/references/game-mode)                    |          | Ranking gamemode |
+| type      | [RankingType](/references/ranking-type)              |          | Ranking type     |
+| options   | [GetRankingOptions](/references/get-ranking-options) | ✓        |                  |
+
+#### options.query
+
+| Parameter | Type               | Optional | Description                                                                      |
+| --------- | ------------------ | -------- | -------------------------------------------------------------------------------- |
+| country   | string             | ✓        | Filter by country code (only available for type `performance`)                   |
+| filter    | 'all' \| 'friends' | ✓        | Show all users or friend ranking                                                 |
+| spotlight | number             | ✓        | ID of the spotlight (if type is `charts`)                                        |
+| variant   | string             | ✓        | Filter ranking by specified mode variant (only available for type `performance`) |
+
+### Returns
+
+```ts
+Promise<Rankings>;
+```
+
+#### Types
+
+- [Rankings](/references/rankings)

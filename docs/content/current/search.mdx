@@ -1,0 +1,44 @@
+---
+title: Search
+ref: miscellaneous
+---
+
+# Search
+
+The `search` method on a `Client` instance makes a `GET` request to the `search` endpoint and returns an array of users and an array of wiki pages.
+
+### Example
+
+```ts
+// Search for users with the query "btmc"
+const results = await api.search({
+  query: {
+    query: 'btmc',
+    mode: 'user'
+  }
+});
+```
+
+### Parameters
+
+| Parameter | Type                                        | Optional | Description |
+| --------- | ------------------------------------------- | -------- | ----------- |
+| options   | [SearchOptions](/references/search-options) | ✓        |             |
+
+#### options.query
+
+| Parameter | Type                           | Optional | Description                                |
+| --------- | ------------------------------ | -------- | ------------------------------------------ |
+| mode      | 'all' \| 'user' \| 'wiki_page' | ✓        | Search only users, only wiki pages or both |
+| query     | string                         | ✓        | Query string to search                     |
+| page      | number                         | ✓        | Page number                                |
+
+### Returns
+
+```ts
+Promise<SearchResults>
+```
+
+#### Types
+
+- [SearchResults](/references/search-results)

@@ -1,0 +1,43 @@
+---
+title: Get news post
+ref: news
+---
+
+# Get news post
+
+The `news.getNewsPost` method on a `Client` instance makes a `GET` request to the `news/{news}` endpoint and returns a news post.
+
+### Example
+
+```ts
+const newsPost = await api.news.getNewsPost('2023-01-19-gmt-apps-now-open');
+```
+
+### Parameters
+
+| Parameter | Type                                                    | Optional | Description                        |
+| --------- | ------------------------------------------------------- | -------- | ---------------------------------- |
+| news      | string \| number                                        |          | ID or slug of the news post to get |
+| options   | [GetNewsPostOptions](/references/get-news-post-options) | ✓        |                                    |
+
+#### options.query
+
+| Parameter | Type | Optional | Description                                                                               |
+| --------- | ---- | -------- | ----------------------------------------------------------------------------------------- |
+| key       | 'id' | ✓        | Specify whether the query must be done with a news post ID (`id`) or a slug (unset value) |
+
+### Returns
+
+```ts
+Promise<
+  NewsPost & {
+    content: string;
+    navigation: NewsNavigation;
+  }
+>;
+```
+
+#### Types
+
+- [NewsPost](/references/news-post)
+- [NewsNavigation](/references/news-navigation)

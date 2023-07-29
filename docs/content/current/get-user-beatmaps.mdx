@@ -1,0 +1,62 @@
+---
+title: Get user beatmaps
+ref: users
+---
+
+# Get user beatmaps
+
+The `users.getUserBeatmaps` method on a `Client` instance makes a `GET` request to the `users/{user}/beatmapsets/{type}` endpoint and returns an array of a user's beatmapsets.
+
+### Example
+
+```ts
+const beatmapsets = await api.users.getUserBeatmaps(14544646, 'favourite', {
+  query: {
+    limit: 2
+  }
+});
+```
+
+### Parameters
+
+| Parameter | Type                                                            | Optional | Description                             |
+| --------- | --------------------------------------------------------------- | -------- | --------------------------------------- |
+| user      | number                                                          |          | ID of the user to get their beatmapsets |
+| type      | [UserBeatmapsType](/references/user-beatmaps-type)              |          | Type of beatmapsets                     |
+| options   | [GetUserBeatmapsOptions](/references/get-user-beatmaps-options) | ✓        |                                         |
+
+#### options.query
+
+| Parameter | Type   | Optional | Description             |
+| --------- | ------ | -------- | ----------------------- |
+| limit     | number | ✓        | Limit number of results |
+| offset    | number | ✓        | Pagination offset       |
+
+### Returns
+
+If `type` is set to `most_played`:
+
+```ts
+Promise<BeatmapPlaycount[]>;
+```
+
+#### Types
+
+- [BeatmapPlaycount](/references/beatmap-playcount)
+
+If `type` is set to anything else:
+
+```ts
+Promise<
+  (Beatmapset & {
+    beatmaps: (Beatmap & {
+      checksum: string | null;
+    })[];
+  })[]
+>;
+```
+
+#### Types
+
+- [Beatmapset](/references/beatmapset)
+- [Beatmap](/references/beatmap)

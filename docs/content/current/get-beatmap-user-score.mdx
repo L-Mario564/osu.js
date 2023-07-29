@@ -1,0 +1,42 @@
+---
+title: Get beatmap user score
+ref: beatmaps
+---
+
+# Get beatmap user score
+
+The `beatmaps.getBeatmapUserScore` method on a `Client` instance makes a `GET` request to the `beatmaps/{beatmap}/scores/users/{user}` endpoint and returns a user's score on a beatmap.
+
+### Example
+
+```ts
+const score = await api.beatmaps.getBeatmapUserScore(1816113, 12408961, {
+  query: {
+    mode: 'osu'
+  }
+});
+```
+
+### Parameters
+
+| Parameter | Type                                                              | Optional | Description                             |
+| --------- | ----------------------------------------------------------------- | -------- | --------------------------------------- |
+| beatmap   | number                                                            |          | ID of the beatmap to get the score from |
+| user      | number                                                            |          | ID of the user to get the score from    |
+| options   | [GetBeatmapScoresOptions](/references/get-beatmap-scores-options) | ✓        |                                         |
+
+#### options.query
+
+| Parameter | Type                              | Optional | Description                     |
+| --------- | --------------------------------- | -------- | ------------------------------- |
+| mode      | [GameMode](/references/game-mode) | ✓        | Gamemode of the score to return |
+
+### Returns
+
+```ts
+Promise<BeatmapUserScore>;
+```
+
+#### Types
+
+- [BeatmapUserScore](/references/beatmap-user-score)

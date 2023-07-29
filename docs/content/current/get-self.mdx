@@ -1,0 +1,46 @@
+---
+title: Get self
+ref: users
+---
+
+# Get self
+
+The `users.getSelf` method on a `Client` instance makes a `GET` request to the `me` endpoint and returns the user corresponding to the access token provided in the constructor of the `Client` class.
+
+### Example
+
+```ts
+const user = await api.users.getSelf({
+  urlParams: {
+    mode: 'osu'
+  }
+});
+```
+
+### Parameters
+
+| Parameter | Type                                           | Optional | Description |
+| --------- | ---------------------------------------------- | -------- | ----------- |
+| options   | [GetSelfOptions](/references/get-self-options) | ✓        |             |
+
+#### options.urlParams
+
+| Parameter | Type                              | Optional | Description                      |
+| --------- | --------------------------------- | -------- | -------------------------------- |
+| mode      | [GameMode](/references/game-mode) | ✓        | Gamemode of the proile to return |
+
+### Returns
+
+```ts
+Promise<
+  UserExtended & {
+    is_restricted: boolean;
+    statistics_rulesets: StatisticsRulesets;
+  }
+>;
+```
+
+#### Types
+
+- [UserExtended](/references/user-extended)
+- [StatisticsRulesets](/references/statistics-rulesets)

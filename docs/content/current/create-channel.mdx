@@ -1,0 +1,60 @@
+---
+title: Create channel
+ref: chat
+---
+
+# Create channel
+
+The `chat.createChannel` method on a `Client` instance makes a `POST` request to the `chat/channels` endpoint and returns the created or rejoined channel.
+
+**Warning:** This endpoint is not tested, you may or may not run into unexpected behavior.
+
+### Parameters
+
+| Parameter | Type               | Optional | Description                      |
+| --------- | ------------------ | -------- | -------------------------------- |
+| type      | 'PM' \| 'ANNOUNCE' |          | Channel type to create or rejoin |
+
+If `type` is set to `PM` then the parameters are as follows:
+
+| Parameter | Type                                                            | Optional | Description |
+| --------- | --------------------------------------------------------------- | -------- | ----------- |
+| type      | 'PM'                                                            |          |             |
+| options   | [CreatePMChannelOptions](/references/create-pm-channel-options) |          |             |
+
+#### options.body
+
+| Parameter           | Type                                          | Optional | Description         |
+| ------------------- | --------------------------------------------- | -------- | ------------------- |
+| target_id           | number                                        |          | Target user ID      |
+| message             | string                                        | ✓        | Message to send     |
+| channel             | [ChannelDetails](/references/channel-details) | ✓        | Channel details     |
+| channel.name        | string                                        | ✓        | Channel name        |
+| channel.description | string                                        | ✓        | Channel description |
+
+If `type` is set to `ANNOUNCE` then the parameters are as follows:
+
+| Parameter | Type                                                                        | Optional | Description |
+| --------- | --------------------------------------------------------------------------- | -------- | ----------- |
+| type      | 'ANNOUNCE'                                                                  |          |             |
+| options   | [CreateAnnounceChannelOptions](/references/create-announce-channel-options) |          |             |
+
+#### options.body
+
+| Parameter           | Type                                          | Optional | Description                           |
+| ------------------- | --------------------------------------------- | -------- | ------------------------------------- |
+| message             | string                                        |          | Message to send with the announcement |
+| target_ids          | number[]                                      |          | Target user IDs                       |
+| channel             | [ChannelDetails](/references/channel-details) |          | Channel details                       |
+| channel.name        | string                                        |          | Channel name                          |
+| channel.description | string                                        |          | Channel description                   |
+
+### Returns
+
+```ts
+Promise<Channel>;
+```
+
+#### Types
+
+- [Channel](/references/channel)

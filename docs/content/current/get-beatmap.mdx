@@ -1,0 +1,41 @@
+---
+title: Get beatmap
+ref: beatmaps
+---
+
+# Get beatmap
+
+The `beatmaps.getBeatmap` method on a `Client` instance makes a `GET` request to the `beatmaps/{beatmap}` endpoint and returns a beatmap.
+
+### Example
+
+```ts
+const beatmap = await api.beatmaps.getBeatmap(1816113);
+```
+
+### Parameters
+
+| Parameter | Type   | Optional | Description              |
+| --------- | ------ | -------- | ------------------------ |
+| beatmap   | number |          | ID of the beatmap to get |
+
+### Returns
+
+```ts
+Promise<
+  Beatmap & {
+    beatmapset: Beatmapset & {
+      ratings: number[];
+    };
+    checksum: string | null;
+    failtimes: Fails;
+    max_combo: number;
+  }
+>;
+```
+
+#### Types
+
+- [Beatmap](/references/beatmap)
+- [Beatmapset](/references/beatmapset)
+- [Fails](/references/fails)

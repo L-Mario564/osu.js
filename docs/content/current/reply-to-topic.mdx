@@ -1,0 +1,38 @@
+---
+title: Reply to topic
+ref: forum
+---
+
+# Reply to topic
+
+The `forum.replyToTopic` method on a `Client` instance makes a `POST` request to the `forums/topics/{topic}/reply` endpoint and returns a forum post.
+
+**Warning:** This endpoint is not tested, you may or may not run into unexpected behavior.
+
+### Parameters
+
+| Parameter | Type                                                      | Optional | Description                 |
+| --------- | --------------------------------------------------------- | -------- | --------------------------- |
+| topic     | number                                                    |          | ID of the topic to reply to |
+| options   | [ReplyToTopicOptions](/references/reply-to-topic-options) |          |                             |
+
+#### options.body
+
+| Parameter | Type   | Optional | Description          |
+| --------- | ------ | -------- | -------------------- |
+| body      | string |          | Content of the reply |
+
+### Returns
+
+```ts
+Promise<
+  ForumPost & {
+    body: ForumPostBody;
+  }
+>;
+```
+
+#### Types
+
+- [ForumPost](/references/forum-post)
+- [ForumPostBody](/references/forum-post-body)
