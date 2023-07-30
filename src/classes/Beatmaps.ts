@@ -201,8 +201,9 @@ export default class Beatmaps extends Base {
   }
 
   /**
-   * Makes a POST reques tot the `/beatmaps/{beatmap}/attributes` endpoint
-   * @param beatmap ID of the beatmap to its attributes
+   * Makes a POST request to the `/beatmaps/{beatmap}/attributes` endpoint
+   * @param beatmap ID of the beatmap to get its attributes
+   * @param gamemode Gamemode attributes to get
    * @returns A beatmap's attributes
    */
   public async getBeatmapAttributes<T extends GameMode>(

@@ -102,6 +102,7 @@ export default class Users extends Base {
   /**
    * Makes a GET request to the `/users/{user}/scores/{type}` endpoint
    * @param user ID of the user to get their scores
+   * @param type Score type
    * @returns An array of the specified user's scores
    */
   public async getUserScores<T extends UserScoreType>(
@@ -146,7 +147,7 @@ export default class Users extends Base {
   }
 
   /**
-   * Makes a GET request to the `/users/{user}/` endpoint
+   * Makes a GET request to the `/users/{user}/{mode?}` endpoint
    * @param user ID or username of the user to get
    * @returns A user
    */

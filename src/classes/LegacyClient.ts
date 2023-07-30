@@ -206,7 +206,7 @@ export default class LegacyClient {
 
   /**
    * Makes a GET request to the `get_match` endpoint
-   * @returns An array of scores on a beatmap
+   * @returns An object containing the match's information, games and each games' scores if the multiplayer lobby exists, otherwise null
    */
   public async getMultiplayerLobby(
     params: GetMultiplayerLobbyParams
@@ -244,7 +244,7 @@ export default class LegacyClient {
   /**
    * Makes a GET request to the `get_replay`
    * @param by Get replay by `score id` or `user & beatmap id`
-   * @returns A string containing the Base64 encoded replay
+   * @returns A string containing the Base64 encoded replay if the replay exists, otherwise null
    */
   public async getReplay<T extends 'score id' | 'user & beatmap id'>(
     by: T,

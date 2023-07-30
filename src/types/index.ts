@@ -46,7 +46,7 @@ export type ProfilePageSection =
 export type UserAccountHistoryType = 'note' | 'restriction' | 'silence';
 export type KudosuAction = 'give' | 'vote.give' | 'reset' | 'vote.reset' | 'revoke' | 'vote.revoke';
 export type Rank = 'SS' | 'SSH' | 'S' | 'SH' | 'A' | 'B' | 'C' | 'D' | 'F';
-export type UserEventTypes =
+export type UserEventType =
   | 'achievement'
   | 'beatmapPlaycount'
   | 'beatmapsetApprove'
@@ -446,7 +446,7 @@ export interface EventBeatmap {
 interface BaseUserEvent {
   created_at: ISOTimestamp;
   id: number;
-  type: UserEventTypes;
+  type: UserEventType;
 }
 
 export interface UserEventAchievement extends BaseUserEvent {

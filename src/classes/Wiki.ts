@@ -15,6 +15,8 @@ export default class Wiki extends Base {
 
   /**
    * Makes a GET request to the `/wiki/{locale}/{path}` endpoint
+   * @param locale Two-letter language code of the wiki page
+   * @param path Path to the wiki page
    * @returns The wiki page
    */
   public async getWikiPage(locale: string, path: string): Promise<WikiPage> {

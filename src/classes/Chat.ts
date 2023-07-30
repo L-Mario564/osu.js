@@ -37,6 +37,7 @@ export default class Chat extends Base {
 
   /**
    * Makes a POST request to the `/chat/channels` endpoint
+   * @param type Channel type to create or rejoin
    * @returns The created or rejoined channel
    */
   public async createChannel<T extends 'PM' | 'ANNOUNCE'>(

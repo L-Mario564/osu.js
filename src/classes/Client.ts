@@ -55,7 +55,7 @@ export default class Client extends Base {
    * @returns Users and wiki pages as results
    */
   public async search(options?: SearchOptions): Promise<SearchResults> {
-    options = searchOptionsSchema.parse(options);
+    options = searchOptionsSchema.optional().parse(options);
     return await this.fetch('search', 'GET', options);
   }
 
@@ -63,7 +63,7 @@ export default class Client extends Base {
    * Make a GET request to an undocumented endpoint
    * @param endpoint The endpoint to make a request to
    */
-  public async getUndocumented<T>(endpoint: string, options?: Options): Promise<T> {
+  public async getUndocumented<T>(endpoint: string, options?: Omit<Options, 'body'>): Promise<T> {
     return await this.fetch(endpoint, 'GET', options);
   }
 }

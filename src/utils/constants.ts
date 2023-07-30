@@ -19,7 +19,7 @@ export const buildUrl = {
   user: (userId: number) => createUrl(`u/${userId}`),
   score: (gamemode: GameMode, scoreId: number) => createUrl(`scores/${gamemode}/${scoreId}`),
   forum: (forumId: number) => createUrl(`community/forums/${forumId}`),
-  forumTopic: (topicId: number) => createUrl(`community/forums/${topicId}`),
+  forumTopic: (topicId: number) => createUrl(`community/forums/topics/${topicId}`),
   room: (roomId: number) => createUrl(`multiplayer/rooms/${roomId}`),
   match: (matchId: number) => createUrl(`mp/${matchId}`),
   /**
@@ -84,7 +84,7 @@ export const calcAccuracy = {
   },
   /**
    * Calculate accuracy for osu! catch
-   * @param c300 Fruits caught
+   * @param c300 Caught fruits
    * @param c100 Caught drops
    * @param c50 Caught droplets
    * @param katu Drops

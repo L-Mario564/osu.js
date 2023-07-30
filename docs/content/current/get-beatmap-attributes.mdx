@@ -1,55 +1,70 @@
 ---
-title: Get discussion posts
-ref: beatmapset discussions
+title: Get beatmap attributes
+ref: beatmaps
 ---
 
-# Get discussion posts
+# Get beatmap attributes
 
-The `beatmapsetDiscussions.getDiscussionPosts` method on a `Client` instance makes a `GET` request to the `beatmapsets/discussions/posts` endpoint and returns an object containing a cursor and arrays of beatmapsets, users, discussions and posts.
+The `beatmaps.getBeatmapAttributes` method on a `Client` instance makes a `POST` request to the `beatmaps/{beatmap}/attributes` endpoint and returns a beatmap's attributes.
 
 ### Example
 
 ```ts
-const posts = await api.beatmapsetDiscussions.getDiscussionPosts({
-  query: {
-    beatmapset_discussion_id: 1816113
-  }
-});
+const scores = await api.beatmaps.getBeatmapAttributes(1816113, 'fruits');
 ```
 
 ### Parameters
 
-| Parameter | Type                                                                 | Optional | Description |
-| --------- | -------------------------------------------------------------------- | -------- | ----------- |
-| options   | [GetDiscussionPostsOptions](/references/get-dicussion-posts-options) | ✓        |             |
+| Parameter | Type                                                                      | Optional | Description                             |
+| --------- | ------------------------------------------------------------------------- | -------- | --------------------------------------- |
+| beatmap   | number                                                                    |          | ID of the beatmap to get its attributes |
+| gamemode  | [Gamemode](/references/game-mode)                                         |          | Gamemode attributes to get              |
+| options   | [GetBeatmapAttributesOptions](/references/get-beatmap-attributes-options) | ✓        |                                         |
 
-#### options.query
+#### options.body
 
-| Parameter                | Type                               | Optional | Description                                            |
-| ------------------------ | ---------------------------------- | -------- | ------------------------------------------------------ |
-| limit                    | number                             | ✓        | Max. number of results                                 |
-| page                     | number                             | ✓        | Search result page number                              |
-| sort                     | 'id_desc' \| 'id_asc'              | ✓        | Sort posts by newest (`id_desc`) or oldest (`id_desc`) |
-| beatmapset_discussion_id | number                             | ✓        | ID of the beatmapset discussion                        |
-| types                    | ('first' \| 'reply' \| 'system')[] | ✓        | Post types                                             |
-| user                     | number                             | ✓        | ID of the user to get posts from                       |
+| Parameter | Type   | Optional                 | Description |
+| --------- | ------ | ------------------------ | ----------- | -------------------------------------------------------------------------------- |
+| mods      | number | [Mod](/references/mod)[] | ✓           | Mods to apply (can be either the bitwise representation or an array of acronyms) |
 
 ### Returns
 
+If `gamemode` is set to `osu`:
+
 ```ts
-Promise<{
-  beatmapsets: BeatmapsetCompact[];
-  cursor_string: Cursor;
-  discussions: BeatmapsetDiscussion[];
-  posts: DiscussionPost[];
-  users: UserCompact[];
-}>;
+Promise<OsuBeatmapDifficultyAttributes>;
 ```
 
 #### Types
 
-- [BeatmapsetCompact](/references/beatmapset-compact)
-- [Cursor](/references/cursor)
-- [BeatmapsetDiscussion](/references/beatmapset-discussion)
-- [DiscussionPost](/references/discussion-post)
-- [UserCompact](/references/user-compact)
+- [OsuBeatmapDifficultyAttributes](/references/osu-beatmap-difficulty-attributes)
+
+If `gamemode` is set to `taiko`:
+
+```ts
+Promise<TaikoBeatmapDifficultyAttributes>;
+```
+
+#### Types
+
+- [TaikoBeatmapDifficultyAttributes](/references/taiko-beatmap-difficulty-attributes)
+
+If `gamemode` is set to `fruits`:
+
+```ts
+Promise<FruitsBeatmapDifficultyAttributes>;
+```
+
+#### Types
+
+- [FruitsBeatmapDifficultyAttributes](/references/fruits-beatmap-difficulty-attributes)
+
+If `gamemode` is set to `mania`:
+
+```ts
+Promise<ManiaBeatmapDifficultyAttributes>;
+```
+
+#### Types
+
+- [ManiaBeatmapDifficultyAttributes](/references/mania-beatmap-difficulty-attributes)
