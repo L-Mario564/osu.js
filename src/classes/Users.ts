@@ -152,7 +152,8 @@ export default class Users extends Base {
    * @returns A user
    */
   public async getUser(user: number | string, options?: GetUserOptions): Promise<UserExtended> {
-    user = z.number().parse(user);
+    if(typeof user === "number") user = z.number().parse(user);
+    else user = z.string().parse(user);
     options = getUserOptionsSchema.optional().parse(options);
     let endpoint: string = `users/${user}`;
 
