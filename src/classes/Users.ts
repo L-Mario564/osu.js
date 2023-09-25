@@ -74,6 +74,7 @@ export default class Users extends Base {
   /**
    * Makes a GET request to the `/users/{user}/kudosu` endpoint
    * @param user ID of the user to get kudosu from
+   * @param options
    * @returns An array containing the specified user's kudosu history
    */
   public async getUserKudosu(
@@ -88,6 +89,7 @@ export default class Users extends Base {
   /**
    * Makes a GET request to the `/users/{user}/recent_activity` endpoint
    * @param user ID of the user to get their recent activity from
+   * @param options
    * @returns An array containing the specified user's recent activity (each event is a union, to discriminate, use the `type` key)
    */
   public async getUserRecentActivity(
@@ -103,6 +105,7 @@ export default class Users extends Base {
    * Makes a GET request to the `/users/{user}/scores/{type}` endpoint
    * @param user ID of the user to get their scores
    * @param type Score type
+   * @param options
    * @returns An array of the specified user's scores
    */
   public async getUserScores<T extends UserScoreType>(
@@ -124,6 +127,7 @@ export default class Users extends Base {
    * Makes a GET request to the `/users/{user}/beatmapsets/{type}` endpoint
    * @param user ID of the user to get their beatmapsets
    * @param type Type of beatmapsets to return
+   * @param options
    * @returns An array of a user's beatmapsets
    */
   public async getUserBeatmaps<T extends UserBeatmapsType>(
@@ -149,11 +153,11 @@ export default class Users extends Base {
   /**
    * Makes a GET request to the `/users/{user}/{mode?}` endpoint
    * @param user ID or username of the user to get
+   * @param options
    * @returns A user
    */
   public async getUser(user: number | string, options?: GetUserOptions): Promise<UserExtended> {
-    if(typeof user === "number") user = z.number().parse(user);
-    else user = z.string().parse(user);
+    user = z.union([z.string(), z.number()]).parse(user);
     options = getUserOptionsSchema.optional().parse(options);
     let endpoint: string = `users/${user}`;
 
