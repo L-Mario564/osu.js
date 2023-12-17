@@ -53,8 +53,10 @@ export const getUserBeatmapsOptionsSchema = z
 export const userBeatmapsTypeSchema = z.union([
   z.literal('favourite'),
   z.literal('graveyard'),
+  z.literal('guest'),
   z.literal('loved'),
   z.literal('most_played'),
+  z.literal('nominated'),
   z.literal('pending'),
   z.literal('ranked')
 ]);
