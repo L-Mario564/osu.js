@@ -26,7 +26,7 @@ export const buildUrl = {
    * @param clientId OAuth client ID
    * @param redirectUri OAuth redirect URI
    * @param scopes An array of OAuth scopes
-   * @param state Data that will be returned when a temporary code is issued. It can be used to provide a token for protecting against cross-site request forgery attacks
+   * @param state Data that will be returned when a temporary code is issued
    */
   authRequest: (
     clientId: number,
