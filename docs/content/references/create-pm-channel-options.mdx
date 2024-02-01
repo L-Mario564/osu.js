@@ -1,19 +1,19 @@
 ---
 title: CreatePMChannelOptions
-ref: type
+ref: interface
 ---
 
 # CreatePMChannelOptions
 
 ```ts
-type CreatePMChannelOptions = {
+interface CreatePMChannelOptions {
   body: {
     message?: string;
-    channel?: Partial<ChannelDetails>;
+    channel?: {
+      name?: string;
+      description?: string;
+    };
     target_id: number;
   };
-};
+}
 ```
-
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
-- [ChannelDetails](/references/channel-details)

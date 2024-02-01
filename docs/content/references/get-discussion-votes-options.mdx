@@ -1,21 +1,21 @@
 ---
 title: GetDiscussionVotesOptions
-ref: type
+ref: interface
 ---
 
 # GetDiscussionVotesOptions
 
 ```ts
-type GetDiscussionVotesOptions = Partial<{
-  query: GetDiscussionsBaseOptions &
-    Partial<{
-      beatmapset_discussion_id: number;
-      receiver: number;
-      score: 1 | -1;
-      user: number;
-    }>;
-}>;
+interface GetDiscussionVotesOptions {
+  query?: GetDiscussionBaseQuery & {
+    beatmapset_discussion_id?: number;
+    receiver?: number;
+    score?: 1 | -1;
+    user?: number;
+  };
+}
 ```
 
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
-- [GetDiscussionsBaseOptions](/references/get-dicussions-base-options)
+## Types
+
+- [GetDiscussionBaseQuery](/references/get-dicussion-base-query)

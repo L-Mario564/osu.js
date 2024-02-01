@@ -1,20 +1,21 @@
 ---
 title: GetUserOptions
-ref: type
+ref: interface
 ---
 
 # GetUserOptions
 
 ```ts
-type GetUserOptions = Partial<{
-  urlParams: Partial<{
-    mode: GameMode;
-  }>;
-  query: Partial<{
+interface GetUserOptions {
+  urlParams?: {
+    mode?: GameMode;
+  };
+  query?: {
     key: 'id' | 'username';
-  }>;
-}>;
+  };
+}
 ```
 
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
+## Types
+
 - [GameMode](/references/game-mode)

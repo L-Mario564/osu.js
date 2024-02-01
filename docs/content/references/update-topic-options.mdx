@@ -1,18 +1,16 @@
 ---
 title: UpdateTopicOptions
-ref: type
+ref: interface
 ---
 
 # UpdateTopicOptions
 
 ```ts
-type UpdateTopicOptions = Partial<{
-  body: Partial<{
-    forum_topic: Partial<{
-      topic_title: string;
-    }>;
-  }>;
-}>;
+interface UpdateTopicOptions {
+  body?: {
+    forum_topic?: {
+      topic_title?: string;
+    };
+  };
+}
 ```
-
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)

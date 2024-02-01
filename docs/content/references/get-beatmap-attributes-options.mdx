@@ -1,17 +1,18 @@
 ---
 title: GetBeatmapAttributesOptions
-ref: type
+ref: interface
 ---
 
 # GetBeatmapAttributesOptions
 
 ```ts
-type GetBeatmapAttributesOptions = Partial<{
-  body: Partial<{
-    mods: number | Mod[];
-  }>;
-}>;
+interface GetBeatmapAttributesOptions {
+  body?: {
+    mods?: number | Mod[];
+  };
+}
 ```
 
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
+## Types
+
 - [Mod](/references/mod)

@@ -1,19 +1,20 @@
 ---
 title: GetUserScoresOptions
-ref: type
+ref: interface
 ---
 
 # GetUserScoresOptions
 
 ```ts
-type GetUserScoresOptions = Partial<{
-  query: Partial<{
-    limit: number;
-    offset: string;
-    mode: GameMode;
-  }>;
-}>;
+interface GetUserScoresOptions {
+  query?: {
+    limit?: number;
+    offset?: number;
+    mode?: GameMode;
+  };
+}
 ```
 
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
+## Types
+
 - [GameMode](/references/game-mode)

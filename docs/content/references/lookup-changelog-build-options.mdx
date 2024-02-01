@@ -1,18 +1,15 @@
 ---
-title: GetChangelogListingOptions
-ref: type
+title: LookupChangelogBuildOptions
+ref: interface
 ---
 
-# GetChangelogListingOptions
+# LookupChangelogBuildOptions
 
 ```ts
-type GetChangelogListingOptions = Partial<{
-  query: Partial<{
-    key: 'id';
-    message_formats: MessageFormat[];
-  }>;
-}>;
+interface LookupChangelogBuildOptions {
+  query?: {
+    key?: 'id';
+    message_formats?: ('html' | 'markdown')[];
+  };
+}
 ```
-
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
-- [MessageFormat](/references/message-format)

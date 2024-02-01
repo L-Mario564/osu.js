@@ -1,18 +1,16 @@
 ---
 title: GetNewsListingOptions
-ref: type
+ref: interface
 ---
 
 # GetNewsListingOptions
 
 ```ts
-type GetNewsListingOptions = Partial<{
-  query: Partial<{
-    limit: number;
-    year: number;
-    cursor_string: string;
-  }>;
-}>;
+interface GetNewsListingOptions {
+  query?: {
+    limit?: number;
+    year?: number;
+    cursor_string?: string;
+  };
+}
 ```
-
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)

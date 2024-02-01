@@ -1,19 +1,17 @@
 ---
 title: GetRankingOptions
-ref: type
+ref: interface
 ---
 
 # GetRankingOptions
 
 ```ts
-type GetRankingOptions = Partial<{
-  query: Partial<{
-    country: string;
-    filter: 'all' | 'friends';
-    spotlight: number;
-    variant: string;
-  }>;
-}>;
+interface GetRankingOptions {
+  query?: {
+    country?: string;
+    filter?: 'all' | 'friends';
+    spotlight?: number;
+    variant?: string;
+  };
+}
 ```
-
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)

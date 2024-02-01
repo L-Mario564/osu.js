@@ -1,18 +1,16 @@
 ---
 title: SearchOptions
-ref: type
+ref: interface
 ---
 
 # SearchOptions
 
 ```ts
-type SearchOptions = Partial<{
-  query: Partial<{
-    mode: 'all' | 'user' | 'wiki_page';
-    query: string;
-    page: number;
-  }>;
-}>;
+interface SearchOptions {
+  query?: {
+    mode?: 'all' | 'user' | 'wiki_page';
+    query?: string;
+    page?: number;
+  };
+}
 ```
-
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)

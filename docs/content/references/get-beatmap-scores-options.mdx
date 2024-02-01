@@ -1,17 +1,18 @@
 ---
 title: GetBeatmapScoresOptions
-ref: type
+ref: interface
 ---
 
 # GetBeatmapScoresOptions
 
 ```ts
-type GetBeatmapScoresOptions = Partial<{
-  query: Partial<{
-    mode: GameMode;
-  }>;
-}>;
+interface GetBeatmapScoresOptions {
+  query?: {
+    mode?: GameMode;
+  };
+}
 ```
 
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
+## Types
+
 - [GameMode](/references/game-mode)

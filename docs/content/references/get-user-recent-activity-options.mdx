@@ -1,17 +1,15 @@
 ---
 title: GetUserRecentActivityOptions
-ref: type
+ref: interface
 ---
 
 # GetUserRecentActivityOptions
 
 ```ts
-type GetUserRecentActivityOptions = Partial<{
-  query: Partial<{
-    limit: number;
-    offset: string;
-  }>;
-}>;
+interface GetUserRecentActivityOptions {
+  query?: {
+    limit?: number;
+    offset?: number;
+  };
+}
 ```
-
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)

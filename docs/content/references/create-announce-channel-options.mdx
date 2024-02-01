@@ -1,18 +1,19 @@
 ---
 title: CreateAnnounceChannelOptions
-ref: type
+ref: interface
 ---
 
 # CreateAnnounceChannelOptions
 
 ```ts
-type CreateAnnounceChannelOptions = {
+interface CreateAnnounceChannelOptions {
   body: {
     message: string;
-    channel: ChannelDetails;
+    channel: {
+      name: string;
+      description: string;
+    };
     target_ids: number[];
   };
-};
+}
 ```
-
-- [ChannelDetails](/references/channel-details)

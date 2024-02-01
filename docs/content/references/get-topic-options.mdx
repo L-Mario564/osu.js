@@ -1,20 +1,18 @@
 ---
 title: GetTopicOptions
-ref: type
+ref: interface
 ---
 
 # GetTopicOptions
 
 ```ts
-type GetTopicOptions = Partial<{
-  query: Partial<{
-    cursor_string: string;
-    sort: 'id_asc' | 'id_desc';
-    limit: number;
-    start: number;
-    end: number;
-  }>;
-}>;
+interface GetTopicOptions {
+  query?: {
+    cursor_string?: string;
+    sort?: 'id_asc' | 'id_desc';
+    limit?: number;
+    start?: number;
+    end?: number;
+  };
+}
 ```
-
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)

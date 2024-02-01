@@ -1,16 +1,14 @@
 ---
 title: GetBeatmapOptions
-ref: type
+ref: interface
 ---
 
 # GetBeatmapOptions
 
 ```ts
-type GetBeatmapOptions = Partial<{
-  query: Partial<{
-    id: number;
-  }>;
-}>;
+interface GetBeatmapOptions {
+  query?: {
+    id?: number;
+  };
+}
 ```
-
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)

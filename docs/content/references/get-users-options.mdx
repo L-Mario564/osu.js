@@ -1,16 +1,14 @@
 ---
 title: GetUsersOptions
-ref: type
+ref: interface
 ---
 
 # GetUsersOptions
 
 ```ts
-type GetUsersOptions = Partial<{
-  query: Partial<{
+interface GetUsersOptions {
+  query?: {
     ids: number[];
-  }>;
-}>;
+  }
+}
 ```
-
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)

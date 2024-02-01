@@ -1,23 +1,24 @@
 ---
 title: GetCommentsOptions
-ref: type
+ref: interface
 ---
 
 # GetCommentsOptions
 
 ```ts
-type GetCommentsOptions = Partial<{
-  query: Partial<{
-    commentable: Partial<{
-      type: CommentableType;
-      id: number;
-    }>;
-    parent_id: number;
-    sort: CommentSort;
-  }>;
-}>;
+interface GetCommentsOptions {
+  query?: {
+    commentable?: {
+      type?: CommentableType;
+      id?: number;
+    };
+    parent_id?: number;
+    sort?: CommentSort;
+  };
+}
 ```
 
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
+## Types
+
 - [CommentableType](/references/commentable-type)
 - [CommentSort](/references/comment-sort)
