@@ -47,7 +47,7 @@ export function getModsEnum(mods: Mod[]): number {
 }
 
 export function getEnumMods(modEnum: string | null): Mod[] {
-  let mods: Mod[] = [];
+  const mods: Mod[] = [];
 
   if (!modEnum || modEnum === '0') return mods;
 
@@ -56,7 +56,7 @@ export function getEnumMods(modEnum: string | null): Mod[] {
   modEnums = modEnums.splice(0, modEnums.length / 2);
 
   for (let i = modEnums.length; parsedGlobalEnum !== 0; i--) {
-    let parsedEnum: number = Number(modEnums[i]);
+    const parsedEnum: number = Number(modEnums[i]);
 
     if (parsedGlobalEnum - parsedEnum >= 0) {
       mods.push(ModsEnum[parsedEnum] as Mod);

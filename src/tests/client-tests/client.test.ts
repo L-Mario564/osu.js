@@ -3,11 +3,11 @@ import { describe, expect, it } from 'vitest';
 import { getExistingAccessToken } from '.';
 
 describe('Test home related endpoints', async () => {
-  let accessToken: string = await getExistingAccessToken();
-  let client = new Client(accessToken);
+  const accessToken: string = await getExistingAccessToken();
+  const client = new Client(accessToken);
 
   it('Searches for wikis and users corresponding to a search query', async () => {
-    let results = await client.search({
+    const results = await client.search({
       query: {
         query: 'peppy'
       }

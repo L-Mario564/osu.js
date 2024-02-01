@@ -100,7 +100,7 @@ export default class Beatmaps extends Base {
     user = z.number().parse(user);
     options = getBeatmapScoresOptionSchema.optional().parse(options);
 
-    let scores: {
+    const scores: {
       scores: Score[];
     } = await this.request(`beatmaps/${beatmap}/scores/users/${user}/all`, 'GET', options);
 
@@ -126,7 +126,7 @@ export default class Beatmaps extends Base {
     beatmap = z.number().parse(beatmap);
     options = getBeatmapScoresOptionSchema.optional().parse(options);
 
-    let scores: {
+    const scores: {
       scores: (Score & {
         user: UserCompact & {
           country: Country;
@@ -154,7 +154,7 @@ export default class Beatmaps extends Base {
   > {
     options = getBeatmapsOptionsSchema.optional().parse(options);
 
-    let beatmaps: {
+    const beatmaps: {
       beatmaps: (Beatmap & {
         failtimes: Fails;
         max_combo: number;
@@ -210,7 +210,7 @@ export default class Beatmaps extends Base {
     gamemode = gameModeSchema.parse(gamemode) as T;
     options = getBeatmapAttributesOptionsSchema.optional().parse(options);
 
-    let remapped = {
+    const remapped = {
       body: {
         mods: options?.body?.mods,
         ruleset: gamemode

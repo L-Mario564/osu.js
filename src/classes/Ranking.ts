@@ -42,7 +42,7 @@ export default class Ranking extends Base {
    * @returns An array of spotlights
    */
   public async getSpotlights(): Promise<Spotlight[]> {
-    let spotlights: {
+    const spotlights: {
       spotlights: Spotlight[];
     } = await this.request('spotlights', 'GET');
 

@@ -60,18 +60,18 @@ export default class Forum extends Base {
     };
   }> {
     options = createTopicOptionsSchema.parse(options);
-    let poll = options.body.forum_topic_poll as Record<string, unknown> | undefined;
+    const poll = options.body.forum_topic_poll as Record<string, unknown> | undefined;
     let parsedPoll: Record<string, unknown> | undefined;
 
     if (poll) {
       parsedPoll = {};
 
-      for (let key in poll) {
+      for (const key in poll) {
         parsedPoll[`forum_topic_poll[${key}]`] = poll[key];
       }
     }
 
-    let parsed = {
+    const parsed = {
       body: {
         ...options.body,
         ...parsedPoll
@@ -110,18 +110,18 @@ export default class Forum extends Base {
   public async updateTopic(topic: number, options?: UpdateTopicOptions): Promise<ForumTopic> {
     topic = z.number().parse(topic);
     options = updateTopicOptionsSchema.optional().parse(options);
-    let forumTopic = options?.body?.forum_topic as Record<string, unknown> | undefined;
+    const forumTopic = options?.body?.forum_topic as Record<string, unknown> | undefined;
     let parsedForumTopic: Record<string, unknown> | undefined;
 
     if (forumTopic) {
       parsedForumTopic = {};
 
-      for (let key in forumTopic) {
+      for (const key in forumTopic) {
         parsedForumTopic[`forum_topic[${key}]`] = forumTopic[key];
       }
     }
 
-    let parsed = {
+    const parsed = {
       // prettier-ignore
       body: options?.body
         ?

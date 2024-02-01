@@ -26,12 +26,12 @@ export default class Base {
     }
   ): Promise<T> {
     if (options?.query) {
-      let query = formatUrlParams(options.query);
+      const query = formatUrlParams(options.query);
       endpoint += query.replace('&', '?');
     }
 
     // TODO: Better error handling
-    let resp = await this.fetch(`https://osu.ppy.sh/api/v2/${endpoint}`, {
+    const resp = await this.fetch(`https://osu.ppy.sh/api/v2/${endpoint}`, {
       method,
       body: options?.body ? JSON.stringify(options.body) : undefined,
       headers: {
@@ -44,7 +44,7 @@ export default class Base {
       return undefined as T;
     }
 
-    let data = await resp.json() as T;
+    const data = await resp.json() as T;
     return data;
   }
 }

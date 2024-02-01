@@ -38,20 +38,19 @@ export default class Client extends Base {
   constructor(accessToken: string, options?: {
     polyfillFetch?: typeof fetch | typeof polyfillFetch;
   }) {
-    let token = accessToken;
-    super(token, options);
+    super(accessToken, options);
 
-    this.beatmaps = new Beatmaps(token, options);
-    this.beatmapsetDiscussions = new BeatmapsetDiscussions(token, options);
-    this.changelog = new Changelog(token, options);
-    this.chat = new Chat(token, options);
-    this.comments = new Comments(token, options);
-    this.forum = new Forum(token, options);
-    this.multiplayer = new Multiplayer(token, options);
-    this.news = new News(token, options);
-    this.ranking = new Ranking(token, options);
-    this.users = new Users(token, options);
-    this.wiki = new Wiki(token, options);
+    this.beatmaps = new Beatmaps(accessToken, options);
+    this.beatmapsetDiscussions = new BeatmapsetDiscussions(accessToken, options);
+    this.changelog = new Changelog(accessToken, options);
+    this.chat = new Chat(accessToken, options);
+    this.comments = new Comments(accessToken, options);
+    this.forum = new Forum(accessToken, options);
+    this.multiplayer = new Multiplayer(accessToken, options);
+    this.news = new News(accessToken, options);
+    this.ranking = new Ranking(accessToken, options);
+    this.users = new Users(accessToken, options);
+    this.wiki = new Wiki(accessToken, options);
   }
 
   /**

@@ -32,7 +32,7 @@ export default class Auth extends Base {
    */
   public async clientCredentialsGrant(): Promise<GuestToken> {
     // TODO: Better error handling
-    let resp = await this.fetch(`${this.oauthUrl}token`, {
+    const resp = await this.fetch(`${this.oauthUrl}token`, {
       method: 'POST',
       body: JSON.stringify({
         client_id: this.clientId,
@@ -45,7 +45,7 @@ export default class Auth extends Base {
       }
     });
 
-    let token = await resp.json() as GuestToken;
+    const token = await resp.json() as GuestToken;
     return token;
   }
 

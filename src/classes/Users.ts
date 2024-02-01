@@ -186,7 +186,7 @@ export default class Users extends Base {
   > {
     options = getUsersOptionsSchema.optional().parse(options);
 
-    let obj: {
+    const obj: {
       users: (UserCompact & {
         country: Country;
         cover: Cover;

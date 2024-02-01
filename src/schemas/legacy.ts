@@ -37,7 +37,7 @@ export const getUserParamsSchema = z.object({
   event_days: z.number().gte(1).lte(31).optional()
 });
 
-let getUserScores = {
+const getUserScores = {
   /** Scores from a specific gamemode  */
   m: gameModeSchema.optional(),
   /** Limit amount of scores to return (100 max.) */

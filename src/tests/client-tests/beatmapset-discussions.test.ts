@@ -4,11 +4,11 @@ import { getExistingAccessToken, ms } from '.';
 import { sleep } from '../../utils';
 
 describe('Test beatmapset discussion related endpoints', async () => {
-  let accessToken: string = await getExistingAccessToken();
-  let discussions = new Client(accessToken).beatmapsetDiscussions;
+  const accessToken: string = await getExistingAccessToken();
+  const discussions = new Client(accessToken).beatmapsetDiscussions;
 
   it("Gets a discussion's posts", async () => {
-    let discussion = await discussions.getDiscussionPosts({
+    const discussion = await discussions.getDiscussionPosts({
       query: {
         beatmapset_discussion_id: 1816113
       }
@@ -19,7 +19,7 @@ describe('Test beatmapset discussion related endpoints', async () => {
   await sleep(ms);
 
   it("Gets a discussion's votes", async () => {
-    let discussion = await discussions.getDiscussionVotes({
+    const discussion = await discussions.getDiscussionVotes({
       query: {
         beatmapset_discussion_id: 1816113
       }
@@ -30,7 +30,7 @@ describe('Test beatmapset discussion related endpoints', async () => {
   await sleep(ms);
 
   it('Gets discussions', async () => {
-    let discussion = await discussions.getDiscussions({
+    const discussion = await discussions.getDiscussions({
       query: {
         beatmapset_id: 742961
       }

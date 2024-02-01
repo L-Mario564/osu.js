@@ -73,12 +73,12 @@ export default class LegacyClient {
   }
 
   private async request<T>(endpoint: string, urlParams: Record<string, unknown>): Promise<T> {
-    let params = formatUrlParams(urlParams);
-    let url = `https://osu.ppy.sh/api/${endpoint}?k=${this.apiKey}${params}`;
+    const params = formatUrlParams(urlParams);
+    const url = `https://osu.ppy.sh/api/${endpoint}?k=${this.apiKey}${params}`;
 
     // TODO: Better error handling
-    let resp = await this.fetch(url);
-    let data = await resp.json() as T;
+    const resp = await this.fetch(url);
+    const data = await resp.json() as T;
 
     return data;
   }
@@ -88,12 +88,12 @@ export default class LegacyClient {
    * @returns An array of beatmaps
    */
   public async getBeatmaps(params: GetBeatmapsParams): Promise<LegacyBeatmap[]> {
-    let parsed = getBeatmapsParamsSchema.parse(params);
-    let mods: Mod[] = parsed.mods ? parsed.mods : [];
-    let diffIncreaseMods: Mod[] = mods.filter((mod: Mod): boolean => {
+    const parsed = getBeatmapsParamsSchema.parse(params);
+    const mods: Mod[] = parsed.mods ? parsed.mods : [];
+    const diffIncreaseMods: Mod[] = mods.filter((mod: Mod): boolean => {
       return ['HD', 'HR', 'DT', 'FL', 'FI'].includes(mod);
     });
-    let validParams: GetBeatmapsValidParams = {
+    const validParams: GetBeatmapsValidParams = {
       ...parsed,
       since: parsed.since?.toISOString().slice(0, 19).replace('T', ' '),
       m: parsed.m && ModesEnum[parsed.m],
@@ -101,7 +101,7 @@ export default class LegacyClient {
       mods: getModsEnum(diffIncreaseMods)
     };
 
-    let beatmaps = await this.request<ResponseBeatmap[]>('get_beatmaps', validParams);
+    const beatmaps = await this.request<ResponseBeatmap[]>('get_beatmaps', validParams);
 
     return beatmaps.map((beatmap) => {
       return map({
@@ -124,13 +124,13 @@ export default class LegacyClient {
    * @returns A user if it exists, otherwise null
    */
   public async getUser(params: GetUserParams): Promise<LegacyUser | null> {
-    let parsed = getUserParamsSchema.parse(params);
-    let validParams: GetUserValidParams = {
+    const parsed = getUserParamsSchema.parse(params);
+    const validParams: GetUserValidParams = {
       ...parsed,
       m: parsed.m && ModesEnum[parsed.m]
     };
 
-    let users = await this.request<ResponseUser[]>('get_user', validParams);
+    const users = await this.request<ResponseUser[]>('get_user', validParams);
     return users.length > 0 ? map(users[0]) : null;
   }
 
@@ -139,13 +139,13 @@ export default class LegacyClient {
    * @returns An array of scores on a beatmap
    */
   public async getBeatmapScores(params: GetBeatmapScoresParams): Promise<LegacyBeatmapScore[]> {
-    let parsed = getBeatmapScoresParamsSchema.parse(params);
-    let validParams: GetBeatmapScoresValidParams = {
+    const parsed = getBeatmapScoresParamsSchema.parse(params);
+    const validParams: GetBeatmapScoresValidParams = {
       ...parsed,
       m: parsed.m && ModesEnum[parsed.m]
     };
 
-    let scores = await this.request<ResponseBeatmapScore[]>('get_scores', validParams);
+    const scores = await this.request<ResponseBeatmapScore[]>('get_scores', validParams);
 
     return scores.map((score) => {
       return map({
@@ -161,16 +161,16 @@ export default class LegacyClient {
     type: 'best' | 'recent',
     params: GetUserScoresParams
   ): Promise<(LegacyUserBestScore | LegacyUserRecentScore)[]> {
-    let parsed = getUserScoresParamsSchema.parse(params);
-    let validParams: GetUserScoresValidParams = {
+    const parsed = getUserScoresParamsSchema.parse(params);
+    const validParams: GetUserScoresValidParams = {
       ...parsed,
       m: parsed.m && ModesEnum[parsed.m]
     };
 
-    let scores = await this.request<(ResponseUserBestScore | ResponseUserRecentScore)[]>(`get_user_${type}`, validParams);
+    const scores = await this.request<(ResponseUserBestScore | ResponseUserRecentScore)[]>(`get_user_${type}`, validParams);
 
     if (type === 'best') {
-      let userScores = scores as ResponseUserBestScore[];
+      const userScores = scores as ResponseUserBestScore[];
 
       return userScores.map((score) => {
         return map({
@@ -181,7 +181,7 @@ export default class LegacyClient {
         });
       });
     } else {
-      let userScores = scores as ResponseUserRecentScore[];
+      const userScores = scores as ResponseUserRecentScore[];
 
       return userScores.map((score) => {
         return map({
@@ -216,8 +216,8 @@ export default class LegacyClient {
   public async getMultiplayerLobby(
     params: GetMultiplayerLobbyParams
   ): Promise<LegacyMultiplayerLobby | null> {
-    let parsed = getMultiplayerLobbyParamsSchema.parse(params);
-    let mpLobby = await this.request<ResponseMultiplayerLobby>('get_match', parsed);
+    const parsed = getMultiplayerLobbyParamsSchema.parse(params);
+    const mpLobby = await this.request<ResponseMultiplayerLobby>('get_match', parsed);
 
     if (!mpLobby.match) return null;
 
@@ -255,12 +255,12 @@ export default class LegacyClient {
     by: T,
     params: T extends 'score id' ? GetReplayByScoreIdParams : GetReplayByBeatmapAndUserIdParams
   ) {
-    let parsed =
+    const parsed =
       by === 'score id'
         ? getReplayByScoreIdParamsSchema.parse(params)
         : getReplayByBeatmapAndUserIdParamsSchema.parse(params);
 
-    let validParams: GetReplayValidParams<
+    const validParams: GetReplayValidParams<
       GetReplayByScoreIdParams | GetReplayByBeatmapAndUserIdParams
     > = {
       ...parsed,
@@ -268,7 +268,7 @@ export default class LegacyClient {
       mods: getModsEnum(parsed.mods ?? [])
     };
 
-    let replay = await this.request<Replay>('get_replay', validParams);
+    const replay = await this.request<Replay>('get_replay', validParams);
     return replay.error ? null : replay.content;
   }
 }

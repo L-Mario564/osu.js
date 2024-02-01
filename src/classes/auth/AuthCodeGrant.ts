@@ -29,7 +29,7 @@ export default class AuthCodeGrant extends Base {
    */
   public async requestToken(code: string): Promise<Token> {
     // TODO: Better error handling
-    let resp = await this.fetch(`${this.oauthUrl}token`, {
+    const resp = await this.fetch(`${this.oauthUrl}token`, {
       method: 'POST',
       body: JSON.stringify({
         client_id: this.clientId,
@@ -43,7 +43,7 @@ export default class AuthCodeGrant extends Base {
       }
     });
 
-    let token = await resp.json() as Token;
+    const token = await resp.json() as Token;
     return token;
   }
 
@@ -54,7 +54,7 @@ export default class AuthCodeGrant extends Base {
    */
   public async refreshToken(refreshToken: string): Promise<Token> {
     // TODO: Better error handling
-    let resp = await this.fetch(`${this.oauthUrl}token`, {
+    const resp = await this.fetch(`${this.oauthUrl}token`, {
       method: 'POST',
       body: JSON.stringify({
         client_id: this.clientId,
@@ -68,7 +68,7 @@ export default class AuthCodeGrant extends Base {
       }
     });
 
-    let token = await resp.json() as Token;
+    const token = await resp.json() as Token;
     return token;
   }
 }

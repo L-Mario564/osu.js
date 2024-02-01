@@ -49,11 +49,11 @@ export default class Chat extends Base {
     options: T extends 'PM' ? CreatePMChannelOptions : CreateAnnounceChannelOptions
   ): Promise<Channel> {
     type = z.union([z.literal('PM'), z.literal('ANNOUNCE')]).parse(type) as T;
-    let parsed =
+    const parsed =
       type === 'PM'
         ? createPMChannelOptionsSchema.parse(options)
         : createAnnounceChannelOptionsSchema.parse(options);
-    let remapped = {
+    const remapped = {
       body: {
         ...parsed.body,
         type
