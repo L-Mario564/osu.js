@@ -47,7 +47,8 @@
     "default-case": "error",
     "prefer-const": "warn",
     "@typescript-eslint/no-inferrable-types": "off",
-    "quote-props": ["warn", "consistent"]
+    "quote-props": ["warn", "consistent"],
+    "@typescript-eslint/no-explicit-any": "off"
   },
   "ignorePatterns": ["node_modules", "lib", "*.d.ts"]
 }

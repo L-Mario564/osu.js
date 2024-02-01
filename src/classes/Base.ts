@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import { formatUrlParams } from '../utils';
 import type polyfillFetch from 'node-fetch';
 import type { Options } from '../types/options';
@@ -22,7 +21,7 @@ export default class Base {
     endpoint: string,
     method: 'POST' | 'GET' | 'PATCH' | 'DELETE',
     options?: Options & {
-      returnUndefinedOn404?: boolean;
+      returnNullOn404?: boolean;
     }
   ): Promise<T> {
     if (options?.query) {
@@ -36,12 +35,12 @@ export default class Base {
       body: options?.body ? JSON.stringify(options.body) : undefined,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${z.string().parse(this.accessToken)}`
+        'Authorization': `Bearer ${this.accessToken}`
       }
     });
 
-    if (resp.status === 404 && options?.returnUndefinedOn404) {
-      return undefined as T;
+    if (resp.status === 404 && options?.returnNullOn404) {
+      return null as T;
     }
 
     const data = await resp.json() as T;

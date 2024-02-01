@@ -5,6 +5,9 @@
 - Use native fetch API instead of Axios.
 - Provide the option to pass a polyfill for the fetch API for development environments that have a Node.js version below 18.
 - Remove input validations.
+- `Client.beatmaps.lookupBeatmap` and `Client.changelog.lookupChangelogBuild` methods now return `null` if nothing is found on lookup. Prior to this, these methods would return `undefined` when there were no results.
+- Converted many types inferred froms schemas into interfaces.
+- Other minor changes to some interfaces and types. 
 
 ## 1.4.0
 

@@ -1,17 +1,4 @@
 import Base from './Base';
-import { z } from 'zod';
-import {
-  getSelfOptionsSchema,
-  getUserBeatmapsOptionsSchema,
-  getUserKudosuOptionsSchema,
-  getUserOptionsSchema,
-  getUserRecentActivityOptionsSchema,
-  getUserRecentScoresOptionsSchema,
-  getUserScoresOptionsSchema,
-  getUsersOptionsSchema,
-  userBeatmapsTypeSchema,
-  userScoreTypeSchema
-} from '../schemas/users';
 import type polyfillFetch from 'node-fetch';
 import type {
   UserExtended,
@@ -65,8 +52,7 @@ export default class Users extends Base {
       statistics_rulesets: StatisticsRulesets;
     }
   > {
-    options = getSelfOptionsSchema.optional().parse(options);
-    let endpoint: string = 'me';
+    let endpoint = 'me';
 
     if (options?.urlParams?.mode) {
       endpoint += `/${options.urlParams.mode}`;
@@ -85,8 +71,6 @@ export default class Users extends Base {
     user: number,
     options?: GetUserKodosuOptions
   ): Promise<UserKudosuHistory[]> {
-    user = z.number().parse(user);
-    options = getUserKudosuOptionsSchema.optional().parse(options);
     return await this.request(`users/${user}/kudosu`, 'GET', options);
   }
 
@@ -100,8 +84,6 @@ export default class Users extends Base {
     user: number,
     options?: GetUserRecentActivityOptions
   ): Promise<UserEvent[]> {
-    user = z.number().parse(user);
-    options = getUserRecentActivityOptionsSchema.optional().parse(options);
     return await this.request(`users/${user}/recent_activity`, 'GET', options);
   }
 
@@ -117,13 +99,6 @@ export default class Users extends Base {
     type: T,
     options?: T extends 'recent' ? GetUserRecentScoresOptions : GetUserScoresOptions
   ): Promise<T extends 'best' ? UserBestScore[] : UserScore[]> {
-    user = z.number().parse(user);
-    type = userScoreTypeSchema.parse(type) as T;
-    options =
-      type === 'recent'
-        ? getUserRecentScoresOptionsSchema.optional().parse(options)
-        : getUserScoresOptionsSchema.optional().parse(options);
-
     return await this.request(`users/${user}/scores/${type}`, 'GET', options);
   }
 
@@ -147,10 +122,6 @@ export default class Users extends Base {
           })[];
         })[]
   > {
-    user = z.number().parse(user);
-    type = userBeatmapsTypeSchema.parse(type) as T;
-    options = getUserBeatmapsOptionsSchema.optional().parse(options);
-
     return await this.request(`users/${user}/beatmapsets/${type}`, 'GET', options);
   }
 
@@ -161,9 +132,7 @@ export default class Users extends Base {
    * @returns A user
    */
   public async getUser(user: number | string, options?: GetUserOptions): Promise<UserExtended> {
-    user = z.union([z.string(), z.number()]).parse(user);
-    options = getUserOptionsSchema.optional().parse(options);
-    let endpoint: string = `users/${user}`;
+    let endpoint = `users/${user}`;
 
     if (options?.urlParams?.mode) {
       endpoint += `/${options.urlParams.mode}`;
@@ -184,17 +153,10 @@ export default class Users extends Base {
       statistics_rulesets: StatisticsRulesets;
     })[]
   > {
-    options = getUsersOptionsSchema.optional().parse(options);
+    const users = await this.request<{
+      users: Awaited<ReturnType<Users['getUsers']>>;
+    }>('users', 'GET', options);
 
-    const obj: {
-      users: (UserCompact & {
-        country: Country;
-        cover: Cover;
-        groups: UserGroup[];
-        statistics_rulesets: StatisticsRulesets;
-      })[];
-    } = await this.request('users', 'GET', options);
-
-    return obj.users;
+    return users.users;
   }
 }

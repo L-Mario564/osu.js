@@ -1,6 +1,4 @@
 import Base from './Base';
-import { getPlaylistScoresOptionsSchema } from '../schemas/multiplayer';
-import { z } from 'zod';
 import type polyfillFetch from 'node-fetch';
 import type { MultiplayerScores } from '../types';
 import type { GetPlaylistScoresOptions } from '../types/options';
@@ -30,10 +28,6 @@ export default class Multiplayer extends Base {
     playlist: number,
     options?: GetPlaylistScoresOptions
   ): Promise<MultiplayerScores> {
-    room = z.number().parse(room);
-    playlist = z.number().parse(playlist);
-    options = getPlaylistScoresOptionsSchema.optional().parse(options);
-
     return await this.request(`rooms/${room}/playlist/${playlist}/scores`, 'GET', options);
   }
 }

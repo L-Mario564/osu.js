@@ -1,9 +1,4 @@
 import Base from './Base';
-import {
-  getDiscussionPostsOptionsSchema,
-  getDiscussionsOptionsSchema,
-  getDiscussionVotesOptionsSchema
-} from '../schemas/beatmapset-discussions';
 import type polyfillFetch from 'node-fetch';
 import type {
   Beatmap,
@@ -45,7 +40,6 @@ export default class BeatmapsetDiscussions extends Base {
     posts: DiscussionPost[];
     users: UserCompact[];
   }> {
-    options = getDiscussionPostsOptionsSchema.optional().parse(options);
     return await this.request('beatmapsets/discussions/posts', 'GET', options);
   }
 
@@ -59,7 +53,6 @@ export default class BeatmapsetDiscussions extends Base {
     users: UserCompact[];
     votes: DiscussionVote[];
   }> {
-    options = getDiscussionVotesOptionsSchema.optional().parse(options);
     return await this.request('beatmapsets/discussions/votes', 'GET', options);
   }
 
@@ -80,7 +73,6 @@ export default class BeatmapsetDiscussions extends Base {
       max_blocks: number;
     };
   }> {
-    options = getDiscussionsOptionsSchema.optional().parse(options);
     return await this.request('beatmapsets/discussions', 'GET', options);
   }
 }

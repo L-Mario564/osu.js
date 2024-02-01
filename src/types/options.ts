@@ -1,8 +1,8 @@
 import type { ChangelogStream, CommentSort, CommentableType, DiscussionMessageType, GameMode, Mod, MultiplayerScoresSort } from '.';
 
 export interface Options {
-  query?: Record<string, unknown>;
-  body?: Record<string, unknown> | string;
+  query?: Record<string, any>;
+  body?: Record<string, any> | string;
 }
 
 export interface LookupBeatmapOptions {

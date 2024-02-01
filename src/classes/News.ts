@@ -1,6 +1,4 @@
 import Base from './Base';
-import { z } from 'zod';
-import { getNewsListingOptionsSchema, getNewsPostOptionsSchema } from '../schemas/news';
 import type polyfillFetch from 'node-fetch';
 import type { GetNewsListingOptions, GetNewsPostOptions } from '../types/options';
 import type { NewsListing, NewsNavigation, NewsPost } from '../types';
@@ -24,7 +22,6 @@ export default class News extends Base {
    * @returns An object containing news posts and other additional data
    */
   public async getNewsListing(options?: GetNewsListingOptions): Promise<NewsListing> {
-    options = getNewsListingOptionsSchema.optional().parse(options);
     return await this.request('news', 'GET', options);
   }
 
@@ -42,9 +39,6 @@ export default class News extends Base {
       navigation: NewsNavigation;
     }
   > {
-    news = z.union([z.string(), z.number()]).parse(news);
-    options = getNewsPostOptionsSchema.optional().parse(options);
-
     return await this.request(`news/${news}`, 'GET', options);
   }
 }

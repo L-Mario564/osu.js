@@ -1,12 +1,4 @@
 import Base from './Base';
-import { z } from 'zod';
-import {
-  lookupBeatmapOptionsSchema,
-  getBeatmapScoresOptionSchema,
-  getBeatmapsOptionsSchema,
-  getBeatmapAttributesOptionsSchema
-} from '../schemas/beatmaps';
-import { gameModeSchema } from '../schemas';
 import type polyfillFetch from 'node-fetch';
 import type {
   Beatmap,
@@ -50,20 +42,18 @@ export default class Beatmaps extends Base {
    */
   public async lookupBeatmap(options?: LookupBeatmapOptions): Promise<
     | (Beatmap & {
-        beatmapset: Beatmapset & {
-          ratings: number[];
-        };
-        checksum: string | null;
-        failtimes: Fails;
-        max_combo: number;
-      })
-    | undefined
+      beatmapset: Beatmapset & {
+        ratings: number[];
+      };
+      checksum: string | null;
+      failtimes: Fails;
+      max_combo: number;
+    })
+    | null
   > {
-    options = lookupBeatmapOptionsSchema.optional().parse(options);
-
     return await this.request('beatmaps/lookup', 'GET', {
       ...options,
-      returnUndefinedOn404: true
+      returnNullOn404: true
     });
   }
 
@@ -78,10 +68,6 @@ export default class Beatmaps extends Base {
     user: number,
     options?: GetBeatmapScoresOptions
   ): Promise<BeatmapUserScore> {
-    beatmap = z.number().parse(beatmap);
-    user = z.number().parse(user);
-    options = getBeatmapScoresOptionSchema.optional().parse(options);
-
     return await this.request(`beatmaps/${beatmap}/scores/users/${user}`, 'GET', options);
   }
 
@@ -96,13 +82,9 @@ export default class Beatmaps extends Base {
     user: number,
     options?: GetBeatmapScoresOptions
   ): Promise<Score[]> {
-    beatmap = z.number().parse(beatmap);
-    user = z.number().parse(user);
-    options = getBeatmapScoresOptionSchema.optional().parse(options);
-
-    const scores: {
-      scores: Score[];
-    } = await this.request(`beatmaps/${beatmap}/scores/users/${user}/all`, 'GET', options);
+    const scores = await this.request<{
+      scores: Awaited<ReturnType<Beatmaps['getBeatmapUserScores']>>;
+    }>(`beatmaps/${beatmap}/scores/users/${user}/all`, 'GET', options);
 
     return scores.scores;
   }
@@ -123,17 +105,9 @@ export default class Beatmaps extends Base {
       };
     })[]
   > {
-    beatmap = z.number().parse(beatmap);
-    options = getBeatmapScoresOptionSchema.optional().parse(options);
-
-    const scores: {
-      scores: (Score & {
-        user: UserCompact & {
-          country: Country;
-          cover: Cover;
-        };
-      })[];
-    } = await this.request(`beatmaps/${beatmap}/scores`, 'GET', options);
+    const scores = await this.request<{
+      scores: Awaited<ReturnType<Beatmaps['getBeatmapTopScores']>>;
+    }>(`beatmaps/${beatmap}/scores`, 'GET', options);
 
     return scores.scores;
   }
@@ -152,18 +126,9 @@ export default class Beatmaps extends Base {
       };
     })[]
   > {
-    options = getBeatmapsOptionsSchema.optional().parse(options);
-
-    const beatmaps: {
-      beatmaps: (Beatmap & {
-        failtimes: Fails;
-        max_combo: number;
-        checksum: string | null;
-        beatmapset: Beatmapset & {
-          ratings: number[];
-        };
-      })[];
-    } = await this.request('beatmaps', 'GET', options);
+    const beatmaps = await this.request<{
+      beatmaps: Awaited<ReturnType<Beatmaps['getBeatmaps']>>
+    }>('beatmaps', 'GET', options);
 
     return beatmaps.beatmaps;
   }
@@ -183,7 +148,6 @@ export default class Beatmaps extends Base {
       max_combo: number;
     }
   > {
-    beatmap = z.number().parse(beatmap);
     return await this.request(`beatmaps/${beatmap}`, 'GET');
   }
 
@@ -199,17 +163,13 @@ export default class Beatmaps extends Base {
     options?: GetBeatmapAttributesOptions
   ): Promise<
     T extends 'osu'
-      ? OsuBeatmapDifficultyAttributes
-      : T extends 'taiko'
-      ? TaikoBeatmapDifficultyAttributes
-      : T extends 'fruits'
-      ? FruitsBeatmapDifficultyAttributes
-      : ManiaBeatmapDifficultyAttributes
+    ? OsuBeatmapDifficultyAttributes
+    : T extends 'taiko'
+    ? TaikoBeatmapDifficultyAttributes
+    : T extends 'fruits'
+    ? FruitsBeatmapDifficultyAttributes
+    : ManiaBeatmapDifficultyAttributes
   > {
-    beatmap = z.number().parse(beatmap);
-    gamemode = gameModeSchema.parse(gamemode) as T;
-    options = getBeatmapAttributesOptionsSchema.optional().parse(options);
-
     const remapped = {
       body: {
         mods: options?.body?.mods,

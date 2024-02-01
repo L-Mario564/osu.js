@@ -1,12 +1,4 @@
 import Base from './Base';
-import { z } from 'zod';
-import {
-  createTopicOptionsSchema,
-  getTopicOptionsSchema,
-  replyToTopicOptionsSchema,
-  updatePostOptionsSchema,
-  updateTopicOptionsSchema
-} from '../schemas/forum';
 import type polyfillFetch from 'node-fetch';
 import type { Cursor, ForumPost, ForumPostBody, ForumTopic } from '../types';
 import type {
@@ -44,8 +36,6 @@ export default class Forum extends Base {
       body: ForumPostBody;
     }
   > {
-    topic = z.number().parse(topic);
-    options = replyToTopicOptionsSchema.parse(options);
     return await this.request(`forums/topics/${topic}/reply`, 'POST', options);
   }
 
@@ -59,7 +49,6 @@ export default class Forum extends Base {
       body: ForumPostBody;
     };
   }> {
-    options = createTopicOptionsSchema.parse(options);
     const poll = options.body.forum_topic_poll as Record<string, unknown> | undefined;
     let parsedPoll: Record<string, unknown> | undefined;
 
@@ -97,8 +86,6 @@ export default class Forum extends Base {
     })[];
     topic: ForumTopic;
   }> {
-    topic = z.number().parse(topic);
-    options = getTopicOptionsSchema.optional().parse(options);
     return await this.request(`forums/topics/${topic}`, 'GET', options);
   }
 
@@ -108,8 +95,6 @@ export default class Forum extends Base {
    * @returns A forum topic
    */
   public async updateTopic(topic: number, options?: UpdateTopicOptions): Promise<ForumTopic> {
-    topic = z.number().parse(topic);
-    options = updateTopicOptionsSchema.optional().parse(options);
     const forumTopic = options?.body?.forum_topic as Record<string, unknown> | undefined;
     let parsedForumTopic: Record<string, unknown> | undefined;
 
@@ -149,8 +134,6 @@ export default class Forum extends Base {
       body: ForumPostBody;
     }
   > {
-    post = z.number().parse(post);
-    options = updatePostOptionsSchema.parse(options);
     return await this.request(`forums/posts/${post}`, 'PATCH', options);
   }
 }

@@ -1,10 +1,4 @@
 import Base from './Base';
-import { z } from 'zod';
-import {
-  createAnnounceChannelOptionsSchema,
-  createPMChannelOptionsSchema,
-  createPMOptionsSchema
-} from '../schemas/chat';
 import type polyfillFetch from 'node-fetch';
 import type { Channel, ChatMessage } from '../types';
 import type {
@@ -35,7 +29,6 @@ export default class Chat extends Base {
     channel: Channel;
     message: ChatMessage;
   }> {
-    options = createPMOptionsSchema.parse(options);
     return await this.request('chat/new', 'POST', options);
   }
 
@@ -48,14 +41,9 @@ export default class Chat extends Base {
     type: T,
     options: T extends 'PM' ? CreatePMChannelOptions : CreateAnnounceChannelOptions
   ): Promise<Channel> {
-    type = z.union([z.literal('PM'), z.literal('ANNOUNCE')]).parse(type) as T;
-    const parsed =
-      type === 'PM'
-        ? createPMChannelOptionsSchema.parse(options)
-        : createAnnounceChannelOptionsSchema.parse(options);
     const remapped = {
       body: {
-        ...parsed.body,
+        ...options.body,
         type
       }
     };

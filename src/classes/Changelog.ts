@@ -1,10 +1,4 @@
 import Base from './Base';
-import { z } from 'zod';
-import {
-  changelogStreamSchema,
-  getChangelogListingOptionsSchema,
-  lookupChangelogBuildOptionsSchema
-} from '../schemas/changelog';
 import type polyfillFetch from 'node-fetch';
 import type { GetChangelogListingOptions, LookupChangelogBuildOptions } from '../types/options';
 import type {
@@ -49,8 +43,6 @@ export default class Changelog extends Base {
       versions: BuildVersions;
     }
   > {
-    stream = changelogStreamSchema.parse(stream);
-    build = z.string().parse(build);
     return await this.request(`changelog/${stream}/${build}`, 'GET');
   }
 
@@ -78,7 +70,6 @@ export default class Changelog extends Base {
       user_count: number;
     })[];
   }> {
-    options = getChangelogListingOptionsSchema.optional().parse(options);
     return await this.request('changelog', 'GET', options);
   }
 
@@ -99,14 +90,11 @@ export default class Changelog extends Base {
         })[];
         versions: BuildVersions;
       })
-    | undefined
+    | null
   > {
-    changelog = z.union([z.string(), z.number()]).parse(changelog);
-    options = lookupChangelogBuildOptionsSchema.optional().parse(options);
-
     return await this.request(`changelog/${changelog}`, 'GET', {
       ...options,
-      returnUndefinedOn404: true
+      returnNullOn404: true
     });;
   }
 }

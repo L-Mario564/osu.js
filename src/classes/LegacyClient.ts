@@ -1,12 +1,3 @@
-import {
-  getBeatmapScoresParamsSchema,
-  getBeatmapsParamsSchema,
-  getMultiplayerLobbyParamsSchema,
-  getReplayByBeatmapAndUserIdParamsSchema,
-  getReplayByScoreIdParamsSchema,
-  getUserParamsSchema,
-  getUserScoresParamsSchema
-} from '../schemas/legacy';
 import { formatUrlParams, getEnumMods, getModsEnum, map } from '../utils';
 import {
   GenresEnum,
@@ -17,7 +8,6 @@ import {
   TeamColorEnum,
   TeamTypeEnum
 } from '../utils/enums';
-import { z } from 'zod';
 import type polyfillFetch from 'node-fetch';
 import type { Mod } from '../types';
 import type {
@@ -68,11 +58,11 @@ export default class LegacyClient {
       // TODO: Throw error
     }
 
-    this.apiKey = z.string().parse(apiKey);
+    this.apiKey = apiKey;
     this.fetch = options?.polyfillFetch || fetch;
   }
 
-  private async request<T>(endpoint: string, urlParams: Record<string, unknown>): Promise<T> {
+  private async request<T>(endpoint: string, urlParams: Record<string, any>): Promise<T> {
     const params = formatUrlParams(urlParams);
     const url = `https://osu.ppy.sh/api/${endpoint}?k=${this.apiKey}${params}`;
 
@@ -88,16 +78,15 @@ export default class LegacyClient {
    * @returns An array of beatmaps
    */
   public async getBeatmaps(params: GetBeatmapsParams): Promise<LegacyBeatmap[]> {
-    const parsed = getBeatmapsParamsSchema.parse(params);
-    const mods: Mod[] = parsed.mods ? parsed.mods : [];
+    const mods: Mod[] = params.mods ? params.mods : [];
     const diffIncreaseMods: Mod[] = mods.filter((mod: Mod): boolean => {
       return ['HD', 'HR', 'DT', 'FL', 'FI'].includes(mod);
     });
     const validParams: GetBeatmapsValidParams = {
-      ...parsed,
-      since: parsed.since?.toISOString().slice(0, 19).replace('T', ' '),
-      m: parsed.m && ModesEnum[parsed.m],
-      a: Number(parsed.a),
+      ...params,
+      since: params.since?.toISOString().slice(0, 19).replace('T', ' '),
+      m: params.m && ModesEnum[params.m],
+      a: Number(params.a),
       mods: getModsEnum(diffIncreaseMods)
     };
 
@@ -124,10 +113,9 @@ export default class LegacyClient {
    * @returns A user if it exists, otherwise null
    */
   public async getUser(params: GetUserParams): Promise<LegacyUser | null> {
-    const parsed = getUserParamsSchema.parse(params);
     const validParams: GetUserValidParams = {
-      ...parsed,
-      m: parsed.m && ModesEnum[parsed.m]
+      ...params,
+      m: params.m && ModesEnum[params.m]
     };
 
     const users = await this.request<ResponseUser[]>('get_user', validParams);
@@ -139,10 +127,9 @@ export default class LegacyClient {
    * @returns An array of scores on a beatmap
    */
   public async getBeatmapScores(params: GetBeatmapScoresParams): Promise<LegacyBeatmapScore[]> {
-    const parsed = getBeatmapScoresParamsSchema.parse(params);
     const validParams: GetBeatmapScoresValidParams = {
-      ...parsed,
-      m: parsed.m && ModesEnum[parsed.m]
+      ...params,
+      m: params.m && ModesEnum[params.m]
     };
 
     const scores = await this.request<ResponseBeatmapScore[]>('get_scores', validParams);
@@ -161,10 +148,9 @@ export default class LegacyClient {
     type: 'best' | 'recent',
     params: GetUserScoresParams
   ): Promise<(LegacyUserBestScore | LegacyUserRecentScore)[]> {
-    const parsed = getUserScoresParamsSchema.parse(params);
     const validParams: GetUserScoresValidParams = {
-      ...parsed,
-      m: parsed.m && ModesEnum[parsed.m]
+      ...params,
+      m: params.m && ModesEnum[params.m]
     };
 
     const scores = await this.request<(ResponseUserBestScore | ResponseUserRecentScore)[]>(`get_user_${type}`, validParams);
@@ -216,8 +202,7 @@ export default class LegacyClient {
   public async getMultiplayerLobby(
     params: GetMultiplayerLobbyParams
   ): Promise<LegacyMultiplayerLobby | null> {
-    const parsed = getMultiplayerLobbyParamsSchema.parse(params);
-    const mpLobby = await this.request<ResponseMultiplayerLobby>('get_match', parsed);
+    const mpLobby = await this.request<ResponseMultiplayerLobby>('get_match', params);
 
     if (!mpLobby.match) return null;
 
@@ -255,17 +240,12 @@ export default class LegacyClient {
     by: T,
     params: T extends 'score id' ? GetReplayByScoreIdParams : GetReplayByBeatmapAndUserIdParams
   ) {
-    const parsed =
-      by === 'score id'
-        ? getReplayByScoreIdParamsSchema.parse(params)
-        : getReplayByBeatmapAndUserIdParamsSchema.parse(params);
-
     const validParams: GetReplayValidParams<
       GetReplayByScoreIdParams | GetReplayByBeatmapAndUserIdParams
     > = {
-      ...parsed,
-      m: parsed.m && ModesEnum[parsed.m],
-      mods: getModsEnum(parsed.mods ?? [])
+      ...params,
+      m: params.m && ModesEnum[params.m],
+      mods: getModsEnum(params.mods ?? [])
     };
 
     const replay = await this.request<Replay>('get_replay', validParams);

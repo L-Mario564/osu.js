@@ -1,6 +1,4 @@
 import Base from './Base';
-import { gameModeSchema } from '../schemas';
-import { getRankingOptionsSchema, rankingTypeSchema } from '../schemas/ranking';
 import type polyfillFetch from 'node-fetch';
 import type { GameMode, Rankings, RankingType, Spotlight } from '../types';
 import type { GetRankingOptions } from '../types/options';
@@ -30,10 +28,6 @@ export default class Ranking extends Base {
     type: RankingType,
     options?: GetRankingOptions
   ): Promise<Rankings> {
-    mode = gameModeSchema.parse(mode);
-    type = rankingTypeSchema.parse(type);
-    options = getRankingOptionsSchema.optional().parse(options);
-
     if (options?.query?.country) {
       options.query.country = options.query.country.toUpperCase();
     }
@@ -46,9 +40,9 @@ export default class Ranking extends Base {
    * @returns An array of spotlights
    */
   public async getSpotlights(): Promise<Spotlight[]> {
-    const spotlights: {
+    const spotlights = await this.request<{
       spotlights: Spotlight[];
-    } = await this.request('spotlights', 'GET');
+    }>('spotlights', 'GET');
 
     return spotlights.spotlights;
   }

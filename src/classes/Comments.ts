@@ -1,6 +1,4 @@
 import Base from './Base';
-import { getCommentsOptionsSchema } from '../schemas/comments';
-import { z } from 'zod';
 import type polyfillFetch from 'node-fetch';
 import type { CommentBundle } from '../types';
 import type { GetCommentsOptions } from '../types/options';
@@ -24,25 +22,19 @@ export default class Comments extends Base {
    * @returns An object containing comments, users and other related data
    */
   public async getComments(options?: GetCommentsOptions): Promise<CommentBundle> {
-    options = getCommentsOptionsSchema
-      .optional()
-      .transform((options) => {
-        let query: Record<string, unknown> | undefined = options?.query;
+    let query: Record<string, unknown> | undefined = options?.query;
 
-        if (query?.commentable) {
-          query = {
-            ...query,
-            commentable_type: options?.query?.commentable?.type,
-            commentable_id: options?.query?.commentable?.id
-          };
+    if (query?.commentable) {
+      query = {
+        ...query,
+        commentable_type: options?.query?.commentable?.type,
+        commentable_id: options?.query?.commentable?.id
+      };
 
-          delete query.commentable;
-        }
+      delete query.commentable;
+    }
 
-        return { query };
-      })
-      .parse(options);
-
+    options = { query };
     return await this.request('comments', 'GET', options);
   }
 
@@ -52,7 +44,6 @@ export default class Comments extends Base {
    * @returns An object containing comments, users and other related data to the comment with the specified ID
    */
   public async getComment(comment: number): Promise<CommentBundle> {
-    comment = z.number().parse(comment);
     return await this.request(`comments/${comment}`, 'GET');
   }
 }

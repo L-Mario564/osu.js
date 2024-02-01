@@ -1,4 +1,3 @@
-import { searchOptionsSchema } from '../schemas';
 import Base from './Base';
 import Users from './Users';
 import Wiki from './Wiki';
@@ -58,7 +57,6 @@ export default class Client extends Base {
    * @returns Users and wiki pages as results
    */
   public async search(options?: SearchOptions): Promise<SearchResults> {
-    options = searchOptionsSchema.optional().parse(options);
     return await this.request('search', 'GET', options);
   }
 

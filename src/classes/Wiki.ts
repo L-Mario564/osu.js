@@ -1,5 +1,4 @@
 import Base from './Base';
-import { z } from 'zod';
 import type polyfillFetch from 'node-fetch';
 import type { WikiPage } from '../types';
 
@@ -24,8 +23,6 @@ export default class Wiki extends Base {
    * @returns The wiki page
    */
   public async getWikiPage(locale: string, path: string): Promise<WikiPage> {
-    locale = z.string().length(2).parse(locale);
-    path = z.string().parse(path);
     return await this.request(`wiki/${locale}/${path}`, 'GET');
   }
 }
