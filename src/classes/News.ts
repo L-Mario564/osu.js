@@ -1,8 +1,9 @@
 import Base from './Base';
-import { NewsListing, NewsNavigation, NewsPost } from '../types';
-import { GetNewsListingOptions, GetNewsPostOptions } from '../types/options';
 import { z } from 'zod';
 import { getNewsListingOptionsSchema, getNewsPostOptionsSchema } from '../schemas/news';
+import type polyfillFetch from 'node-fetch';
+import type { GetNewsListingOptions, GetNewsPostOptions } from '../types/options';
+import type { NewsListing, NewsNavigation, NewsPost } from '../types';
 
 /**
  * Class that wraps all news related endpoints
@@ -10,9 +11,12 @@ import { getNewsListingOptionsSchema, getNewsPostOptionsSchema } from '../schema
 export default class News extends Base {
   /**
    * @param accessToken OAuth access token
+   * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(accessToken: string) {
-    super(accessToken);
+  constructor(accessToken: string, options?: {
+    polyfillFetch?: typeof fetch | typeof polyfillFetch;
+  }) {
+    super(accessToken, options);
   }
 
   /**
@@ -21,7 +25,7 @@ export default class News extends Base {
    */
   public async getNewsListing(options?: GetNewsListingOptions): Promise<NewsListing> {
     options = getNewsListingOptionsSchema.optional().parse(options);
-    return await this.fetch('news', 'GET', options);
+    return await this.request('news', 'GET', options);
   }
 
   /**
@@ -41,6 +45,6 @@ export default class News extends Base {
     news = z.union([z.string(), z.number()]).parse(news);
     options = getNewsPostOptionsSchema.optional().parse(options);
 
-    return await this.fetch(`news/${news}`, 'GET', options);
+    return await this.request(`news/${news}`, 'GET', options);
   }
 }

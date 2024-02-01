@@ -1,13 +1,5 @@
 import Base from './Base';
-import { Cursor, ForumPost, ForumPostBody, ForumTopic } from '../types';
 import { z } from 'zod';
-import {
-  CreateTopicOptions,
-  GetTopicOptions,
-  ReplyToTopicOptions,
-  UpdatePostOptions,
-  UpdateTopicOptions
-} from '../types/options';
 import {
   createTopicOptionsSchema,
   getTopicOptionsSchema,
@@ -15,6 +7,15 @@ import {
   updatePostOptionsSchema,
   updateTopicOptionsSchema
 } from '../schemas/forum';
+import type polyfillFetch from 'node-fetch';
+import type { Cursor, ForumPost, ForumPostBody, ForumTopic } from '../types';
+import type {
+  CreateTopicOptions,
+  GetTopicOptions,
+  ReplyToTopicOptions,
+  UpdatePostOptions,
+  UpdateTopicOptions
+} from '../types/options';
 
 /**
  * Class that wraps all forum related endpoints
@@ -22,9 +23,12 @@ import {
 export default class Forum extends Base {
   /**
    * @param accessToken OAuth access token
+   * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(accessToken: string) {
-    super(accessToken);
+  constructor(accessToken: string, options?: {
+    polyfillFetch?: typeof fetch | typeof polyfillFetch;
+  }) {
+    super(accessToken, options);
   }
 
   /**
@@ -42,7 +46,7 @@ export default class Forum extends Base {
   > {
     topic = z.number().parse(topic);
     options = replyToTopicOptionsSchema.parse(options);
-    return await this.fetch(`forums/topics/${topic}/reply`, 'POST', options);
+    return await this.request(`forums/topics/${topic}/reply`, 'POST', options);
   }
 
   /**
@@ -75,7 +79,7 @@ export default class Forum extends Base {
     };
 
     delete parsed.body.forum_topic_poll;
-    return await this.fetch('forums/topics', 'POST', parsed);
+    return await this.request('forums/topics', 'POST', parsed);
   }
 
   /**
@@ -95,7 +99,7 @@ export default class Forum extends Base {
   }> {
     topic = z.number().parse(topic);
     options = getTopicOptionsSchema.optional().parse(options);
-    return await this.fetch(`forums/topics/${topic}`, 'GET', options);
+    return await this.request(`forums/topics/${topic}`, 'GET', options);
   }
 
   /**
@@ -129,7 +133,7 @@ export default class Forum extends Base {
     };
 
     delete parsed.body?.forum_topic;
-    return await this.fetch(`forums/topics/${topic}`, 'PATCH', parsed);
+    return await this.request(`forums/topics/${topic}`, 'PATCH', parsed);
   }
 
   /**
@@ -147,6 +151,6 @@ export default class Forum extends Base {
   > {
     post = z.number().parse(post);
     options = updatePostOptionsSchema.parse(options);
-    return await this.fetch(`forums/posts/${post}`, 'PATCH', options);
+    return await this.request(`forums/posts/${post}`, 'PATCH', options);
   }
 }

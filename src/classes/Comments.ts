@@ -1,8 +1,9 @@
 import Base from './Base';
-import { CommentBundle } from '../types';
-import { GetCommentsOptions } from '../types/options';
 import { getCommentsOptionsSchema } from '../schemas/comments';
 import { z } from 'zod';
+import type polyfillFetch from 'node-fetch';
+import type { CommentBundle } from '../types';
+import type { GetCommentsOptions } from '../types/options';
 
 /**
  * Class that wraps all comment related endpoints
@@ -10,9 +11,12 @@ import { z } from 'zod';
 export default class Comments extends Base {
   /**
    * @param accessToken OAuth access token
+   * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(accessToken: string) {
-    super(accessToken);
+  constructor(accessToken: string, options?: {
+    polyfillFetch?: typeof fetch | typeof polyfillFetch;
+  }) {
+    super(accessToken, options);
   }
 
   /**
@@ -39,7 +43,7 @@ export default class Comments extends Base {
       })
       .parse(options);
 
-    return await this.fetch('comments', 'GET', options);
+    return await this.request('comments', 'GET', options);
   }
 
   /**
@@ -49,6 +53,6 @@ export default class Comments extends Base {
    */
   public async getComment(comment: number): Promise<CommentBundle> {
     comment = z.number().parse(comment);
-    return await this.fetch(`comments/${comment}`, 'GET');
+    return await this.request(`comments/${comment}`, 'GET');
   }
 }

@@ -1,5 +1,11 @@
 import Base from './Base';
 import {
+  getDiscussionPostsOptionsSchema,
+  getDiscussionsOptionsSchema,
+  getDiscussionVotesOptionsSchema
+} from '../schemas/beatmapset-discussions';
+import type polyfillFetch from 'node-fetch';
+import type {
   Beatmap,
   BeatmapsetCompact,
   BeatmapsetDiscussion,
@@ -8,16 +14,11 @@ import {
   DiscussionVote,
   UserCompact
 } from '../types';
-import {
+import type {
   GetDiscussionPostsOptions,
   GetDiscussionsOptions,
   GetDiscussionVotesOptions
 } from '../types/options';
-import {
-  getDiscussionPostsOptionsSchema,
-  getDiscussionsOptionsSchema,
-  getDiscussionVotesOptionsSchema
-} from '../schemas/beatmapset-discussions';
 
 /**
  * Class that wraps all beatmapset discussion related endpoints
@@ -25,9 +26,12 @@ import {
 export default class BeatmapsetDiscussions extends Base {
   /**
    * @param accessToken OAuth access token
+   * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(accessToken: string) {
-    super(accessToken);
+  constructor(accessToken: string, options?: {
+    polyfillFetch?: typeof fetch | typeof polyfillFetch;
+  }) {
+    super(accessToken, options);
   }
 
   /**
@@ -42,7 +46,7 @@ export default class BeatmapsetDiscussions extends Base {
     users: UserCompact[];
   }> {
     options = getDiscussionPostsOptionsSchema.optional().parse(options);
-    return await this.fetch('beatmapsets/discussions/posts', 'GET', options);
+    return await this.request('beatmapsets/discussions/posts', 'GET', options);
   }
 
   /**
@@ -56,7 +60,7 @@ export default class BeatmapsetDiscussions extends Base {
     votes: DiscussionVote[];
   }> {
     options = getDiscussionVotesOptionsSchema.optional().parse(options);
-    return await this.fetch('beatmapsets/discussions/votes', 'GET', options);
+    return await this.request('beatmapsets/discussions/votes', 'GET', options);
   }
 
   /**
@@ -77,6 +81,6 @@ export default class BeatmapsetDiscussions extends Base {
     };
   }> {
     options = getDiscussionsOptionsSchema.optional().parse(options);
-    return await this.fetch('beatmapsets/discussions', 'GET', options);
+    return await this.request('beatmapsets/discussions', 'GET', options);
   }
 }

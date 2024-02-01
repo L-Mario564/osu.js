@@ -12,7 +12,8 @@ import {
   userBeatmapsTypeSchema,
   userScoreTypeSchema
 } from '../schemas/users';
-import {
+import type polyfillFetch from 'node-fetch';
+import type {
   UserExtended,
   UserKudosuHistory,
   UserCompact,
@@ -29,7 +30,7 @@ import {
   UserBestScore,
   UserScore
 } from '../types';
-import {
+import type {
   GetSelfOptions,
   GetUserKodosuOptions,
   GetUserOptions,
@@ -46,9 +47,12 @@ import {
 export default class Users extends Base {
   /**
    * @param accessToken OAuth access token
+   * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(accessToken: string) {
-    super(accessToken);
+  constructor(accessToken: string, options?: {
+    polyfillFetch?: typeof fetch | typeof polyfillFetch;
+  }) {
+    super(accessToken, options);
   }
 
   /**
@@ -68,7 +72,7 @@ export default class Users extends Base {
       endpoint += `/${options.urlParams.mode}`;
     }
 
-    return await this.fetch(endpoint, 'GET');
+    return await this.request(endpoint, 'GET');
   }
 
   /**
@@ -83,7 +87,7 @@ export default class Users extends Base {
   ): Promise<UserKudosuHistory[]> {
     user = z.number().parse(user);
     options = getUserKudosuOptionsSchema.optional().parse(options);
-    return await this.fetch(`users/${user}/kudosu`, 'GET', options);
+    return await this.request(`users/${user}/kudosu`, 'GET', options);
   }
 
   /**
@@ -98,7 +102,7 @@ export default class Users extends Base {
   ): Promise<UserEvent[]> {
     user = z.number().parse(user);
     options = getUserRecentActivityOptionsSchema.optional().parse(options);
-    return await this.fetch(`users/${user}/recent_activity`, 'GET', options);
+    return await this.request(`users/${user}/recent_activity`, 'GET', options);
   }
 
   /**
@@ -120,7 +124,7 @@ export default class Users extends Base {
         ? getUserRecentScoresOptionsSchema.optional().parse(options)
         : getUserScoresOptionsSchema.optional().parse(options);
 
-    return await this.fetch(`users/${user}/scores/${type}`, 'GET', options);
+    return await this.request(`users/${user}/scores/${type}`, 'GET', options);
   }
 
   /**
@@ -147,7 +151,7 @@ export default class Users extends Base {
     type = userBeatmapsTypeSchema.parse(type) as T;
     options = getUserBeatmapsOptionsSchema.optional().parse(options);
 
-    return await this.fetch(`users/${user}/beatmapsets/${type}`, 'GET', options);
+    return await this.request(`users/${user}/beatmapsets/${type}`, 'GET', options);
   }
 
   /**
@@ -165,7 +169,7 @@ export default class Users extends Base {
       endpoint += `/${options.urlParams.mode}`;
     }
 
-    return await this.fetch(endpoint, 'GET', options);
+    return await this.request(endpoint, 'GET', options);
   }
 
   /**
@@ -189,7 +193,7 @@ export default class Users extends Base {
         groups: UserGroup[];
         statistics_rulesets: StatisticsRulesets;
       })[];
-    } = await this.fetch('users', 'GET', options);
+    } = await this.request('users', 'GET', options);
 
     return obj.users;
   }

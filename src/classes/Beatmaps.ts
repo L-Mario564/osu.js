@@ -1,5 +1,14 @@
 import Base from './Base';
+import { z } from 'zod';
 import {
+  lookupBeatmapOptionsSchema,
+  getBeatmapScoresOptionSchema,
+  getBeatmapsOptionsSchema,
+  getBeatmapAttributesOptionsSchema
+} from '../schemas/beatmaps';
+import { gameModeSchema } from '../schemas';
+import type polyfillFetch from 'node-fetch';
+import type {
   Beatmap,
   Beatmapset,
   BeatmapUserScore,
@@ -14,21 +23,12 @@ import {
   TaikoBeatmapDifficultyAttributes,
   UserCompact
 } from '../types';
-import {
+import type {
   GetBeatmapAttributesOptions,
   GetBeatmapScoresOptions,
   GetBeatmapsOptions,
   LookupBeatmapOptions
 } from '../types/options';
-import { z } from 'zod';
-import {
-  lookupBeatmapOptionsSchema,
-  getBeatmapScoresOptionSchema,
-  getBeatmapsOptionsSchema,
-  getBeatmapAttributesOptionsSchema
-} from '../schemas/beatmaps';
-import { gameModeSchema } from '../schemas';
-import { isAxiosError } from 'axios';
 
 /**
  * Class that wraps all beatmap related endpoints
@@ -36,9 +36,12 @@ import { isAxiosError } from 'axios';
 export default class Beatmaps extends Base {
   /**
    * @param accessToken OAuth access token
+   * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(accessToken: string) {
-    super(accessToken);
+  constructor(accessToken: string, options?: {
+    polyfillFetch?: typeof fetch | typeof polyfillFetch;
+  }) {
+    super(accessToken, options);
   }
 
   /**
@@ -58,26 +61,10 @@ export default class Beatmaps extends Base {
   > {
     options = lookupBeatmapOptionsSchema.optional().parse(options);
 
-    let beatmap:
-      | (Beatmap & {
-          beatmapset: Beatmapset & {
-            ratings: number[];
-          };
-          checksum: string | null;
-          failtimes: Fails;
-          max_combo: number;
-        })
-      | undefined;
-
-    try {
-      beatmap = await this.fetch('beatmaps/lookup', 'GET', options);
-    } catch (err) {
-      if (!isAxiosError(err) || err.response?.status !== 404) {
-        throw err;
-      }
-    }
-
-    return beatmap;
+    return await this.request('beatmaps/lookup', 'GET', {
+      ...options,
+      returnUndefinedOn404: true
+    });
   }
 
   /**
@@ -95,7 +82,7 @@ export default class Beatmaps extends Base {
     user = z.number().parse(user);
     options = getBeatmapScoresOptionSchema.optional().parse(options);
 
-    return await this.fetch(`beatmaps/${beatmap}/scores/users/${user}`, 'GET', options);
+    return await this.request(`beatmaps/${beatmap}/scores/users/${user}`, 'GET', options);
   }
 
   /**
@@ -115,7 +102,7 @@ export default class Beatmaps extends Base {
 
     let scores: {
       scores: Score[];
-    } = await this.fetch(`beatmaps/${beatmap}/scores/users/${user}/all`, 'GET', options);
+    } = await this.request(`beatmaps/${beatmap}/scores/users/${user}/all`, 'GET', options);
 
     return scores.scores;
   }
@@ -146,7 +133,7 @@ export default class Beatmaps extends Base {
           cover: Cover;
         };
       })[];
-    } = await this.fetch(`beatmaps/${beatmap}/scores`, 'GET', options);
+    } = await this.request(`beatmaps/${beatmap}/scores`, 'GET', options);
 
     return scores.scores;
   }
@@ -176,7 +163,7 @@ export default class Beatmaps extends Base {
           ratings: number[];
         };
       })[];
-    } = await this.fetch('/beatmaps', 'GET', options);
+    } = await this.request('beatmaps', 'GET', options);
 
     return beatmaps.beatmaps;
   }
@@ -197,7 +184,7 @@ export default class Beatmaps extends Base {
     }
   > {
     beatmap = z.number().parse(beatmap);
-    return await this.fetch(`beatmaps/${beatmap}`, 'GET');
+    return await this.request(`beatmaps/${beatmap}`, 'GET');
   }
 
   /**
@@ -230,6 +217,6 @@ export default class Beatmaps extends Base {
       }
     };
 
-    return await this.fetch(`beatmaps/${beatmap}/attributes`, 'POST', remapped);
+    return await this.request(`beatmaps/${beatmap}/attributes`, 'POST', remapped);
   }
 }

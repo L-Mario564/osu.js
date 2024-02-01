@@ -1,8 +1,9 @@
 import Base from './Base';
-import { GameMode, Rankings, RankingType, Spotlight } from '../types';
-import { GetRankingOptions } from '../types/options';
 import { gameModeSchema } from '../schemas';
 import { getRankingOptionsSchema, rankingTypeSchema } from '../schemas/ranking';
+import type polyfillFetch from 'node-fetch';
+import type { GameMode, Rankings, RankingType, Spotlight } from '../types';
+import type { GetRankingOptions } from '../types/options';
 
 /**
  * Class that wraps all ranking related endpoints
@@ -10,9 +11,12 @@ import { getRankingOptionsSchema, rankingTypeSchema } from '../schemas/ranking';
 export default class Ranking extends Base {
   /**
    * @param accessToken OAuth access token
+   * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(accessToken: string) {
-    super(accessToken);
+  constructor(accessToken: string, options?: {
+    polyfillFetch?: typeof fetch | typeof polyfillFetch;
+  }) {
+    super(accessToken, options);
   }
 
   /**
@@ -30,7 +34,7 @@ export default class Ranking extends Base {
     type = rankingTypeSchema.parse(type);
     options = getRankingOptionsSchema.optional().parse(options);
 
-    return await this.fetch(`rankings/${mode}/${type}`, 'GET', options);
+    return await this.request(`rankings/${mode}/${type}`, 'GET', options);
   }
 
   /**
@@ -40,7 +44,7 @@ export default class Ranking extends Base {
   public async getSpotlights(): Promise<Spotlight[]> {
     let spotlights: {
       spotlights: Spotlight[];
-    } = await this.fetch('spotlights', 'GET');
+    } = await this.request('spotlights', 'GET');
 
     return spotlights.spotlights;
   }

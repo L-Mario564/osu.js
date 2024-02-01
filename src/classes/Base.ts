@@ -1,42 +1,50 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { z } from 'zod';
-import { Options } from '../types/options';
 import { formatUrlParams } from '../utils';
+import type polyfillFetch from 'node-fetch';
+import type { Options } from '../types/options';
 
 export default class Base {
-  protected axios: AxiosInstance;
+  protected accessToken: string;
+  private fetch: typeof fetch | typeof polyfillFetch;
 
-  constructor(accessToken: string) {
-    this.axios = axios.create({
-      baseURL: 'https://osu.ppy.sh/api/v2/',
-      headers: {
-        'Authorization': `Bearer ${z.string().parse(accessToken)}`,
-        'Accept-encoding': '*'
-      }
-    });
+  constructor(accessToken: string, options?: {
+    polyfillFetch?: typeof fetch | typeof polyfillFetch;
+  }) {
+    if (typeof fetch === 'undefined' && !options?.polyfillFetch) {
+      // TODO: Throw error
+    }
+
+    this.accessToken = accessToken;
+    this.fetch = options?.polyfillFetch || fetch;
   }
 
-  protected async fetch<T>(
+  protected async request<T>(
     endpoint: string,
-    method: 'POST' | 'GET' | 'PATCH',
-    options?: Options
+    method: 'POST' | 'GET' | 'PATCH' | 'DELETE',
+    options?: Options & {
+      returnUndefinedOn404?: boolean;
+    }
   ): Promise<T> {
-    let resp: AxiosResponse;
-
     if (options?.query) {
-      let query: string = formatUrlParams(options.query);
+      let query = formatUrlParams(options.query);
       endpoint += query.replace('&', '?');
     }
 
-    if (method === 'GET') {
-      resp = await this.axios.get(endpoint);
-    } else if (method === 'POST') {
-      resp = await this.axios.post(endpoint, options?.body);
-    } else {
-      resp = await this.axios.patch(endpoint, options?.body);
+    // TODO: Better error handling
+    let resp = await this.fetch(`https://osu.ppy.sh/api/v2/${endpoint}`, {
+      method,
+      body: options?.body ? JSON.stringify(options.body) : undefined,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${z.string().parse(this.accessToken)}`
+      }
+    });
+
+    if (resp.status === 404 && options?.returnUndefinedOn404) {
+      return undefined as T;
     }
 
-    let data: T = resp.data;
+    let data = await resp.json() as T;
     return data;
   }
 }
