@@ -1,19 +1,19 @@
 ---
 title: GetReplayByBeatmapAndUserIdParams
-ref: type
+ref: interface
 ---
 
 # GetReplayByBeatmapAndUserIdParams
 
 ```ts
-type GetReplayByBeatmapAndUserIdParams = GetReplay & {
+interface GetReplayByBeatmapAndUserIdParams extends GetReplayBaseParams {
   b: number;
   u: string | number;
   type?: UserType;
-};
+}
 ```
 
 ## Types
 
-- [GetReplay](/references/get-replay)
+- [GetReplayBaseParams](/references/get-replay-base-params)
 - [UserType](//references/user-type)

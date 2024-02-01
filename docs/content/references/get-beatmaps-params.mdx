@@ -1,28 +1,27 @@
 ---
 title: GetBeatmapsParams
-ref: type
+ref: interface
 ---
 
 # GetBeatmapsParams
 
 ```ts
-type GetBeatmapsParams = Partial<{
-  since: Date;
-  s: number;
-  b: number;
-  u: string | number;
-  type: UserType;
-  m: GameMode;
-  a: boolean;
-  h: string;
-  limit: number;
-  mods: Mod[];
-}>;
+interface GetBeatmapsParams {
+  since?: Date;
+  s?: number;
+  b?: number;
+  u?: string | number;
+  type?: UserType;
+  m?: GameMode;
+  a?: boolean;
+  h?: string;
+  limit?: number;
+  mods?: Mod[];
+}
 ```
 
 ## Types
 
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
 - [UserType](/references/user-type)
 - [GameMode](/references/game-mode)
 - [Mod](/references/mod)
