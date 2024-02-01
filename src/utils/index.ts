@@ -43,7 +43,7 @@ export function mapCallback([key, value]: [string, unknown]): [string, unknown] 
 // Functions to re-export
 
 export function getModsEnum(mods: Mod[]): number {
-  return mods.reduce((count: number, mod: Mod) => count + ModsEnum[mod], 0);
+  return mods.reduce((count, mod) => count + ModsEnum[mod], 0);
 }
 
 export function getEnumMods(modEnum: string | null): Mod[] {

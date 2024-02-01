@@ -1,7 +1,7 @@
-import Base from './Base';
-import axios, { AxiosResponse } from 'axios';
-import { GuestToken, Scope } from '../../types';
 import AuthCodeGrant from './AuthCodeGrant';
+import Base from './Base';
+import type polyfillFetch from 'node-fetch';
+import type { GuestToken, Scope } from '../../types';
 
 /**
  * Class that wraps all OAuth related endpoints
@@ -11,9 +11,12 @@ export default class Auth extends Base {
    * @param clientId OAuth client ID
    * @param clientSecret OAuth client secret
    * @param redirectUri OAuth redirect URI
+   * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(clientId: number, clientSecret: string, redirectUri: string) {
-    super(clientId, clientSecret, redirectUri);
+  constructor(clientId: number, clientSecret: string, redirectUri: string, options?: {
+    polyfillFetch?: typeof fetch | typeof polyfillFetch;
+  }) {
+    super(clientId, clientSecret, redirectUri, options);
   }
 
   /**
@@ -28,18 +31,21 @@ export default class Auth extends Base {
    * @returns An API token (with guest permissions)
    */
   public async clientCredentialsGrant(): Promise<GuestToken> {
-    let resp: AxiosResponse = await axios.post(
-      `${this.oauthUrl}token`,
-      {
+    // TODO: Better error handling
+    let resp = await this.fetch(`${this.oauthUrl}token`, {
+      method: 'POST',
+      body: JSON.stringify({
         client_id: this.clientId,
         client_secret: this.clientSecret,
         grant_type: 'client_credentials',
         scope: 'public'
-      },
-      this.headers
-    );
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
 
-    let token: GuestToken = resp.data;
+    let token = await resp.json() as GuestToken;
     return token;
   }
 
@@ -47,10 +53,12 @@ export default class Auth extends Base {
    * Revokes a token
    * @param accessToken Access toke to revoke
    */
+  // TODO: Clone to Client class
   public async revokeToken(accessToken: string) {
-    await axios.delete('https://osu.ppy.sh/api/v2/oauth/tokens/current', {
+    // TODO: Better error handling
+    await this.fetch('https://osu.ppy.sh/api/v2/oauth/tokens/current', {
+      method: 'DELETE',
       headers: {
-        ...this.headers.headers,
         Authorization: `Bearer ${accessToken}`
       }
     });

@@ -1,8 +1,8 @@
 import e from 'express';
 import { Auth, buildUrl } from '../';
 import { readFileSync, writeFileSync } from 'fs';
-import { GuestToken, Scope, Token } from '../types';
 import { tokenFileLocation, getClientData } from './client-tests';
+import type { GuestToken, Scope, Token } from '../types';
 
 let server = e();
 let { clientId, clientSecret, redirectUri } = getClientData();
