@@ -1,14 +1,4 @@
-import { z } from 'zod';
 import { Mod, RankStatus, Rank, GameMode } from '../';
-import {
-  getBeatmapsParamsSchema,
-  getUserParamsSchema,
-  getBeatmapScoresParamsSchema,
-  getUserScoresParamsSchema,
-  getMultiplayerLobbyParamsSchema,
-  getReplayByScoreIdParamsSchema,
-  getReplayByBeatmapAndUserIdParamsSchema
-} from '../../schemas/legacy';
 import {
   GenresEnum,
   LanguagesEnum,
@@ -22,23 +12,94 @@ import {
  */
 export type ODBCTimestamp = string;
 
-export type GetBeatmapsParams = z.infer<typeof getBeatmapsParamsSchema>;
-export type GetUserParams = z.infer<typeof getUserParamsSchema>;
-export type GetBeatmapScoresParams = z.infer<typeof getBeatmapScoresParamsSchema>;
-export type GetUserScoresParams = z.infer<typeof getUserScoresParamsSchema>;
-export type GetMultiplayerLobbyParams = z.infer<typeof getMultiplayerLobbyParamsSchema>;
-
-export type GetReplayByScoreIdParams = z.infer<typeof getReplayByScoreIdParamsSchema>;
-
-export type GetReplayByBeatmapAndUserIdParams = z.infer<
-  typeof getReplayByBeatmapAndUserIdParamsSchema
->;
-
 export type Genre = keyof typeof GenresEnum;
 export type Language = keyof typeof LanguagesEnum;
 export type ScoringType = keyof typeof ScoringTypeEnum;
 export type TeamType = keyof typeof TeamTypeEnum;
 export type TeamColor = keyof typeof TeamColorEnum;
+
+type UserType = 'id' | 'string'; 
+
+export interface GetBeatmapsParams {
+  /** Beatmaps ranked or loved since this date (in UTC) */
+  since?: Date;
+  /** Beatmaps with a specific beatmapset ID */
+  s?: number;
+  /** Beatmap with a specific beatmap ID */
+  b?: number;
+  /** Beatmaps created by user with a specific user ID or username */
+  u?: string | number;
+  /** Specify if `u` is a user ID (`id`) or a username (`string`) */
+  type?: UserType;
+  /** Beatmaps from a specific gamemode */
+  m?: GameMode;
+  /** Include converted beatmaps? */
+  a?: boolean;
+  /** Beatmap with a specific hash */
+  h?: string;
+  /** Limit amount of beatmaps to return (500 max.) */
+  limit?: number;
+  /** Mods to apply */
+  mods?: Mod[];
+}
+
+export interface GetUserParams {
+  /** User with a specific user ID or username */
+  u?: string | number;
+  /** User gamemode profile */
+  m?: GameMode;
+  /** Specify if `u` is a user ID (`id`) or a username (`string`) */
+  type?: UserType;
+  /** Max. number of days between now and the last event's date (range: 1-31) */
+  event_days?: number;
+}
+
+interface GetUserScoresBaseParams {
+  /** Scores from a specific gamemode */
+  m?: GameMode;
+  /** Limit amount of scores to return (100 max.) */
+  limit?: number;
+  /** Specify if `u` is a user ID (`id`) or a username (`string`) */
+  type?: UserType;
+}
+
+export interface GetBeatmapScoresParams extends GetUserScoresBaseParams {
+  /** Scores from a beatmap with a specific beatmap ID */
+  b: number;
+  /** Scores from a user with a specific user ID or username */
+  u?: string | number;
+}
+
+export interface GetUserScoresParams extends GetUserScoresBaseParams {
+  /** Scores from a user with a specific user ID or username */
+  u: string | number;
+}
+
+export interface GetMultiplayerLobbyParams {
+  /** Match with a specific match ID */
+  mp: number;
+}
+
+interface GetReplayBaseParams {
+  /** Replay gamemode */
+  m?: GameMode;
+  /** Replay with a specific list of mods */
+  mods?: Mod[];
+}
+
+export interface GetReplayByScoreIdParams extends GetReplayBaseParams {
+  /** Replay from a score with a specific score ID */
+  s: number;
+}
+
+export interface GetReplayByBeatmapAndUserIdParams extends GetReplayBaseParams {
+  /** Replay from a beatmap with a specific beatmap ID */
+  b: number;
+  /** Replay from a user with a specific user ID or username */
+  u: string | number;
+  /** Specify if `u` is a user ID (`id`) or a username (`string`) */
+  type?: UserType;
+}
 
 export interface LegacyBeatmap {
   approved: RankStatus;

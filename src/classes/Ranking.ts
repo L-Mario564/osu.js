@@ -34,6 +34,10 @@ export default class Ranking extends Base {
     type = rankingTypeSchema.parse(type);
     options = getRankingOptionsSchema.optional().parse(options);
 
+    if (options?.query?.country) {
+      options.query.country = options.query.country.toUpperCase();
+    }
+
     return await this.request(`rankings/${mode}/${type}`, 'GET', options);
   }
 

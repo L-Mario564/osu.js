@@ -1,12 +1,4 @@
-import { z } from 'zod';
-import { ModsEnum, StatusEnum } from '../utils/enums';
-import { gameModeSchema } from '../schemas';
-import { userBeatmapsTypeSchema, userScoreTypeSchema } from '../schemas/users';
-import { commentableTypeSchema, commentSortSchema } from '../schemas/comments';
-import { multiplayerScoresSortSchema } from '../schemas/multiplayer';
-import { rankingTypeSchema } from '../schemas/ranking';
-import { changelogStreamSchema } from '../schemas/changelog';
-import { discussionMessageTypeSchema } from '../schemas/beatmapset-discussions';
+import type { ModsEnum, StatusEnum } from '../utils/enums';
 
 /**
  * Timestamp string in ISO 8601 format
@@ -17,16 +9,15 @@ export type Cursor = string | null;
 export type Mod = keyof typeof ModsEnum;
 export type RankStatus = keyof typeof StatusEnum;
 
-export type GameMode = z.infer<typeof gameModeSchema>;
-export type UserBeatmapsType = z.infer<typeof userBeatmapsTypeSchema>;
-export type CommentableType = z.infer<typeof commentableTypeSchema>;
-export type CommentSort = z.infer<typeof commentSortSchema>;
-export type MultiplayerScoresSort = z.infer<typeof multiplayerScoresSortSchema>;
-export type RankingType = z.infer<typeof rankingTypeSchema>;
-export type UserScoreType = z.infer<typeof userScoreTypeSchema>;
-export type ChangelogStream = z.infer<typeof changelogStreamSchema>;
-export type DiscussionMessageType = z.infer<typeof discussionMessageTypeSchema>;
-
+export type GameMode = 'fruits' | 'mania' | 'osu' | 'taiko';
+export type UserBeatmapsType = 'favourite' | 'graveyard' | 'guest' | 'loved' | 'most_played' | 'nominated' | 'pending' | 'ranked';
+export type CommentableType = 'beatmapset' | 'news_post' | 'build';
+export type CommentSort = 'new' | 'old' | 'top';
+export type MultiplayerScoresSort = 'score_asc' | 'score_desc';
+export type RankingType = 'charts' | 'country' | 'performance' | 'score';
+export type UserScoreType = 'best' | 'firsts' | 'recent';
+export type ChangelogStream = 'stable40' | 'beta40' | 'cuttingedge' | 'lazer' | 'web';
+export type DiscussionMessageType = 'suggestion' | 'problem' | 'mapper_note' | 'praise' | 'hype' | 'review';
 export type Playstyle = 'mouse' | 'keyboard' | 'tablet' | 'touch';
 export type Scope =
   | 'chat.write'
