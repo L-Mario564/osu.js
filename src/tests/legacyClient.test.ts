@@ -1,3 +1,4 @@
+import fetch from 'node-fetch';
 import { LegacyClient } from '../';
 import { describe, expect, it } from 'vitest';
 import { config } from 'dotenv';
@@ -11,6 +12,9 @@ describe('Test legacy client', async () => {
 
   let ms: number = 500;
   let client = new LegacyClient(apiKey);
+  let withPolyfillFetch = new LegacyClient(apiKey, {
+    polyfillFetch: fetch
+  });
 
   it('Gets beatmaps', async () => {
     let beatmaps = await client.getBeatmaps({ b: 1816113 });
@@ -75,8 +79,13 @@ describe('Test legacy client', async () => {
   });
   await sleep(ms);
 
-  it("Gets replays that don't exist", async () => {
+  it("Gets replays that doesn't exist", async () => {
     let replay = await client.getReplay('score id', { s: 0 });
     expect(replay).toBeNull();
+  });
+
+  it('Gets a user (polyfill fetch API)', async () => {
+    let user = await withPolyfillFetch.getUser({ u: 14544646 });
+    expect(user).toBeDefined();
   });
 });

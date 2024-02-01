@@ -8,10 +8,22 @@ import { LegacyClient } from 'osu-web.js';
 const legacyApi = new LegacyClient(apiKey);
 ```
 
+Node.js versions prior to 18 don't have a native fetch API, so you'll have to use a polyfill instead.
+
+```ts
+import fetch from 'node-fetch'; // Install this package
+import { LegacyClient } from 'osu-web.js';
+
+const legacyApi = new LegacyClient(apiKey, {
+  polyfillFetch: fetch
+});
+```
+
 ## Parameters
 
-| Parameter | Type   | Optional | Description       |
-| --------- | ------ | -------- | ----------------- |
-| apiKey    | string |          | Your osu! API Key |
+| Parameter             | Type   | Optional | Description                                                                                                                |
+| --------------------- | ------ | -------- | -------------------------------------------------------------------------------------------------------------------------- |
+| apiKey                | string |          | Your osu! API Key                                                                                                          |
+| options.polyfillFetch | string | ✓        | In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch` |
 
 You should avoid exposing the API key in your source code and frontend apps. Set it as an environment variable.

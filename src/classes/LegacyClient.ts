@@ -7,8 +7,20 @@ import {
   getUserParamsSchema,
   getUserScoresParamsSchema
 } from '../schemas/legacy';
-import { Mod } from '../types';
+import { formatUrlParams, getEnumMods, getModsEnum, map } from '../utils';
 import {
+  GenresEnum,
+  LanguagesEnum,
+  ModesEnum,
+  ScoringTypeEnum,
+  StatusEnum,
+  TeamColorEnum,
+  TeamTypeEnum
+} from '../utils/enums';
+import { z } from 'zod';
+import type polyfillFetch from 'node-fetch';
+import type { Mod } from '../types';
+import type {
   LegacyBeatmap,
   LegacyBeatmapScore,
   GetBeatmapScoresParams,
@@ -23,7 +35,7 @@ import {
   LegacyUserBestScore,
   LegacyUserRecentScore
 } from '../types/legacy';
-import {
+import type {
   GetBeatmapScoresValidParams,
   GetBeatmapsValidParams,
   GetUserScoresValidParams,
@@ -37,42 +49,36 @@ import {
   ResponseUserRecentScore,
   GetReplayValidParams
 } from '../types/legacy/not-exported';
-import { formatUrlParams, getEnumMods, getModsEnum, map } from '../utils';
-import {
-  GenresEnum,
-  LanguagesEnum,
-  ModesEnum,
-  ScoringTypeEnum,
-  StatusEnum,
-  TeamColorEnum,
-  TeamTypeEnum
-} from '../utils/enums';
-import { z } from 'zod';
-import axios, { AxiosResponse } from 'axios';
 
 /**
  * Class that wraps all endpoints of the legacy API (API v1)
  */
 export default class LegacyClient {
   private apiKey: string;
+  private fetch: typeof fetch | typeof polyfillFetch;
 
   /**
    * @param apiKey API key
+   * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(apiKey: string) {
+  constructor(apiKey: string, options?: {
+    polyfillFetch?: typeof fetch | typeof polyfillFetch;
+  }) {
+    if (typeof fetch === 'undefined' && !options?.polyfillFetch) {
+      // TODO: Throw error
+    }
+
     this.apiKey = z.string().parse(apiKey);
+    this.fetch = options?.polyfillFetch || fetch;
   }
 
-  private async fetch<T>(endpoint: string, urlParams: Record<string, unknown>): Promise<T> {
-    let params: string = formatUrlParams(urlParams);
-    let url: string = `https://osu.ppy.sh/api/${endpoint}?k=${this.apiKey}${params}`;
+  private async request<T>(endpoint: string, urlParams: Record<string, unknown>): Promise<T> {
+    let params = formatUrlParams(urlParams);
+    let url = `https://osu.ppy.sh/api/${endpoint}?k=${this.apiKey}${params}`;
 
-    let resp: AxiosResponse = await axios.get(url, {
-      headers: {
-        'Accept-encoding': '*'
-      }
-    });
-    let data: T = resp.data;
+    // TODO: Better error handling
+    let resp = await this.fetch(url);
+    let data = await resp.json() as T;
 
     return data;
   }
@@ -95,7 +101,8 @@ export default class LegacyClient {
       mods: getModsEnum(diffIncreaseMods)
     };
 
-    let beatmaps: ResponseBeatmap[] = await this.fetch('get_beatmaps', validParams);
+    let beatmaps = await this.request<ResponseBeatmap[]>('get_beatmaps', validParams);
+
     return beatmaps.map((beatmap) => {
       return map({
         ...beatmap,
@@ -123,7 +130,7 @@ export default class LegacyClient {
       m: parsed.m && ModesEnum[parsed.m]
     };
 
-    let users: ResponseUser[] = await this.fetch('get_user', validParams);
+    let users = await this.request<ResponseUser[]>('get_user', validParams);
     return users.length > 0 ? map(users[0]) : null;
   }
 
@@ -138,7 +145,8 @@ export default class LegacyClient {
       m: parsed.m && ModesEnum[parsed.m]
     };
 
-    let scores: ResponseBeatmapScore[] = await this.fetch('get_scores', validParams);
+    let scores = await this.request<ResponseBeatmapScore[]>('get_scores', validParams);
+
     return scores.map((score) => {
       return map({
         ...score,
@@ -159,10 +167,7 @@ export default class LegacyClient {
       m: parsed.m && ModesEnum[parsed.m]
     };
 
-    let scores: (ResponseUserBestScore | ResponseUserRecentScore)[] = await this.fetch(
-      `get_user_${type}`,
-      validParams
-    );
+    let scores = await this.request<(ResponseUserBestScore | ResponseUserRecentScore)[]>(`get_user_${type}`, validParams);
 
     if (type === 'best') {
       let userScores = scores as ResponseUserBestScore[];
@@ -212,7 +217,7 @@ export default class LegacyClient {
     params: GetMultiplayerLobbyParams
   ): Promise<LegacyMultiplayerLobby | null> {
     let parsed = getMultiplayerLobbyParamsSchema.parse(params);
-    let mpLobby: ResponseMultiplayerLobby = await this.fetch('get_match', parsed);
+    let mpLobby = await this.request<ResponseMultiplayerLobby>('get_match', parsed);
 
     if (!mpLobby.match) return null;
 
@@ -263,7 +268,7 @@ export default class LegacyClient {
       mods: getModsEnum(parsed.mods ?? [])
     };
 
-    let replay: Replay = await this.fetch('get_replay', validParams);
+    let replay = await this.request<Replay>('get_replay', validParams);
     return replay.error ? null : replay.content;
   }
 }
