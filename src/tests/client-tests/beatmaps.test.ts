@@ -25,7 +25,7 @@ describe('Test beatmap related endpoints', async () => {
       }
     });
 
-    expect(beatmap).toBeUndefined();
+    expect(beatmap).toBeNull();
   });
   await sleep(ms);
 

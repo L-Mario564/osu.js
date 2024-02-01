@@ -27,6 +27,6 @@ describe('Test changelog related endpoints', async () => {
 
   it('Looks up a non-existant changelog build', async () => {
     const build = await changelog.lookupChangelogBuild('skjdaljdwjadlsa');
-    expect(build).toBeUndefined();
+    expect(build).toBeNull();
   });
 });
