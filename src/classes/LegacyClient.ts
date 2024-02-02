@@ -1,4 +1,5 @@
-import { formatUrlParams, getEnumMods, getModsEnum, map } from '../utils';
+import { formatUrlParams, map } from '../utils';
+import { getEnumMods, getModsEnum } from '../utils/exported';
 import {
   GenresEnum,
   LanguagesEnum,
@@ -138,7 +139,7 @@ export default class LegacyClient {
       return map({
         ...score,
         replay_available: score.replay_available === '1',
-        enabled_mods: getEnumMods(score.enabled_mods),
+        enabled_mods: getEnumMods(Number(score.enabled_mods)),
         perfect: score.perfect === '1'
       });
     });
@@ -162,9 +163,9 @@ export default class LegacyClient {
         return map({
           ...score,
           perfect: score.perfect === '1',
-          enabled_mods: getEnumMods(score.enabled_mods),
+          enabled_mods: getEnumMods(Number(score.enabled_mods)),
           replay_available: score.replay_available === '1'
-        });
+        }) as any;
       });
     } else {
       const userScores = scores as ResponseUserRecentScore[];
@@ -173,8 +174,8 @@ export default class LegacyClient {
         return map({
           ...score,
           perfect: score.perfect === '1',
-          enabled_mods: getEnumMods(score.enabled_mods)
-        });
+          enabled_mods: getEnumMods(Number(score.enabled_mods))
+        }) as any;
       });
     }
   }
@@ -214,7 +215,7 @@ export default class LegacyClient {
           play_mode: ModesEnum[Number(game.play_mode)],
           scoring_type: ScoringTypeEnum[Number(game.scoring_type)],
           team_type: TeamTypeEnum[Number(game.team_type)],
-          mods: getEnumMods(game.mods),
+          mods: getEnumMods(Number(game.mods)),
           scores: game.scores.map((score) => {
             delete score.rank;
 
@@ -223,7 +224,7 @@ export default class LegacyClient {
               team: score.team === '0' ? null : TeamColorEnum[Number(score.team)],
               perfect: score.perfect === '1',
               pass: score.pass === '1',
-              enabled_mods: getEnumMods(score.enabled_mods)
+              enabled_mods: getEnumMods(score.enabled_mods ? Number(score.enabled_mods) : 0)
             };
           })
         };

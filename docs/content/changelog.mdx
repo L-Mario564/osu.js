@@ -7,7 +7,11 @@
 - Remove input validations.
 - `Client.beatmaps.lookupBeatmap` and `Client.changelog.lookupChangelogBuild` methods now return `null` if nothing is found on lookup. Prior to this, these methods would return `undefined` when there were no results.
 - Converted many types inferred froms schemas into interfaces.
-- Other minor changes to some interfaces and types. 
+- Other minor changes to some interfaces and types.
+- New utility function: `getModsEnum`. It converts an array of mods into its numerical representation.
+- New utility function: `getEnumMods`. It converts a numerical representation of a mod or mod combination into an array of mods represented as strings.
+- Introduce error handling via the `OsuJSGeneralError` and `OsuJSUnexpectedResponse` classes and `OsuJSError` type.
+- New utility function: `isOsuJSError`. It determines if a value is an error thrown by osu.js.
 
 ## 1.4.0
 

@@ -1,10 +1,12 @@
+import type { OsuJSGeneralError, OsuJSUnexpectedResponse } from '../classes/Errors';
 import type { ModsEnum, StatusEnum } from '../utils/enums';
 
 /**
  * Timestamp string in ISO 8601 format
- */
+*/
 export type ISOTimestamp = string;
 export type Cursor = string | null;
+export type OsuJSError = OsuJSGeneralError | OsuJSUnexpectedResponse;
 
 export type Mod = keyof typeof ModsEnum;
 export type RankStatus = keyof typeof StatusEnum;

@@ -16,6 +16,7 @@
     "lint": "npx eslint . && npx tsc --noEmit",
     "test:legacy": "vitest run src/tests/legacyClient.test.ts",
     "test:auth": "node --experimental-specifier-resolution=node --loader ts-node/esm src/tests/authTestServer.ts",
+    "test:utils": "vitest run --dir src/tests/utils",
     "test:current": "vitest run --dir src/tests/client-tests",
     "test:client": "vitest run src/tests/client-tests/client.test.ts",
     "test:users": "vitest run src/tests/client-tests/users.test.ts",
