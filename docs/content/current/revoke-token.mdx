@@ -1,0 +1,30 @@
+---
+title: Revoke Token
+ref: miscellaneous
+---
+
+# Revoke Token
+
+The `revokeToken` method on a `Client` instance makes a `DELETE` request to the `oauth/tokens/current` endpoint and doesn't return anything.
+
+`Auth.revokeToken` has the same functionality.
+
+### Example
+
+```ts
+// Revoke the current access token
+await api.revokeToken();
+```
+
+### Returns
+
+```ts
+Promise<void>;
+```
+
+### Possible Exceptions
+
+See the [error handling documentation](/extras/error-handling) for more information.
+
+- `network_error`
+- `unexpected_response`

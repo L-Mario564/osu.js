@@ -1,0 +1,21 @@
+---
+title: Mod-Enum Conversion
+---
+
+# Mod-Enum Conversion
+
+The `getModsEnum` and `getEnumMods` allows you to convert an array of mods into its numerical representation and vice-versa respectively.
+
+## Example
+
+```ts
+import { getModsEnum, getEnumMods } from 'osu-web.js';
+
+let mods = getEnumMods(0); // Output: []
+mods = getEnumMods(24); // Output: ['HD', 'HR']
+mods = getEnumMods(88); // Output: ['HD', 'HR', 'DT']
+
+let enumValue = getModsEnum([]); // Output: 0
+enumValue = getModsEnum(['HR', 'SD']); // Output: 48
+enumValue = getModsEnum(['HR', 'SD', 'FL']); // Output: 1072
+```

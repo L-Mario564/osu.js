@@ -1,0 +1,64 @@
+---
+title: Error Handling
+---
+
+# Error Handling
+
+To handle errors thrown while using the library, osu.js provides the `OsuJSGeneralError` and `OsuJSUnexpectedResponseError` classes and a type of `OsuJSError`. The classes are thrown as exceptions while type is simple a union of both of these classes.
+
+```ts
+class OsuJSGeneralError extends Error { ... }
+class OsuJSUnexpectedResponseError extends Error { ... }
+
+type OsuJSError = OsuJSGeneralError | OsuJSUnexpectedResponseError;
+```
+
+To determine whether an error comes from osu.js, use the `isOsuJSError` utility function inside your catch block.
+
+### Example
+
+```ts
+import { isOsuJSError } from 'osu-web.js';
+
+try {
+  const user = await api.users.getUser(14544646, {
+    urlParams: {
+      mode: 'osu'
+    }
+  });
+} catch (err: any) {
+  if (isOsuJSError(err)) {
+    // `err` is now of type `OsuJSError`
+
+    if (err.type === 'invalid_json_syntax') {
+      // `err` is now of type `OsuJSGeneralError`
+      console.error('Error while parsing response as JSON');
+    } else if (err.type === 'network_error') {
+      // `err` is now of type `OsuJSGeneralError`
+      console.error('Network error');
+    } else if (err.type === 'unexpected_response') {
+      // `err` is now of type `OsuJSUnexpectedResponseError`
+
+      /**
+       * If using the fetch polyfill instead of the native fetch API, write:
+       * `err.response(true);`
+       * "true" means that it will return the Response type from "node-fetch" instead of the native Response
+       */
+      const response = err.response(); // Type: `Response`
+
+      console.error('Unexpected response');
+      console.log(`Details: ${response.status} - ${response.statusText}`);
+      consoe.log('JSON: ', await response.json());
+    }
+  }
+}
+```
+
+## Error Types
+
+| Type                  | Upon                 | Message                                                                                           |
+| --------------------- | -------------------- | ------------------------------------------------------------------------------------------------- |
+| `undefined_fetch`     | Initializing clients | Global fetch is undefined. Please provide a polyfill for the fetch API by installing "node-fetch" |
+| `invalid_json_syntax` | Requesting API       | A syntax error occurred while trying to parse the response as JSON. The API returned invalid JSON |
+| `network_error`       | Requesting API       | A network error occurred while making a request to the API                                        |
+| `unexpected_response` | Requesting API       | Received an unexpected response from the API                                                      |
