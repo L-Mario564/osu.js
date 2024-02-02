@@ -8,7 +8,7 @@ export default class Base {
   protected fetch: typeof fetch | typeof polyfillFetch;
 
   constructor(clientId: number, clientSecret: string, redirectUri: string, options?: {
-    polyfillFetch?: typeof fetch | typeof polyfillFetch;
+    polyfillFetch?: typeof polyfillFetch;
   }) {
     if (typeof fetch === 'undefined' && !options?.polyfillFetch) {
       // TODO: Throw error

@@ -7,7 +7,7 @@ export default class Base {
   private fetch: typeof fetch | typeof polyfillFetch;
 
   constructor(accessToken: string, options?: {
-    polyfillFetch?: typeof fetch | typeof polyfillFetch;
+    polyfillFetch?: typeof polyfillFetch;
   }) {
     if (typeof fetch === 'undefined' && !options?.polyfillFetch) {
       // TODO: Throw error
