@@ -4,7 +4,7 @@ title: Mod-Enum Conversion
 
 # Mod-Enum Conversion
 
-The `getModsEnum` and `getEnumMods` allows you to convert an array of mods into its numerical representation and vice-versa respectively.
+The `getModsEnum` and `getEnumMods` allows you to convert an array of mods into its numerical representation and vice-versa respectively. These functions are expected to work only for mods within [this enum](https://github.com/ppy/osu-api/wiki#mods).
 
 ## Example
 
@@ -18,4 +18,5 @@ mods = getEnumMods(88); // Output: ['HD', 'HR', 'DT']
 let enumValue = getModsEnum([]); // Output: 0
 enumValue = getModsEnum(['HR', 'SD']); // Output: 48
 enumValue = getModsEnum(['HR', 'SD', 'FL']); // Output: 1072
+enumValue = getModsEnum(['DC']); // Output: 0, because DC (Daycore) is not present in the enum mentioned above
 ```

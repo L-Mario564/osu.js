@@ -11,4 +11,6 @@ describe('Test mod-enum conversion', () => {
   it('(Enum -> Mod) 1 mod', () => expect(getModsEnum(['HR'])).toBe(16));
   it('(Enum -> Mod) 2 mods', () => expect(getModsEnum(['HR', 'SD'])).toBe(48));
   it('(Enum -> Mod) 3 mods', () => expect(getModsEnum(['HR', 'SD', 'FL'])).toBe(1072));
+  it('(Enum -> Mod) Non-legacy mod', () => expect(getModsEnum(['DC'])).toBe(0));
+  it('(Enum -> Mod) 2 non-legacy mod', () => expect(getModsEnum(['DC', '10K'])).toBe(0));
 });

@@ -11,7 +11,7 @@ export type ISOTimestamp = string;
 export type OsuJSError = OsuJSGeneralError | OsuJSUnexpectedResponseError;
 export type Cursor = string | null;
 
-export type Mod = keyof typeof ModsEnum;
+export type Mod = (keyof typeof ModsEnum) | 'DC' | 'BL' | 'ST' | 'AC' | 'DA' | 'CL' | 'AL' | 'SG' | 'TR' | 'WG' | 'SI' | 'GR' | 'DF' | 'WU' | 'WD' | 'TC' | 'BR' | 'AD' | 'MU' | 'NS' | 'MG' | 'RP' | 'AS' | 'FR' | 'BU' | 'SY' | 'DP' | 'SW' | 'FF' | 'DS' | 'IN' | 'CS' | 'HO' | '9K' | '10K';
 export type RankStatus = keyof typeof StatusEnum;
 
 export type GameMode = 'fruits' | 'mania' | 'osu' | 'taiko';
