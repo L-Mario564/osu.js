@@ -13,7 +13,7 @@ export { default as Ranking } from './classes/Ranking';
 export { default as Users } from './classes/Users';
 export { default as Wiki } from './classes/Wiki';
 export { default as AuthCodeGrant } from './classes/auth/AuthCodeGrant';
-export * from './classes/Errors';
+export { OsuJSGeneralError, OsuJSUnexpectedResponseError } from './classes/Errors';
 export * from './types/options';
 export * from './types';
 export * from './types/legacy';

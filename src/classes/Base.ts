@@ -1,5 +1,7 @@
 import { formatUrlParams } from '../utils';
+import { OsuJSGeneralError, OsuJSUnexpectedResponseError } from './Errors';
 import type polyfillFetch from 'node-fetch';
+import type { Response as PolyfillResponse } from 'node-fetch';
 import type { Options } from '../types/options';
 
 export default class Base {
@@ -10,7 +12,7 @@ export default class Base {
     polyfillFetch?: typeof polyfillFetch;
   }) {
     if (typeof fetch === 'undefined' && !options?.polyfillFetch) {
-      // TODO: Throw error
+      throw new OsuJSGeneralError('undefined_fetch');
     }
 
     this.accessToken = accessToken;
@@ -29,21 +31,41 @@ export default class Base {
       endpoint += query.replace('&', '?');
     }
 
-    // TODO: Better error handling
-    const resp = await this.fetch(`https://osu.ppy.sh/api/v2/${endpoint}`, {
-      method,
-      body: options?.body ? JSON.stringify(options.body) : undefined,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.accessToken}`
+    let resp: Response | PolyfillResponse = new Response();
+
+    try {
+      resp = await this.fetch(`https://osu.ppy.sh/api/v2/${endpoint}`, {
+        method,
+        body: options?.body ? JSON.stringify(options.body) : undefined,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.accessToken}`
+        }
+      });
+    } catch(err) {
+      if (err instanceof TypeError) {
+        throw new OsuJSGeneralError('network_error');
       }
-    });
+    }
 
     if (resp.status === 404 && options?.returnNullOn404) {
       return null as T;
     }
 
-    const data = await resp.json() as T;
-    return data;
+    if (!resp.ok) {
+      throw new OsuJSUnexpectedResponseError(resp);
+    }
+
+    let data: T | undefined;
+
+    try {
+      data = await resp.json() as T;
+    } catch(err) {
+      if (err instanceof SyntaxError) {
+        throw new OsuJSGeneralError('invalid_json_syntax');
+      }
+    }
+
+    return data as T;
   }
 }

@@ -1,6 +1,8 @@
 import AuthCodeGrant from './AuthCodeGrant';
 import Base from './Base';
+import { OsuJSGeneralError, OsuJSUnexpectedResponseError } from '../Errors';
 import type polyfillFetch from 'node-fetch';
+import type { Response as PolyfillResponse } from 'node-fetch';
 import type { GuestToken, Scope } from '../../types';
 
 /**
@@ -31,22 +33,42 @@ export default class Auth extends Base {
    * @returns An API token (with guest permissions)
    */
   public async clientCredentialsGrant(): Promise<GuestToken> {
-    // TODO: Better error handling
-    const resp = await this.fetch(`${this.oauthUrl}token`, {
-      method: 'POST',
-      body: JSON.stringify({
-        client_id: this.clientId,
-        client_secret: this.clientSecret,
-        grant_type: 'client_credentials',
-        scope: 'public'
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    let resp: Response | PolyfillResponse = new Response();
 
-    const token = await resp.json() as GuestToken;
-    return token;
+    try {
+      resp = await this.fetch(`${this.oauthUrl}token`, {
+        method: 'POST',
+        body: JSON.stringify({
+          client_id: this.clientId,
+          client_secret: this.clientSecret,
+          grant_type: 'client_credentials',
+          scope: 'public'
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    } catch(err) {
+      if (err instanceof TypeError) {
+        throw new OsuJSGeneralError('network_error');
+      }
+    }
+
+    if (!resp.ok) {
+      throw new OsuJSUnexpectedResponseError(resp);
+    }
+
+    let token: GuestToken | undefined;
+
+    try {
+      token = await resp.json() as GuestToken;
+    } catch(err) {
+      if (err instanceof SyntaxError) {
+        throw new OsuJSGeneralError('invalid_json_syntax');
+      }
+    }
+
+    return token as GuestToken;
   }
 
   /**
@@ -55,12 +77,17 @@ export default class Auth extends Base {
    */
   // TODO: Clone to Client class
   public async revokeToken(accessToken: string) {
-    // TODO: Better error handling
-    await this.fetch('https://osu.ppy.sh/api/v2/oauth/tokens/current', {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${accessToken}`
+    try {
+      await this.fetch('https://osu.ppy.sh/api/v2/oauth/tokens/current', {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
+    } catch(err) {
+      if (err instanceof TypeError) {
+        throw new OsuJSGeneralError('network_error');
       }
-    });
+    }
   }
 }

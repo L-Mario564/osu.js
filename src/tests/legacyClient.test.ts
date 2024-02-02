@@ -84,7 +84,7 @@ describe('Test legacy client', async () => {
     expect(replay).toBeNull();
   });
 
-  it('Gets a user (polyfill fetch API)', async () => {
+  it('Gets a user (polyfill fetch API test)', async () => {
     const user = await withPolyfillFetch.getUser({ u: 14544646 });
     expect(user).toBeDefined();
   });

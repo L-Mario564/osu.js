@@ -1,4 +1,4 @@
-import { OsuJSGeneralError, OsuJSUnexpectedResponse, isOsuJSError } from '../..';
+import { OsuJSGeneralError, OsuJSUnexpectedResponseError, isOsuJSError } from '../..';
 import { describe, expect, it } from 'vitest';
 
 describe('Test error handling', () => {
@@ -6,7 +6,7 @@ describe('Test error handling', () => {
     let caughtErr: OsuJSGeneralError | undefined;
 
     try {
-      throw new OsuJSGeneralError('invalid_json_syntax', 'An error occurred while trying to parse the response as JSON');
+      throw new OsuJSGeneralError('invalid_json_syntax');
     } catch(err) {
       if (isOsuJSError(err) && err.type !== 'unexpected_response') {
         caughtErr = err;
@@ -20,7 +20,7 @@ describe('Test error handling', () => {
     let caughtErr: OsuJSGeneralError | undefined;
 
     try {
-      throw new OsuJSGeneralError('network_error', 'A network error occurred while trying to request the API');
+      throw new OsuJSGeneralError('network_error');
     } catch(err) {
       if (isOsuJSError(err) && err.type !== 'unexpected_response') {
         caughtErr = err;
@@ -30,8 +30,22 @@ describe('Test error handling', () => {
     expect(caughtErr?.type).toBe('network_error');
   });
 
-  it('Throws an "network_error" error', () => {
-    let caughtErr: OsuJSUnexpectedResponse | undefined;
+  it('Throws an "undefined_fetch" error', () => {
+    let caughtErr: OsuJSGeneralError | undefined;
+
+    try {
+      throw new OsuJSGeneralError('undefined_fetch');
+    } catch(err) {
+      if (isOsuJSError(err) && err.type !== 'unexpected_response') {
+        caughtErr = err;
+      }
+    }
+
+    expect(caughtErr?.type).toBe('undefined_fetch');
+  });
+
+  it('Throws an "unexpected_response" error', () => {
+    let caughtErr: OsuJSUnexpectedResponseError | undefined;
     let resp: Response | undefined;
 
     try {
@@ -40,7 +54,7 @@ describe('Test error handling', () => {
         statusText: 'Not Found'
       });
 
-      throw new OsuJSUnexpectedResponse('Received an unexpected response from the API', resp);
+      throw new OsuJSUnexpectedResponseError(resp);
     } catch(err) {
       if (isOsuJSError(err) && err.type === 'unexpected_response') {
         caughtErr = err;

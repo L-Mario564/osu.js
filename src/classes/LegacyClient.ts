@@ -9,7 +9,9 @@ import {
   TeamColorEnum,
   TeamTypeEnum
 } from '../utils/enums';
+import { OsuJSGeneralError, OsuJSUnexpectedResponseError } from './Errors';
 import type polyfillFetch from 'node-fetch';
+import type { Response as PolyfillResponse } from 'node-fetch';
 import type { Mod } from '../types';
 import type {
   LegacyBeatmap,
@@ -56,7 +58,7 @@ export default class LegacyClient {
     polyfillFetch?: typeof polyfillFetch;
   }) {
     if (typeof fetch === 'undefined' && !options?.polyfillFetch) {
-      // TODO: Throw error
+      throw new OsuJSGeneralError('undefined_fetch');
     }
 
     this.apiKey = apiKey;
@@ -67,11 +69,35 @@ export default class LegacyClient {
     const params = formatUrlParams(urlParams);
     const url = `https://osu.ppy.sh/api/${endpoint}?k=${this.apiKey}${params}`;
 
-    // TODO: Better error handling
-    const resp = await this.fetch(url);
-    const data = await resp.json() as T;
+    let resp: Response | PolyfillResponse = new Response();
 
-    return data;
+    try {
+      resp = await this.fetch(url, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    } catch(err) {
+      if (err instanceof TypeError) {
+        throw new OsuJSGeneralError('network_error');
+      }
+    }
+
+    if (!resp.ok) {
+      throw new OsuJSUnexpectedResponseError(resp);
+    }
+
+    let data: T | undefined;
+
+    try {
+      data = await resp.json() as T;
+    } catch(err) {
+      if (err instanceof SyntaxError) {
+        throw new OsuJSGeneralError('invalid_json_syntax');
+      }
+    }
+
+    return data as T;
   }
 
   /**

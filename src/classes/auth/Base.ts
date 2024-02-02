@@ -1,3 +1,4 @@
+import { OsuJSGeneralError } from '../Errors';
 import type polyfillFetch from 'node-fetch';
 
 export default class Base {
@@ -11,7 +12,7 @@ export default class Base {
     polyfillFetch?: typeof polyfillFetch;
   }) {
     if (typeof fetch === 'undefined' && !options?.polyfillFetch) {
-      // TODO: Throw error
+      throw new OsuJSGeneralError('undefined_fetch');
     }
 
     this.clientId = clientId;

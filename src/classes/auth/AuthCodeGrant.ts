@@ -1,5 +1,7 @@
 import Base from './Base';
+import { OsuJSGeneralError, OsuJSUnexpectedResponseError } from '../Errors';
 import type polyfillFetch from 'node-fetch';
+import type { Response as PolyfillResponse } from 'node-fetch';
 import type { Scope, Token } from '../../types';
 
 /**
@@ -28,23 +30,43 @@ export default class AuthCodeGrant extends Base {
    * @returns An API token
    */
   public async requestToken(code: string): Promise<Token> {
-    // TODO: Better error handling
-    const resp = await this.fetch(`${this.oauthUrl}token`, {
-      method: 'POST',
-      body: JSON.stringify({
-        client_id: this.clientId,
-        client_secret: this.clientSecret,
-        code,
-        grant_type: 'authorization_code',
-        redirect_uri: this.redirectUri
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    let resp: Response | PolyfillResponse = new Response();
 
-    const token = await resp.json() as Token;
-    return token;
+    try {
+      resp = await this.fetch(`${this.oauthUrl}token`, {
+        method: 'POST',
+        body: JSON.stringify({
+          client_id: this.clientId,
+          client_secret: this.clientSecret,
+          code,
+          grant_type: 'authorization_code',
+          redirect_uri: this.redirectUri
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    } catch(err) {
+      if (err instanceof TypeError) {
+        throw new OsuJSGeneralError('network_error');
+      }
+    }
+
+    if (!resp.ok) {
+      throw new OsuJSUnexpectedResponseError(resp);
+    }
+
+    let token: Token | undefined;
+
+    try {
+      token = await resp.json() as Token;
+    } catch(err) {
+      if (err instanceof SyntaxError) {
+        throw new OsuJSGeneralError('invalid_json_syntax');
+      }
+    }
+
+    return token as Token;
   }
 
   /**
@@ -53,22 +75,42 @@ export default class AuthCodeGrant extends Base {
    * @returns An API token
    */
   public async refreshToken(refreshToken: string): Promise<Token> {
-    // TODO: Better error handling
-    const resp = await this.fetch(`${this.oauthUrl}token`, {
-      method: 'POST',
-      body: JSON.stringify({
-        client_id: this.clientId,
-        client_secret: this.clientSecret,
-        refresh_token: refreshToken,
-        grant_type: 'refresh_token',
-        scope: this.scopes
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    let resp: Response | PolyfillResponse = new Response();
 
-    const token = await resp.json() as Token;
-    return token;
+    try {
+      resp = await this.fetch(`${this.oauthUrl}token`, {
+        method: 'POST',
+        body: JSON.stringify({
+          client_id: this.clientId,
+          client_secret: this.clientSecret,
+          refresh_token: refreshToken,
+          grant_type: 'refresh_token',
+          scope: this.scopes
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    } catch(err) {
+      if (err instanceof TypeError) {
+        throw new OsuJSGeneralError('network_error');
+      }
+    }
+
+    if (!resp.ok) {
+      throw new OsuJSUnexpectedResponseError(resp);
+    }
+
+    let token: Token | undefined;
+
+    try {
+      token = await resp.json() as Token;
+    } catch(err) {
+      if (err instanceof SyntaxError) {
+        throw new OsuJSGeneralError('invalid_json_syntax');
+      }
+    }
+
+    return token as Token;
   }
 }
