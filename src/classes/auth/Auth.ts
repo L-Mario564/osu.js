@@ -75,7 +75,6 @@ export default class Auth extends Base {
    * Revokes a token
    * @param accessToken Access toke to revoke
    */
-  // TODO: Clone to Client class
   public async revokeToken(accessToken: string) {
     try {
       await this.fetch('https://osu.ppy.sh/api/v2/oauth/tokens/current', {

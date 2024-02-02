@@ -61,6 +61,13 @@ export default class Client extends Base {
   }
 
   /**
+   * Makes a DELETE request to the `/oauth/tokens/current` endpoint. Revokes the access token
+   */
+  public async revokeToken() {
+    return await this.request('oauth/tokens/current', 'DELETE');
+  }
+
+  /**
    * Make a GET request to an undocumented endpoint
    * @param endpoint The endpoint to make a request to
    */
