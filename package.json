@@ -13,7 +13,7 @@
   "scripts": {
     "build": "npx tsup src/index.ts --format cjs,esm --dts && node scripts/rename.js",
     "fmt": "npx prettier --write . && npx prettier --write ./docs/src/**/*.astro",
-    "lint": "npx eslint . && npx tsc --noEmit",
+    "lint": "npx ts-prune --ignore \"(src\\\\index.ts|used in module)\" && npx eslint . && npx tsc --noEmit",
     "test:legacy": "vitest run src/tests/legacyClient.test.ts",
     "test:auth": "node --experimental-specifier-resolution=node --loader ts-node/esm src/tests/authTestServer.ts",
     "test:utils": "vitest run --dir src/tests/utils",
@@ -49,6 +49,7 @@
     "prettier": "^3.0.0",
     "prettier-plugin-astro": "^0.11.0",
     "ts-node": "^10.9.1",
+    "ts-prune": "^0.10.3",
     "tsup": "^6.6.3",
     "typescript": "^4.9.4",
     "vitest": "^1.2.2"

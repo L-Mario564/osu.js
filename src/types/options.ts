@@ -38,13 +38,6 @@ export interface GetBeatmapsOptions {
   };
 }
 
-export interface GetBeatmapOptions {
-  query?: {
-    /** A beatmap ID */
-    id?: number;
-  };
-}
-
 export interface GetBeatmapAttributesOptions {
   body?: {
     /** Mods to apply (can be either the bitwise representation or an array of acronyms) */
