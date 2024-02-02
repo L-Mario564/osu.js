@@ -24,6 +24,7 @@ export default class Base {
     method: 'POST' | 'GET' | 'PATCH' | 'DELETE',
     options?: Options & {
       returnNullOn404?: boolean;
+      dontParseResp?: boolean;
     }
   ): Promise<T> {
     if (options?.query) {
@@ -54,6 +55,10 @@ export default class Base {
 
     if (!resp.ok) {
       throw new OsuJSUnexpectedResponseError(resp);
+    }
+
+    if (options?.dontParseResp) {
+      return undefined as T;
     }
 
     let data: T | undefined;
