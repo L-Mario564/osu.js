@@ -7,7 +7,7 @@ import type { GuestToken, Scope } from '../../types';
 
 /**
  * Class that wraps all OAuth related endpoints
- * 
+ *
  * Documentation: {@link https://osujs.mario564.com/oauth}
  */
 export default class Auth extends Base {
@@ -17,15 +17,20 @@ export default class Auth extends Base {
    * @param redirectUri OAuth redirect URI
    * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(clientId: number, clientSecret: string, redirectUri: string, options?: {
-    polyfillFetch?: typeof polyfillFetch;
-  }) {
+  constructor(
+    clientId: number,
+    clientSecret: string,
+    redirectUri: string,
+    options?: {
+      polyfillFetch?: typeof polyfillFetch;
+    }
+  ) {
     super(clientId, clientSecret, redirectUri, options);
   }
 
   /**
    * @param scopes An array of scopes
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/oauth/authorization-code-grant}
    */
   public authorizationCodeGrant(scopes: Scope[] = ['identify']): AuthCodeGrant {
@@ -34,7 +39,7 @@ export default class Auth extends Base {
 
   /**
    * Gets a token
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/oauth/client-credentials-grant}
    * @returns An API token (with guest permissions)
    */
@@ -54,7 +59,7 @@ export default class Auth extends Base {
           'Content-Type': 'application/json'
         }
       });
-    } catch(err) {
+    } catch (err) {
       if (err instanceof TypeError) {
         throw new OsuJSGeneralError('network_error');
       }
@@ -67,8 +72,8 @@ export default class Auth extends Base {
     let token: GuestToken | undefined;
 
     try {
-      token = await resp.json() as GuestToken;
-    } catch(err) {
+      token = (await resp.json()) as GuestToken;
+    } catch (err) {
       if (err instanceof SyntaxError) {
         throw new OsuJSGeneralError('invalid_json_syntax');
       }
@@ -79,7 +84,7 @@ export default class Auth extends Base {
 
   /**
    * Revokes a token
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/oauth/revoke-token}
    * @param accessToken Access token to revoke
    */
@@ -91,7 +96,7 @@ export default class Auth extends Base {
           Authorization: `Bearer ${accessToken}`
         }
       });
-    } catch(err) {
+    } catch (err) {
       if (err instanceof TypeError) {
         throw new OsuJSGeneralError('network_error');
       }

@@ -7,7 +7,7 @@ describe('Test error handling', () => {
 
     try {
       throw new OsuJSGeneralError('invalid_json_syntax');
-    } catch(err) {
+    } catch (err) {
       if (isOsuJSError(err) && err.type !== 'unexpected_response') {
         caughtErr = err;
       }
@@ -21,7 +21,7 @@ describe('Test error handling', () => {
 
     try {
       throw new OsuJSGeneralError('network_error');
-    } catch(err) {
+    } catch (err) {
       if (isOsuJSError(err) && err.type !== 'unexpected_response') {
         caughtErr = err;
       }
@@ -35,7 +35,7 @@ describe('Test error handling', () => {
 
     try {
       throw new OsuJSGeneralError('undefined_fetch');
-    } catch(err) {
+    } catch (err) {
       if (isOsuJSError(err) && err.type !== 'unexpected_response') {
         caughtErr = err;
       }
@@ -55,7 +55,7 @@ describe('Test error handling', () => {
       });
 
       throw new OsuJSUnexpectedResponseError(resp);
-    } catch(err) {
+    } catch (err) {
       if (isOsuJSError(err) && err.type === 'unexpected_response') {
         caughtErr = err;
         resp = err.response();

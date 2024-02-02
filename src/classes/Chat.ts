@@ -15,15 +15,18 @@ export default class Chat extends Base {
    * @param accessToken OAuth access token
    * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(accessToken: string, options?: {
-    polyfillFetch?: typeof polyfillFetch;
-  }) {
+  constructor(
+    accessToken: string,
+    options?: {
+      polyfillFetch?: typeof polyfillFetch;
+    }
+  ) {
     super(accessToken, options);
   }
 
   /**
    * Makes a POST request to the `/chat/new` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/create-pm}
    * @returns An object containing the message sent and the channel it was sent to
    */
@@ -36,7 +39,7 @@ export default class Chat extends Base {
 
   /**
    * Makes a POST request to the `/chat/channels` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/create-channel}
    * @param type Channel type to create or rejoin
    * @returns The created or rejoined channel

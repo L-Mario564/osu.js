@@ -11,15 +11,18 @@ export default class Ranking extends Base {
    * @param accessToken OAuth access token
    * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(accessToken: string, options?: {
-    polyfillFetch?: typeof polyfillFetch;
-  }) {
+  constructor(
+    accessToken: string,
+    options?: {
+      polyfillFetch?: typeof polyfillFetch;
+    }
+  ) {
     super(accessToken, options);
   }
 
   /**
    * Makes a GET request to the `/rankings/{mode}/{type}` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/get-ranking}
    * @param mode Ranking gamemode
    * @param type Ranking type
@@ -39,7 +42,7 @@ export default class Ranking extends Base {
 
   /**
    * Makes a GET request to the `/spotights` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/get-spotlights}
    * @returns An array of spotlights
    */

@@ -54,9 +54,12 @@ export default class LegacyClient {
    * @param apiKey API key
    * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(apiKey: string, options?: {
-    polyfillFetch?: typeof polyfillFetch;
-  }) {
+  constructor(
+    apiKey: string,
+    options?: {
+      polyfillFetch?: typeof polyfillFetch;
+    }
+  ) {
     if (typeof fetch === 'undefined' && !options?.polyfillFetch) {
       throw new OsuJSGeneralError('undefined_fetch');
     }
@@ -77,7 +80,7 @@ export default class LegacyClient {
           'Content-Type': 'application/json'
         }
       });
-    } catch(err) {
+    } catch (err) {
       if (err instanceof TypeError) {
         throw new OsuJSGeneralError('network_error');
       }
@@ -90,8 +93,8 @@ export default class LegacyClient {
     let data: T | undefined;
 
     try {
-      data = await resp.json() as T;
-    } catch(err) {
+      data = (await resp.json()) as T;
+    } catch (err) {
       if (err instanceof SyntaxError) {
         throw new OsuJSGeneralError('invalid_json_syntax');
       }
@@ -102,7 +105,7 @@ export default class LegacyClient {
 
   /**
    * Makes a GET request to the `get_beatmaps` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/legacy/get-beatmaps}
    * @returns An array of beatmaps
    */
@@ -139,7 +142,7 @@ export default class LegacyClient {
 
   /**
    * Makes a GET request to the `get_user` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/legacy/get-user}
    * @returns A user if it exists, otherwise null
    */
@@ -155,7 +158,7 @@ export default class LegacyClient {
 
   /**
    * Makes a GET request to the `get_scores` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/legacy/get-beatmap-scores}
    * @returns An array of scores on a beatmap
    */
@@ -186,7 +189,10 @@ export default class LegacyClient {
       m: params.m && ModesEnum[params.m]
     };
 
-    const scores = await this.request<(ResponseUserBestScore | ResponseUserRecentScore)[]>(`get_user_${type}`, validParams);
+    const scores = await this.request<(ResponseUserBestScore | ResponseUserRecentScore)[]>(
+      `get_user_${type}`,
+      validParams
+    );
 
     if (type === 'best') {
       const userScores = scores as ResponseUserBestScore[];
@@ -214,7 +220,7 @@ export default class LegacyClient {
 
   /**
    * Makes a GET request to the `get_user_best` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/legacy/get-user-best-scores}
    * @returns An array of a user's top scores
    */
@@ -224,7 +230,7 @@ export default class LegacyClient {
 
   /**
    * Makes a GET request to the `get_user_recent` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/legacy/get-user-recent-scores}
    * @returns An array of a user's most recent scores in 24 hours
    */
@@ -234,7 +240,7 @@ export default class LegacyClient {
 
   /**
    * Makes a GET request to the `get_match` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/legacy/get-multiplayer-lobby}
    * @returns An object containing the match's information, games and each games' scores if the multiplayer lobby exists, otherwise null
    */
@@ -272,7 +278,7 @@ export default class LegacyClient {
 
   /**
    * Makes a GET request to the `get_replay`
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/legacy/get-replay}
    * @param by Get replay by `score id` or `user & beatmap id`
    * @returns A string containing the Base64 encoded replay if the replay exists, otherwise null

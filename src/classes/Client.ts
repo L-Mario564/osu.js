@@ -16,7 +16,7 @@ import type { SearchResults } from '../types';
 
 /**
  * Class that wraps all endpoints of the current API (API v2)
- * 
+ *
  * Documentation: {@link https://osujs.mario564.com/current}
  */
 export default class Client extends Base {
@@ -36,9 +36,12 @@ export default class Client extends Base {
    * @param accessToken OAuth access token
    * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(accessToken: string, options?: {
-    polyfillFetch?: typeof polyfillFetch;
-  }) {
+  constructor(
+    accessToken: string,
+    options?: {
+      polyfillFetch?: typeof polyfillFetch;
+    }
+  ) {
     super(accessToken, options);
 
     this.beatmaps = new Beatmaps(accessToken, options);
@@ -56,7 +59,7 @@ export default class Client extends Base {
 
   /**
    * Makes a GET request to the `/search` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/search}
    * @returns Users and wiki pages as results
    */
@@ -66,7 +69,7 @@ export default class Client extends Base {
 
   /**
    * Makes a DELETE request to the `/oauth/tokens/current` endpoint. Revokes the access token
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/revoke-token}
    */
   public async revokeToken(): Promise<void> {
@@ -77,7 +80,7 @@ export default class Client extends Base {
 
   /**
    * Make a GET request to an undocumented endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/get-undocumented}
    * @param endpoint The endpoint to make a request to
    */

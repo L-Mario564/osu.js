@@ -11,15 +11,18 @@ export default class Multiplayer extends Base {
    * @param accessToken OAuth access token
    * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(accessToken: string, options?: {
-    polyfillFetch?: typeof polyfillFetch;
-  }) {
+  constructor(
+    accessToken: string,
+    options?: {
+      polyfillFetch?: typeof polyfillFetch;
+    }
+  ) {
     super(accessToken, options);
   }
 
   /**
    * Makes a GET request to the `/rooms/{room}/playlist/{playlist}/scores` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/get-playlist-scores}
    * @param room ID of the room corresponding to the playlist
    * @param playlist ID of the playlist to get scores from

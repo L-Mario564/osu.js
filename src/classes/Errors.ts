@@ -3,9 +3,11 @@ import type { Response as PolyfillResponse } from 'node-fetch';
 export const isOsuJSErrorSymbol = Symbol.for('osu.js:OsuJSError');
 
 const errorMessageMap = {
-  invalid_json_syntax: 'A syntax error occurred while trying to parse the response as JSON. The API returned invalid JSON',
+  invalid_json_syntax:
+    'A syntax error occurred while trying to parse the response as JSON. The API returned invalid JSON',
   network_error: 'A network error occurred while making a request to the API',
-  undefined_fetch: 'Global fetch is undefined. Please provide a polyfill for the fetch API by installing "node-fetch"',
+  undefined_fetch:
+    'Global fetch is undefined. Please provide a polyfill for the fetch API by installing "node-fetch"',
   unexpected_response: 'Received an unexpected response from the API'
 } as const;
 
@@ -41,7 +43,7 @@ export class OsuJSUnexpectedResponseError extends Error {
 
   public response<
     T extends boolean | undefined = undefined
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   >(polyfill?: T): T extends true ? PolyfillResponse : Response {
     return this.response1 as any;
   }

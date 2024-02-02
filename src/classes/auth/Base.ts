@@ -8,9 +8,14 @@ export default class Base {
   protected oauthUrl: string;
   protected fetch: typeof fetch | typeof polyfillFetch;
 
-  constructor(clientId: number, clientSecret: string, redirectUri: string, options?: {
-    polyfillFetch?: typeof polyfillFetch;
-  }) {
+  constructor(
+    clientId: number,
+    clientSecret: string,
+    redirectUri: string,
+    options?: {
+      polyfillFetch?: typeof polyfillFetch;
+    }
+  ) {
     if (typeof fetch === 'undefined' && !options?.polyfillFetch) {
       throw new OsuJSGeneralError('undefined_fetch');
     }

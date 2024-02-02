@@ -1,4 +1,12 @@
-import type { ChangelogStream, CommentSort, CommentableType, DiscussionMessageType, GameMode, Mod, MultiplayerScoresSort } from '.';
+import type {
+  ChangelogStream,
+  CommentSort,
+  CommentableType,
+  DiscussionMessageType,
+  GameMode,
+  Mod,
+  MultiplayerScoresSort
+} from '.';
 
 export interface Options {
   query?: Record<string, any>;
@@ -372,5 +380,5 @@ export interface GetUsersOptions {
   query?: {
     /** An array of user IDs (can only take up to 50 IDs) */
     ids: number[];
-  }
+  };
 }

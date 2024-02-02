@@ -11,15 +11,18 @@ export default class News extends Base {
    * @param accessToken OAuth access token
    * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(accessToken: string, options?: {
-    polyfillFetch?: typeof polyfillFetch;
-  }) {
+  constructor(
+    accessToken: string,
+    options?: {
+      polyfillFetch?: typeof polyfillFetch;
+    }
+  ) {
     super(accessToken, options);
   }
 
   /**
    * Makes a GET request to the `/news` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/get-news-listing}
    * @returns An object containing news posts and other additional data
    */
@@ -29,7 +32,7 @@ export default class News extends Base {
 
   /**
    * Makes a GET request to the `/news/{news}` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/get-news-post}
    * @param news ID or slug of the news post to get
    * @returns A news post

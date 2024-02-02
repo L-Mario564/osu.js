@@ -18,7 +18,7 @@ export type ScoringType = keyof typeof ScoringTypeEnum;
 export type TeamType = keyof typeof TeamTypeEnum;
 export type TeamColor = keyof typeof TeamColorEnum;
 
-type UserType = 'id' | 'string'; 
+type UserType = 'id' | 'string';
 
 export interface GetBeatmapsParams {
   /** Beatmaps ranked or loved since this date (in UTC) */

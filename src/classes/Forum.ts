@@ -17,15 +17,18 @@ export default class Forum extends Base {
    * @param accessToken OAuth access token
    * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(accessToken: string, options?: {
-    polyfillFetch?: typeof polyfillFetch;
-  }) {
+  constructor(
+    accessToken: string,
+    options?: {
+      polyfillFetch?: typeof polyfillFetch;
+    }
+  ) {
     super(accessToken, options);
   }
 
   /**
    * Makes a POST request to the `/forums/topics/{topic}/reply` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/reply-to-topic}
    * @param topic ID of the topic to reply to
    * @returns A forum post
@@ -43,7 +46,7 @@ export default class Forum extends Base {
 
   /**
    * Makes a POST request to the `/forums/topics` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/create-topic}
    * @returns A forum topic and the post attached to it
    */
@@ -77,7 +80,7 @@ export default class Forum extends Base {
 
   /**
    * Makes a GET request to the `/forums/topics/{topic}` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/get-topic}
    * @param topic ID of the topic to get its data and posts from
    * @returns An object containing the cursor string, posts and the topic itself
@@ -97,7 +100,7 @@ export default class Forum extends Base {
 
   /**
    * Makes a PATCH request to the `/forums/topics/{topic}` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/update-topic}
    * @param topic ID of the topic to update
    * @returns A forum topic
@@ -115,13 +118,11 @@ export default class Forum extends Base {
     }
 
     const parsed = {
-      // prettier-ignore
       body: options?.body
-        ?
-        {
-          ...options.body,
-          ...parsedForumTopic
-        }
+        ? {
+            ...options.body,
+            ...parsedForumTopic
+          }
         : undefined
     };
 
@@ -131,7 +132,7 @@ export default class Forum extends Base {
 
   /**
    * Makes a PATCH request to the `/forums/posts/{post}` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/update-post}
    * @param post ID of the post to update
    * @returns A forum post

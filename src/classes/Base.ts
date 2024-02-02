@@ -8,9 +8,12 @@ export default class Base {
   protected accessToken: string;
   private fetch: typeof fetch | typeof polyfillFetch;
 
-  constructor(accessToken: string, options?: {
-    polyfillFetch?: typeof polyfillFetch;
-  }) {
+  constructor(
+    accessToken: string,
+    options?: {
+      polyfillFetch?: typeof polyfillFetch;
+    }
+  ) {
     if (typeof fetch === 'undefined' && !options?.polyfillFetch) {
       throw new OsuJSGeneralError('undefined_fetch');
     }
@@ -43,7 +46,7 @@ export default class Base {
           'Authorization': `Bearer ${this.accessToken}`
         }
       });
-    } catch(err) {
+    } catch (err) {
       if (err instanceof TypeError) {
         throw new OsuJSGeneralError('network_error');
       }
@@ -64,8 +67,8 @@ export default class Base {
     let data: T | undefined;
 
     try {
-      data = await resp.json() as T;
-    } catch(err) {
+      data = (await resp.json()) as T;
+    } catch (err) {
       if (err instanceof SyntaxError) {
         throw new OsuJSGeneralError('invalid_json_syntax');
       }

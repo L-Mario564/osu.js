@@ -2,7 +2,7 @@ import { GameMode, Scope } from '../types';
 
 /**
  * URL builder
- * 
+ *
  * Documentation: {@link https://osujs.mario564.com/extras/create-urls}
  */
 export const buildUrl = {
@@ -63,7 +63,7 @@ function createUrl(path: string, subdomain?: string) {
 
 /**
  * Score accuracy calculator
- * 
+ *
  * Documentation: {@link https://osujs.mario564.com/extras/calculate-accuracy}
  */
 export const calcAccuracy = {
@@ -127,7 +127,7 @@ export const calcAccuracy = {
 
 /**
  * Beatmap stat calculator based on mods
- * 
+ *
  * Documentation: {@link https://osujs.mario564.com/extras/calculate-mod-stats}
  */
 export const calcModStat = {

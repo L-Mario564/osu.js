@@ -36,15 +36,18 @@ export default class Users extends Base {
    * @param accessToken OAuth access token
    * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(accessToken: string, options?: {
-    polyfillFetch?: typeof polyfillFetch;
-  }) {
+  constructor(
+    accessToken: string,
+    options?: {
+      polyfillFetch?: typeof polyfillFetch;
+    }
+  ) {
     super(accessToken, options);
   }
 
   /**
    * Makes a GET request to the `me` endpoint (requires the `identify` scope)
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/get-self}
    * @returns The user corresponding to the access token provided in the constructor of this class
    */
@@ -65,7 +68,7 @@ export default class Users extends Base {
 
   /**
    * Makes a GET request to the `/users/{user}/kudosu` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/get-user-kudosu}
    * @param user ID of the user to get kudosu from
    * @param options
@@ -80,7 +83,7 @@ export default class Users extends Base {
 
   /**
    * Makes a GET request to the `/users/{user}/recent_activity` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/get-user-recent-activity}
    * @param user ID of the user to get their recent activity from
    * @param options
@@ -95,7 +98,7 @@ export default class Users extends Base {
 
   /**
    * Makes a GET request to the `/users/{user}/scores/{type}` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/get-user-scores}
    * @param user ID of the user to get their scores
    * @param type Score type
@@ -112,7 +115,7 @@ export default class Users extends Base {
 
   /**
    * Makes a GET request to the `/users/{user}/beatmapsets/{type}` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/get-user-beatmaps}
    * @param user ID of the user to get their beatmapsets
    * @param type Type of beatmapsets to return
@@ -137,7 +140,7 @@ export default class Users extends Base {
 
   /**
    * Makes a GET request to the `/users/{user}/{mode?}` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/get-user}
    * @param user ID or username of the user to get
    * @param options
@@ -155,7 +158,7 @@ export default class Users extends Base {
 
   /**
    * Makes a GET request to the `/users` endpoint
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/get-users}
    * @returns An array of users
    */
