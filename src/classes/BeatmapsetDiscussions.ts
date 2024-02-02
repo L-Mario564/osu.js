@@ -31,6 +31,8 @@ export default class BeatmapsetDiscussions extends Base {
 
   /**
    * Makes a GET request to the `/beatmapsets/discussions/posts` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-discussion-posts}
    * @returns An object containing a cursor and arrays of beatmapsets, users, discussions and posts
    */
   public async getDiscussionPosts(options?: GetDiscussionPostsOptions): Promise<{
@@ -45,6 +47,8 @@ export default class BeatmapsetDiscussions extends Base {
 
   /**
    * Makes a GET request to the `/beatmapsets/discussions/votes` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-discussion-votes}
    * @returns An object containing a cursor and arrays of discussions, users and votes
    */
   public async getDiscussionVotes(options?: GetDiscussionVotesOptions): Promise<{
@@ -58,6 +62,8 @@ export default class BeatmapsetDiscussions extends Base {
 
   /**
    * Makes a GET request to the `/beatmapsets/discussions` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-discussions}
    * @returns An object containing a cursor and arrays of beatmaps, discussions and users
    */
   public async getDiscussions(options?: GetDiscussionsOptions): Promise<{

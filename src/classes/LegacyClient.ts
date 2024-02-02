@@ -102,6 +102,8 @@ export default class LegacyClient {
 
   /**
    * Makes a GET request to the `get_beatmaps` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/legacy/get-beatmaps}
    * @returns An array of beatmaps
    */
   public async getBeatmaps(params: GetBeatmapsParams): Promise<LegacyBeatmap[]> {
@@ -137,6 +139,8 @@ export default class LegacyClient {
 
   /**
    * Makes a GET request to the `get_user` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/legacy/get-user}
    * @returns A user if it exists, otherwise null
    */
   public async getUser(params: GetUserParams): Promise<LegacyUser | null> {
@@ -151,6 +155,8 @@ export default class LegacyClient {
 
   /**
    * Makes a GET request to the `get_scores` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/legacy/get-beatmap-scores}
    * @returns An array of scores on a beatmap
    */
   public async getBeatmapScores(params: GetBeatmapScoresParams): Promise<LegacyBeatmapScore[]> {
@@ -208,6 +214,8 @@ export default class LegacyClient {
 
   /**
    * Makes a GET request to the `get_user_best` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/legacy/get-user-best-scores}
    * @returns An array of a user's top scores
    */
   public async getUserBestScores(params: GetUserScoresParams): Promise<LegacyUserBestScore[]> {
@@ -216,6 +224,8 @@ export default class LegacyClient {
 
   /**
    * Makes a GET request to the `get_user_recent` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/legacy/get-user-recent-scores}
    * @returns An array of a user's most recent scores in 24 hours
    */
   public async getUserRecentScores(params: GetUserScoresParams): Promise<LegacyUserRecentScore[]> {
@@ -224,6 +234,8 @@ export default class LegacyClient {
 
   /**
    * Makes a GET request to the `get_match` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/legacy/get-multiplayer-lobby}
    * @returns An object containing the match's information, games and each games' scores if the multiplayer lobby exists, otherwise null
    */
   public async getMultiplayerLobby(
@@ -260,6 +272,8 @@ export default class LegacyClient {
 
   /**
    * Makes a GET request to the `get_replay`
+   * 
+   * Documentation: {@link https://osujs.mario564.com/legacy/get-replay}
    * @param by Get replay by `score id` or `user & beatmap id`
    * @returns A string containing the Base64 encoded replay if the replay exists, otherwise null
    */

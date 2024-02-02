@@ -18,6 +18,8 @@ export default class Wiki extends Base {
 
   /**
    * Makes a GET request to the `/wiki/{locale}/{path}` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-wiki-page}
    * @param locale Two-letter language code of the wiki page
    * @param path Path to the wiki page
    * @returns The wiki page

@@ -19,6 +19,8 @@ export default class News extends Base {
 
   /**
    * Makes a GET request to the `/news` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-news-listing}
    * @returns An object containing news posts and other additional data
    */
   public async getNewsListing(options?: GetNewsListingOptions): Promise<NewsListing> {
@@ -27,6 +29,8 @@ export default class News extends Base {
 
   /**
    * Makes a GET request to the `/news/{news}` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-news-post}
    * @param news ID or slug of the news post to get
    * @returns A news post
    */

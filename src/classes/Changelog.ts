@@ -26,6 +26,8 @@ export default class Changelog extends Base {
 
   /**
    * Makes a GET request to the `/changelog/{stream}/{build}` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-changelog-build}
    * @param stream Update stream name
    * @param build Build version
    * @returns A changelog build
@@ -48,6 +50,8 @@ export default class Changelog extends Base {
 
   /**
    * Makes a GET request to the `/changelog` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-changelog-listing}
    * @returns An object containing a array of builds, update stream and search parameters used
    */
   public async getChangelogListing(options?: GetChangelogListingOptions): Promise<{
@@ -75,6 +79,8 @@ export default class Changelog extends Base {
 
   /**
    * Makes a GET request to the `/changelog/{changelog}` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/lookup-changelog-build}
    * @param changelog Build version, update stream name, or build ID
    * @returns A changelog build
    */

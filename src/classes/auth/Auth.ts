@@ -7,6 +7,8 @@ import type { GuestToken, Scope } from '../../types';
 
 /**
  * Class that wraps all OAuth related endpoints
+ * 
+ * Documentation: {@link https://osujs.mario564.com/oauth}
  */
 export default class Auth extends Base {
   /**
@@ -23,6 +25,8 @@ export default class Auth extends Base {
 
   /**
    * @param scopes An array of scopes
+   * 
+   * Documentation: {@link https://osujs.mario564.com/oauth/authorization-code-grant}
    */
   public authorizationCodeGrant(scopes: Scope[] = ['identify']): AuthCodeGrant {
     return new AuthCodeGrant(this.clientId, this.clientSecret, this.redirectUri, scopes);
@@ -30,6 +34,8 @@ export default class Auth extends Base {
 
   /**
    * Gets a token
+   * 
+   * Documentation: {@link https://osujs.mario564.com/oauth/client-credentials-grant}
    * @returns An API token (with guest permissions)
    */
   public async clientCredentialsGrant(): Promise<GuestToken> {
@@ -73,7 +79,9 @@ export default class Auth extends Base {
 
   /**
    * Revokes a token
-   * @param accessToken Access toke to revoke
+   * 
+   * Documentation: {@link https://osujs.mario564.com/oauth/revoke-token}
+   * @param accessToken Access token to revoke
    */
   public async revokeToken(accessToken: string) {
     try {

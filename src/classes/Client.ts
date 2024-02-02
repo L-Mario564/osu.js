@@ -16,6 +16,8 @@ import type { SearchResults } from '../types';
 
 /**
  * Class that wraps all endpoints of the current API (API v2)
+ * 
+ * Documentation: {@link https://osujs.mario564.com/current}
  */
 export default class Client extends Base {
   public beatmaps: Beatmaps;
@@ -54,6 +56,8 @@ export default class Client extends Base {
 
   /**
    * Makes a GET request to the `/search` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/search}
    * @returns Users and wiki pages as results
    */
   public async search(options?: SearchOptions): Promise<SearchResults> {
@@ -62,6 +66,8 @@ export default class Client extends Base {
 
   /**
    * Makes a DELETE request to the `/oauth/tokens/current` endpoint. Revokes the access token
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/revoke-token}
    */
   public async revokeToken(): Promise<void> {
     await this.request('oauth/tokens/current', 'DELETE', {
@@ -71,6 +77,8 @@ export default class Client extends Base {
 
   /**
    * Make a GET request to an undocumented endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-undocumented}
    * @param endpoint The endpoint to make a request to
    */
   public async getUndocumented<T>(endpoint: string, options?: Omit<Options, 'body'>): Promise<T> {

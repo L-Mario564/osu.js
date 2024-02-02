@@ -5,8 +5,11 @@ import type { ModsEnum, StatusEnum } from '../utils/enums';
  * Timestamp string in ISO 8601 format
 */
 export type ISOTimestamp = string;
-export type Cursor = string | null;
+/**
+ * Documentation: {@link https://osujs.mario564.com/extras/error-handling}
+*/
 export type OsuJSError = OsuJSGeneralError | OsuJSUnexpectedResponseError;
+export type Cursor = string | null;
 
 export type Mod = keyof typeof ModsEnum;
 export type RankStatus = keyof typeof StatusEnum;

@@ -9,6 +9,9 @@ const errorMessageMap = {
   unexpected_response: 'Received an unexpected response from the API'
 } as const;
 
+/**
+ * Documentation: {@link https://osujs.mario564.com/extras/error-handling}
+ */
 export class OsuJSGeneralError extends Error {
   public readonly _ = {
     [isOsuJSErrorSymbol]: true
@@ -21,6 +24,9 @@ export class OsuJSGeneralError extends Error {
   }
 }
 
+/**
+ * Documentation: {@link https://osujs.mario564.com/extras/error-handling}
+ */
 export class OsuJSUnexpectedResponseError extends Error {
   public readonly _ = {
     [isOsuJSErrorSymbol]: true

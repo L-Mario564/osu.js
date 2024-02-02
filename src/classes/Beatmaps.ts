@@ -38,6 +38,8 @@ export default class Beatmaps extends Base {
 
   /**
    * Makes a GET request to the `/beatmaps/lookup` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/lookup-beatmap}
    * @returns A beatmap
    */
   public async lookupBeatmap(options?: LookupBeatmapOptions): Promise<
@@ -59,6 +61,8 @@ export default class Beatmaps extends Base {
 
   /**
    * Makes a GET request to the `/beatmaps/{beatmap}/scores/users/{user}` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-beatmap-user-score}
    * @param beatmap ID of the beatmap to get scores from
    * @param user ID of the user to get scores from
    * @returns A user score on a beatmap
@@ -73,6 +77,8 @@ export default class Beatmaps extends Base {
 
   /**
    * Makes a GET request to the `/beatmaps/{beatmap}/scores/users/{user}/all` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-beatmap-user-scores}
    * @param beatmap ID of the beatmap to get scores from
    * @param user ID of the user to get scores from
    * @returns An array of user scores on a beatmap
@@ -91,6 +97,8 @@ export default class Beatmaps extends Base {
 
   /**
    * Makes a GET request to the `/beatmaps/{beatmap}/scores` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-beatmap-top-scores}
    * @param beatmap ID of the beatmap to get top scores from
    * @returns An array of user scores on a beatmap
    */
@@ -114,6 +122,8 @@ export default class Beatmaps extends Base {
 
   /**
    * Makes a GET request to the `/beatmaps` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-beatmaps}
    * @returns An array of beatmaps
    */
   public async getBeatmaps(options?: GetBeatmapsOptions): Promise<
@@ -135,6 +145,8 @@ export default class Beatmaps extends Base {
 
   /**
    * Makes a GET request to the `/beatmaps/{beatmap}` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-beatmap}
    * @param beatmap ID of the beatmap to get
    * @returns A beatmap
    */
@@ -153,6 +165,8 @@ export default class Beatmaps extends Base {
 
   /**
    * Makes a POST request to the `/beatmaps/{beatmap}/attributes` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-beatmap-attributes}
    * @param beatmap ID of the beatmap to get its attributes
    * @param gamemode Gamemode attributes to get
    * @returns A beatmap's attributes

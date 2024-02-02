@@ -19,6 +19,8 @@ export default class Ranking extends Base {
 
   /**
    * Makes a GET request to the `/rankings/{mode}/{type}` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-ranking}
    * @param mode Ranking gamemode
    * @param type Ranking type
    * @returns An object containing ranking data
@@ -37,6 +39,8 @@ export default class Ranking extends Base {
 
   /**
    * Makes a GET request to the `/spotights` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-spotlights}
    * @returns An array of spotlights
    */
   public async getSpotlights(): Promise<Spotlight[]> {

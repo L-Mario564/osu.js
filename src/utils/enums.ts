@@ -1,3 +1,6 @@
+/**
+ * Documentation: {@link https://osujs.mario564.com/references/modes-enum}
+ */
 export enum ModesEnum {
   osu = 0,
   taiko = 1,
@@ -5,6 +8,9 @@ export enum ModesEnum {
   mania = 3
 }
 
+/**
+ * Documentation: {@link https://osujs.mario564.com/references/status-enum}
+ */
 export enum StatusEnum {
   graveyard = -2,
   wip = -1,
@@ -15,6 +21,9 @@ export enum StatusEnum {
   loved = 4
 }
 
+/**
+ * Documentation: {@link https://osujs.mario564.com/references/genres-enum}
+ */
 export enum GenresEnum {
   Any = 0,
   Unspecified = 1,
@@ -32,6 +41,9 @@ export enum GenresEnum {
   Jazz = 14
 }
 
+/**
+ * Documentation: {@link https://osujs.mario564.com/references/languages-enum}
+ */
 export enum LanguagesEnum {
   Any = 0,
   Unspecified = 1,
@@ -50,6 +62,9 @@ export enum LanguagesEnum {
   Other = 14
 }
 
+/**
+ * Documentation: {@link https://osujs.mario564.com/references/mods-enum}
+ */
 export enum ModsEnum {
   NF = 1,
   EZ = 2,
@@ -84,6 +99,9 @@ export enum ModsEnum {
   MR = 1073741824
 }
 
+/**
+ * Documentation: {@link https://osujs.mario564.com/references/scoring-type-enum}
+ */
 export enum ScoringTypeEnum {
   Score = 0,
   Accuracy = 1,
@@ -91,6 +109,9 @@ export enum ScoringTypeEnum {
   'Score V2' = 3
 }
 
+/**
+ * Documentation: {@link https://osujs.mario564.com/references/team-type-enum}
+ */
 export enum TeamTypeEnum {
   'Head To Head' = 0,
   'Tag Co-Op' = 1,
@@ -98,6 +119,9 @@ export enum TeamTypeEnum {
   'Tag Team VS' = 3
 }
 
+/**
+ * Documentation: {@link https://osujs.mario564.com/references/team-color-enum}
+ */
 export enum TeamColorEnum {
   Blue = 1,
   Red = 2

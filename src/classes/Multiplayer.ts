@@ -19,6 +19,8 @@ export default class Multiplayer extends Base {
 
   /**
    * Makes a GET request to the `/rooms/{room}/playlist/{playlist}/scores` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-playlist-scores}
    * @param room ID of the room corresponding to the playlist
    * @param playlist ID of the playlist to get scores from
    * @returns An object containing playlist scores and metadata

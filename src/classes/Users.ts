@@ -44,6 +44,8 @@ export default class Users extends Base {
 
   /**
    * Makes a GET request to the `me` endpoint (requires the `identify` scope)
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-self}
    * @returns The user corresponding to the access token provided in the constructor of this class
    */
   public async getSelf(options?: GetSelfOptions): Promise<
@@ -63,6 +65,8 @@ export default class Users extends Base {
 
   /**
    * Makes a GET request to the `/users/{user}/kudosu` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-user-kudosu}
    * @param user ID of the user to get kudosu from
    * @param options
    * @returns An array containing the specified user's kudosu history
@@ -76,6 +80,8 @@ export default class Users extends Base {
 
   /**
    * Makes a GET request to the `/users/{user}/recent_activity` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-user-recent-activity}
    * @param user ID of the user to get their recent activity from
    * @param options
    * @returns An array containing the specified user's recent activity (each event is a union, to discriminate, use the `type` key)
@@ -89,6 +95,8 @@ export default class Users extends Base {
 
   /**
    * Makes a GET request to the `/users/{user}/scores/{type}` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-user-scores}
    * @param user ID of the user to get their scores
    * @param type Score type
    * @param options
@@ -104,6 +112,8 @@ export default class Users extends Base {
 
   /**
    * Makes a GET request to the `/users/{user}/beatmapsets/{type}` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-user-beatmaps}
    * @param user ID of the user to get their beatmapsets
    * @param type Type of beatmapsets to return
    * @param options
@@ -127,6 +137,8 @@ export default class Users extends Base {
 
   /**
    * Makes a GET request to the `/users/{user}/{mode?}` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-user}
    * @param user ID or username of the user to get
    * @param options
    * @returns A user
@@ -143,6 +155,8 @@ export default class Users extends Base {
 
   /**
    * Makes a GET request to the `/users` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-users}
    * @returns An array of users
    */
   public async getUsers(options?: GetUsersOptions): Promise<

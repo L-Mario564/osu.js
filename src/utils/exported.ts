@@ -4,6 +4,9 @@ import type { Mod, OsuJSError } from '../types';
 
 /**
  * Convert an array of mods into its numerical representation
+ * 
+ * Documentation: {@link https://osujs.mario564.com/extras/mod-enum-conversion}
+ * @see getEnumMods for the inverse operation
  */
 export function getModsEnum(mods: Mod[]): number {
   return mods.reduce((count, mod) => count + ModsEnum[mod], 0);
@@ -11,6 +14,9 @@ export function getModsEnum(mods: Mod[]): number {
 
 /**
  * Convert a numerical representation of a mod or mod combination into an array of mods represented as strings. Returns and empty array if the input is 0.
+ * 
+ * Documentation: {@link https://osujs.mario564.com/extras/mod-enum-conversion}
+ * @see getModsEnum for the inverse operation
  */
 export function getEnumMods(modEnum: number): Mod[] {
   const mods: Mod[] = [];
@@ -35,6 +41,8 @@ export function getEnumMods(modEnum: number): Mod[] {
 
 /**
  * Determine if a value is an error thrown by osu.js
+ * 
+ * Documentation: {@link https://osujs.mario564.com/extras/error-handling}
  */
 export function isOsuJSError(value: any): value is OsuJSError {
   return typeof value === 'object' && value?._?.[isOsuJSErrorSymbol] === true;

@@ -6,6 +6,8 @@ import type { Scope, Token } from '../../types';
 
 /**
  * Class that handles auth code grant flow related actions
+ * 
+ * Documentation: {@link https://osujs.mario564.com/oauth/authorization-code-grant}
  */
 export default class AuthCodeGrant extends Base {
   private scopes: Scope[];
@@ -26,6 +28,8 @@ export default class AuthCodeGrant extends Base {
 
   /**
    * Gets a token
+   * 
+   * Documentation: {@link https://osujs.mario564.com/oauth/authorization-code-grant}
    * @param code The string received after a user authorizes the app
    * @returns An API token
    */
@@ -71,6 +75,8 @@ export default class AuthCodeGrant extends Base {
 
   /**
    * Refreshes a token
+   * 
+   * Documentation: {@link https://osujs.mario564.com/oauth/authorization-code-grant}
    * @param refreshToken The token used to refresh
    * @returns An API token
    */

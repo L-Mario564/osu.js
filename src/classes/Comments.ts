@@ -19,6 +19,8 @@ export default class Comments extends Base {
 
   /**
    * Makes a GET request to the `/comments` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-comments}
    * @returns An object containing comments, users and other related data
    */
   public async getComments(options?: GetCommentsOptions): Promise<CommentBundle> {
@@ -40,6 +42,8 @@ export default class Comments extends Base {
 
   /**
    * Makes a GET request to the `/comments/{comment}` endpoint
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/get-comment}
    * @param comment ID of the comment to get related data from
    * @returns An object containing comments, users and other related data to the comment with the specified ID
    */
