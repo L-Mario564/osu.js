@@ -4,7 +4,7 @@ title: Error Handling
 
 # Error Handling
 
-To handle errors thrown while using the library, osu.js provides the `OsuJSGeneralError` and `OsuJSUnexpectedResponseError` classes and a type of `OsuJSError`. The classes are thrown as exceptions while type is simple a union of both of these classes.
+To handle exceptions that may arise while using the library, osu.js provides the `OsuJSGeneralError` and `OsuJSUnexpectedResponseError` classes and a type of `OsuJSError`. The classes are thrown in the same way as the native `Error` class while type is simple a union of both of these classes.
 
 ```ts
 class OsuJSGeneralError extends Error { ... }
@@ -41,7 +41,7 @@ try {
 
       /**
        * If using the fetch polyfill instead of the native fetch API, write:
-       * `err.response(true);`
+       * `err.response(true)`
        * "true" means that it will return the Response type from "node-fetch" instead of the native Response
        */
       const response = err.response(); // Type: `Response`
