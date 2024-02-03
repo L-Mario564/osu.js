@@ -1,10 +1,19 @@
-<div align="center">
+<div align="center" style="padding: 32px 0;">
   <img src="https://i.imgur.com/eFERZWb.png" width="350" alt="osu.js" />
 </div>
 
 ## About
 
-osu.js is an unofficial Javascript and Typescript SDK for the browser-facing portion of [osu!](https://osu.ppy.sh/home) with type safety in mind, with support for both versions of the API. It includes some extra utilities as well.
+[osu.js](https://osujs.mario564.com) is an unofficial Javascript and Typescript SDK for the browser-facing portion of [osu!](https://osu.ppy.sh/home) with type safety in mind.
+
+**Why this API wrapper?**
+
+- Extremely lightweight (less than 6kb when minified + gzipped).
+- Supports both versions of the API.
+- Every response from the APIs are fully typed.
+- Handles errors in a developer-friendly way.
+- Fully documented in its own website.
+- In addition to the API wrapping, it includes some extra utilities.
 
 ## Installation
 
