@@ -263,12 +263,12 @@ export interface UserStatistics {
   play_count: number;
   play_time: number;
   pp: number;
-  global_rank: number;
+  global_rank: number | null;
   ranked_score: number;
   replays_watched_by_others: number;
   total_hits: number;
   total_score: number;
-  country_rank: number;
+  country_rank: number | null;
 }
 
 export interface UserAchievement {
