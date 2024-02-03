@@ -6,7 +6,7 @@
 - Provide the option to pass a polyfill for the fetch API for development environments that have a Node.js version below 18.
 - Remove input validations.
 - `Client.beatmaps.lookupBeatmap` and `Client.changelog.lookupChangelogBuild` methods now return `null` if nothing is found on lookup. Prior to this, these methods would return `undefined` when there were no results.
-- Converted many types inferred froms schemas into interfaces.
+- Converted many types inferred from schemas into interfaces.
 - Other minor changes to some interfaces and types.
 - Introduce error handling via the `OsuJSGeneralError` and `OsuJSUnexpectedResponseError` classes and `OsuJSError` type.
 - Token can now be revoken using `Client.revokeToken`. Has same functionality as `Auth.revokeToken`.
