@@ -7,9 +7,11 @@ ref: interface
 
 ```ts
 interface Options {
-  query?: Record<string, unknown>;
-  body?: Record<string, unknown> | string;
+  query?: Record<string, any>;
+  body?: Record<string, any> | string;
 }
 ```
+
+## Types
 
 - [Record](https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type)

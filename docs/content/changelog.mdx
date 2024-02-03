@@ -1,5 +1,34 @@
 # Changelog
 
+## 2.0.0
+
+- Use native fetch API instead of Axios.
+- Provide the option to pass a polyfill for the fetch API for development environments that have a Node.js version below 18.
+- Remove input validations.
+- `Client.beatmaps.lookupBeatmap` and `Client.changelog.lookupChangelogBuild` methods now return `null` if nothing is found on lookup. Prior to this, these methods would return `undefined` when there were no results.
+- Converted many types inferred froms schemas into interfaces.
+- Other minor changes to some interfaces and types.
+- Introduce error handling via the `OsuJSGeneralError` and `OsuJSUnexpectedResponseError` classes and `OsuJSError` type.
+- Token can now be revoken using `Client.revokeToken`. Has same functionality as `Auth.revokeToken`.
+- Add links to documentation in JSDoc comments.
+- Add osu! Lazer mods to `Mod` type.
+- Remove unused interface `GetBeatmapOptions`. (Not to be confused with `GetBeatmapsOptions`, note the plural form of beatmap).
+- New utility functions:
+  - `getModsEnum`: Converts an array of mods into its numerical representation.
+  - `getEnumMods`: Converts a numerical representation of a mod or mod combination into an array of mods represented as strings.
+  - `isOsuJSError`: Determines if a value is an error thrown by osu.js.
+- The following properties in `ModsEnum` have been renamed:
+  - `K4` -> `4K`
+  - `K5` -> `5K`
+  - `K6` -> `6K`
+  - `K7` -> `7K`
+  - `K8` -> `8K`
+  - `RN` -> `RD`
+  - `TR` -> `TP`
+  - `K1` -> `1K`
+  - `K3` -> `3K`
+  - `K2` -> `2K`
+
 ## 1.4.0
 
 - Add `guest` and `nominated` literals to `UserBeatmapsType`.

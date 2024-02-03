@@ -1,24 +1,24 @@
 ---
 title: GetDiscussionsOptions
-ref: type
+ref: interface
 ---
 
 # GetDiscussionsOptions
 
 ```ts
-type GetDiscussionsOptions = Partial<{
-  query: GetDiscussionsBaseOptions &
-    Partial<{
-      beatmap_id: number;
-      beatmapset_id: number;
-      beatmapset_status: 'all' | 'ranked' | 'qualified' | 'disqualified' | 'never_qualified';
-      message_types: DiscussionMessageType[];
-      only_unresolved: number;
-      user: number;
-    }>;
-}>;
+interface GetDiscussionsOptions {
+  query?: GetDiscussionBaseQuery & {
+    beatmap_id?: number;
+    beatmapset_id?: number;
+    beatmapset_status?: 'all' | 'ranked' | 'qualified' | 'disqualified' | 'never_qualified';
+    message_types?: DiscussionMessageType[];
+    only_unresolved?: boolean;
+    user?: number;
+  };
+}
 ```
 
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
-- [GetDiscussionsBaseOptions](/references/get-dicussions-base-options)
+## Types
+
+- [GetDiscussionBaseQuery](/references/get-dicussion-base-query)
 - [DiscussionMessageType](/references/discussion-message-type)

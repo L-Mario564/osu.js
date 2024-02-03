@@ -1,16 +1,16 @@
 ---
 title: GetReplayByScoreIdParams
-ref: type
+ref: interface
 ---
 
 # GetReplayByScoreIdParams
 
 ```ts
-type GetReplayByScoreIdParams = GetReplay & {
+interface GetReplayByScoreIdParams extends GetReplayBaseParams {
   s: number;
-};
+}
 ```
 
 ## Types
 
-- [GetReplay](/references/get-replay)
+- [GetReplayBaseParams](/references/get-replay-base-params)

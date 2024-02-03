@@ -1,16 +1,16 @@
 import e from 'express';
 import { Auth, buildUrl } from '../';
 import { readFileSync, writeFileSync } from 'fs';
-import { GuestToken, Scope, Token } from '../types';
 import { tokenFileLocation, getClientData } from './client-tests';
+import type { GuestToken, Scope, Token } from '../types';
 
-let server = e();
-let { clientId, clientSecret, redirectUri } = getClientData();
+const server = e();
+const { clientId, clientSecret, redirectUri } = getClientData();
 
-let client = new Auth(Number(clientId), clientSecret, redirectUri);
-let scopes: Scope[] = ['identify', 'public', 'friends.read', 'forum.write', 'chat.write'];
+const client = new Auth(Number(clientId), clientSecret, redirectUri);
+const scopes: Scope[] = ['identify', 'public', 'friends.read', 'forum.write', 'chat.write'];
 
-let authCodeGrant = client.authorizationCodeGrant(scopes);
+const authCodeGrant = client.authorizationCodeGrant(scopes);
 
 server.get('/auth', (_, res) => {
   res.redirect(buildUrl.authRequest(Number(clientId), redirectUri, scopes));
@@ -22,7 +22,7 @@ server.get('/auth-callback', async (req, res) => {
     return;
   }
 
-  let code: string = req.query.code as string;
+  const code: string = req.query.code as string;
   let token: Token | undefined;
 
   try {
@@ -46,8 +46,8 @@ server.get('/auth-callback', async (req, res) => {
 });
 
 server.get('/refresh-token', async (_, res) => {
-  let file: string = readFileSync(tokenFileLocation, { encoding: 'utf-8' });
-  let token: Token = JSON.parse(file);
+  const file: string = readFileSync(tokenFileLocation, { encoding: 'utf-8' });
+  const token: Token = JSON.parse(file);
   let newToken: Token | undefined;
 
   try {
@@ -71,8 +71,8 @@ server.get('/refresh-token', async (_, res) => {
 });
 
 server.get('/revoke-token', async (_, res) => {
-  let file: string = readFileSync(tokenFileLocation, { encoding: 'utf-8' });
-  let token: Token = JSON.parse(file);
+  const file: string = readFileSync(tokenFileLocation, { encoding: 'utf-8' });
+  const token: Token = JSON.parse(file);
 
   try {
     await client.revokeToken(token.access_token);

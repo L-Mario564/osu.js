@@ -1,16 +1,14 @@
 ---
 title: GetNewsPostOptions
-ref: type
+ref: interface
 ---
 
 # GetNewsPostOptions
 
 ```ts
-type GetNewsPostOptions = Partial<{
-  query: Partial<{
-    key: 'id';
-  }>;
-}>;
+interface GetNewsPostOptions {
+  query?: {
+    key?: 'id';
+  };
+}
 ```
-
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)

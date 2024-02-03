@@ -1,6 +1,6 @@
 {
   "name": "osu-web.js",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "description": "osu.js is an unofficial Javascript and Typescript SDK for the browser-facing portion of osu! with type safety in mind",
   "main": "lib/index.cjs",
   "module": "lib/index.js",
@@ -13,9 +13,11 @@
   "scripts": {
     "build": "npx tsup src/index.ts --format cjs,esm --dts && node scripts/rename.js",
     "fmt": "npx prettier --write . && npx prettier --write ./docs/src/**/*.astro",
-    "lint": "npx eslint . && npx tsc --noEmit",
+    "lint": "npx ts-prune --ignore \"(src\\\\index.ts|used in module)\" && npx eslint . && npx tsc --noEmit",
     "test:legacy": "vitest run src/tests/legacyClient.test.ts",
     "test:auth": "node --experimental-specifier-resolution=node --loader ts-node/esm src/tests/authTestServer.ts",
+    "test:utils": "vitest run --dir src/tests/utils",
+    "test:current": "vitest run --dir src/tests/client-tests",
     "test:client": "vitest run src/tests/client-tests/client.test.ts",
     "test:users": "vitest run src/tests/client-tests/users.test.ts",
     "test:wiki": "vitest run src/tests/client-tests/wiki.test.ts",
@@ -43,16 +45,13 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-astro": "^0.27.2",
     "express": "^4.18.2",
-    "open": "^8.4.0",
+    "node-fetch": "^3.3.2",
     "prettier": "^3.0.0",
     "prettier-plugin-astro": "^0.11.0",
     "ts-node": "^10.9.1",
+    "ts-prune": "^0.10.3",
     "tsup": "^6.6.3",
     "typescript": "^4.9.4",
-    "vitest": "^0.26.2"
-  },
-  "dependencies": {
-    "axios": "^1.2.1",
-    "zod": "^3.20.2"
+    "vitest": "^1.2.2"
   }
 }

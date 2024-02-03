@@ -1,6 +1,10 @@
-import { renameSync } from 'fs';
+import { renameSync, rmSync } from 'fs';
 
-let dir = process.cwd();
+const dir = process.cwd();
+rmSync(`${dir}/lib`, {
+  force: true,
+  recursive: true
+});
 renameSync(`${dir}/dist`, `${dir}/lib`);
 
 console.log('Renamed "dist" folder to "lib"');

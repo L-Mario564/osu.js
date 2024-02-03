@@ -1,18 +1,16 @@
 ---
 title: GetUserScoresParams
-ref: type
+ref: interface
 ---
 
 # GetUserScoresParams
 
-**Note:** This type can't be imported, it's only here for reference.
-
 ```ts
-type GetUserScoresParams = GetUserScores & {
+interface GetUserScoresParams extends GetUserScoresBaseParams {
   u: string | number;
-};
+}
 ```
 
 ## Types
 
-- [GetUserScores](/references/get-user-scores)
+- [GetUserScoresBaseParams](/references/get-user-scores-base-params)

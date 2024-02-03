@@ -32,7 +32,6 @@
   ],
   "plugins": ["@typescript-eslint"],
   "rules": {
-    "indent": ["warn", 2],
     "quotes": [
       "warn",
       "single",
@@ -45,9 +44,10 @@
     "brace-style": ["warn", "1tbs"],
     "comma-dangle": ["warn", "never"],
     "default-case": "error",
-    "prefer-const": "off",
+    "prefer-const": "warn",
     "@typescript-eslint/no-inferrable-types": "off",
-    "quote-props": ["warn", "consistent"]
+    "quote-props": ["warn", "consistent"],
+    "@typescript-eslint/no-explicit-any": "off"
   },
   "ignorePatterns": ["node_modules", "lib", "*.d.ts"]
 }

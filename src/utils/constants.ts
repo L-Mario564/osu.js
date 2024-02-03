@@ -2,6 +2,8 @@ import { GameMode, Scope } from '../types';
 
 /**
  * URL builder
+ *
+ * Documentation: {@link https://osujs.mario564.com/extras/create-urls}
  */
 export const buildUrl = {
   /**
@@ -26,7 +28,7 @@ export const buildUrl = {
    * @param clientId OAuth client ID
    * @param redirectUri OAuth redirect URI
    * @param scopes An array of OAuth scopes
-   * @param state Data that will be returned when a temporary code is issued. It can be used to provide a token for protecting against cross-site request forgery attacks
+   * @param state Data that will be returned when a temporary code is issued
    */
   authRequest: (
     clientId: number,
@@ -50,7 +52,7 @@ export const buildUrl = {
 };
 
 function createUrl(path: string, subdomain?: string) {
-  let baseUrl: string = 'https://osu.ppy.sh/';
+  let baseUrl = 'https://osu.ppy.sh/';
 
   if (subdomain) {
     baseUrl = baseUrl.replace('osu', subdomain);
@@ -61,6 +63,8 @@ function createUrl(path: string, subdomain?: string) {
 
 /**
  * Score accuracy calculator
+ *
+ * Documentation: {@link https://osujs.mario564.com/extras/calculate-accuracy}
  */
 export const calcAccuracy = {
   /**
@@ -91,7 +95,7 @@ export const calcAccuracy = {
    * @param misses Droplets
    */
   fruits: (c300: number, c100: number, c50: number, katu: number, misses: number) => {
-    let x: number = c300 + c100 + c50;
+    const x = c300 + c100 + c50;
     return x / (x + katu + misses);
   },
   /**
@@ -113,8 +117,8 @@ export const calcAccuracy = {
     misses: number,
     scoreV2?: boolean
   ) => {
-    let x: number = scoreV2 ? 305 * geki + 300 * c300 : 300 * (geki + c300);
-    let y: number = scoreV2 ? 305 : 300;
+    const x = scoreV2 ? 305 * geki + 300 * c300 : 300 * (geki + c300);
+    const y = scoreV2 ? 305 : 300;
     return (
       (x + 200 * katu + 100 * c100 + 50 * c50) / (y * (geki + c300 + katu + c100 + c50 + misses))
     );
@@ -123,6 +127,8 @@ export const calcAccuracy = {
 
 /**
  * Beatmap stat calculator based on mods
+ *
+ * Documentation: {@link https://osujs.mario564.com/extras/calculate-mod-stats}
  */
 export const calcModStat = {
   hr: {

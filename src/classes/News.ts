@@ -1,8 +1,7 @@
 import Base from './Base';
-import { NewsListing, NewsNavigation, NewsPost } from '../types';
-import { GetNewsListingOptions, GetNewsPostOptions } from '../types/options';
-import { z } from 'zod';
-import { getNewsListingOptionsSchema, getNewsPostOptionsSchema } from '../schemas/news';
+import type polyfillFetch from 'node-fetch';
+import type { GetNewsListingOptions, GetNewsPostOptions } from '../types/options';
+import type { NewsListing, NewsNavigation, NewsPost } from '../types';
 
 /**
  * Class that wraps all news related endpoints
@@ -10,22 +9,31 @@ import { getNewsListingOptionsSchema, getNewsPostOptionsSchema } from '../schema
 export default class News extends Base {
   /**
    * @param accessToken OAuth access token
+   * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(accessToken: string) {
-    super(accessToken);
+  constructor(
+    accessToken: string,
+    options?: {
+      polyfillFetch?: typeof polyfillFetch;
+    }
+  ) {
+    super(accessToken, options);
   }
 
   /**
    * Makes a GET request to the `/news` endpoint
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-news-listing}
    * @returns An object containing news posts and other additional data
    */
   public async getNewsListing(options?: GetNewsListingOptions): Promise<NewsListing> {
-    options = getNewsListingOptionsSchema.optional().parse(options);
-    return await this.fetch('news', 'GET', options);
+    return await this.request('news', 'GET', options);
   }
 
   /**
    * Makes a GET request to the `/news/{news}` endpoint
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-news-post}
    * @param news ID or slug of the news post to get
    * @returns A news post
    */
@@ -38,9 +46,6 @@ export default class News extends Base {
       navigation: NewsNavigation;
     }
   > {
-    news = z.union([z.string(), z.number()]).parse(news);
-    options = getNewsPostOptionsSchema.optional().parse(options);
-
-    return await this.fetch(`news/${news}`, 'GET', options);
+    return await this.request(`news/${news}`, 'GET', options);
   }
 }

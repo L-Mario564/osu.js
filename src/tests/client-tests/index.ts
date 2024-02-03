@@ -8,9 +8,9 @@ export const ms: number = 500;
 
 export function getClientData() {
   config();
-  let clientId: string | undefined = process.env.CLIENT_ID;
-  let clientSecret: string | undefined = process.env.CLIENT_SECRET;
-  let redirectUri: string | undefined = process.env.REDIRECT_URI;
+  const clientId: string | undefined = process.env.CLIENT_ID;
+  const clientSecret: string | undefined = process.env.CLIENT_SECRET;
+  const redirectUri: string | undefined = process.env.REDIRECT_URI;
 
   if (!clientId || !clientSecret || !redirectUri) {
     throw new Error(
@@ -28,13 +28,13 @@ export async function getExistingAccessToken() {
     );
   }
 
-  let file: string = readFileSync(tokenFileLocation, { encoding: 'utf-8' });
-  let fileData = statSync(tokenFileLocation);
+  const file: string = readFileSync(tokenFileLocation, { encoding: 'utf-8' });
+  const fileData = statSync(tokenFileLocation);
   let token: Token = JSON.parse(file);
   let tokenRefreshed: boolean = false;
 
   if (new Date().getTime() - fileData.mtime.getTime() >= 86_000_000) {
-    let { clientId, clientSecret, redirectUri } = getClientData();
+    const { clientId, clientSecret, redirectUri } = getClientData();
     token = await new Auth(Number(clientId), clientSecret, redirectUri)
       .authorizationCodeGrant()
       .refreshToken(token.refresh_token);

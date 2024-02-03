@@ -1,8 +1,7 @@
 import Base from './Base';
-import { GameMode, Rankings, RankingType, Spotlight } from '../types';
-import { GetRankingOptions } from '../types/options';
-import { gameModeSchema } from '../schemas';
-import { getRankingOptionsSchema, rankingTypeSchema } from '../schemas/ranking';
+import type polyfillFetch from 'node-fetch';
+import type { GameMode, Rankings, RankingType, Spotlight } from '../types';
+import type { GetRankingOptions } from '../types/options';
 
 /**
  * Class that wraps all ranking related endpoints
@@ -10,13 +9,21 @@ import { getRankingOptionsSchema, rankingTypeSchema } from '../schemas/ranking';
 export default class Ranking extends Base {
   /**
    * @param accessToken OAuth access token
+   * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(accessToken: string) {
-    super(accessToken);
+  constructor(
+    accessToken: string,
+    options?: {
+      polyfillFetch?: typeof polyfillFetch;
+    }
+  ) {
+    super(accessToken, options);
   }
 
   /**
    * Makes a GET request to the `/rankings/{mode}/{type}` endpoint
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-ranking}
    * @param mode Ranking gamemode
    * @param type Ranking type
    * @returns An object containing ranking data
@@ -26,21 +33,23 @@ export default class Ranking extends Base {
     type: RankingType,
     options?: GetRankingOptions
   ): Promise<Rankings> {
-    mode = gameModeSchema.parse(mode);
-    type = rankingTypeSchema.parse(type);
-    options = getRankingOptionsSchema.optional().parse(options);
+    if (options?.query?.country) {
+      options.query.country = options.query.country.toUpperCase();
+    }
 
-    return await this.fetch(`rankings/${mode}/${type}`, 'GET', options);
+    return await this.request(`rankings/${mode}/${type}`, 'GET', options);
   }
 
   /**
    * Makes a GET request to the `/spotights` endpoint
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-spotlights}
    * @returns An array of spotlights
    */
   public async getSpotlights(): Promise<Spotlight[]> {
-    let spotlights: {
+    const spotlights = await this.request<{
       spotlights: Spotlight[];
-    } = await this.fetch('spotlights', 'GET');
+    }>('spotlights', 'GET');
 
     return spotlights.spotlights;
   }

@@ -3,11 +3,11 @@ import { describe, expect, it } from 'vitest';
 import { getExistingAccessToken } from '.';
 
 describe('Test multiplayer related endpoints', async () => {
-  let accessToken: string = await getExistingAccessToken();
-  let multiplayer = new Client(accessToken).multiplayer;
+  const accessToken: string = await getExistingAccessToken();
+  const multiplayer = new Client(accessToken).multiplayer;
 
   it('Gets multiple comments', async () => {
-    let scores = await multiplayer.getPlaylistScores(274844, 1852978, {
+    const scores = await multiplayer.getPlaylistScores(274844, 1852978, {
       query: {
         limit: 5
       }

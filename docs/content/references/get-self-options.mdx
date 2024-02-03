@@ -1,17 +1,18 @@
 ---
 title: GetSelfOptions
-ref: type
+ref: interface
 ---
 
 # GetSelfOptions
 
 ```ts
-type GetSelfOptions = Partial<{
-  urlParams: Partial<{
+interface GetSelfOptions {
+  urlParams?: {
     mode: GameMode;
-  }>;
-}>;
+  };
+}
 ```
 
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
+## Types
+
 - [GameMode](/references/game-mode)

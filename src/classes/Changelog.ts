@@ -1,5 +1,7 @@
 import Base from './Base';
-import {
+import type polyfillFetch from 'node-fetch';
+import type { GetChangelogListingOptions, LookupChangelogBuildOptions } from '../types/options';
+import type {
   Build,
   BuildVersions,
   ChangelogEntry,
@@ -7,14 +9,6 @@ import {
   GithubUser,
   UpdateStream
 } from '../types';
-import { z } from 'zod';
-import {
-  changelogStreamSchema,
-  getChangelogListingOptionsSchema,
-  lookupChangelogBuildOptionsSchema
-} from '../schemas/changelog';
-import { GetChangelogListingOptions, LookupChangelogBuildOptions } from '../types/options';
-import { isAxiosError } from 'axios';
 
 /**
  * Class that wraps all changelog related endpoints
@@ -22,13 +16,21 @@ import { isAxiosError } from 'axios';
 export default class Changelog extends Base {
   /**
    * @param accessToken OAuth access token
+   * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(accessToken: string) {
-    super(accessToken);
+  constructor(
+    accessToken: string,
+    options?: {
+      polyfillFetch?: typeof polyfillFetch;
+    }
+  ) {
+    super(accessToken, options);
   }
 
   /**
    * Makes a GET request to the `/changelog/{stream}/{build}` endpoint
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-changelog-build}
    * @param stream Update stream name
    * @param build Build version
    * @returns A changelog build
@@ -46,13 +48,13 @@ export default class Changelog extends Base {
       versions: BuildVersions;
     }
   > {
-    stream = changelogStreamSchema.parse(stream);
-    build = z.string().parse(build);
-    return await this.fetch(`changelog/${stream}/${build}`, 'GET');
+    return await this.request(`changelog/${stream}/${build}`, 'GET');
   }
 
   /**
    * Makes a GET request to the `/changelog` endpoint
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-changelog-listing}
    * @returns An object containing a array of builds, update stream and search parameters used
    */
   public async getChangelogListing(options?: GetChangelogListingOptions): Promise<{
@@ -75,12 +77,13 @@ export default class Changelog extends Base {
       user_count: number;
     })[];
   }> {
-    options = getChangelogListingOptionsSchema.optional().parse(options);
-    return await this.fetch('changelog', 'GET', options);
+    return await this.request('changelog', 'GET', options);
   }
 
   /**
    * Makes a GET request to the `/changelog/{changelog}` endpoint
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/lookup-changelog-build}
    * @param changelog Build version, update stream name, or build ID
    * @returns A changelog build
    */
@@ -96,30 +99,11 @@ export default class Changelog extends Base {
         })[];
         versions: BuildVersions;
       })
-    | undefined
+    | null
   > {
-    changelog = z.union([z.string(), z.number()]).parse(changelog);
-    options = lookupChangelogBuildOptionsSchema.optional().parse(options);
-
-    let build:
-      | (Build & {
-          changelog_entries: (ChangelogEntry & {
-            github_user: GithubUser;
-            message: string | null;
-            message_html: string | null;
-          })[];
-          versions: BuildVersions;
-        })
-      | undefined;
-
-    try {
-      build = await this.fetch(`changelog/${changelog}`, 'GET', options);
-    } catch (err) {
-      if (!isAxiosError(err) || err.response?.status !== 404) {
-        throw err;
-      }
-    }
-
-    return build;
+    return await this.request(`changelog/${changelog}`, 'GET', {
+      ...options,
+      returnNullOn404: true
+    });
   }
 }

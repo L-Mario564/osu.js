@@ -1,19 +1,20 @@
 ---
 title: GetPlaylistScoresOptions
-ref: type
+ref: interface
 ---
 
 # GetPlaylistScoresOptions
 
 ```ts
-type GetPlaylistScoresOptions = Partial<{
-  query: Partial<{
-    limit: number;
-    sort: MultiplayerScoresSort;
-    cursor_string: string;
-  }>;
-}>;
+interface GetPlaylistScoresOptions {
+  query?: {
+    limit?: number;
+    sort?: MultiplayerScoresSort;
+    cursor_string?: string;
+  };
+}
 ```
 
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
+## Types
+
 - [MultiplayerScoresSort](/references/multiplayer-scores-sort)

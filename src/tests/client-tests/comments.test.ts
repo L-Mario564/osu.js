@@ -4,11 +4,11 @@ import { getExistingAccessToken, ms } from '.';
 import { sleep } from '../../utils';
 
 describe('Test comment related endpoints', async () => {
-  let accessToken: string = await getExistingAccessToken();
-  let comments = new Client(accessToken).comments;
+  const accessToken: string = await getExistingAccessToken();
+  const comments = new Client(accessToken).comments;
 
   it('Gets multiple comments', async () => {
-    let commentBundle = await comments.getComments({
+    const commentBundle = await comments.getComments({
       query: {
         commentable: {
           id: 742961,
@@ -22,7 +22,7 @@ describe('Test comment related endpoints', async () => {
   await sleep(ms);
 
   it('Gets a comment', async () => {
-    let commentBundle = await comments.getComment(832359);
+    const commentBundle = await comments.getComment(832359);
     expect(commentBundle).toBeDefined();
   });
 });

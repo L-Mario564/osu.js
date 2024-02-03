@@ -1,6 +1,4 @@
-import { Mod } from '../types';
-import { ModsEnum } from './enums';
-
+// ts-prune-ignore-next
 export function sleep(ms: number): Promise<unknown> {
   return new Promise((resolve: (value: unknown) => unknown) => setTimeout(resolve, ms));
 }
@@ -15,7 +13,7 @@ export function formatUrlParams(urlParams: Record<string, unknown>): string {
   }, '');
 }
 
-export function map<T>(obj: Record<string, unknown>): T {
+export function map<T>(obj: Record<string, any>): T {
   let entries: [string, unknown][] = Object.entries(obj);
   entries = entries.map(mapCallback);
 
@@ -38,31 +36,4 @@ export function mapCallback([key, value]: [string, unknown]): [string, unknown] 
   }
 
   return [key, newValue];
-}
-
-// Functions to re-export
-
-export function getModsEnum(mods: Mod[]): number {
-  return mods.reduce((count: number, mod: Mod) => count + ModsEnum[mod], 0);
-}
-
-export function getEnumMods(modEnum: string | null): Mod[] {
-  let mods: Mod[] = [];
-
-  if (!modEnum || modEnum === '0') return mods;
-
-  let parsedGlobalEnum: number = Number(modEnum);
-  let modEnums: string[] = Object.keys(ModsEnum);
-  modEnums = modEnums.splice(0, modEnums.length / 2);
-
-  for (let i = modEnums.length; parsedGlobalEnum !== 0; i--) {
-    let parsedEnum: number = Number(modEnums[i]);
-
-    if (parsedGlobalEnum - parsedEnum >= 0) {
-      mods.push(ModsEnum[parsedEnum] as Mod);
-      parsedGlobalEnum -= parsedEnum;
-    }
-  }
-
-  return mods.reverse();
 }

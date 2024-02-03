@@ -23,7 +23,7 @@ const scores = await api.beatmaps.getBeatmapAttributes(1816113, 'fruits');
 
 #### options.body
 
-| Parameter | Type   | Optional                 | Description |
+| Parameter | Type   | Optional                 | Description |                                                                                  |
 | --------- | ------ | ------------------------ | ----------- | -------------------------------------------------------------------------------- |
 | mods      | number | [Mod](/references/mod)[] | ✓           | Mods to apply (can be either the bitwise representation or an array of acronyms) |
 
@@ -68,3 +68,11 @@ Promise<ManiaBeatmapDifficultyAttributes>;
 #### Types
 
 - [ManiaBeatmapDifficultyAttributes](/references/mania-beatmap-difficulty-attributes)
+
+### Possible Exceptions
+
+See the [error handling documentation](/extras/error-handling) for more information.
+
+- `invalid_json_syntax`
+- `network_error`
+- `unexpected_response`

@@ -1,22 +1,22 @@
 ---
 title: GetChangelogListingOptions
-ref: type
+ref: interface
 ---
 
 # GetChangelogListingOptions
 
 ```ts
-type GetChangelogListingOptions = Partial<{
-  query: Partial<{
-    from: string;
-    max_id: number;
-    stream: ChangelogStream;
-    to: string;
-    message_formats: MessageFormat[];
-  }>;
-}>;
+interface GetChangelogListingOptions {
+  query?: {
+    from?: string;
+    max_id?: number;
+    stream?: ChangelogStream;
+    to?: string;
+    message_formats?: ('html' | 'markdown')[];
+  };
+}
 ```
 
-- [Partial](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)
+## Types
+
 - [ChangelogStream](/references/changelog-stream)
-- [MessageFormat](/references/message-format)

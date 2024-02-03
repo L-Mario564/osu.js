@@ -4,11 +4,11 @@ import { sleep } from '../../utils';
 import { getExistingAccessToken, ms } from '.';
 
 describe('Test user related endpoints', async () => {
-  let accessToken: string = await getExistingAccessToken();
-  let users = new Client(accessToken).users;
+  const accessToken: string = await getExistingAccessToken();
+  const users = new Client(accessToken).users;
 
   it('Gets the user data of the current access token', async () => {
-    let me = await users.getSelf({
+    const me = await users.getSelf({
       urlParams: {
         mode: 'osu'
       }
@@ -19,7 +19,7 @@ describe('Test user related endpoints', async () => {
   await sleep(ms);
 
   it("Gets a user's kudosu", async () => {
-    let kudosu = await users.getUserKudosu(3171691, {
+    const kudosu = await users.getUserKudosu(3171691, {
       query: {
         limit: 1
       }
@@ -30,7 +30,7 @@ describe('Test user related endpoints', async () => {
   await sleep(ms);
 
   it("Gets a user's best scores", async () => {
-    let scores = await users.getUserScores(14544646, 'best', {
+    const scores = await users.getUserScores(14544646, 'best', {
       query: {
         mode: 'osu',
         limit: 3
@@ -42,7 +42,7 @@ describe('Test user related endpoints', async () => {
   await sleep(ms);
 
   it("Gets a user's beatmaps", async () => {
-    let beatmapsets = await users.getUserBeatmaps(14544646, 'favourite', {
+    const beatmapsets = await users.getUserBeatmaps(14544646, 'favourite', {
       query: {
         limit: 2
       }
@@ -53,13 +53,13 @@ describe('Test user related endpoints', async () => {
   await sleep(ms);
 
   it("Gets a user's recent activity", async () => {
-    let events = await users.getUserRecentActivity(14544646);
+    const events = await users.getUserRecentActivity(14544646);
     expect(Array.isArray(events)).toBe(true);
   });
   await sleep(ms);
 
   it('Gets a single user', async () => {
-    let user = await users.getUser(14544646, {
+    const user = await users.getUser(14544646, {
       urlParams: {
         mode: 'osu'
       }
@@ -70,7 +70,7 @@ describe('Test user related endpoints', async () => {
   await sleep(ms);
 
   it('Gets multiple users', async () => {
-    let usersData = await users.getUsers({
+    const usersData = await users.getUsers({
       query: {
         ids: [14544646, 3171691]
       }

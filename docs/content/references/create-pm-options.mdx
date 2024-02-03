@@ -1,20 +1,17 @@
 ---
 title: CreatePMOptions
-ref: type
+ref: interface
 ---
 
 # CreatePMOptions
 
 ```ts
-type CreatePMOptions = {
+interface CreatePMOptions {
   body: {
     target_id: number;
-    /** Message to send */
     message: string;
-    /** Is the message an action? */
-    is_action?: boolean;
-    /** Client side message identifier which will be sent back in response and websocket JSON */
-    uuid: string;
+    is_action: boolean;
+    uuid?: string;
   };
-};
+}
 ```

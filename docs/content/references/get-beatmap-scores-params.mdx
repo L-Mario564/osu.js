@@ -1,17 +1,17 @@
 ---
 title: GetBeatmapScoresParams
-ref: type
+ref: interface
 ---
 
 # GetBeatmapScoresParams
 
 ```ts
-type GetBeatmapScoresParams = GetUserScores & {
+interface GetBeatmapScoresParams extends GetUserScoresBaseParams {
   b: number;
   u?: string | number;
-};
+}
 ```
 
 ## Types
 
-- [GetUserScores](/references/get-user-scores)
+- [GetUserScoresBaseParams](/references/get-user-scores-base-params)

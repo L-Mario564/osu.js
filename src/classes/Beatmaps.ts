@@ -1,5 +1,6 @@
 import Base from './Base';
-import {
+import type polyfillFetch from 'node-fetch';
+import type {
   Beatmap,
   Beatmapset,
   BeatmapUserScore,
@@ -14,21 +15,12 @@ import {
   TaikoBeatmapDifficultyAttributes,
   UserCompact
 } from '../types';
-import {
+import type {
   GetBeatmapAttributesOptions,
   GetBeatmapScoresOptions,
   GetBeatmapsOptions,
   LookupBeatmapOptions
 } from '../types/options';
-import { z } from 'zod';
-import {
-  lookupBeatmapOptionsSchema,
-  getBeatmapScoresOptionSchema,
-  getBeatmapsOptionsSchema,
-  getBeatmapAttributesOptionsSchema
-} from '../schemas/beatmaps';
-import { gameModeSchema } from '../schemas';
-import { isAxiosError } from 'axios';
 
 /**
  * Class that wraps all beatmap related endpoints
@@ -36,13 +28,21 @@ import { isAxiosError } from 'axios';
 export default class Beatmaps extends Base {
   /**
    * @param accessToken OAuth access token
+   * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
    */
-  constructor(accessToken: string) {
-    super(accessToken);
+  constructor(
+    accessToken: string,
+    options?: {
+      polyfillFetch?: typeof polyfillFetch;
+    }
+  ) {
+    super(accessToken, options);
   }
 
   /**
    * Makes a GET request to the `/beatmaps/lookup` endpoint
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/lookup-beatmap}
    * @returns A beatmap
    */
   public async lookupBeatmap(options?: LookupBeatmapOptions): Promise<
@@ -54,34 +54,18 @@ export default class Beatmaps extends Base {
         failtimes: Fails;
         max_combo: number;
       })
-    | undefined
+    | null
   > {
-    options = lookupBeatmapOptionsSchema.optional().parse(options);
-
-    let beatmap:
-      | (Beatmap & {
-          beatmapset: Beatmapset & {
-            ratings: number[];
-          };
-          checksum: string | null;
-          failtimes: Fails;
-          max_combo: number;
-        })
-      | undefined;
-
-    try {
-      beatmap = await this.fetch('beatmaps/lookup', 'GET', options);
-    } catch (err) {
-      if (!isAxiosError(err) || err.response?.status !== 404) {
-        throw err;
-      }
-    }
-
-    return beatmap;
+    return await this.request('beatmaps/lookup', 'GET', {
+      ...options,
+      returnNullOn404: true
+    });
   }
 
   /**
    * Makes a GET request to the `/beatmaps/{beatmap}/scores/users/{user}` endpoint
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-beatmap-user-score}
    * @param beatmap ID of the beatmap to get scores from
    * @param user ID of the user to get scores from
    * @returns A user score on a beatmap
@@ -91,15 +75,13 @@ export default class Beatmaps extends Base {
     user: number,
     options?: GetBeatmapScoresOptions
   ): Promise<BeatmapUserScore> {
-    beatmap = z.number().parse(beatmap);
-    user = z.number().parse(user);
-    options = getBeatmapScoresOptionSchema.optional().parse(options);
-
-    return await this.fetch(`beatmaps/${beatmap}/scores/users/${user}`, 'GET', options);
+    return await this.request(`beatmaps/${beatmap}/scores/users/${user}`, 'GET', options);
   }
 
   /**
    * Makes a GET request to the `/beatmaps/{beatmap}/scores/users/{user}/all` endpoint
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-beatmap-user-scores}
    * @param beatmap ID of the beatmap to get scores from
    * @param user ID of the user to get scores from
    * @returns An array of user scores on a beatmap
@@ -109,19 +91,17 @@ export default class Beatmaps extends Base {
     user: number,
     options?: GetBeatmapScoresOptions
   ): Promise<Score[]> {
-    beatmap = z.number().parse(beatmap);
-    user = z.number().parse(user);
-    options = getBeatmapScoresOptionSchema.optional().parse(options);
-
-    let scores: {
-      scores: Score[];
-    } = await this.fetch(`beatmaps/${beatmap}/scores/users/${user}/all`, 'GET', options);
+    const scores = await this.request<{
+      scores: Awaited<ReturnType<Beatmaps['getBeatmapUserScores']>>;
+    }>(`beatmaps/${beatmap}/scores/users/${user}/all`, 'GET', options);
 
     return scores.scores;
   }
 
   /**
    * Makes a GET request to the `/beatmaps/{beatmap}/scores` endpoint
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-beatmap-top-scores}
    * @param beatmap ID of the beatmap to get top scores from
    * @returns An array of user scores on a beatmap
    */
@@ -136,23 +116,17 @@ export default class Beatmaps extends Base {
       };
     })[]
   > {
-    beatmap = z.number().parse(beatmap);
-    options = getBeatmapScoresOptionSchema.optional().parse(options);
-
-    let scores: {
-      scores: (Score & {
-        user: UserCompact & {
-          country: Country;
-          cover: Cover;
-        };
-      })[];
-    } = await this.fetch(`beatmaps/${beatmap}/scores`, 'GET', options);
+    const scores = await this.request<{
+      scores: Awaited<ReturnType<Beatmaps['getBeatmapTopScores']>>;
+    }>(`beatmaps/${beatmap}/scores`, 'GET', options);
 
     return scores.scores;
   }
 
   /**
    * Makes a GET request to the `/beatmaps` endpoint
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-beatmaps}
    * @returns An array of beatmaps
    */
   public async getBeatmaps(options?: GetBeatmapsOptions): Promise<
@@ -165,24 +139,17 @@ export default class Beatmaps extends Base {
       };
     })[]
   > {
-    options = getBeatmapsOptionsSchema.optional().parse(options);
-
-    let beatmaps: {
-      beatmaps: (Beatmap & {
-        failtimes: Fails;
-        max_combo: number;
-        checksum: string | null;
-        beatmapset: Beatmapset & {
-          ratings: number[];
-        };
-      })[];
-    } = await this.fetch('/beatmaps', 'GET', options);
+    const beatmaps = await this.request<{
+      beatmaps: Awaited<ReturnType<Beatmaps['getBeatmaps']>>;
+    }>('beatmaps', 'GET', options);
 
     return beatmaps.beatmaps;
   }
 
   /**
    * Makes a GET request to the `/beatmaps/{beatmap}` endpoint
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-beatmap}
    * @param beatmap ID of the beatmap to get
    * @returns A beatmap
    */
@@ -196,12 +163,13 @@ export default class Beatmaps extends Base {
       max_combo: number;
     }
   > {
-    beatmap = z.number().parse(beatmap);
-    return await this.fetch(`beatmaps/${beatmap}`, 'GET');
+    return await this.request(`beatmaps/${beatmap}`, 'GET');
   }
 
   /**
    * Makes a POST request to the `/beatmaps/{beatmap}/attributes` endpoint
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-beatmap-attributes}
    * @param beatmap ID of the beatmap to get its attributes
    * @param gamemode Gamemode attributes to get
    * @returns A beatmap's attributes
@@ -219,17 +187,13 @@ export default class Beatmaps extends Base {
       ? FruitsBeatmapDifficultyAttributes
       : ManiaBeatmapDifficultyAttributes
   > {
-    beatmap = z.number().parse(beatmap);
-    gamemode = gameModeSchema.parse(gamemode) as T;
-    options = getBeatmapAttributesOptionsSchema.optional().parse(options);
-
-    let remapped = {
+    const remapped = {
       body: {
         mods: options?.body?.mods,
         ruleset: gamemode
       }
     };
 
-    return await this.fetch(`beatmaps/${beatmap}/attributes`, 'POST', remapped);
+    return await this.request(`beatmaps/${beatmap}/attributes`, 'POST', remapped);
   }
 }

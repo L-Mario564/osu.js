@@ -6,6 +6,8 @@ title: Revoke token
 
 To revoke an OAuth token, regardless if it's from the client credentails or authorization code flow, use the `revokeToken` method on an `Auth` class instance. The method makes a `DELETE` request to `https://osu.ppy.sh/api/v2/oauth/tokens/current`.
 
+`Client.revokeToken` has the same functionality.
+
 ## Example
 
 ```ts
