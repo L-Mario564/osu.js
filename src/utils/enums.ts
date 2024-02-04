@@ -66,6 +66,7 @@ export enum LanguagesEnum {
  * Documentation: {@link https://osujs.mario564.com/references/mods-enum}
  */
 export enum ModsEnum {
+  NM = 0,
   NF = 1,
   EZ = 2,
   TD = 4,

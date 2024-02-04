@@ -12,6 +12,7 @@ export function getModsEnum(mods: Mod[]): number {
   return mods.reduce((count, mod) => {
     if (
       ![
+        'NM',
         'NF',
         'EZ',
         'TD',
