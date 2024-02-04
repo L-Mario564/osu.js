@@ -75,7 +75,8 @@ export enum ModsEnum {
   DT = 64,
   RX = 128,
   HT = 256,
-  NC = 512,
+  // Only set along with DoubleTime. i.e: NC only gives 576
+  NC = 576,
   FL = 1024,
   AT = 2048,
   SO = 4096,
