@@ -87,6 +87,8 @@ To run tests related to the legacy API, run the `test:legacy` script with the `A
 
 To run any tests related to the current API, you first need to get an OAuth token. To do this, you can run `test:auth`. Once the Express server is running, visit `http://localhost:3000/auth`. For this to work, you must set the `CLIENT_ID`, `CLIENT_SECRET` and `REDIRECT_URI` environment variables.
 
+You don't need to repeat the step of getting the token as long as you have a `api-token.json` file, as each test will refresh the token automatically if it's expired.
+
 After getting the token, you can run all tests with `test:current` or test specific classes and methods using the scripts described previously.
 
 ### Utilities
