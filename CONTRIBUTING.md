@@ -75,3 +75,30 @@ Run these scripts by prefixing the script's name with `pnpm `.
 - `dev`: Start a local dev server.
 - `build`: Compile the the website for production.
 - `preview`: Start a local server for the production version of the site.
+
+
+## Testing
+
+### Legacy API
+
+To run tests related to the legacy API, run the `test:legacy` script with the `API_KEY` environment variable set.
+
+### Current API
+
+To run any tests related to the current API, you first need to get an OAuth token. To do this, you can run `test:auth`. Once the Express server is running, visit `http://localhost:3000/auth`. For this to work, you must set the `CLIENT_ID`, `CLIENT_SECRET` and `REDIRECT_URI` environment variables.
+
+After getting the token, you can run all tests with `test:current` or test specific classes and methods using the scripts described previously.
+
+### Utilities
+
+To run tests unrelated to making requests to the osu! API (a.k.a utilities), run `test:utils`. No environment variables are required.
+
+### Authentication
+
+To test all OAuth related functionality, run `test:auth`. The script will run an Express server serving at `http://localhost:3000`.
+
+To test the authorization code grant flow, head to `http://localhost:3000/auth` to get an access token. If you wish to referesh the token for the sake of testing, head to `http://localhost:3000/refresh-token`, and with that, you've completed the auth flow.
+
+To test the client credentials grant flow, head to `http://localhost:3000/auth/guest`.
+
+To revoke any of token, head to `http://localhost:3000/revoke-token`.
