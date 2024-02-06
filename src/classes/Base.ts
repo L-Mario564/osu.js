@@ -43,7 +43,8 @@ export default class Base {
         body: options?.body ? JSON.stringify(options.body) : undefined,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.accessToken}`
+          'Authorization': `Bearer ${this.accessToken}`,
+          'x-api-version': '20220705'
         }
       });
     } catch (err) {
