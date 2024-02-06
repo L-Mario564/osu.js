@@ -81,6 +81,7 @@ export enum ModsEnum {
   AT = 2048,
   SO = 4096,
   AP = 8192,
+  // Only set along with SuddenDeath. i.e: PF only gives 16416
   PF = 16384,
   '4K' = 32768,
   '5K' = 65536,
