@@ -74,6 +74,14 @@ export function getEnumMods(modEnum: number): Mod[] {
     }
   }
 
+  if ((['DT', 'NC'] as Mod[]).every((mod) => mods.includes(mod))) {
+    const i = mods.indexOf('DT');
+    mods.splice(i);
+  } else if ((['SD', 'PF'] as Mod[]).every((mod) => mods.includes(mod))) {
+    const i = mods.indexOf('SD');
+    mods.splice(i);
+  }
+
   return mods.reverse();
 }
 
