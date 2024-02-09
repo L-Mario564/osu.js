@@ -1,3 +1,4 @@
 node_modules
 lib
 LICENSE
+pnpm-lock.yaml

@@ -75,10 +75,4 @@ The current API is up to date with February 17th, 2023's (2023-02-17) [breaking 
 
 ## Contributing
 
-### Issues
-
-Before filing an issue, make sure it hasn't already been reported and make sure it doesn't have a documented solution.
-
-### Pull Requests
-
-When filing a pull request, describe why it was created; if it's a bug fix, describe what issue it solves; if it's a new feature implementation, describe how it could enhance this library; so on and so forth.
+Read [CONTRIBUTING.md](https://github.com/L-Mario564/osu.js/blob/master/CONTRIBUTING.md)
