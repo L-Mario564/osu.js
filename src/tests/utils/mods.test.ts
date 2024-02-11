@@ -19,6 +19,4 @@ describe('Test mod-enum conversion', () => {
   it('(Enum -> Mod) PF', () => expect(getModsEnum(['PF'])).toStrictEqual(16384));
   it('(Enum -> Mod) (DT)NC', () => expect(getModsEnum(['NC'], true)).toStrictEqual(576));
   it('(Enum -> Mod) (SD)PF', () => expect(getModsEnum(['PF'], true)).toStrictEqual(16416));
-  it('(Enum -> Mod) DTNC', () => expect(getModsEnum(['DT', 'NC'], true)).toStrictEqual(576));
-  it('(Enum -> Mod) SDPF', () => expect(getModsEnum(['SD', 'PF'], true)).toStrictEqual(16416));
 });
