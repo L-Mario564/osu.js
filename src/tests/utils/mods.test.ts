@@ -17,4 +17,8 @@ describe('Test mod-enum conversion', () => {
   it('(Enum -> Mod) 2 non-legacy mod', () => expect(getModsEnum(['DC', '10K'])).toBe(0));
   it('(Enum -> Mod) NC', () => expect(getModsEnum(['NC'])).toStrictEqual(512));
   it('(Enum -> Mod) PF', () => expect(getModsEnum(['PF'])).toStrictEqual(16384));
+  it('(Enum -> Mod) (DT)NC', () => expect(getModsEnum(['NC'], true)).toStrictEqual(576));
+  it('(Enum -> Mod) (SD)PF', () => expect(getModsEnum(['PF'], true)).toStrictEqual(16416));
+  it('(Enum -> Mod) DTNC', () => expect(getModsEnum(['DT', 'NC'], true)).toStrictEqual(576));
+  it('(Enum -> Mod) SDPF', () => expect(getModsEnum(['SD', 'PF'], true)).toStrictEqual(16416));
 });
