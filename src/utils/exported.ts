@@ -46,6 +46,12 @@ export function getModsEnum(mods: Mod[]): number {
       ].includes(mod)
     )
       return count;
+      
+    if (mod === 'NC')
+      return count + ModsEnum.NC + ModsEnum.DT;
+    if (mod === 'PF')
+      return count + ModsEnum.PF + ModsEnum.SD;
+
     return count + ModsEnum[mod as keyof typeof ModsEnum];
   }, 0);
 }
