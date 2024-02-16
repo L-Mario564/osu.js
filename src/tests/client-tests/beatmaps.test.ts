@@ -62,6 +62,17 @@ describe('Test beatmap related endpoints', async () => {
   });
   await sleep(ms);
 
+  it('Gets beatmap top user (non-legacy) scores', async () => {
+    const scores = await beatmaps.getBeatmapTopNonLegacyScores(1816113, {
+      query: {
+        mode: 'osu'
+      }
+    });
+
+    expect(Array.isArray(scores)).toBe(true);
+  });
+  await sleep(ms);
+
   it('Gets beatmaps', async () => {
     const maps = await beatmaps.getBeatmaps({
       query: {

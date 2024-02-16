@@ -17,6 +17,7 @@ import type {
 } from '../types';
 import type {
   GetBeatmapAttributesOptions,
+  GetBeatmapNonLegacyScoresOptions,
   GetBeatmapScoresOptions,
   GetBeatmapsOptions,
   LookupBeatmapOptions
@@ -119,6 +120,31 @@ export default class Beatmaps extends Base {
     const scores = await this.request<{
       scores: Awaited<ReturnType<Beatmaps['getBeatmapTopScores']>>;
     }>(`beatmaps/${beatmap}/scores`, 'GET', options);
+
+    return scores.scores;
+  }
+
+  /**
+   * Makes a GET request to the `/beatmaps/{beatmap}/solo-scores` endpoint
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-beatmap-top-non-legacy-scores}
+   * @param beatmap ID of the beatmap to get top scores from
+   * @returns An array of user scores on a beatmap
+   */
+  public async getBeatmapTopNonLegacyScores(
+    beatmap: number,
+    options?: GetBeatmapNonLegacyScoresOptions
+  ): Promise<
+    (Score & {
+      user: UserCompact & {
+        country: Country;
+        cover: Cover;
+      };
+    })[]
+  > {
+    const scores = await this.request<{
+      scores: Awaited<ReturnType<Beatmaps['getBeatmapTopNonLegacyScores']>>;
+    }>(`beatmaps/${beatmap}/solo-scores`, 'GET', options);
 
     return scores.scores;
   }
