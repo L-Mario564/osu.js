@@ -54,6 +54,7 @@ export default class Users extends Base {
   public async getSelf(options?: GetSelfOptions): Promise<
     UserExtended & {
       is_restricted: boolean;
+      session_verified: boolean;
       statistics_rulesets: StatisticsRulesets;
     }
   > {
