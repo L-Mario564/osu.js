@@ -1,9 +1,11 @@
 # Changelog
 
-## Unreleased
+## 2.1.0
 
 - Add `best_id` property to the `Score` interface.
 - The `count_geki` and `count_katu` properties in the `ScoreStatistics` interface are now marked as nullable.
+- Fix a bug with `getEnumMods` when passing NC and/or PF alongside other mods.
+- Add `derivativeModsWithOriginal` parameter to `getModsEnum` in case the developer wishes for NC to output the same enum value as DTNC and for PF to output the same enum value as SDPF if set to `true`.
 
 ## 2.0.2
 
