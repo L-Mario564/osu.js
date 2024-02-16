@@ -75,7 +75,9 @@ export type DiscussionMessageType =
   | 'review';
 export type Playstyle = 'mouse' | 'keyboard' | 'tablet' | 'touch';
 export type Scope =
+  | 'chat.read'
   | 'chat.write'
+  | 'chat.write_manage'
   | 'delegate'
   | 'forum.write'
   | 'friends.read'
