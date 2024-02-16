@@ -340,13 +340,14 @@ export interface ScoreStatistics {
   count_50: number;
   count_100: number;
   count_300: number;
-  count_geki: number;
-  count_katu: number;
+  count_geki: number | null;
+  count_katu: number | null;
   count_miss: number;
 }
 
 export interface Score {
   id: number;
+  best_id: number;
   user_id: number;
   accuracy: number;
   mods: Mod[];
