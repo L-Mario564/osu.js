@@ -76,10 +76,10 @@ export function getEnumMods(modEnum: number): Mod[] {
 
   if ((['DT', 'NC'] as Mod[]).every((mod) => mods.includes(mod))) {
     const i = mods.indexOf('DT');
-    mods.splice(i);
+    mods.splice(i, 1);
   } else if ((['SD', 'PF'] as Mod[]).every((mod) => mods.includes(mod))) {
     const i = mods.indexOf('SD');
-    mods.splice(i);
+    mods.splice(i, 1);
   }
 
   return mods.reverse();
