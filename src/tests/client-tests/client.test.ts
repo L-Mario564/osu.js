@@ -1,7 +1,8 @@
 import fetch from 'node-fetch';
 import { Client } from '../../index';
 import { describe, expect, it } from 'vitest';
-import { getExistingAccessToken } from '.';
+import { getExistingAccessToken, ms } from '.';
+import { sleep } from '../test-utils';
 
 describe('Test home related endpoints', async () => {
   const accessToken: string = await getExistingAccessToken();
@@ -19,6 +20,7 @@ describe('Test home related endpoints', async () => {
 
     expect(results.user?.data[0]).toBeDefined();
   });
+  await sleep(ms);
 
   it('Gets multiple users (polyfill fetch API test)', async () => {
     const usersData = await withPolyfillFetch.users.getUsers({

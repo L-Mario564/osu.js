@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import { LegacyClient } from '../';
 import { describe, expect, it } from 'vitest';
 import { config } from 'dotenv';
-import { sleep } from '../utils';
+import { sleep } from './test-utils';
 
 describe('Test legacy client', async () => {
   config();
