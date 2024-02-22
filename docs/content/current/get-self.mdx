@@ -35,6 +35,7 @@ const user = await api.users.getSelf({
 Promise<
   UserExtended & {
     is_restricted: boolean;
+    session_verified: boolean;
     statistics_rulesets: StatisticsRulesets;
   }
 >;

@@ -9,6 +9,8 @@ ref: interface
 interface GetBeatmapAttributesOptions {
   body?: {
     mods?: number | Mod[];
+    ruleset?: GameMode;
+    ruleset_id?: number;
   };
 }
 ```
@@ -16,3 +18,4 @@ interface GetBeatmapAttributesOptions {
 ## Types
 
 - [Mod](/references/mod)
+- [GameMode](/references/game-mode)
