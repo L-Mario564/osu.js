@@ -133,7 +133,7 @@ export default class Beatmaps<
    * @param beatmap ID of the beatmap to get top scores from
    * @returns An array of user scores on a beatmap
    */
-  public async getBeatmapTopNonLegacyScores(
+  private async getBeatmapTopNonLegacyScores(
     beatmap: number,
     options?: GetBeatmapNonLegacyScoresOptions
   ): Promise<
