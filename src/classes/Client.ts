@@ -19,18 +19,20 @@ import type { SearchResults } from '../types';
  *
  * Documentation: {@link https://osujs.mario564.com/current}
  */
-export default class Client extends Base {
-  public beatmaps: Beatmaps;
-  public beatmapsetDiscussions: BeatmapsetDiscussions;
-  public changelog: Changelog;
-  public chat: Chat;
-  public comments: Comments;
-  public forum: Forum;
-  public multiplayer: Multiplayer;
-  public news: News;
-  public ranking: Ranking;
-  public users: Users;
-  public wiki: Wiki;
+export default class Client<
+  TPolyfillFetch extends typeof polyfillFetch | undefined = undefined
+> extends Base<TPolyfillFetch> {
+  public beatmaps: Beatmaps<TPolyfillFetch>;
+  public beatmapsetDiscussions: BeatmapsetDiscussions<TPolyfillFetch>;
+  public changelog: Changelog<TPolyfillFetch>;
+  public chat: Chat<TPolyfillFetch>;
+  public comments: Comments<TPolyfillFetch>;
+  public forum: Forum<TPolyfillFetch>;
+  public multiplayer: Multiplayer<TPolyfillFetch>;
+  public news: News<TPolyfillFetch>;
+  public ranking: Ranking<TPolyfillFetch>;
+  public users: Users<TPolyfillFetch>;
+  public wiki: Wiki<TPolyfillFetch>;
 
   /**
    * @param accessToken OAuth access token
@@ -39,7 +41,7 @@ export default class Client extends Base {
   constructor(
     accessToken: string,
     options?: {
-      polyfillFetch?: typeof polyfillFetch;
+      polyfillFetch?: TPolyfillFetch;
     }
   ) {
     super(accessToken, options);

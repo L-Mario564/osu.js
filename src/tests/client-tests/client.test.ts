@@ -23,12 +23,37 @@ describe('Test home related endpoints', async () => {
   await sleep(ms);
 
   it('Gets multiple users (polyfill fetch API test)', async () => {
-    const usersData = await withPolyfillFetch.users.getUsers({
+    const users = await withPolyfillFetch.users.getUsers({
       query: {
         ids: [14544646, 3171691]
       }
     });
 
-    expect(usersData.length).toBe(2);
+    expect(users.length).toBe(2);
+  });
+
+  it('Gets multiple users (safe parsing)', async () => {
+    const request = await client.safeParse(
+      client.users.getUsers({
+        query: {
+          ids: [14544646, 3171691]
+        }
+      })
+    );
+
+    let userIds: number[] = [];
+
+    if (request.success === true) {
+      userIds = request.data.map(({ id }) => id);
+    }
+
+    expect({
+      ...request,
+      data: userIds
+    }).toStrictEqual({
+      success: true,
+      response: undefined,
+      data: [3171691, 14544646]
+    });
   });
 });

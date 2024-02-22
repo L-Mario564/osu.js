@@ -1,17 +1,21 @@
 import { formatUrlParams } from '../utils';
 import { OsuJSGeneralError, OsuJSUnexpectedResponseError } from './Errors';
+import { isOsuJSError } from '../utils/exported';
 import type polyfillFetch from 'node-fetch';
 import type { Response as PolyfillResponse } from 'node-fetch';
 import type { Options } from '../types/options';
 
-export default class Base {
+export default class Base<
+  TPolyfillFetch extends typeof polyfillFetch | undefined = undefined
+> {
   protected accessToken: string;
   private fetch: typeof fetch | typeof polyfillFetch;
+  private usingPolyfillFetch: boolean;
 
   constructor(
     accessToken: string,
     options?: {
-      polyfillFetch?: typeof polyfillFetch;
+      polyfillFetch?: TPolyfillFetch;
     }
   ) {
     if (typeof fetch === 'undefined' && !options?.polyfillFetch) {
@@ -20,6 +24,7 @@ export default class Base {
 
     this.accessToken = accessToken;
     this.fetch = options?.polyfillFetch || fetch;
+    this.usingPolyfillFetch = !!options?.polyfillFetch;
   }
 
   protected async request<T>(
@@ -35,7 +40,7 @@ export default class Base {
       endpoint += query.replace('&', '?');
     }
 
-    let resp: Response | PolyfillResponse = new Response();
+    let resp!: Response | PolyfillResponse;
 
     try {
       resp = await this.fetch(`https://osu.ppy.sh/api/v2/${endpoint}`, {
@@ -75,5 +80,32 @@ export default class Base {
     }
 
     return data as T;
+  }
+
+  public async safeParse<T extends Promise<any>>(request: T): Promise<({
+    success: true;
+    data: Awaited<T>;
+  } | {
+    success: false;
+    response: TPolyfillFetch extends typeof polyfillFetch ? PolyfillResponse : Response;
+  })> {
+    let response!: PolyfillResponse | Response;
+    let data!: Awaited<T>;
+
+    try {
+      data = await request;
+    } catch (err) {
+      if (isOsuJSError(err) && err.type === 'unexpected_response') {
+        response = err.response(this.usingPolyfillFetch);
+      } else {
+        throw err;
+      }
+    }
+
+    return {
+      success: !!data,
+      response,
+      data
+    } as any;
   }
 }

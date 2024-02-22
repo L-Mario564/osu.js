@@ -6,7 +6,9 @@ import type { GetRankingOptions } from '../types/options';
 /**
  * Class that wraps all ranking related endpoints
  */
-export default class Ranking extends Base {
+export default class Ranking<
+  TPolyfillFetch extends typeof polyfillFetch | undefined = undefined
+> extends Base<TPolyfillFetch> {
   /**
    * @param accessToken OAuth access token
    * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
@@ -14,7 +16,7 @@ export default class Ranking extends Base {
   constructor(
     accessToken: string,
     options?: {
-      polyfillFetch?: typeof polyfillFetch;
+      polyfillFetch?: TPolyfillFetch;
     }
   ) {
     super(accessToken, options);
