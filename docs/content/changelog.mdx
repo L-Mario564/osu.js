@@ -3,9 +3,13 @@
 ## Unreleased
 
 - Add support for the `/beatmaps/{beatmap}/solo-scores` endpoint via `Client.beatmaps.getBeatmapTopNonLegacyScores`.
+
+## 2.2.0
+
 - Add `ruleset` and `ruleset_id` properties to `GetBeatmapAttributesOptions.body`.
 - Update response type for `Client.users.getSelf` to include the `session_verified` property.
 - Add `'chat.read'` and `'chat.write_manage'` to `Scope` union type.
+- Add `safeParse` method to the `Client` class to optionally prevent the `OsuJSUnexpectedResponseError` error to be thrown in requests done to the current API.
 
 ## 2.1.0
 

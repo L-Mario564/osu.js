@@ -4,6 +4,7 @@ import { isOsuJSError } from '../utils/exported';
 import type polyfillFetch from 'node-fetch';
 import type { Response as PolyfillResponse } from 'node-fetch';
 import type { Options } from '../types/options';
+import type { SafeParse } from '../types';
 
 export default class Base<
   TPolyfillFetch extends typeof polyfillFetch | undefined = undefined
@@ -82,18 +83,24 @@ export default class Base<
     return data as T;
   }
 
-  public async safeParse<T extends Promise<any>>(request: T): Promise<({
-    success: true;
-    data: Awaited<T>;
-  } | {
-    success: false;
-    response: TPolyfillFetch extends typeof polyfillFetch ? PolyfillResponse : Response;
-  })> {
+  /**
+   * Prevents a request done to the current API to throw an `OsuJSUnexpectedResponseError` error.
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/safe-parse}
+   */
+  public async safeParse<T extends Promise<any>>(request: T): Promise<
+    SafeParse<
+      Awaited<T>,
+      TPolyfillFetch extends typeof polyfillFetch ? true : false
+    >
+  > {
     let response!: PolyfillResponse | Response;
     let data!: Awaited<T>;
+    let success = false;
 
     try {
       data = await request;
+      success = true;
     } catch (err) {
       if (isOsuJSError(err) && err.type === 'unexpected_response') {
         response = err.response(this.usingPolyfillFetch);
@@ -103,7 +110,7 @@ export default class Base<
     }
 
     return {
-      success: !!data,
+      success,
       response,
       data
     } as any;

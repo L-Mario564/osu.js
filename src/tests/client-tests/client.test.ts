@@ -43,7 +43,7 @@ describe('Test home related endpoints', async () => {
 
     let userIds: number[] = [];
 
-    if (request.success === true) {
+    if (request.success) {
       userIds = request.data.map(({ id }) => id);
     }
 
