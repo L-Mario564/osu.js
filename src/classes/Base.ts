@@ -6,9 +6,7 @@ import type { Response as PolyfillResponse } from 'node-fetch';
 import type { Options } from '../types/options';
 import type { SafeParse } from '../types';
 
-export default class Base<
-  TPolyfillFetch extends typeof polyfillFetch | undefined = undefined
-> {
+export default class Base<TPolyfillFetch extends typeof polyfillFetch | undefined = undefined> {
   protected accessToken: string;
   private fetch: typeof fetch | typeof polyfillFetch;
   private usingPolyfillFetch: boolean;
@@ -88,12 +86,9 @@ export default class Base<
    *
    * Documentation: {@link https://osujs.mario564.com/current/safe-parse}
    */
-  public async safeParse<T extends Promise<any>>(request: T): Promise<
-    SafeParse<
-      Awaited<T>,
-      TPolyfillFetch extends typeof polyfillFetch ? true : false
-    >
-  > {
+  public async safeParse<T extends Promise<any>>(
+    request: T
+  ): Promise<SafeParse<Awaited<T>, TPolyfillFetch extends typeof polyfillFetch ? true : false>> {
     let response!: PolyfillResponse | Response;
     let data!: Awaited<T>;
     let success = false;

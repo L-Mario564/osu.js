@@ -46,11 +46,14 @@ export function getModsEnum(mods: Mod[], derivativeModsWithOriginal?: boolean): 
       ].includes(mod)
     )
       return count;
-      
-    if (mod === 'NC' && derivativeModsWithOriginal)
+
+    if (mod === 'NC' && derivativeModsWithOriginal) {
       return count + ModsEnum.NC + ModsEnum.DT;
-    if (mod === 'PF' && derivativeModsWithOriginal)
+    }
+
+    if (mod === 'PF' && derivativeModsWithOriginal) {
       return count + ModsEnum.PF + ModsEnum.SD;
+    }
 
     return count + ModsEnum[mod as keyof typeof ModsEnum];
   }, 0);
@@ -84,7 +87,7 @@ export function getEnumMods(modEnum: number): Mod[] {
     const i = mods.indexOf('DT');
     mods.splice(i, 1);
   }
-  
+
   if ((['SD', 'PF'] as Mod[]).every((mod) => mods.includes(mod))) {
     const i = mods.indexOf('SD');
     mods.splice(i, 1);

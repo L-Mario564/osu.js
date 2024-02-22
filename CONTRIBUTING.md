@@ -76,7 +76,6 @@ Run these scripts by prefixing the script's name with `pnpm `.
 - `build`: Compile the the website for production.
 - `preview`: Start a local server for the production version of the site.
 
-
 ## Testing
 
 ### Legacy API

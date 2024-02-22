@@ -11,16 +11,15 @@ export type ISOTimestamp = string;
  */
 export type OsuJSError = OsuJSGeneralError | OsuJSUnexpectedResponseError;
 export type Cursor = string | null;
-export type SafeParse<
-  TData,
-  TUsePolyfillResponse extends boolean = false
-> = {
-  success: true;
-  data: TData;
-} | {
-  success: false;
-  response: TUsePolyfillResponse extends true ? PolyfillResponse : Response;
-};
+export type SafeParse<TData, TUsePolyfillResponse extends boolean = false> =
+  | {
+      success: true;
+      data: TData;
+    }
+  | {
+      success: false;
+      response: TUsePolyfillResponse extends true ? PolyfillResponse : Response;
+    };
 
 export type Mod =
   | keyof typeof ModsEnum
