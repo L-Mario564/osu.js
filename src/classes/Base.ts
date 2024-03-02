@@ -48,7 +48,7 @@ export default class Base<TPolyfillFetch extends typeof polyfillFetch | undefine
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${this.accessToken}`,
-          'x-api-version': '20220705'
+          'x-api-version': '20220706'
         }
       });
     } catch (err) {
