@@ -1,3 +1,4 @@
+import type { Response as PolyfillResponse } from 'node-fetch';
 import type { OsuJSGeneralError, OsuJSUnexpectedResponseError } from '../classes/Errors';
 import type { StatusEnum } from '../utils/enums';
 import { Mod } from './mod';
@@ -11,6 +12,15 @@ export type ISOTimestamp = string;
  */
 export type OsuJSError = OsuJSGeneralError | OsuJSUnexpectedResponseError;
 export type Cursor = string | null;
+export type SafeParse<TData, TUsePolyfillResponse extends boolean = false> =
+  | {
+      success: true;
+      data: TData;
+    }
+  | {
+      success: false;
+      response: TUsePolyfillResponse extends true ? PolyfillResponse : Response;
+    };
 export type RankStatus = keyof typeof StatusEnum;
 
 export type GameMode = 'fruits' | 'mania' | 'osu' | 'taiko';
