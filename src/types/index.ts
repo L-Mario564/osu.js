@@ -48,10 +48,17 @@ export type DiscussionMessageType =
   | 'review';
 export type Playstyle = 'mouse' | 'keyboard' | 'tablet' | 'touch';
 export type Scope =
+  | 'chat.read'
   | 'chat.write'
+  | 'chat.write'
+  | 'chat.write_manage'
+  | 'delegate'
   | 'delegate'
   | 'forum.write'
+  | 'forum.write'
   | 'friends.read'
+  | 'friends.read'
+  | 'identify'
   | 'identify'
   | 'public';
 export type ProfilePageSection =
