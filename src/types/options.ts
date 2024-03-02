@@ -31,6 +31,15 @@ export interface GetBeatmapScoresOptions {
   };
 }
 
+export interface GetBeatmapNonLegacyScoresOptions {
+  query?: {
+    /** Set to true to only return legacy scores */
+    legacy_only?: boolean;
+    /** Gamemode of the scores to return */
+    mode?: GameMode;
+  };
+}
+
 export interface GetBeatmapsOptions {
   query?: {
     /** An array of beatmap IDs (can only take up to 50 IDs) */
@@ -42,6 +51,10 @@ export interface GetBeatmapAttributesOptions {
   body?: {
     /** Mods to apply (can be either the bitwise representation or an array of acronyms) */
     mods?: number | Mod[];
+    /** Ruleset of the difficulty attributes. Only valid if it's the beatmap ruleset or the beatmap can be converted to the specified ruleset. Defaults to ruleset of the specified beatmap */
+    ruleset?: GameMode;
+    /** The same as `ruleset` but in integer form */
+    ruleset_id?: number;
   };
 }
 

@@ -20,3 +20,22 @@ enumValue = getModsEnum(['HR', 'SD']); // Output: 48
 enumValue = getModsEnum(['HR', 'SD', 'FL']); // Output: 1072
 enumValue = getModsEnum(['DC']); // Output: 0, because DC (Daycore) is not present in the enum mentioned above
 ```
+
+**Note:** In some responses, DT might be paired with NC and PF might paired with PF. DTNC and SDPF aren't possible mod combinations, but in the API, they are paired because NC derives from DT and PF derives from SD. So, if the API returns DTNC, it will be parsed as NC, and if it returns SDPF, it will parsed as PF.
+
+```ts
+let mods = getEnumMods(512); // Output: ['NC']
+mods = getEnumMods(576); // DTNC is not a possible mod combo, so the output is: ['NC']
+mods = getEnumMods(16384); // Output: ['PF']
+mods = getEnumMods(16416); // SDPF is not a possible mod combo, so the output is: ['PF']
+```
+
+For the inverse operation, NC and PF will output their respective enum value (512 and 16384 respectively). If you have specific cases in which you want NC to output the enum value for DTNC, and PF to output the value for SDPF, then you can set `derivativeModsWithOriginal` to `true`.
+
+```ts
+let enumValue = getModsEnum(['NC']); // Output: 512
+enumValue = getModsEnum(['PF']); // Output: 16384
+
+enumValue = getModsEnum(['NC'], true); // Output: 576 (Same output for ['DT', 'NC'])
+enumValue = getModsEnum(['PF'], true); // Output: 16416 (Same output for ['SD', 'PF'])
+```

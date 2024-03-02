@@ -1,0 +1,23 @@
+---
+title: SafeParse
+ref: type
+---
+
+# SafeParse
+
+```ts
+type SafeParse<TData, TUsePolyfillResponse extends boolean = false> =
+  | {
+      success: true;
+      data: TData;
+    }
+  | {
+      success: false;
+      response: TUsePolyfillResponse extends true ? PolyfillResponse : Response;
+    };
+```
+
+## Types
+
+- [PolyfillResponse](https://github.com/node-fetch/node-fetch?tab=readme-ov-file#class-response)
+- [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response)

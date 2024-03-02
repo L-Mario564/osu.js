@@ -58,8 +58,6 @@ osu.js has 100% coverage over the legacy API.
 
 For the current API, all documented endpoints with a `GET` request have been implemented and tested. All endpoints with `POST` and `PATCH` requests have been implemented, but most aren't tested. None of the undocumented endpoints have been implemented.
 
-The current API is up to date with February 17th, 2023's (2023-02-17) [breaking changes](https://osu.ppy.sh/docs/index.html#breaking-changes).
-
 ## Links
 
 ### Project

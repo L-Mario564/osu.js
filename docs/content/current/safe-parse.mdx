@@ -1,0 +1,40 @@
+---
+title: Safe Parse
+ref: miscellaneous
+---
+
+# Safe Parse
+
+If the current API returns an unsuccessful response, osu.js treats this as an exception (in other words, it throws an error), as it means that the return type is no longer accurate. If you wish to utilize the response even if it wasn't successful, you can use `Client.safeParse` alongside whatever request you wish to parse without throwing a `OsuJSUnexpectedResponseError` error.
+
+### Example
+
+```ts
+let request!: SafeParse<UserExtended>;
+
+try {
+  request = await client.safeParse(
+    // Do not await this
+    client.users.getUser(14544646)
+  );
+} catch (err) {
+  if (isOsuJSError(err) && err.type === 'unexpected_response') {
+    // This case will never happen, because `safeParse` makes it so the `getUser` method doesn't throw an 'unexpected_response' error
+  }
+}
+
+if (request.success) {
+  const user: UserExtended = request.data;
+  // Do stuff with the user data...
+} else {
+  const response: Response = request.response;
+  // Do stuff with the response...
+}
+```
+
+## SafeParse
+
+`SafeParse` is the return type for the `Client.safeParse` method, and it has 2 type parameters. [Reference](/references/safe-parse).
+
+- `TData`: The expected type if the request is successful (the value for `request.data` in the above example).
+- `TUsePolyfillResponse`: Defaults to false. If set to true, the response is of type `Response` coming from the `node-fetch` package instead of the native `Response` (the value for `request.response` in the above example), useful for environments that don't support the native fetch API.

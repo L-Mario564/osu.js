@@ -6,5 +6,13 @@ ref: type
 # Scope
 
 ```ts
-type Scope = 'chat.write' | 'delegate' | 'forum.write' | 'friends.read' | 'identify' | 'public';
+type Scope =
+  | 'chat.read'
+  | 'chat.write'
+  | 'chat.write_manage'
+  | 'delegate'
+  | 'forum.write'
+  | 'friends.read'
+  | 'identify'
+  | 'public';
 ```

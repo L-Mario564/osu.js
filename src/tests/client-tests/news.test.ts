@@ -1,7 +1,7 @@
 import { Client } from '../../index';
 import { describe, expect, it } from 'vitest';
 import { getExistingAccessToken, ms } from '.';
-import { sleep } from '../../utils';
+import { sleep } from '../test-utils';
 
 describe('Test news related endpoints', async () => {
   const accessToken: string = await getExistingAccessToken();

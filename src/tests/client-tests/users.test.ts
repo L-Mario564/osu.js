@@ -1,6 +1,6 @@
 import { Client } from '../../index';
 import { describe, expect, it } from 'vitest';
-import { sleep } from '../../utils';
+import { sleep } from '../test-utils';
 import { getExistingAccessToken, ms } from '.';
 
 describe('Test user related endpoints', async () => {

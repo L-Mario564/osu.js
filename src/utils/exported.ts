@@ -8,7 +8,7 @@ import type { Mod, OsuJSError } from '../types';
  * Documentation: {@link https://osujs.mario564.com/extras/mod-enum-conversion}
  * @see getEnumMods for the inverse operation
  */
-export function getModsEnum(mods: Mod[]): number {
+export function getModsEnum(mods: Mod[], derivativeModsWithOriginal?: boolean): number {
   return mods.reduce((count, mod) => {
     if (
       ![
@@ -46,6 +46,15 @@ export function getModsEnum(mods: Mod[]): number {
       ].includes(mod)
     )
       return count;
+
+    if (mod === 'NC' && derivativeModsWithOriginal) {
+      return count + ModsEnum.NC + ModsEnum.DT;
+    }
+
+    if (mod === 'PF' && derivativeModsWithOriginal) {
+      return count + ModsEnum.PF + ModsEnum.SD;
+    }
+
     return count + ModsEnum[mod as keyof typeof ModsEnum];
   }, 0);
 }
@@ -76,10 +85,12 @@ export function getEnumMods(modEnum: number): Mod[] {
 
   if ((['DT', 'NC'] as Mod[]).every((mod) => mods.includes(mod))) {
     const i = mods.indexOf('DT');
-    mods.splice(i);
-  } else if ((['SD', 'PF'] as Mod[]).every((mod) => mods.includes(mod))) {
+    mods.splice(i, 1);
+  }
+
+  if ((['SD', 'PF'] as Mod[]).every((mod) => mods.includes(mod))) {
     const i = mods.indexOf('SD');
-    mods.splice(i);
+    mods.splice(i, 1);
   }
 
   return mods.reverse();

@@ -1,7 +1,7 @@
 import { Client } from '../../index';
 import { describe, expect, it } from 'vitest';
 import { getExistingAccessToken, ms } from '.';
-import { sleep } from '../../utils';
+import { sleep } from '../test-utils';
 
 describe('Test beatmap related endpoints', async () => {
   const accessToken: string = await getExistingAccessToken();
@@ -53,6 +53,17 @@ describe('Test beatmap related endpoints', async () => {
 
   it('Gets beatmap top user scores', async () => {
     const scores = await beatmaps.getBeatmapTopScores(1816113, {
+      query: {
+        mode: 'osu'
+      }
+    });
+
+    expect(Array.isArray(scores)).toBe(true);
+  });
+  await sleep(ms);
+
+  it('Gets beatmap top user (non-legacy) scores', async () => {
+    const scores = await beatmaps.getBeatmapTopNonLegacyScores(1816113, {
       query: {
         mode: 'osu'
       }

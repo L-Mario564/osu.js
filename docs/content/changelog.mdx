@@ -1,5 +1,23 @@
 # Changelog
 
+## Unreleased
+
+- Add support for the `/beatmaps/{beatmap}/solo-scores` endpoint via `Client.beatmaps.getBeatmapTopNonLegacyScores`.
+
+## 2.2.0
+
+- Add `ruleset` and `ruleset_id` properties to `GetBeatmapAttributesOptions.body`.
+- Update response type for `Client.users.getSelf` to include the `session_verified` property.
+- Add `'chat.read'` and `'chat.write_manage'` to `Scope` union type.
+- Add `safeParse` method to the `Client` class to optionally prevent the `OsuJSUnexpectedResponseError` error to be thrown in requests done to the current API.
+
+## 2.1.0
+
+- Add `best_id` property to the `Score` interface.
+- The `count_geki` and `count_katu` properties in the `ScoreStatistics` interface are now marked as nullable.
+- Fix a bug with `getEnumMods` when passing NC and/or PF alongside other mods.
+- Add `derivativeModsWithOriginal` parameter to `getModsEnum` in case the developer wishes for NC to output the same enum value as DTNC and for PF to output the same enum value as SDPF if set to `true`.
+
 ## 2.0.2
 
 - `getEnumMods` now returns `['NC']` instead of `['DT', 'NC']` when input is `576` and returns `['PF']` instead of `['SD', 'PF']` when input is `16416`.

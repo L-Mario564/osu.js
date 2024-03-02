@@ -17,6 +17,7 @@ import type {
 } from '../types';
 import type {
   GetBeatmapAttributesOptions,
+  GetBeatmapNonLegacyScoresOptions,
   GetBeatmapScoresOptions,
   GetBeatmapsOptions,
   LookupBeatmapOptions
@@ -25,7 +26,9 @@ import type {
 /**
  * Class that wraps all beatmap related endpoints
  */
-export default class Beatmaps extends Base {
+export default class Beatmaps<
+  TPolyfillFetch extends typeof polyfillFetch | undefined = undefined
+> extends Base<TPolyfillFetch> {
   /**
    * @param accessToken OAuth access token
    * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
@@ -33,7 +36,7 @@ export default class Beatmaps extends Base {
   constructor(
     accessToken: string,
     options?: {
-      polyfillFetch?: typeof polyfillFetch;
+      polyfillFetch?: TPolyfillFetch;
     }
   ) {
     super(accessToken, options);
@@ -119,6 +122,31 @@ export default class Beatmaps extends Base {
     const scores = await this.request<{
       scores: Awaited<ReturnType<Beatmaps['getBeatmapTopScores']>>;
     }>(`beatmaps/${beatmap}/scores`, 'GET', options);
+
+    return scores.scores;
+  }
+
+  /**
+   * Makes a GET request to the `/beatmaps/{beatmap}/solo-scores` endpoint
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-beatmap-top-non-legacy-scores}
+   * @param beatmap ID of the beatmap to get top scores from
+   * @returns An array of user scores on a beatmap
+   */
+  private async getBeatmapTopNonLegacyScores(
+    beatmap: number,
+    options?: GetBeatmapNonLegacyScoresOptions
+  ): Promise<
+    (Score & {
+      user: UserCompact & {
+        country: Country;
+        cover: Cover;
+      };
+    })[]
+  > {
+    const scores = await this.request<{
+      scores: Awaited<ReturnType<Beatmaps['getBeatmapTopNonLegacyScores']>>;
+    }>(`beatmaps/${beatmap}/solo-scores`, 'GET', options);
 
     return scores.scores;
   }

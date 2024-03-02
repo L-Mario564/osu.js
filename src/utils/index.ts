@@ -1,8 +1,3 @@
-// ts-prune-ignore-next
-export function sleep(ms: number): Promise<unknown> {
-  return new Promise((resolve: (value: unknown) => unknown) => setTimeout(resolve, ms));
-}
-
 export function formatUrlParams(urlParams: Record<string, unknown>): string {
   return Object.entries(urlParams).reduce((prev: string, [key, value]) => {
     if (!value) return prev;

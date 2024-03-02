@@ -1,17 +1,20 @@
 import { formatUrlParams } from '../utils';
 import { OsuJSGeneralError, OsuJSUnexpectedResponseError } from './Errors';
+import { isOsuJSError } from '../utils/exported';
 import type polyfillFetch from 'node-fetch';
 import type { Response as PolyfillResponse } from 'node-fetch';
 import type { Options } from '../types/options';
+import type { SafeParse } from '../types';
 
-export default class Base {
+export default class Base<TPolyfillFetch extends typeof polyfillFetch | undefined = undefined> {
   protected accessToken: string;
   private fetch: typeof fetch | typeof polyfillFetch;
+  private usingPolyfillFetch: boolean;
 
   constructor(
     accessToken: string,
     options?: {
-      polyfillFetch?: typeof polyfillFetch;
+      polyfillFetch?: TPolyfillFetch;
     }
   ) {
     if (typeof fetch === 'undefined' && !options?.polyfillFetch) {
@@ -20,6 +23,7 @@ export default class Base {
 
     this.accessToken = accessToken;
     this.fetch = options?.polyfillFetch || fetch;
+    this.usingPolyfillFetch = !!options?.polyfillFetch;
   }
 
   protected async request<T>(
@@ -35,7 +39,7 @@ export default class Base {
       endpoint += query.replace('&', '?');
     }
 
-    let resp: Response | PolyfillResponse = new Response();
+    let resp!: Response | PolyfillResponse;
 
     try {
       resp = await this.fetch(`https://osu.ppy.sh/api/v2/${endpoint}`, {
@@ -76,5 +80,35 @@ export default class Base {
     }
 
     return data as T;
+  }
+
+  /**
+   * Prevents a request done to the current API to throw an `OsuJSUnexpectedResponseError` error.
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/safe-parse}
+   */
+  public async safeParse<T extends Promise<any>>(
+    request: T
+  ): Promise<SafeParse<Awaited<T>, TPolyfillFetch extends typeof polyfillFetch ? true : false>> {
+    let response!: PolyfillResponse | Response;
+    let data!: Awaited<T>;
+    let success = false;
+
+    try {
+      data = await request;
+      success = true;
+    } catch (err) {
+      if (isOsuJSError(err) && err.type === 'unexpected_response') {
+        response = err.response(this.usingPolyfillFetch);
+      } else {
+        throw err;
+      }
+    }
+
+    return {
+      success,
+      response,
+      data
+    } as any;
   }
 }
