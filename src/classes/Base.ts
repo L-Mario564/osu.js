@@ -110,4 +110,13 @@ export default class Base<TPolyfillFetch extends typeof polyfillFetch | undefine
       data
     } as any;
   }
+
+  /**
+   * Set a new access token to be used by the current client.
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/set-access-token}
+   */
+  public setAccessToken(accessToken: string) {
+    this.accessToken = accessToken;
+  }
 }

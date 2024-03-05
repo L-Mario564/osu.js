@@ -1,0 +1,16 @@
+---
+title: Set Access Token
+ref: miscellaneous
+---
+
+# Set Access Token
+
+You can change the access token used by an existing client via the `Client.setAccessToken` method.
+
+```ts
+const token = await getToken();
+const client = new Client(token.access_token);
+
+const newToken = await refreshToken();
+client.setAccessToken(newToken.access_token);
+```
