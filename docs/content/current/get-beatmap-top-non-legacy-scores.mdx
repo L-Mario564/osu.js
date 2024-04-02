@@ -1,0 +1,60 @@
+---
+title: Get beatmap top scores (non-legacy)
+ref: beatmaps
+---
+
+# Get beatmap top scores (non-legacy)
+
+The `beatmaps.getBeatmapTopNonLegacyScores` method on a `Client` instance makes a `GET` request to the `beatmaps/{beatmap}/solo-scores` endpoint and returns an array of user scores on a beatmap.
+
+### Example
+
+```ts
+const scores = await api.beatmaps.getBeatmapTopNonLegacyScores(1816113, {
+  query: {
+    mode: 'osu'
+  }
+});
+```
+
+### Parameters
+
+| Parameter | Type                                                                                         | Optional | Description                              |
+| --------- | -------------------------------------------------------------------------------------------- | -------- | ---------------------------------------- |
+| beatmap   | number                                                                                       |          | ID of the beatmap to get top scores from |
+| options   | [GetBeatmapTopNonLegacyScoresOptions](/references/get-beatmap-top-non-legacy-scores-options) | ✓        |                                          |
+
+#### options.query
+
+| Parameter   | Type                              | Optional | Description                              |
+| ----------- | --------------------------------- | -------- | ---------------------------------------- |
+| legacy_only | boolean                           | ✓        | Set to true to only return legacy scores |
+| mode        | [GameMode](/references/game-mode) | ✓        | Gamemode of the scores to return         |
+
+### Returns
+
+```ts
+Promise<
+  (Score & {
+    user: UserCompact & {
+      country: Country;
+      cover: Cover;
+    };
+  })[]
+>;
+```
+
+#### Types
+
+- [Score](/references/score)
+- [UserCompact](/references/user-compact)
+- [Country](/references/country)
+- [Cover](/references/cover)
+
+### Possible Exceptions
+
+See the [error handling documentation](/extras/error-handling) for more information.
+
+- `invalid_json_syntax`
+- `network_error`
+- `unexpected_response`

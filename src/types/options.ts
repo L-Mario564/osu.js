@@ -31,7 +31,7 @@ export interface GetBeatmapScoresOptions {
   };
 }
 
-export interface GetBeatmapNonLegacyScoresOptions {
+export interface GetBeatmapTopNonLegacyScoresOptions {
   query?: {
     /** Set to true to only return legacy scores */
     legacy_only?: boolean;

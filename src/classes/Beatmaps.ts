@@ -17,7 +17,7 @@ import type {
 } from '../types';
 import type {
   GetBeatmapAttributesOptions,
-  GetBeatmapNonLegacyScoresOptions,
+  GetBeatmapTopNonLegacyScoresOptions,
   GetBeatmapScoresOptions,
   GetBeatmapsOptions,
   LookupBeatmapOptions
@@ -133,9 +133,9 @@ export default class Beatmaps<
    * @param beatmap ID of the beatmap to get top scores from
    * @returns An array of user scores on a beatmap
    */
-  private async getBeatmapTopNonLegacyScores(
+  public async getBeatmapTopNonLegacyScores(
     beatmap: number,
-    options?: GetBeatmapNonLegacyScoresOptions
+    options?: GetBeatmapTopNonLegacyScoresOptions
   ): Promise<
     (Score & {
       user: UserCompact & {
