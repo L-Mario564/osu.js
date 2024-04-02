@@ -61,7 +61,7 @@ export default class Client<
 
   /**
    * Set a new access token to be used by the current client.
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/set-access-token}
    */
   public override setAccessToken(accessToken: string) {

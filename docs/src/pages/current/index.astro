@@ -29,18 +29,18 @@ const files = validateFrontmatters(
   })
 );
 const sections: Sections<z.infer<typeof refSchema>> = {
-  'beatmaps': [],
+  beatmaps: [],
   'beatmapset discussions': [],
-  'changelog': [],
-  'chat': [],
-  'comments': [],
-  'forum': [],
-  'miscellaneous': [],
-  'multiplayer': [],
-  'news': [],
-  'ranking': [],
-  'users': [],
-  'wiki': []
+  changelog: [],
+  chat: [],
+  comments: [],
+  forum: [],
+  miscellaneous: [],
+  multiplayer: [],
+  news: [],
+  ranking: [],
+  users: [],
+  wiki: []
 };
 
 files.forEach(({ file, frontmatter }) => {

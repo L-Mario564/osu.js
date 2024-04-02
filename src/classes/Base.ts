@@ -47,7 +47,7 @@ export default class Base<TPolyfillFetch extends typeof polyfillFetch | undefine
         body: options?.body ? JSON.stringify(options.body) : undefined,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.accessToken}`
+          Authorization: `Bearer ${this.accessToken}`
         }
       });
     } catch (err) {
@@ -113,7 +113,7 @@ export default class Base<TPolyfillFetch extends typeof polyfillFetch | undefine
 
   /**
    * Set a new access token to be used by the current client.
-   * 
+   *
    * Documentation: {@link https://osujs.mario564.com/current/set-access-token}
    */
   public setAccessToken(accessToken: string) {

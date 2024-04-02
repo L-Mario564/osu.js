@@ -1,7 +1,7 @@
 {
   "printWidth": 100,
   "trailingComma": "none",
-  "quoteProps": "consistent",
+  "quoteProps": "as-needed",
   "singleQuote": true,
   "semi": true,
   "plugins": ["prettier-plugin-astro"],
