@@ -208,13 +208,15 @@ export interface UserAccountHistory {
 export interface UserActiveTournamentBanner {
   id: number;
   tournament_id: number;
-  image: string;
+  image: string | null;
+  'image@2x': string | null;
 }
 
 export interface UserBadge {
   awarded_at: ISOTimestamp;
   description: string;
   image_url: string;
+  'image@2x_url': string;
   url: string;
 }
 
@@ -267,6 +269,10 @@ export interface UserLevel {
 }
 
 export interface UserStatistics {
+  count_100: number;
+  count_300: number;
+  count_50: number;
+  count_miss: number;
   grade_counts: GradeCounts;
   hit_accuracy: number;
   is_ranked: boolean;
@@ -275,7 +281,9 @@ export interface UserStatistics {
   play_count: number;
   play_time: number;
   pp: number;
+  pp_exp: number;
   global_rank: number | null;
+  global_rank_exp: number | null;
   ranked_score: number;
   replays_watched_by_others: number;
   total_hits: number;
@@ -290,6 +298,7 @@ export interface UserAchievement {
 
 export interface UserExtended extends User {
   account_history: UserAccountHistory[];
+  active_tournament_banners: UserActiveTournamentBanner[];
   active_tournament_banner: UserActiveTournamentBanner | null;
   badges: UserBadge[];
   beatmap_playcounts_count: number;
@@ -377,13 +386,13 @@ export interface Score {
 }
 
 export interface Covers {
-  'cover': string;
+  cover: string;
   'cover@2x': string;
-  'card': string;
+  card: string;
   'card@2x': string;
-  'list': string;
+  list: string;
   'list@2x': string;
-  'slimcover': string;
+  slimcover: string;
   'slimcover@2x': string;
 }
 

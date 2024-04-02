@@ -7,6 +7,10 @@ ref: interface
 
 ```ts
 interface UserStatistics {
+  count_100: number;
+  count_300: number;
+  count_50: number;
+  count_miss: number;
   grade_counts: GradeCounts;
   hit_accuracy: number;
   is_ranked: boolean;
@@ -15,7 +19,9 @@ interface UserStatistics {
   play_count: number;
   play_time: number;
   pp: number;
+  pp_exp: number;
   global_rank: number | null;
+  global_rank_exp: number | null;
   ranked_score: number;
   replays_watched_by_others: number;
   total_hits: number;
