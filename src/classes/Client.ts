@@ -60,6 +60,26 @@ export default class Client<
   }
 
   /**
+   * Set a new access token to be used by the current client.
+   * 
+   * Documentation: {@link https://osujs.mario564.com/current/set-access-token}
+   */
+  public override setAccessToken(accessToken: string) {
+    this.accessToken = accessToken;
+    this.beatmaps.setAccessToken(accessToken);
+    this.beatmapsetDiscussions.setAccessToken(accessToken);
+    this.changelog.setAccessToken(accessToken);
+    this.chat.setAccessToken(accessToken);
+    this.comments.setAccessToken(accessToken);
+    this.forum.setAccessToken(accessToken);
+    this.multiplayer.setAccessToken(accessToken);
+    this.news.setAccessToken(accessToken);
+    this.ranking.setAccessToken(accessToken);
+    this.users.setAccessToken(accessToken);
+    this.wiki.setAccessToken(accessToken);
+  }
+
+  /**
    * Makes a GET request to the `/search` endpoint
    *
    * Documentation: {@link https://osujs.mario564.com/current/search}
