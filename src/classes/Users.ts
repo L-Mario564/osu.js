@@ -111,12 +111,13 @@ export default class Users<
    * @param options
    * @returns An array of the specified user's scores
    */
-  public async getUserScores<T extends UserScoreType>(
+  public async getUserScores<T extends UserScoreType, X extends LazerStructureType>(
     user: number,
     type: T,
+    lazerStructure?: X,
     options?: T extends 'recent' ? GetUserRecentScoresOptions : GetUserScoresOptions
-  ): Promise<T extends 'best' ? UserBestScore[] : UserScore[]> {
-    return await this.request(`users/${user}/scores/${type}`, 'GET', options);
+  ): Promise<X extends true ? (T extends 'best' ? UserBestScore[] : UserScore[]) : (T extends 'best' ? LegacyUserBestScore[] : LegacyUserScore[])> {
+    return await this.request(`users/${user}/scores/${type}`, 'GET', options, lazerStructure);
   }
 
   /**

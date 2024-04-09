@@ -9,6 +9,8 @@ import type {
   Fails,
   FruitsBeatmapDifficultyAttributes,
   GameMode,
+  LazerStructureType,
+  LegacyScore,
   ManiaBeatmapDifficultyAttributes,
   OsuBeatmapDifficultyAttributes,
   Score,
@@ -22,6 +24,7 @@ import type {
   GetBeatmapsOptions,
   LookupBeatmapOptions
 } from '../types/options';
+import { LegacyBeatmapScore } from '../types/legacy';
 
 /**
  * Class that wraps all beatmap related endpoints
@@ -73,12 +76,13 @@ export default class Beatmaps<
    * @param user ID of the user to get scores from
    * @returns A user score on a beatmap
    */
-  public async getBeatmapUserScore(
+  public async getBeatmapUserScore<T extends LazerStructureType>(
     beatmap: number,
     user: number,
+    lazerStructure?: T,
     options?: GetBeatmapScoresOptions
-  ): Promise<BeatmapUserScore> {
-    return await this.request(`beatmaps/${beatmap}/scores/users/${user}`, 'GET', options);
+  ): Promise<T extends true ? BeatmapUserScore : LegacyBeatmapScore> {
+    return await this.request(`beatmaps/${beatmap}/scores/users/${user}`, 'GET', options, lazerStructure);
   }
 
   /**
@@ -89,14 +93,16 @@ export default class Beatmaps<
    * @param user ID of the user to get scores from
    * @returns An array of user scores on a beatmap
    */
-  public async getBeatmapUserScores(
+  public async getBeatmapUserScores<T extends LazerStructureType>(
     beatmap: number,
     user: number,
+    lazerStructure?: T,
     options?: GetBeatmapScoresOptions
-  ): Promise<Score[]> {
+  ): Promise<T extends true ? Score[] : LegacyScore[]> {
     const scores = await this.request<{
-      scores: Awaited<ReturnType<Beatmaps['getBeatmapUserScores']>>;
-    }>(`beatmaps/${beatmap}/scores/users/${user}/all`, 'GET', options);
+      // scores: Awaited<ReturnType<Beatmaps['getBeatmapUserScores']>>;
+      scores: T extends true ? Score[] : LegacyScore[];
+    }>(`beatmaps/${beatmap}/scores/users/${user}/all`, 'GET', options, lazerStructure);
 
     return scores.scores;
   }
@@ -108,11 +114,12 @@ export default class Beatmaps<
    * @param beatmap ID of the beatmap to get top scores from
    * @returns An array of user scores on a beatmap
    */
-  public async getBeatmapTopScores(
+  public async getBeatmapTopScores<T extends LazerStructureType>(
     beatmap: number,
+    lazerStructure?: T,
     options?: GetBeatmapScoresOptions
   ): Promise<
-    (Score & {
+    (T extends true ? Score : LegacyScore & {
       user: UserCompact & {
         country: Country;
         cover: Cover;
@@ -120,8 +127,14 @@ export default class Beatmaps<
     })[]
   > {
     const scores = await this.request<{
-      scores: Awaited<ReturnType<Beatmaps['getBeatmapTopScores']>>;
-    }>(`beatmaps/${beatmap}/scores`, 'GET', options);
+      // scores: Awaited<ReturnType<Beatmaps['getBeatmapTopScores']>>;
+      scores: (T extends true ? Score : LegacyScore & {
+        user: UserCompact & {
+          country: Country;
+          cover: Cover;
+        };
+      })[];
+    }>(`beatmaps/${beatmap}/scores`, 'GET', options, lazerStructure);
 
     return scores.scores;
   }
@@ -133,11 +146,12 @@ export default class Beatmaps<
    * @param beatmap ID of the beatmap to get top scores from
    * @returns An array of user scores on a beatmap
    */
-  private async getBeatmapTopNonLegacyScores(
+  private async getBeatmapTopNonLegacyScores<T extends LazerStructureType>(
     beatmap: number,
+    lazerStructure?: T,
     options?: GetBeatmapNonLegacyScoresOptions
   ): Promise<
-    (Score & {
+    (T extends true ? Score : LegacyScore & {
       user: UserCompact & {
         country: Country;
         cover: Cover;
@@ -145,8 +159,14 @@ export default class Beatmaps<
     })[]
   > {
     const scores = await this.request<{
-      scores: Awaited<ReturnType<Beatmaps['getBeatmapTopNonLegacyScores']>>;
-    }>(`beatmaps/${beatmap}/solo-scores`, 'GET', options);
+      // scores: Awaited<ReturnType<Beatmaps['getBeatmapTopNonLegacyScores']>>;
+      scores: (T extends true ? Score : LegacyScore & {
+        user: UserCompact & {
+          country: Country;
+          cover: Cover;
+        };
+      })[]
+    }>(`beatmaps/${beatmap}/solo-scores`, 'GET', options, lazerStructure);
 
     return scores.scores;
   }

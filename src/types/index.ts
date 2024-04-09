@@ -700,6 +700,30 @@ export interface MultiplayerScoreStatistics {
   SmallTickMiss: number;
 }
 
+export interface LegacyMultiplayerScoreMod {
+  acronym: LegacyMod;
+}
+
+export interface LegacyMultiplayerScore {
+  id: number;
+  user_id: number;
+  room_id: number;
+  playlist_item_id: number;
+  beatmap_id: number;
+  rank: Rank;
+  total_score: number;
+  accuracy: number;
+  max_combo: number;
+  mods: LegacyMultiplayerScoreMod[];
+  statistics: MultiplayerScoreStatistics;
+  passed: boolean;
+  position: number | null;
+  user: UserCompact & {
+    country: Country;
+    cover: Cover;
+  };
+}
+
 export interface MultiplayerScore {
   id: number;
   user_id: number;
