@@ -1,3 +1,5 @@
+import { ModsEnum } from '../utils/enums';
+
 type BaseMod = {
   acronym: string;
   settings?: object;
@@ -438,3 +440,41 @@ export type Mod =
   | K8
   | K9
   | K10;
+
+export type LegacyMod =
+  | keyof typeof ModsEnum
+  | 'DC'
+  | 'BL'
+  | 'ST'
+  | 'AC'
+  | 'DA'
+  | 'CL'
+  | 'AL'
+  | 'SG'
+  | 'TR'
+  | 'WG'
+  | 'SI'
+  | 'GR'
+  | 'DF'
+  | 'WU'
+  | 'WD'
+  | 'TC'
+  | 'BR'
+  | 'AD'
+  | 'MU'
+  | 'NS'
+  | 'MG'
+  | 'RP'
+  | 'AS'
+  | 'FR'
+  | 'BU'
+  | 'SY'
+  | 'DP'
+  | 'SW'
+  | 'FF'
+  | 'DS'
+  | 'IN'
+  | 'CS'
+  | 'HO'
+  | '9K'
+  | '10K';

@@ -1,7 +1,7 @@
 import type { Response as PolyfillResponse } from 'node-fetch';
 import type { OsuJSGeneralError, OsuJSUnexpectedResponseError } from '../classes/Errors';
 import type { StatusEnum } from '../utils/enums';
-import { Mod } from './mod';
+import { LegacyMod, Mod } from './mod';
 
 /**
  * Timestamp string in ISO 8601 format
@@ -316,6 +316,15 @@ export interface BeatmapCompact {
   version: string;
 }
 
+export interface LegacyScoreStatistics {
+  count_50: number;
+  count_100: number;
+  count_300: number;
+  count_geki: number | null;
+  count_katu: number | null;
+  count_miss: number;
+}
+
 export interface ScoreStatistics {
   ok: number;
   meh: number;
@@ -326,23 +335,42 @@ export interface ScoreStatistics {
 }
 
 export interface MaximumScoreStatistics {
-  miss: number;
-  meh: number;
-  ok: number;
-  good: number;
-  great: number;
-  perfect: number;
-  large_tick_hit: number;
-  large_tick_miss: number;
-  small_tick_hit: number;
-  small_tick_miss: number;
-  ignore_hit: number;
-  ignore_miss: number;
-  large_bonus: number;
-  small_bonus: number;
-  slider_tail_hit: number;
-  combo_break: number;
-  legacy_combo_increase: number;
+  miss?: number;
+  meh?: number;
+  ok?: number;
+  good?: number;
+  great?: number;
+  perfect?: number;
+  large_tick_hit?: number;
+  large_tick_miss?: number;
+  small_tick_hit?: number;
+  small_tick_miss?: number;
+  ignore_hit?: number;
+  ignore_miss?: number;
+  large_bonus?: number;
+  small_bonus?: number;
+  slider_tail_hit?: number;
+  combo_break?: number;
+  legacy_combo_increase?: number;
+}
+
+export interface LegacyScore {
+  id: number;
+  best_id: number;
+  user_id: number;
+  accuracy: number;
+  mods: LegacyMod[];
+  score: number;
+  max_combo: number;
+  perfect: boolean;
+  statistics: LegacyScoreStatistics;
+  passed: boolean;
+  pp: number;
+  rank: Rank;
+  created_at: ISOTimestamp;
+  mode: GameMode;
+  mode_int: number;
+  replay: boolean;
 }
 
 export interface Score {
@@ -404,6 +432,14 @@ export interface BeatmapsetCompact {
   video: boolean;
 }
 
+export interface LegacyUserScore extends LegacyScore {
+  beatmap: BeatmapCompact & {
+   checksum: string | null;
+  };
+  beatmapset: BeatmapsetCompact;
+  user: UserCompact;
+}
+
 export interface UserScore extends Score {
   beatmap: BeatmapCompact & {
     checksum: string | null;
@@ -415,6 +451,10 @@ export interface UserScore extends Score {
 export interface Weight {
   percentage: number;
   pp: number;
+}
+
+export interface LegacyUserBestScore extends LegacyUserScore, LegacyScore {
+  weight: Weight;
 }
 
 export interface UserBestScore extends UserScore, Score {
@@ -748,6 +788,19 @@ export interface NewsNavigation {
 export interface Fails {
   exit: number[] | null;
   fail: number[] | null;
+}
+
+export interface LegacyBeatmapUserScore {
+  position: number;
+  score: LegacyScore & {
+    beatmap: Beatmap & {
+      checksum: string | null;
+    };
+    user: UserCompact & {
+      country: Country;
+      cover: Cover;
+    };
+  };
 }
 
 export interface BeatmapUserScore {
