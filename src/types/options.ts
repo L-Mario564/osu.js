@@ -4,9 +4,11 @@ import type {
   CommentableType,
   DiscussionMessageType,
   GameMode,
-  Mod,
   MultiplayerScoresSort
 } from '.';
+
+import { Mod } from './mod';
+
 
 export interface Options {
   query?: Record<string, any>;
@@ -31,7 +33,7 @@ export interface GetBeatmapScoresOptions {
   };
 }
 
-export interface GetBeatmapTopNonLegacyScoresOptions {
+export interface GetBeatmapNonLegacyScoresOptions {
   query?: {
     /** Set to true to only return legacy scores */
     legacy_only?: boolean;
