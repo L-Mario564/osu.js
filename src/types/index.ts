@@ -1,6 +1,7 @@
 import type { Response as PolyfillResponse } from 'node-fetch';
 import type { OsuJSGeneralError, OsuJSUnexpectedResponseError } from '../classes/Errors';
-import type { ModsEnum, StatusEnum } from '../utils/enums';
+import type { StatusEnum } from '../utils/enums';
+import { LegacyMod, Mod } from './mod';
 
 /**
  * Timestamp string in ISO 8601 format
@@ -20,44 +21,6 @@ export type SafeParse<TData, TUsePolyfillResponse extends boolean = false> =
       success: false;
       response: TUsePolyfillResponse extends true ? PolyfillResponse : Response;
     };
-
-export type Mod =
-  | keyof typeof ModsEnum
-  | 'DC'
-  | 'BL'
-  | 'ST'
-  | 'AC'
-  | 'DA'
-  | 'CL'
-  | 'AL'
-  | 'SG'
-  | 'TR'
-  | 'WG'
-  | 'SI'
-  | 'GR'
-  | 'DF'
-  | 'WU'
-  | 'WD'
-  | 'TC'
-  | 'BR'
-  | 'AD'
-  | 'MU'
-  | 'NS'
-  | 'MG'
-  | 'RP'
-  | 'AS'
-  | 'FR'
-  | 'BU'
-  | 'SY'
-  | 'DP'
-  | 'SW'
-  | 'FF'
-  | 'DS'
-  | 'IN'
-  | 'CS'
-  | 'HO'
-  | '9K'
-  | '10K';
 export type RankStatus = keyof typeof StatusEnum;
 
 export type GameMode = 'fruits' | 'mania' | 'osu' | 'taiko';
@@ -75,6 +38,7 @@ export type CommentSort = 'new' | 'old' | 'top';
 export type MultiplayerScoresSort = 'score_asc' | 'score_desc';
 export type RankingType = 'charts' | 'country' | 'performance' | 'score';
 export type UserScoreType = 'best' | 'firsts' | 'recent';
+export type LazerStructureType = boolean;
 export type ChangelogStream = 'stable40' | 'beta40' | 'cuttingedge' | 'lazer' | 'web';
 export type DiscussionMessageType =
   | 'suggestion'
@@ -87,10 +51,15 @@ export type Playstyle = 'mouse' | 'keyboard' | 'tablet' | 'touch';
 export type Scope =
   | 'chat.read'
   | 'chat.write'
+  | 'chat.write'
   | 'chat.write_manage'
   | 'delegate'
+  | 'delegate'
+  | 'forum.write'
   | 'forum.write'
   | 'friends.read'
+  | 'friends.read'
+  | 'identify'
   | 'identify'
   | 'public';
 export type ProfilePageSection =
@@ -208,15 +177,13 @@ export interface UserAccountHistory {
 export interface UserActiveTournamentBanner {
   id: number;
   tournament_id: number;
-  image: string | null;
-  'image@2x': string | null;
+  image: string;
 }
 
 export interface UserBadge {
   awarded_at: ISOTimestamp;
   description: string;
   image_url: string;
-  'image@2x_url': string;
   url: string;
 }
 
@@ -269,10 +236,6 @@ export interface UserLevel {
 }
 
 export interface UserStatistics {
-  count_100: number;
-  count_300: number;
-  count_50: number;
-  count_miss: number;
   grade_counts: GradeCounts;
   hit_accuracy: number;
   is_ranked: boolean;
@@ -281,9 +244,7 @@ export interface UserStatistics {
   play_count: number;
   play_time: number;
   pp: number;
-  pp_exp: number;
   global_rank: number | null;
-  global_rank_exp: number | null;
   ranked_score: number;
   replays_watched_by_others: number;
   total_hits: number;
@@ -298,7 +259,6 @@ export interface UserAchievement {
 
 export interface UserExtended extends User {
   account_history: UserAccountHistory[];
-  active_tournament_banners: UserActiveTournamentBanner[];
   active_tournament_banner: UserActiveTournamentBanner | null;
   badges: UserBadge[];
   beatmap_playcounts_count: number;
@@ -357,7 +317,7 @@ export interface BeatmapCompact {
   version: string;
 }
 
-export interface ScoreStatistics {
+export interface LegacyScoreStatistics {
   count_50: number;
   count_100: number;
   count_300: number;
@@ -366,16 +326,45 @@ export interface ScoreStatistics {
   count_miss: number;
 }
 
-export interface Score {
+export interface ScoreStatistics {
+  ok: number;
+  meh: number;
+  good: number;
+  miss: number;
+  great: number;
+  perfect: number;
+}
+
+export interface MaximumScoreStatistics {
+  miss?: number;
+  meh?: number;
+  ok?: number;
+  good?: number;
+  great?: number;
+  perfect?: number;
+  large_tick_hit?: number;
+  large_tick_miss?: number;
+  small_tick_hit?: number;
+  small_tick_miss?: number;
+  ignore_hit?: number;
+  ignore_miss?: number;
+  large_bonus?: number;
+  small_bonus?: number;
+  slider_tail_hit?: number;
+  combo_break?: number;
+  legacy_combo_increase?: number;
+}
+
+export interface LegacyScore {
   id: number;
   best_id: number;
   user_id: number;
   accuracy: number;
-  mods: Mod[];
+  mods: LegacyMod[];
   score: number;
   max_combo: number;
   perfect: boolean;
-  statistics: ScoreStatistics;
+  statistics: LegacyScoreStatistics;
   passed: boolean;
   pp: number;
   rank: Rank;
@@ -385,14 +374,44 @@ export interface Score {
   replay: boolean;
 }
 
+export interface Score {
+  accuracy: number;
+  beatmap_id: number;
+  best_id?: number;
+  build_id?: number;
+  ended_at: ISOTimestamp;
+  has_replay: boolean;
+  id: number;
+  is_perfect_combo: boolean;
+  legacy_perfect: boolean;
+  legacy_score_id?: number;
+  legacy_total_score: number;
+  max_combo: number;
+  maximum_statistics?: ScoreStatistics;
+  mods: Mod[];
+  passed: boolean;
+  playlist_item_id?: number;
+  pp?: number;
+  preserve: boolean;
+  rank: string;
+  ranked: boolean;
+  room_id?: number;
+  ruleset_id: number;
+  started_at?: ISOTimestamp;
+  statistics: ScoreStatistics;
+  total_score: number;
+  type: string;
+  user_id: number;
+}
+
 export interface Covers {
-  cover: string;
+  'cover': string;
   'cover@2x': string;
-  card: string;
+  'card': string;
   'card@2x': string;
-  list: string;
+  'list': string;
   'list@2x': string;
-  slimcover: string;
+  'slimcover': string;
   'slimcover@2x': string;
 }
 
@@ -414,6 +433,14 @@ export interface BeatmapsetCompact {
   video: boolean;
 }
 
+export interface LegacyUserScore extends LegacyScore {
+  beatmap: BeatmapCompact & {
+   checksum: string | null;
+  };
+  beatmapset: BeatmapsetCompact;
+  user: UserCompact;
+}
+
 export interface UserScore extends Score {
   beatmap: BeatmapCompact & {
     checksum: string | null;
@@ -425,6 +452,10 @@ export interface UserScore extends Score {
 export interface Weight {
   percentage: number;
   pp: number;
+}
+
+export interface LegacyUserBestScore extends LegacyUserScore, LegacyScore {
+  weight: Weight;
 }
 
 export interface UserBestScore extends UserScore, Score {
@@ -651,10 +682,6 @@ export interface MultiplayerScoresParams {
   sort: MultiplayerScoresSort;
 }
 
-export interface MultiplayerScoreMod {
-  acronym: Mod;
-}
-
 export interface MultiplayerScoreStatistics {
   Ok: number;
   Meh: number;
@@ -673,6 +700,30 @@ export interface MultiplayerScoreStatistics {
   SmallTickMiss: number;
 }
 
+export interface LegacyMultiplayerScoreMod {
+  acronym: LegacyMod;
+}
+
+export interface LegacyMultiplayerScore {
+  id: number;
+  user_id: number;
+  room_id: number;
+  playlist_item_id: number;
+  beatmap_id: number;
+  rank: Rank;
+  total_score: number;
+  accuracy: number;
+  max_combo: number;
+  mods: LegacyMultiplayerScoreMod[];
+  statistics: MultiplayerScoreStatistics;
+  passed: boolean;
+  position: number | null;
+  user: UserCompact & {
+    country: Country;
+    cover: Cover;
+  };
+}
+
 export interface MultiplayerScore {
   id: number;
   user_id: number;
@@ -683,7 +734,7 @@ export interface MultiplayerScore {
   total_score: number;
   accuracy: number;
   max_combo: number;
-  mods: MultiplayerScoreMod[];
+  mods: Mod[];
   statistics: MultiplayerScoreStatistics;
   passed: boolean;
   position: number | null;
@@ -762,6 +813,19 @@ export interface NewsNavigation {
 export interface Fails {
   exit: number[] | null;
   fail: number[] | null;
+}
+
+export interface LegacyBeatmapUserScore {
+  position: number;
+  score: LegacyScore & {
+    beatmap: Beatmap & {
+      checksum: string | null;
+    };
+    user: UserCompact & {
+      country: Country;
+      cover: Cover;
+    };
+  };
 }
 
 export interface BeatmapUserScore {
