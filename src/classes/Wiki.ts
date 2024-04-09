@@ -11,10 +11,12 @@ export default class Wiki<
   /**
    * @param accessToken OAuth access token
    * @param options.polyfillFetch In case developing with a Node.js version prior to 18, you need to pass a polyfill for the fetch API. Install `node-fetch`
+   * @param options.lazerStructure Specify whether or not you want the newer Lazer's API structure. Defaults to false, which means it will return legacy structure.
    */
   constructor(
     accessToken: string,
     options?: {
+      lazerStructure?: boolean;
       polyfillFetch?: TPolyfillFetch;
     }
   ) {

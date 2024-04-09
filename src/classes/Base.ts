@@ -15,6 +15,7 @@ export default class Base<TPolyfillFetch extends typeof polyfillFetch | undefine
     accessToken: string,
     options?: {
       polyfillFetch?: TPolyfillFetch;
+      lazerStructure?: boolean;
     }
   ) {
     if (typeof fetch === 'undefined' && !options?.polyfillFetch) {
