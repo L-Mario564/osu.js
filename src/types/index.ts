@@ -38,6 +38,7 @@ export type CommentSort = 'new' | 'old' | 'top';
 export type MultiplayerScoresSort = 'score_asc' | 'score_desc';
 export type RankingType = 'charts' | 'country' | 'performance' | 'score';
 export type UserScoreType = 'best' | 'firsts' | 'recent';
+export type LazerStructureType = boolean;
 export type ChangelogStream = 'stable40' | 'beta40' | 'cuttingedge' | 'lazer' | 'web';
 export type DiscussionMessageType =
   | 'suggestion'

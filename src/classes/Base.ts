@@ -10,13 +10,11 @@ export default class Base<TPolyfillFetch extends typeof polyfillFetch | undefine
   protected accessToken: string;
   private fetch: typeof fetch | typeof polyfillFetch;
   private usingPolyfillFetch: boolean;
-  public lazerStructure: boolean;
 
   constructor(
     accessToken: string,
     options?: {
       polyfillFetch?: TPolyfillFetch;
-      lazerStructure?: boolean;
     }
   ) {
     if (typeof fetch === 'undefined' && !options?.polyfillFetch) {
@@ -26,7 +24,6 @@ export default class Base<TPolyfillFetch extends typeof polyfillFetch | undefine
     this.accessToken = accessToken;
     this.fetch = options?.polyfillFetch || fetch;
     this.usingPolyfillFetch = !!options?.polyfillFetch;
-    this.lazerStructure = options?.lazerStructure ?? false;
   }
 
   protected async request<T>(
