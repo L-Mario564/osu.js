@@ -222,6 +222,7 @@ export default class Beatmaps<
       }
     };
 
-    return await this.request(`beatmaps/${beatmap}/attributes`, 'POST', remapped);
+    const beatmap_ = await this.request<any>(`beatmaps/${beatmap}/attributes`, 'POST', remapped);
+    return beatmap_.attributes;
   }
 }
