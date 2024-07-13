@@ -315,7 +315,7 @@ export interface GetRankingOptions {
 
 export interface GetSelfOptions {
   urlParams?: {
-    /** Gamemode of the proile to return */
+    /** Gamemode of the profile to return */
     mode: GameMode;
   };
 }
@@ -373,7 +373,7 @@ export interface GetUserRecentActivityOptions {
 
 export interface GetUserOptions {
   urlParams?: {
-    /** Gamemode of the proile to return */
+    /** Gamemode of the profile to return */
     mode?: GameMode;
   };
   query?: {
@@ -385,6 +385,8 @@ export interface GetUserOptions {
 export interface GetUsersOptions {
   query?: {
     /** An array of user IDs (can only take up to 50 IDs) */
-    ids: number[];
+    ids?: number[];
+    /** Include `statistics_rulesets.variants`? */
+    include_variant_statistics?: boolean;
   };
 }

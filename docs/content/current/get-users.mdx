@@ -25,9 +25,10 @@ const users = await api.users.getUsers({
 
 #### options.query
 
-| Parameter | Type     | Optional | Description                                       |
-| --------- | -------- | -------- | ------------------------------------------------- |
-| ids       | number[] | ✓        | An array of user IDs (can only take up to 50 IDs) |
+| Parameter                  | Type     | Optional | Description                                       |
+| -------------------------- | -------- | -------- | ------------------------------------------------- |
+| ids                        | number[] | ✓        | An array of user IDs (can only take up to 50 IDs) |
+| include_variant_statistics | boolean  | ✓        | Include `statistics_rulesets.variants`?           |
 
 ### Returns
 
