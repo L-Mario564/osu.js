@@ -268,6 +268,14 @@ export interface UserLevel {
   progress: number;
 }
 
+export interface UserStatisticsVariant {
+  mode: GameMode;
+  variant: string;
+  country_rank: number;
+  global_rank: number;
+  pp: number;
+}
+
 export interface UserStatistics {
   count_100: number;
   count_300: number;
@@ -289,6 +297,7 @@ export interface UserStatistics {
   total_hits: number;
   total_score: number;
   country_rank: number | null;
+  variants?: UserStatisticsVariant[];
 }
 
 export interface UserAchievement {
