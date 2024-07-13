@@ -41,9 +41,10 @@ export default class Auth extends Base {
    * Gets a token
    *
    * Documentation: {@link https://osujs.mario564.com/oauth/client-credentials-grant}
-   * @returns An API token (with guest permissions)
+   * @param scopes An array of scopes
+   * @returns An API token
    */
-  public async clientCredentialsGrant(): Promise<GuestToken> {
+  public async clientCredentialsGrant(scopes: Scope[] = ['public']): Promise<GuestToken> {
     let resp: Response | PolyfillResponse = new Response();
 
     try {
@@ -53,7 +54,7 @@ export default class Auth extends Base {
           client_id: this.clientId,
           client_secret: this.clientSecret,
           grant_type: 'client_credentials',
-          scope: 'public'
+          scope: scopes
         }),
         headers: {
           'Content-Type': 'application/json'
