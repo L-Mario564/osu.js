@@ -32,7 +32,8 @@ export default class Base<TPolyfillFetch extends typeof polyfillFetch | undefine
     options?: Options & {
       returnNullOn404?: boolean;
       dontParseResp?: boolean;
-    }
+    },
+    lazerStructure?: boolean
   ): Promise<T> {
     if (options?.query) {
       const query = formatUrlParams(options.query);
@@ -47,7 +48,8 @@ export default class Base<TPolyfillFetch extends typeof polyfillFetch | undefine
         body: options?.body ? JSON.stringify(options.body) : undefined,
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.accessToken}`
+          Authorization: `Bearer ${this.accessToken}`,
+          'x-api-version': lazerStructure === true ? '20220706' : '20220704'
         }
       });
     } catch (err) {

@@ -1,6 +1,6 @@
 import Base from './Base';
 import type polyfillFetch from 'node-fetch';
-import type { MultiplayerScores } from '../types';
+import type { LazerStructureType, LegacyMultiplayerScore, MultiplayerScores } from '../types';
 import type { GetPlaylistScoresOptions } from '../types/options';
 
 /**
@@ -30,11 +30,12 @@ export default class Multiplayer<
    * @param playlist ID of the playlist to get scores from
    * @returns An object containing playlist scores and metadata
    */
-  public async getPlaylistScores(
+  public async getPlaylistScores<T extends LazerStructureType>(
     room: number,
     playlist: number,
+    lazerStructure?: T,
     options?: GetPlaylistScoresOptions
-  ): Promise<MultiplayerScores> {
-    return await this.request(`rooms/${room}/playlist/${playlist}/scores`, 'GET', options);
+  ): Promise<T extends true ? MultiplayerScores : LegacyMultiplayerScore> {
+    return await this.request(`rooms/${room}/playlist/${playlist}/scores`, 'GET', options, lazerStructure);
   }
 }
