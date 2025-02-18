@@ -1,0 +1,19 @@
+---
+title: AccuracyChallengeMod
+ref: type
+---
+
+# AccuracyChallengeMod
+
+```ts
+type AccuracyChallengeMod = {
+  acronym: 'AC';
+  settings?:
+    | {
+        minimum_accuracy: number;
+        accuracy_judge_mode: string;
+        restart: boolean;
+      }
+    | undefined;
+};
+```
