@@ -1,0 +1,20 @@
+---
+title: MutedMod
+ref: type
+---
+
+# MutedMod
+
+```ts
+type MutedMod = {
+  acronym: 'MU';
+  settings?:
+    | {
+        inverse_muting: boolean;
+        enable_metronome: boolean;
+        mute_combo_count: number;
+        affects_hit_sounds: boolean;
+      }
+    | undefined;
+};
+```

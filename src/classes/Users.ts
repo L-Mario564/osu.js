@@ -15,7 +15,9 @@ import type {
   BeatmapPlaycount,
   UserScoreType,
   UserBestScore,
-  UserScore
+  UserScore,
+  UserScoreV2,
+  UserBestScoreV2
 } from '../types';
 import type {
   GetSelfOptions,
@@ -99,6 +101,27 @@ export default class Users<
     return await this.request(`users/${user}/recent_activity`, 'GET', options);
   }
 
+  private getUserScoresBase<Version extends 'v1' | 'v2'>(version: Version) {
+    return async <T extends UserScoreType>(
+      user: number,
+      type: T,
+      options?: T extends 'recent' ? GetUserRecentScoresOptions : GetUserScoresOptions
+    ): Promise<
+      Version extends 'v2'
+        ? T extends 'best'
+          ? UserBestScoreV2[]
+          : UserScoreV2[]
+        : T extends 'best'
+        ? UserBestScore[]
+        : UserScore[]
+    > => {
+      return await this.request(`users/${user}/scores/${type}`, 'GET', {
+        ...options,
+        apiVersion: version === 'v2' ? '20220705' : undefined
+      });
+    };
+  }
+
   /**
    * Makes a GET request to the `/users/{user}/scores/{type}` endpoint
    *
@@ -108,13 +131,18 @@ export default class Users<
    * @param options
    * @returns An array of the specified user's scores
    */
-  public async getUserScores<T extends UserScoreType>(
-    user: number,
-    type: T,
-    options?: T extends 'recent' ? GetUserRecentScoresOptions : GetUserScoresOptions
-  ): Promise<T extends 'best' ? UserBestScore[] : UserScore[]> {
-    return await this.request(`users/${user}/scores/${type}`, 'GET', options);
-  }
+  public getUserScores = this.getUserScoresBase('v1');
+
+  /**
+   * Makes a GET request to the `/users/{user}/scores/{type}` endpoint with the `x-api-version` header set to `20220705`
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-user-scores}
+   * @param user ID of the user to get their scores
+   * @param type Score type
+   * @param options
+   * @returns An array of the specified user's scores
+   */
+  public getUserScoresV2 = this.getUserScoresBase('v2');
 
   /**
    * Makes a GET request to the `/users/{user}/beatmapsets/{type}` endpoint

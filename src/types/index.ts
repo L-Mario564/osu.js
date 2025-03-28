@@ -1,6 +1,7 @@
 import type { Response as PolyfillResponse } from 'node-fetch';
 import type { OsuJSGeneralError, OsuJSUnexpectedResponseError } from '../classes/Errors';
 import type { ModsEnum, StatusEnum } from '../utils/enums';
+import type { ModSettings } from './mods';
 
 /**
  * Timestamp string in ISO 8601 format
@@ -394,6 +395,37 @@ export interface Score {
   replay: boolean;
 }
 
+export interface ScoreV2 {
+  accuracy: number;
+  beatmap_id: number;
+  best_id: number | null;
+  build_id: number | null;
+  classic_total_score: number | null;
+  ended_at: ISOTimestamp;
+  has_replay: boolean;
+  id: number;
+  is_perfect_combo: boolean;
+  legacy_perfect: boolean;
+  legacy_score_id: number | null;
+  legacy_total_score: number;
+  max_combo: number;
+  maximum_statistics: ScoreStatistics;
+  mods: ModSettings[];
+  passed: boolean;
+  playlist_item_id: number | null;
+  pp: number | null;
+  preserve: boolean | null;
+  processed: boolean | null;
+  rank: Rank;
+  room_id: number | null;
+  ruleset_id: number;
+  started_at: ISOTimestamp | null;
+  statistics: ScoreStatistics;
+  total_score: number;
+  type: string;
+  user_id: number;
+}
+
 export interface Covers {
   cover: string;
   'cover@2x': string;
@@ -431,12 +463,18 @@ export interface UserScore extends Score {
   user: UserCompact;
 }
 
+export interface UserScoreV2 extends Pick<UserScore, 'beatmap' | 'beatmapset' | 'user'>, ScoreV2 {}
+
 export interface Weight {
   percentage: number;
   pp: number;
 }
 
 export interface UserBestScore extends UserScore, Score {
+  weight: Weight;
+}
+
+export interface UserBestScoreV2 extends UserScoreV2, ScoreV2 {
   weight: Weight;
 }
 
@@ -776,6 +814,19 @@ export interface Fails {
 export interface BeatmapUserScore {
   position: number;
   score: Score & {
+    beatmap: Beatmap & {
+      checksum: string | null;
+    };
+    user: UserCompact & {
+      country: Country;
+      cover: Cover;
+    };
+  };
+}
+
+export interface BeatmapUserScoreV2 {
+  position: number;
+  score: ScoreV2 & {
     beatmap: Beatmap & {
       checksum: string | null;
     };

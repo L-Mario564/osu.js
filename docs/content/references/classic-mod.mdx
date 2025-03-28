@@ -1,0 +1,21 @@
+---
+title: ClassicMod
+ref: type
+---
+
+# ClassicMod
+
+```ts
+type ClassicMod = {
+  acronym: 'CL';
+  settings?:
+    | {
+        no_slider_head_accuracy: boolean;
+        classic_note_lock: boolean;
+        always_play_tail_sample: boolean;
+        fade_hit_circle_early: boolean;
+        classic_health: boolean;
+      }
+    | undefined;
+};
+```

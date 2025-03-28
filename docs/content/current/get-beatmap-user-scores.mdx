@@ -5,7 +5,7 @@ ref: beatmaps
 
 # Get beatmap user scores
 
-The `beatmaps.getBeatmapUserScores` method on a `Client` instance makes a `GET` request to the `beatmaps/{beatmap}/scores/users/{user}/all` endpoint and returns a user's scores on a beatmap.
+The `beatmaps.getBeatmapUserScores` method on a `Client` instance makes a `GET` request to the `beatmaps/{beatmap}/scores/users/{user}/all` endpoint and returns a user's scores on a beatmap. `beatmaps.getBeatmapUserScoresV2` makes a request to the same endpoint, but has the `X-API-Version` header set to `20220705`.
 
 ### Example
 
@@ -33,13 +33,22 @@ const scores = await api.beatmaps.getBeatmapUserScores(1816113, 12408961, {
 
 ### Returns
 
+If using `beatmaps.getBeatmapUserScores`:
+
 ```ts
 Promise<Score[]>;
+```
+
+If using `beatmaps.getBeatmapUserScoresV2`:
+
+```ts
+Promise<ScoreV2[]>;
 ```
 
 #### Types
 
 - [Score](/references/score)
+- [ScoreV2](/references/score-v2)
 
 ### Possible Exceptions
 

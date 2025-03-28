@@ -41,6 +41,18 @@ describe('Test user related endpoints', async () => {
   });
   await sleep(ms);
 
+  it("Gets a user's best scores (v2)", async () => {
+    const scores = await users.getUserScoresV2(14544646, 'best', {
+      query: {
+        mode: 'osu',
+        limit: 3
+      }
+    });
+
+    expect(scores.length).toBe(3);
+  });
+  await sleep(ms);
+
   it("Gets a user's beatmaps", async () => {
     const beatmapsets = await users.getUserBeatmaps(14544646, 'favourite', {
       query: {

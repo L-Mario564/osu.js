@@ -1,0 +1,21 @@
+---
+title: DifficultyAdjustMod
+ref: type
+---
+
+# DifficultyAdjustMod
+
+```ts
+type DifficultyAdjustMod = {
+  acronym: 'DA';
+  settings?:
+    | {
+        circle_size: number;
+        approach_rate: number;
+        drain_rate: number;
+        overall_difficulty: number;
+        extended_limits: boolean;
+      }
+    | undefined;
+};
+```

@@ -1,0 +1,23 @@
+---
+title: UserScoreV2
+ref: interface
+---
+
+# UserScore
+
+```ts
+interface UserScoreV2 extends ScoreV2 {
+  beatmap: BeatmapCompact & {
+    checksum: string | null;
+  };
+  beatmapset: BeatmapsetCompact;
+  user: UserCompact;
+}
+```
+
+## Types
+
+- [ScoreV2](/references/score-v2)
+- [BeatmapCompact](/references/beatmap-compact)
+- [BeatmapsetCompact](/references/beatmapset-compact)
+- [UserCompact](/references/user-compact)
