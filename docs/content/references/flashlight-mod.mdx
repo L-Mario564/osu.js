@@ -1,0 +1,19 @@
+---
+title: FlaslightMod
+ref: type
+---
+
+# FlaslightMod
+
+```ts
+type FlaslightMod = {
+  acronym: 'FL';
+  settings?:
+    | {
+        follow_delay: number;
+        size_multiplier: number;
+        combo_based_size: boolean;
+      }
+    | undefined;
+};
+```

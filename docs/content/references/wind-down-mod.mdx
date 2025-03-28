@@ -1,0 +1,19 @@
+---
+title: WindDownMod
+ref: type
+---
+
+# WindDownMod
+
+```ts
+type WindDownMod = {
+  acronym: 'WD';
+  settings?:
+    | {
+        initial_rate: number;
+        final_rate: number;
+        adjust_pitch: boolean;
+      }
+    | undefined;
+};
+```

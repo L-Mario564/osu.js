@@ -1,0 +1,46 @@
+---
+title: ScoreV2
+ref: interface
+---
+
+# Score
+
+```ts
+interface ScoreV2 {
+  accuracy: number;
+  beatmap_id: number;
+  best_id: number | null;
+  build_id: number | null;
+  classic_total_score: number | null;
+  ended_at: ISOTimestamp;
+  has_replay: boolean;
+  id: number;
+  is_perfect_combo: boolean;
+  legacy_perfect: boolean;
+  legacy_score_id: number | null;
+  legacy_total_score: number;
+  max_combo: number;
+  maximum_statistics: ScoreStatistics;
+  mods: ModSettings[];
+  passed: boolean;
+  playlist_item_id: number | null;
+  pp: number | null;
+  preserve: boolean | null;
+  processed: boolean | null;
+  rank: Rank;
+  room_id: number | null;
+  ruleset_id: number;
+  started_at: ISOTimestamp | null;
+  statistics: ScoreStatistics;
+  total_score: number;
+  type: string;
+  user_id: number;
+}
+```
+
+## Types
+
+- [ISOTimestamp](/references/iso-timestamp)
+- [ScoreStatistics](/references/score-statistics)
+- [ModSettings](/references/mod-settings)
+- [Rank](/references/rank)

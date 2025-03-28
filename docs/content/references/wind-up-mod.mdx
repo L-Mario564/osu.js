@@ -1,0 +1,19 @@
+---
+title: WindUpMod
+ref: type
+---
+
+# WindUpMod
+
+```ts
+type WindUpMod = {
+  acronym: 'WU';
+  settings?:
+    | {
+        initial_rate: number;
+        final_rate: number;
+        adjust_pitch: boolean;
+      }
+    | undefined;
+};
+```
