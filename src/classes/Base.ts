@@ -32,6 +32,7 @@ export default class Base<TPolyfillFetch extends typeof polyfillFetch | undefine
     options?: Options & {
       returnNullOn404?: boolean;
       dontParseResp?: boolean;
+      apiVersion?: string;
     }
   ): Promise<T> {
     if (options?.query) {
@@ -40,15 +41,19 @@ export default class Base<TPolyfillFetch extends typeof polyfillFetch | undefine
     }
 
     let resp!: Response | PolyfillResponse;
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${this.accessToken}`
+    };
+    if (options?.apiVersion) {
+      headers['X-Api-Version'] = options.apiVersion;
+    }
 
     try {
       resp = await this.fetch(`https://osu.ppy.sh/api/v2/${endpoint}`, {
         method,
-        body: options?.body ? JSON.stringify(options.body) : undefined,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.accessToken}`
-        }
+        headers,
+        body: options?.body ? JSON.stringify(options.body) : undefined
       });
     } catch (err) {
       if (err instanceof TypeError) {

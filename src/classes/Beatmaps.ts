@@ -4,6 +4,7 @@ import type {
   Beatmap,
   Beatmapset,
   BeatmapUserScore,
+  BeatmapUserScoreV2,
   Country,
   Cover,
   Fails,
@@ -12,6 +13,7 @@ import type {
   ManiaBeatmapDifficultyAttributes,
   OsuBeatmapDifficultyAttributes,
   Score,
+  ScoreV2,
   TaikoBeatmapDifficultyAttributes,
   UserCompact
 } from '../types';
@@ -65,6 +67,19 @@ export default class Beatmaps<
     });
   }
 
+  private getBeatmapUserScoreBase<Version extends 'v1' | 'v2'>(version: Version) {
+    return async (
+      beatmap: number,
+      user: number,
+      options?: GetBeatmapScoresOptions
+    ): Promise<Version extends 'v2' ? BeatmapUserScoreV2 : BeatmapUserScore> => {
+      return await this.request(`beatmaps/${beatmap}/scores/users/${user}`, 'GET', {
+        ...options,
+        apiVersion: version === 'v2' ? '20220705' : undefined
+      });
+    };
+  }
+
   /**
    * Makes a GET request to the `/beatmaps/{beatmap}/scores/users/{user}` endpoint
    *
@@ -73,12 +88,33 @@ export default class Beatmaps<
    * @param user ID of the user to get scores from
    * @returns A user score on a beatmap
    */
-  public async getBeatmapUserScore(
-    beatmap: number,
-    user: number,
-    options?: GetBeatmapScoresOptions
-  ): Promise<BeatmapUserScore> {
-    return await this.request(`beatmaps/${beatmap}/scores/users/${user}`, 'GET', options);
+  public getBeatmapUserScore = this.getBeatmapUserScoreBase('v1');
+
+  /**
+   * Makes a GET request to the `/beatmaps/{beatmap}/scores/users/{user}` endpoint with the `x-api-version` header set to `20220705`
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-beatmap-user-score}
+   * @param beatmap ID of the beatmap to get scores from
+   * @param user ID of the user to get scores from
+   * @returns A user score on a beatmap
+   */
+  public getBeatmapUserScoreV2 = this.getBeatmapUserScoreBase('v2');
+
+  private getBeatmapUserScoresBase<Version extends 'v1' | 'v2'>(version: Version) {
+    return async (
+      beatmap: number,
+      user: number,
+      options?: GetBeatmapScoresOptions
+    ): Promise<Version extends 'v2' ? ScoreV2[] : Score[]> => {
+      const scores = await this.request<{
+        scores: any;
+      }>(`beatmaps/${beatmap}/scores/users/${user}/all`, 'GET', {
+        ...options,
+        apiVersion: version === 'v2' ? '20220705' : undefined
+      });
+
+      return scores.scores;
+    };
   }
 
   /**
@@ -89,16 +125,39 @@ export default class Beatmaps<
    * @param user ID of the user to get scores from
    * @returns An array of user scores on a beatmap
    */
-  public async getBeatmapUserScores(
-    beatmap: number,
-    user: number,
-    options?: GetBeatmapScoresOptions
-  ): Promise<Score[]> {
-    const scores = await this.request<{
-      scores: Awaited<ReturnType<Beatmaps['getBeatmapUserScores']>>;
-    }>(`beatmaps/${beatmap}/scores/users/${user}/all`, 'GET', options);
+  public getBeatmapUserScores = this.getBeatmapUserScoresBase('v1');
 
-    return scores.scores;
+  /**
+   * Makes a GET request to the `/beatmaps/{beatmap}/scores/users/{user}/all` endpoint with the `x-api-version` header set to `20220705`
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-beatmap-user-scores}
+   * @param beatmap ID of the beatmap to get scores from
+   * @param user ID of the user to get scores from
+   * @returns An array of user scores on a beatmap
+   */
+  public getBeatmapUserScoresV2 = this.getBeatmapUserScoresBase('v2');
+
+  private getBeatmapTopScoresBase<Version extends 'v1' | 'v2'>(version: Version) {
+    return async (
+      beatmap: number,
+      options?: GetBeatmapScoresOptions
+    ): Promise<
+      ((Version extends 'v2' ? ScoreV2 : Score) & {
+        user: UserCompact & {
+          country: Country;
+          cover: Cover;
+        };
+      })[]
+    > => {
+      const scores = await this.request<{
+        scores: any;
+      }>(`beatmaps/${beatmap}/scores`, 'GET', {
+        ...options,
+        apiVersion: version === 'v2' ? '20220705' : undefined
+      });
+
+      return scores.scores;
+    };
   }
 
   /**
@@ -108,22 +167,38 @@ export default class Beatmaps<
    * @param beatmap ID of the beatmap to get top scores from
    * @returns An array of user scores on a beatmap
    */
-  public async getBeatmapTopScores(
-    beatmap: number,
-    options?: GetBeatmapScoresOptions
-  ): Promise<
-    (Score & {
-      user: UserCompact & {
-        country: Country;
-        cover: Cover;
-      };
-    })[]
-  > {
-    const scores = await this.request<{
-      scores: Awaited<ReturnType<Beatmaps['getBeatmapTopScores']>>;
-    }>(`beatmaps/${beatmap}/scores`, 'GET', options);
+  public getBeatmapTopScores = this.getBeatmapTopScoresBase('v1');
 
-    return scores.scores;
+  /**
+   * Makes a GET request to the `/beatmaps/{beatmap}/scores` endpoint with the `x-api-version` header set to `20220705`
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-beatmap-top-scores}
+   * @param beatmap ID of the beatmap to get top scores from
+   * @returns An array of user scores on a beatmap
+   */
+  public getBeatmapTopScoresV2 = this.getBeatmapTopScoresBase('v2');
+
+  private getBeatmapTopNonLegacyScoresBase<Version extends 'v1' | 'v2'>(version: Version) {
+    return async (
+      beatmap: number,
+      options?: GetBeatmapTopNonLegacyScoresOptions
+    ): Promise<
+      ((Version extends 'v2' ? ScoreV2 : Score) & {
+        user: UserCompact & {
+          country: Country;
+          cover: Cover;
+        };
+      })[]
+    > => {
+      const scores = await this.request<{
+        scores: any;
+      }>(`beatmaps/${beatmap}/solo-scores`, 'GET', {
+        ...options,
+        apiVersion: version === 'v2' ? '20220705' : undefined
+      });
+
+      return scores.scores;
+    };
   }
 
   /**
@@ -133,23 +208,16 @@ export default class Beatmaps<
    * @param beatmap ID of the beatmap to get top scores from
    * @returns An array of user scores on a beatmap
    */
-  public async getBeatmapTopNonLegacyScores(
-    beatmap: number,
-    options?: GetBeatmapTopNonLegacyScoresOptions
-  ): Promise<
-    (Score & {
-      user: UserCompact & {
-        country: Country;
-        cover: Cover;
-      };
-    })[]
-  > {
-    const scores = await this.request<{
-      scores: Awaited<ReturnType<Beatmaps['getBeatmapTopNonLegacyScores']>>;
-    }>(`beatmaps/${beatmap}/solo-scores`, 'GET', options);
+  public getBeatmapTopNonLegacyScores = this.getBeatmapTopNonLegacyScoresBase('v1');
 
-    return scores.scores;
-  }
+  /**
+   * Makes a GET request to the `/beatmaps/{beatmap}/solo-scores` endpoint with the `x-api-version` header set to `20220705`
+   *
+   * Documentation: {@link https://osujs.mario564.com/current/get-beatmap-top-non-legacy-scores}
+   * @param beatmap ID of the beatmap to get top scores from
+   * @returns An array of user scores on a beatmap
+   */
+  public getBeatmapTopNonLegacyScoresV2 = this.getBeatmapTopNonLegacyScoresBase('v2');
 
   /**
    * Makes a GET request to the `/beatmaps` endpoint

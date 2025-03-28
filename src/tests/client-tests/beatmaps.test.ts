@@ -40,8 +40,30 @@ describe('Test beatmap related endpoints', async () => {
   });
   await sleep(ms);
 
+  it('Gets a beatmap user score (v2)', async () => {
+    const score = await beatmaps.getBeatmapUserScoreV2(1816113, 12408961, {
+      query: {
+        mode: 'osu'
+      }
+    });
+
+    expect(score).toBeDefined();
+  });
+  await sleep(ms);
+
   it('Gets multiple beatmap user scores', async () => {
     const scores = await beatmaps.getBeatmapUserScores(1816113, 12408961, {
+      query: {
+        mode: 'osu'
+      }
+    });
+
+    expect(Array.isArray(scores)).toBe(true);
+  });
+  await sleep(ms);
+
+  it('Gets multiple beatmap user scores (v2)', async () => {
+    const scores = await beatmaps.getBeatmapUserScoresV2(1816113, 12408961, {
       query: {
         mode: 'osu'
       }
@@ -62,8 +84,30 @@ describe('Test beatmap related endpoints', async () => {
   });
   await sleep(ms);
 
+  it('Gets beatmap top user scores (v2)', async () => {
+    const scores = await beatmaps.getBeatmapTopScoresV2(1816113, {
+      query: {
+        mode: 'osu'
+      }
+    });
+
+    expect(Array.isArray(scores)).toBe(true);
+  });
+  await sleep(ms);
+
   it('Gets beatmap top user (non-legacy) scores', async () => {
     const scores = await beatmaps.getBeatmapTopNonLegacyScores(1816113, {
+      query: {
+        mode: 'osu'
+      }
+    });
+
+    expect(Array.isArray(scores)).toBe(true);
+  });
+  await sleep(ms);
+
+  it('Gets beatmap top user (non-legacy) scores (v2)', async () => {
+    const scores = await beatmaps.getBeatmapTopNonLegacyScoresV2(1816113, {
       query: {
         mode: 'osu'
       }
