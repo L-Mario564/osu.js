@@ -5,7 +5,7 @@ ref: beatmaps
 
 # Get beatmap top scores
 
-The `beatmaps.getBeatmapTopScores` method on a `Client` instance makes a `GET` request to the `beatmaps/{beatmap}/scores` endpoint and returns an array of user scores on a beatmap.
+The `beatmaps.getBeatmapTopScores` method on a `Client` instance makes a `GET` request to the `beatmaps/{beatmap}/scores` endpoint and returns an array of user scores on a beatmap. `beatmaps.getBeatmapTopScoresV2` makes a request to the same endpoint, but has the `X-API-Version` header set to `20220705`.
 
 ### Example
 
@@ -32,6 +32,8 @@ const scores = await api.beatmaps.getBeatmapTopScores(1816113, {
 
 ### Returns
 
+If using `beatmaps.getBeatmapTopScores`:
+
 ```ts
 Promise<
   (Score & {
@@ -43,9 +45,23 @@ Promise<
 >;
 ```
 
+If using `beatmaps.getBeatmapTopScoresV2`:
+
+```ts
+Promise<
+  (ScoreV2 & {
+    user: UserCompact & {
+      country: Country;
+      cover: Cover;
+    };
+  })[]
+>;
+```
+
 #### Types
 
 - [Score](/references/score)
+- [ScoreV2](/references/score-v2)
 - [UserCompact](/references/user-compact)
 - [Country](/references/country)
 - [Cover](/references/cover)

@@ -416,7 +416,7 @@ export interface ScoreV2 {
   pp: number | null;
   preserve: boolean | null;
   processed: boolean | null;
-  rank: string;
+  rank: Rank;
   room_id: number | null;
   ruleset_id: number;
   started_at: ISOTimestamp | null;
